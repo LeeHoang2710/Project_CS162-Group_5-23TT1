@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string.h>
 #include <sstream>
+#include <time.h>
 
 using namespace std;
 
@@ -43,6 +44,11 @@ struct ClassNode
     ClassNode *next;
 };
 
+struct Session
+{
+    int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
+    int session_no;      // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
+};
 struct Course
 {
     string course_id;
@@ -108,12 +114,6 @@ struct StudentNode
 {
     Student student;
     StudentNode *next;
-};
-
-struct Session
-{
-    int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
-    int session_no;      // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 
 struct Score
