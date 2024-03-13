@@ -1,0 +1,7 @@
+#include "../semester.h"
+
+int main()
+{
+
+    return 0;
+}
