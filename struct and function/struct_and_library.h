@@ -57,6 +57,7 @@ struct Course
     int num_credit;
     int max_students = 50;
     Session teaching_session[2];
+
 };
 struct CourseNode
 {
@@ -66,6 +67,14 @@ struct CourseNode
     StudentNode *student_list = nullptr;
     CourseNode *next;
 };
+struct Score
+{
+    float process = 0.0f;
+    float midterm = 0.0f;
+    float final = 0.0f;
+    float overall = 0.0f;
+};
+
 struct MyCourse
 {
     Score score;
@@ -116,10 +125,4 @@ struct StudentNode
     StudentNode *next;
 };
 
-struct Score
-{
-    float process = 0.0f;
-    float midterm = 0.0f;
-    float final = 0.0f;
-    float overall = 0.0f;
-};
+
