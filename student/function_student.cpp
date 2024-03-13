@@ -1,4 +1,5 @@
-#include ".\struct and function\student.h"
+#include "../struct_and_function/student.h"
+using namespace std;
 
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class)
 {
@@ -50,6 +51,7 @@ void removeStudentNode(StudentNode *&head, Student student_1)
             StudentNode *temp = person;
             person->next = person->next->next;
             delete temp;
+            temp = nullptr;
         }
         else
             person = person->next;
@@ -77,7 +79,7 @@ StudentNode *searchStudentNode(StudentNode *head, Student student_1)
 
 void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
-    file.open("./database/student.csv");
+    file.open("../database/student.csv");
     if (!file.is_open())
         cout << "Can not open file" << endl;
     else
@@ -108,9 +110,9 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
     file.close();
 }
 
-void exportStudentToFile(ofstream &file, StudentNode *list_student)
+void exportStudentToFile(ofstream &file, StudentNode *&list_student)
 {
-    file.open("./database/student.csv");
+    file.open("../database/output.csv");
     if (!file.is_open())
         cout << "Can not open file" << endl;
     else
@@ -126,10 +128,22 @@ void exportStudentToFile(ofstream &file, StudentNode *list_student)
             {
                 Student person = list_student->student;
                 file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name;
-                file << person.social_id << "," << person.password << "," << person.student_class << endl;
+                file << "," << person.social_id << "," << person.password << "," << person.student_class << endl;
                 list_student = list_student->next;
             }
         }
     }
     file.close();
+}
+
+int main()
+{
+    cout << "Hello world";
+    ifstream fin;
+    ofstream fout;
+    StudentNode *ditmethangNam = nullptr;
+    readStudentFromFile(fin, ditmethangNam);
+    exportStudentToFile(fout, ditmethangNam);
+
+    return 0;
 }

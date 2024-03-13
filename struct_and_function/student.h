@@ -5,5 +5,5 @@ StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 void removeStudentNode(StudentNode *&head, Student student_1);
 StudentNode *searchStudentNode(StudentNode *head, Student student_1);
-void readStudentFromFile(ifstream &file, StudentNode *list_student);
-void exportStudentToFile(ofstream &file);
+void readStudentFromFile(ifstream &file, StudentNode *&list_student);
+void exportStudentToFile(ofstream &file, StudentNode *&list_student);

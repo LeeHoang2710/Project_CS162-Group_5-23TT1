@@ -1,4 +1,4 @@
-#include ".\struct and function\year.h"
+#include "./struct_and_function/year.h"
 
 Year createYear(string p_year_id)
 {
