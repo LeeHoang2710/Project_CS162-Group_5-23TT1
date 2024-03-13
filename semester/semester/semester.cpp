@@ -13,7 +13,7 @@ bool checkFailedInput()
 void createSemester(YearNode*& pHY)
 {
 	cout << "You are creating a new semester." << endl;
-	//Missing enter 0 to go back...
+	//Missing enter 0 to go back..., enter num to do sth
 	//Enter semester and school year
 	int sem;
 	cout << "Enter semester number: ";
@@ -73,4 +73,9 @@ void createSemester(YearNode*& pHY)
 			}
 		}
 	}
+}
+
+void deleteSemester(YearNode*& pHY);
+{
+
 }
