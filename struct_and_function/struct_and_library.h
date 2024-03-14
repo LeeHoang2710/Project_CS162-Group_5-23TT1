@@ -86,6 +86,8 @@ struct MyCourse
 
 struct Semester
 {
+    string start_date;
+    string end_date;
     string semester_id;
     CourseNode *course_list = nullptr;
 };
