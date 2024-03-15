@@ -58,7 +58,7 @@ void removeStudentNode(StudentNode *&head, Student student_1)
     }
 }
 
-StudentNode *searchStudentNode(StudentNode *head, Student student_1)
+StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
 {
     if (!head)
     {
@@ -68,7 +68,7 @@ StudentNode *searchStudentNode(StudentNode *head, Student student_1)
     StudentNode *list_student = head;
     while (list_student)
     {
-        if (list_student->student.student_id == student_1.student_id)
+        if (list_student->student.student_id == student_1_id)
             return list_student;
         else
             list_student = list_student->next;
