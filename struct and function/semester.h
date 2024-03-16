@@ -1,10 +1,13 @@
 #pragma once
 #include "struct_and_library.h"
 
-void importSemester(Semester*& list_sem, ifstream& fin);
-void exportSemester(Semester* list_sem, ofstream& fout);
+void inputSemester(string sem_id, string start_date, string end_date, CourseNode* course_list);
 
-bool checkFailedInput();//check multiple things, maybe everything
-void createSemester(YearNode*& pHY);
-void deleteSemester(YearNode*& pHY);
-void searchSemester(YearNode*& pHY);
+Semester createSemester(string sem_id, string start_date, string end_date, CourseNode* course_list);
+SemesterNode* initSemesterNode(Semester new_sem);
+void addSemesterNode(SemesterNode*& sem_list, Semester new_sem);
+void removeSemesterNode(SemesterNode*& sem_list, int sem_num);
+SemesterNode* searchSemesterNode(SemesterNode* sem_list, string year_id, int sem_num);
+
+void importFileSemester();
+void exportFileSemester();

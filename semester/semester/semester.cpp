@@ -1,81 +1,77 @@
 #include "../semester.h"
 
-bool checkFailedInput()
+//Assuming users always input correctly
+//Missing menus
+//Missing "Enter 0 to go back"
+
+Semester createSemester(string sem_id, string start_date, string end_date, CourseNode* course_list)
 {
-	//unfinished
-	if (cin.fail()) {
-		cout << "Invalid character input. Please try again." << std::endl;
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	}
+	Semester sem;
+	sem.semester_id = sem_id;
+	sem.start_date = start_date;
+	sem.end_date = end_date;
+	sem.course_list = course_list;
+	return sem;
 }
-
-void createSemester(YearNode*& pHY)
+SemesterNode* initSemesterNode(Semester new_sem)
 {
-	cout << "You are creating a new semester." << endl;
-	//Missing enter 0 to go back..., enter num to do sth
-	//Enter semester and school year
-	int sem;
-	cout << "Enter semester number: ";
-	cin >> sem;
-	string semester_id = "Semester " + to_string(sem);
-
-	int start, end;
-	cout << "Enter school year:" << endl
-		<< "	Enter start year: ";
-	cin >> start;
-	cout << "	Enter end year: ";
-	cin >> end;
-	string year_id = to_string(start) + " - " + to_string(end);
-	
-	//Check and add semester
-	YearNode* currY = pHY;
-	if (!pHY)
-	{
-		pHY = new YearNode;
-		Year* syTemp = &(pHY->school_year);
-		syTemp->year_id = year_id;
-		syTemp->list_sem = new SemesterNode;
-		Semester* sTemp = &(syTemp->list_sem->sem);
-		sTemp->semester_id = semester_id;
-		currY = pHY;
-	}
+	SemesterNode* newSemNode = new SemesterNode;
+	newSemNode->sem = new_sem;
+	return newSemNode;
+}
+void addSemesterNode(SemesterNode*& sem_list, Semester new_sem)
+{
+	if (!sem_list)
+		sem_list = initSemesterNode(new_sem);
 	else
 	{
-		while (currY->next && currY->school_year.year_id != year_id)
-			currY = currY->next;
-		if (currY->school_year.year_id != year_id)
+		SemesterNode* curr = sem_list;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = initSemesterNode(new_sem);
+	}
+}
+void removeSemesterNode(SemesterNode*& sem_list, int sem_num)
+{
+	if (!sem_list)
+		cout << "There are no semesters." << endl;
+	else
+	{
+		string sem = "Semester " + sem_num;
+		if (sem_list->sem.semester_id == sem)
 		{
-			currY->next = new YearNode;
-			currY = currY->next;
-			Year* syTemp = &(currY->school_year);
-			syTemp->year_id = year_id;
-			syTemp->list_sem = new SemesterNode;
-			Semester* sTemp = &(syTemp->list_sem->sem);
-			sTemp->semester_id = semester_id;
+			SemesterNode* temp = sem_list;
+			sem_list = sem_list->next;
+			//delete course list,...
+			CourseNode* curr = temp->sem.course_list;
+			while (curr)
+			{
+				CourseNode* tempC = curr;
+				curr = curr->next;
+				delete tempC;
+			}
+			delete temp;
 		}
 		else
 		{
-			SemesterNode* sNTemp = currY->school_year.list_sem;
-			while (sNTemp->next && sNTemp->sem.semester_id == semester_id)
-				sNTemp = sNTemp->next;
-			if (sNTemp->sem.semester_id != semester_id)
+			SemesterNode* curr = sem_list->next;
+			while (curr->next->next && curr->next->sem.semester_id != sem)
+				curr = curr->next;
+			if (curr->next->sem.semester_id == sem)
 			{
-				sNTemp->next = new SemesterNode;
-				sNTemp = sNTemp->next;
-				sNTemp->sem.semester_id = semester_id;
+				SemesterNode* temp = curr->next;
+				curr->next = curr->next->next;
+				//delete course list,...
+				CourseNode* curr = temp->sem.course_list;
+				while (curr)
+				{
+					CourseNode* tempC = curr;
+					curr = curr->next;
+					delete tempC;
+				}
+				delete temp;
 			}
-			else
-			{
-				cout << "Semester already exists. Please try again." << endl;
-				createSemester(pHY);
-				return;
-			}
+
 		}
 	}
-}
-
-void deleteSemester(YearNode*& pHY);
-{
-
 }

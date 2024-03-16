@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <cstring>
 #include <sstream>
-#include <time.h>
+#include <ctime>
+#include <string>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ struct StudentNode;
 struct Session;
 struct Score;
 
+//Comments for ease of understand
+//School years
 struct Year
 {
 	string year_id;
@@ -32,16 +35,28 @@ struct YearNode
 	YearNode* next = nullptr;
 };
 
-struct Class
+//Each year has 3 semesters
+struct Semester
 {
-	string class_id;
-	string head_teacher;
-	StudentNode* student_list = nullptr;
+	string semester_id;
+	string start_date;
+	string end_date;
+	CourseNode* course_list = nullptr;
 };
-struct ClassNode
+struct SemesterNode
 {
-	Class my_class;
-	ClassNode* next;
+	Semester sem;
+	SemesterNode* next = nullptr;
+};
+
+//I don't know what this is
+struct RegistrationSession
+{
+	string year;
+	string sem;
+	CourseNode* list_of_courses = nullptr;
+	string start_date;
+	string end_date;
 };
 
 struct Session
@@ -76,25 +91,16 @@ struct MyCourse
 	MyCourse* next;
 };
 
-struct Semester
+struct Class
 {
-	string start_date;
-	string end_date;
-	string semester_id;
-	CourseNode* course_list = nullptr;
+	string class_id;
+	string head_teacher;
+	StudentNode* student_list = nullptr;
 };
-struct SemesterNode
+struct ClassNode
 {
-	Semester sem;
-	SemesterNode* next = nullptr;
-};
-struct RegistrationSession
-{
-	string year;
-	string sem;
-	CourseNode* list_of_courses = nullptr;
-	string start_date;
-	string end_date;
+	Class my_class;
+	ClassNode* next;
 };
 
 struct Student
