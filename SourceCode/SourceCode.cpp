@@ -97,27 +97,42 @@ void display(CourseNode* CourseHead) {
 		}
 	}
 }
-void test(Student& x, ifstream& ip) {
-	ip.open("C:/Users/LEGION/Desktop/branches/Project_CS162/database/testcourse.csv");
-	Student tmp;
-	ip >> tmp.num;
-	ip.ignore();
-	getline(ip, tmp.student_id, ',');
-	getline(ip, tmp.first_name, ',');
-	getline(ip, tmp.last_name, ',');
-	ip >> tmp.gender;
-	ip.ignore();
-	getline(ip, tmp.dob, ',');
-	getline(ip, tmp.social_id, ',');
-	getline(ip, tmp.student_class, ',');
-	ip.close();
-	x = tmp;
-	cout << x.num << endl;
-	cout << x.student_id << endl; 
-	cout << x.first_name << endl;
-	cout << x.last_name << endl;
-	cout << x.dob << endl;
-	cout << x.social_id << endl;
-	cout << x.student_class << endl;
-	ip.close();
+void Login(StudentNode* StuList) {
+	while (1) {
+		string input_ID;
+		string input_Pass;
+		cout << "Enter your username: ";
+		cin >> input_ID;
+		cout << "Enter your password: ";
+		cin >> input_Pass;
+		for (StudentNode* tmp = StuList; tmp != NULL; tmp = tmp->next) {
+			if (tmp->student.student_id == input_ID) {
+				if (tmp->student.password == input_Pass) {
+					cout << "Login Succesfully" << endl;
+				}
+				else {
+					cout << "wrong username or password, please try again" << endl;
+				}
+			}
+		}
+	}
+}
+void ChangePass(Student& current) {
+	while (1) {
+		string input_ID;
+		string input_Pass;
+		cout << "Enter your username: ";
+		cin >> input_ID;
+		cout << "Enter your password: ";
+		cin >> input_Pass;
+		if (current.student_id == input_ID && current.password == input_Pass) {
+			cout << "Enter your new password: ";
+			cin >> input_Pass;
+			current.password == input_Pass;
+			return;
+		}
+		else {
+			cout << "Your username or password is wrong, please try again" << endl;
+		}
+	}
 }
