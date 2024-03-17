@@ -43,5 +43,8 @@
     <None Include="..\database\Students_Password.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\database\Staff_Password.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

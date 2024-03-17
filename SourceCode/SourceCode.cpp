@@ -39,8 +39,7 @@ void AddStudent2Course(CourseNode*& csnode, Course cs,ifstream& ip) {
 	getline(ip, tmp.social_id,',');
 	getline(ip, tmp.password, ',');
 	getline(ip, tmp.student_class,'\n');
-	int loop = 5;
-	while(!ip.eof()) {
+	while(1) {
 		if (csnode->student_list == nullptr) {
 			csnode->student_list = new StudentNode;
 			cur = csnode->student_list;
@@ -51,6 +50,10 @@ void AddStudent2Course(CourseNode*& csnode, Course cs,ifstream& ip) {
 		}
 		cur->student = tmp;
 		cur->next = NULL;
+		if (ip.eof()) {
+			ip.close();
+			return;
+		}
 		ip >> tmp.num;
 		ip.ignore();
 		getline(ip, tmp.student_id, ',');
@@ -71,7 +74,7 @@ void OutputCourse(Course cs) {
 	cout << cs.course_name << endl;
 	cout << cs.teacher_name << endl;
 	cout << "Credits: "<< cs.num_credit  << endl;
-	cout << "Day: " << cs.teaching_session[0].day_of_the_week << " (Mon)" << endl;
+	cout << "Day: " << cs.teaching_session[0].day_of_the_week  << endl;
 	cout << "Sesion: "<< cs.teaching_session[0].session_no << endl;
 
 }
@@ -98,7 +101,7 @@ void display(CourseNode* CourseHead) {
 	}
 }
 //Login session
-void StorePassWord_Student(StudentNode*& StuPass, ifstream& ip) {
+void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip) {
 	StudentNode* cur=StuPass;
 	Student tmp;
 	getline(ip, tmp.student_id, ',');
@@ -119,7 +122,7 @@ void StorePassWord_Student(StudentNode*& StuPass, ifstream& ip) {
 		getline(ip, tmp.password, '\n');
 	}
 }
-void StorePassWord_Staff(StaffNode*& StaffPass, ifstream& ip) {
+void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip) {
 	StaffNode* cur = StaffPass;
 	Staff tmp;
 	getline(ip, tmp.username, ',');
@@ -148,7 +151,8 @@ void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& Ch
 		cin >> input_ID;
 		cout << "Enter your password: ";
 		cin >> input_Pass;
-		for (StudentNode* tmp = StuPass; tmp != NULL; tmp = tmp->next) {
+		StudentNode* tmp = StuPass;
+		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->student.student_id == input_ID) {
 				if (tmp->student.password == input_Pass) {
 					onstatus_ID = input_ID;
@@ -158,11 +162,11 @@ void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& Ch
 				}
 				else {
 					cout << "wrong username or password, please try again" << endl;
+					break;
 				}
 			}
 		}
-		cout << "This account is not signed up yet" <<endl;
-		return;
+		if (tmp==NULL) cout << "This account is not signed up yet" <<endl;
 	}
 }
 void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass) {
@@ -173,7 +177,8 @@ void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& 
 		cin >> input_UserName;
 		cout << "Enter your password: ";
 		cin >> input_Pass;
-		for (StaffNode* tmp = StaffPass; tmp != NULL; tmp = tmp->next) {
+		StaffNode* tmp = StaffPass;
+		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->staff.username == input_UserName) {
 				if (tmp->staff.password == input_Pass) {
 					onstatus_UserName = input_UserName;
@@ -183,22 +188,32 @@ void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& 
 				}
 				else {
 					cout << "wrong username or password, please try again" << endl;
+					break;
 				}
 			}
 		}
-		cout << "This account is not signed up yet" << endl;
-		return;
+		if (tmp == NULL) cout << "This account is not signed up yet" << endl;
 	}
 }
 void UpdateStuPassFile(StudentNode* List, ofstream& op) {
-	op.open();
-	for (qStudentNode* tmp = List; tmp != NULL; tmp = tmp->next) {
-		op << tmp->student.student_id <<;
-		op << tmp->student.dob;
+	op.open("../database/Students_Password.csv");
+	for (StudentNode* tmp = List; tmp != NULL; tmp = tmp->next) {
+		op << tmp->student.student_id <<",";
+		op << tmp->student.password;
+		if (tmp->next != NULL) op << endl;
 	}
 	op.close();
 }
-void ChangePassStudent(StudentNode* current, ofstream& op) {
+void UpdateStaffPassFile(StaffNode* List, ofstream& op) {
+	op.open("../database/Staff_Password.csv");
+	for (StaffNode* tmp = List; tmp != NULL; tmp = tmp->next) {
+		op << tmp->staff.username << ",";
+		op << tmp->staff.password ;
+		if (tmp->next != NULL) op << endl;
+	}
+	op.close();
+}
+void ChangePassStudent(StudentNode* current) {
 	while (1) {
 		string input_Pass;
 		cout << "Enter your current password: ";
@@ -232,5 +247,4 @@ void ChangePassStaff(StaffNode* current) {
 		}
 	}
 }
-void 
 //new session
