@@ -103,7 +103,19 @@ struct RegistrationSession
     string start_date;
     string end_date;
 };
-
+struct Staff {
+    string username;
+    string first_name;
+    string last_name;
+    bool gender;
+    string dob;
+    string social_id;
+    string password;
+};
+struct StaffNode {
+    Staff staff;
+    StaffNode* next;
+};
 struct Student
 {
     int num;

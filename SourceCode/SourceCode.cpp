@@ -139,7 +139,7 @@ void StorePassWord_Staff(StaffNode*& StaffPass, ifstream& ip) {
 		getline(ip, tmp.password, '\n');
 	}
 }
-void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& NodeForChangeStuPass) {
+void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& ChangeStuPass) {
 	while (1) {
 		string input_ID;
 		string input_Pass;
@@ -151,6 +151,7 @@ void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& No
 			if (tmp->student.student_id == input_ID) {
 				if (tmp->student.password == input_Pass) {
 					onstatus_ID = input_ID;
+					ChangeStuPass = tmp;
 					cout << "Login Succesfully" << endl;
 					return;
 				}
@@ -159,9 +160,11 @@ void LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& No
 				}
 			}
 		}
+		cout << "This account is not signed up yet" <<endl;
+		return;
 	}
 }
-void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StudentNode*& NodeForChangeStaffPass) {
+void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass) {
 	while (1) {
 		string input_UserName;
 		string input_Pass;
@@ -173,6 +176,7 @@ void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StudentNode*
 			if (tmp->staff.username == input_UserName) {
 				if (tmp->staff.password == input_Pass) {
 					onstatus_UserName = input_UserName;
+					ChangeStaffPass = tmp;
 					cout << "Login Succesfully" << endl;
 					return;
 				}
@@ -181,43 +185,41 @@ void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StudentNode*
 				}
 			}
 		}
+		cout << "This account is not signed up yet" << endl;
+		return;
 	}
 }
-void ChangePassStudent(Student& current,) {
+void ChangePassStudent(StudentNode* current) {
 	while (1) {
-		string input_ID;
 		string input_Pass;
-		cout << "Enter your username: ";
-		cin >> input_ID;
-		cout << "Enter your password: ";
+		cout << "Enter your current password: ";
 		cin >> input_Pass;
-		if (current.student_id == input_ID && current.password == input_Pass) {
+		if (current->student.password == input_Pass) {
 			cout << "Enter your new password: ";
 			cin >> input_Pass;
-			current.password = input_Pass;
+			current->student.password = input_Pass;
+			cout << "Password changed successfully " <<endl;
 			return;
 		}
 		else {
-			cout << "Your username or password is wrong, please try again" << endl;
+			cout << "current password is wrong, please try again" << endl;
 		}
 	}
 }
-void ChangePassStudent(Student& current) {
+void ChangePassStaff(StaffNode* current) {
 	while (1) {
-		string input_ID;
 		string input_Pass;
-		cout << "Enter your username: ";
-		cin >> input_ID;
-		cout << "Enter your password: ";
+		cout << "Enter your current password: ";
 		cin >> input_Pass;
-		if (current.student_id == input_ID && current.password == input_Pass) {
+		if (current->staff.password == input_Pass) {
 			cout << "Enter your new password: ";
 			cin >> input_Pass;
-			current.password = input_Pass;
+			current->staff.password = input_Pass;
+			cout << "Password changed successfully" << endl;
 			return;
 		}
 		else {
-			cout << "Your username or password is wrong, please try again" << endl;
+			cout << "current password is wrong, please try again" << endl;
 		}
 	}
 }
