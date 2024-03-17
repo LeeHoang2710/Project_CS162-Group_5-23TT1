@@ -87,14 +87,18 @@ ClassNode* SearchClassNode(ClassNode*& head,Class searchclass)
 		return nullptr;
 	}
 }
-void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent) {
-	if (!head) {
+void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent)
+{
+	if (!head)
+	{
 		cout << "The class you want to join don't exist!\n";
 		return;
 	}
 	ClassNode* tmp = head;
-	while (tmp) {
-		if (tmp->my_class.class_id == classid) {
+	while (tmp)
+		{
+		if (tmp->my_class.class_id == classid) 
+		{
 			StudentNode* Stulist = tmp->my_class.student_list;
 			while (Stulist->next)
 				Stulist = Stulist->next;
@@ -106,7 +110,8 @@ void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent) {
 			tmp = tmp->next;
 		}
 	}
-	if (!tmp) {
+	if (!tmp)
+	{
 		cout << "The class you want to join don't exist!\n";
 	}
 }
