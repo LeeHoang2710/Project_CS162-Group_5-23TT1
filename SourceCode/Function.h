@@ -4,4 +4,7 @@ void InputCourse(Course& cs, ifstream& ip);
 void OutputCourse(Course cs);
 void AddStudent2Course(CourseNode*& csnode, Course cs, ifstream& ip);
 void display(CourseNode* CourseHead);
-void test(Student& x, ifstream& ip);
+//Login Session
+void StorePassWord(StudentNode*& StuPass, ifstream& ip);
+void Login(StudentNode* StuList, string& onstatus_ID);
+void ChangePass(Student& current);

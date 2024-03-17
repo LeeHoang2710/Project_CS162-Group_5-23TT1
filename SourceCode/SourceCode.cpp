@@ -97,7 +97,28 @@ void display(CourseNode* CourseHead) {
 		}
 	}
 }
-void Login(StudentNode* StuList) {
+void StorePassWord(StudentNode*& StuPass, ifstream& ip) {
+	StudentNode* cur=StuPass;
+	Student tmp;
+	getline(ip, tmp.student_id, ',');
+	getline(ip, tmp.password, '\n');
+	while (1) {
+		if (StuPass==NULL) {
+			StuPass = new StudentNode;
+			cur = StuPass;
+		}
+		else {
+			cur->next = new StudentNode;
+			cur = cur->next;
+		}
+		cur->student = tmp;
+		cur->next = NULL;
+		if (ip.eof()) return;
+		getline(ip, tmp.student_id, ',');
+		getline(ip, tmp.password, '\n');
+	}
+}
+void Login(StudentNode* StuPass, string& onstatus_ID) {
 	while (1) {
 		string input_ID;
 		string input_Pass;
@@ -105,10 +126,12 @@ void Login(StudentNode* StuList) {
 		cin >> input_ID;
 		cout << "Enter your password: ";
 		cin >> input_Pass;
-		for (StudentNode* tmp = StuList; tmp != NULL; tmp = tmp->next) {
+		for (StudentNode* tmp = StuPass; tmp != NULL; tmp = tmp->next) {
 			if (tmp->student.student_id == input_ID) {
 				if (tmp->student.password == input_Pass) {
+					onstatus_ID = input_ID;
 					cout << "Login Succesfully" << endl;
+					return;
 				}
 				else {
 					cout << "wrong username or password, please try again" << endl;
@@ -128,7 +151,7 @@ void ChangePass(Student& current) {
 		if (current.student_id == input_ID && current.password == input_Pass) {
 			cout << "Enter your new password: ";
 			cin >> input_Pass;
-			current.password == input_Pass;
+			current.password = input_Pass;
 			return;
 		}
 		else {

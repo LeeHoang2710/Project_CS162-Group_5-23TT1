@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
+    <None Include="..\database\Students_Password.csv" />
     <None Include="..\database\testcourse.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
