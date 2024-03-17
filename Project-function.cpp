@@ -115,3 +115,32 @@ void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent)
 		cout << "The class you want to join don't exist!\n";
 	}
 }
+void ReadClassfromfile(ClassNode* Listclass[],ifstream &fin) {
+	for (int j = 0; j < 10; ++j) {
+		Listclass[j] = 0;
+	}
+	int i = 0;
+	string line;
+	while (getline(fin, line, '\n')) {
+		stringstream ss(line);
+		string newclass;
+		while (getline(ss, newclass, ',')) {
+			ClassNode* tmp = 0;
+			if (!Listclass[i]) {
+				Listclass[i] = new ClassNode();
+				Listclass[i]->my_class.class_id = newclass;
+				Listclass[i]->next = 0;
+			}
+			else {
+				tmp = Listclass[i];
+				while (tmp->next)
+					tmp = tmp->next;
+				ClassNode* newclassnode = new ClassNode();
+				newclassnode->my_class.class_id = newclass;
+				newclassnode->next = 0;
+				tmp->next = newclassnode;
+			}
+		}
+		i++;
+	}
+}
