@@ -97,6 +97,7 @@ void display(CourseNode* CourseHead) {
 		}
 	}
 }
+//Login session
 void StorePassWord_Student(StudentNode*& StuPass, ifstream& ip) {
 	StudentNode* cur=StuPass;
 	Student tmp;
@@ -189,7 +190,15 @@ void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& 
 		return;
 	}
 }
-void ChangePassStudent(StudentNode* current) {
+void UpdateStuPassFile(StudentNode* List, ofstream& op) {
+	op.open();
+	for (qStudentNode* tmp = List; tmp != NULL; tmp = tmp->next) {
+		op << tmp->student.student_id <<;
+		op << tmp->student.dob;
+	}
+	op.close();
+}
+void ChangePassStudent(StudentNode* current, ofstream& op) {
 	while (1) {
 		string input_Pass;
 		cout << "Enter your current password: ";
@@ -223,3 +232,5 @@ void ChangePassStaff(StaffNode* current) {
 		}
 	}
 }
+void 
+//new session
