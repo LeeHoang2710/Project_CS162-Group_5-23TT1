@@ -1,36 +1,53 @@
-#include <iostream>
-#include "SFML\Graphics.hpp"
-
-using namespace sf;
-using namespace std;
+#include "view_function.h"
 
 int main()
 {
-    RenderWindow window(VideoMode(1080, 720), "SFML", Style::Default);
-    RectangleShape player(Vector2f(200.0f, 200.0f));
-    player.setFillColor(Color::Blue);
+    RenderWindow window;
+    window.create(VideoMode(1440, 960), "CS162-Project", Style::Default);
+    int page = 1;
+    bool is_staff = false;
 
-    while (window.isOpen())
+    while (page > 0 && window.isOpen())
     {
-        Event event;
-        while (window.pollEvent(event))
+        switch (page)
         {
-            switch (event.type)
-            {
-            case Event::Closed:
-                window.close();
-                break;
-            case Event::Resized:
-                cout << "New window width: " << event.size.width << " New window height: " << event.size.height << endl;
-                break;
-            }
+        case 1:
+            Scene1(window, page, is_staff);
+            break;
+        case 2:
+        {
+            bool see = false;
+            logIn(window, page, is_staff, see);
+            break;
+        }
+        case 3:
+        {
+            if (is_staff)
+                homeStaff(window, page);
+            /*else
+                homeStudent(window, page); */
+            break;
+        }
+        case 4:
+        {
+            Add(window, page, is_staff);
+            break;
+        }
+        case 19:
+        {
+            Other(window, page, is_staff);
+            break;
+        }
+        case 20:
+        {
+            changePassword(window, page, is_staff);
+            break;
         }
 
-        if(KeyBoard::isKeyPressed(Keyboard::Key::A)) player.m
-        window.clear();
-        window.draw(player);
-        window.display();
+        default:
+            break;
+        }
     }
 
-
+    return 0;
 }
