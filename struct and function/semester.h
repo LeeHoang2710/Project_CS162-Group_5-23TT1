@@ -1,13 +1,17 @@
 #pragma once
 #include "struct_and_library.h"
+#include "year_LeeHoang.h" //LeeHoang's Year functions
 
-void inputSemester(string sem_id, string start_date, string end_date, CourseNode* course_list);
+YearNode* importYearSemester(const string& filename, ifstream& fin);
+void exportYearSemester(YearNode* year_list, const string& filename, ofstream& fout);
+
+void inputSemester(string& sem_id, string& start_date, string& end_date);
 
 Semester createSemester(string sem_id, string start_date, string end_date, CourseNode* course_list);
-SemesterNode* initSemesterNode(Semester new_sem);
-void addSemesterNode(SemesterNode*& sem_list, Semester new_sem);
-void removeSemesterNode(SemesterNode*& sem_list, int sem_num);
-SemesterNode* searchSemesterNode(SemesterNode* sem_list, string year_id, int sem_num);
+SemesterNode* createSemesterNode(Semester new_sem);
+void addSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node);
+void removeSemesterNode(YearNode* year_list, string year_id, int sem_num);
+SemesterNode* searchSemesterNode(YearNode* year_list, string year_id, int sem_num);
 
-void importFileSemester();
-void exportFileSemester();
+void deleteYearList(YearNode*& year_list);
+void deleteSemesterList(SemesterNode*& sem_list);

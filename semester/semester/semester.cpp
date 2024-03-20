@@ -1,8 +1,92 @@
 #include "../semester.h"
 
-//Assuming users always input correctly
-//Missing menus
-//Missing "Enter 0 to go back"
+//string filename = "../database/semester.csv";
+YearNode* importYearSemester(const string& filename, ifstream& fin)
+{
+	YearNode* year_list = nullptr;
+	fin.open(filename);
+	if (!fin.is_open())
+	{
+		cout << "Cannot open " << filename << " to import school year and semester information." << endl;
+		fin.close();
+		return;
+	}
+
+	YearNode* currYear = nullptr;
+	SemesterNode* currSem = nullptr;
+	string line;
+	while (getline(fin, line))
+	{
+		istringstream ss(line);
+		//Process YearNode
+		string year_id;
+		getline(ss, year_id, ',');
+		if (!year_list)
+		{
+			year_list = initYearNode(createYear(year_id));
+			currYear = year_list;
+		}
+		else if (currYear->school_year.year_id != year_id)
+		{
+			currYear->next = initYearNode(createYear(year_id));
+			currYear = currYear->next;
+		}
+		//Process SemesterNode
+		if (!currYear->school_year.list_sem)
+		{
+			currYear->school_year.list_sem = new SemesterNode;
+			currSem = currYear->school_year.list_sem;
+		}
+		else
+		{
+			currSem->next = new SemesterNode;
+			currSem = currSem->next;
+		}
+
+		getline(ss, currSem->sem.semester_id, ',');
+		getline(ss, currSem->sem.start_date, ',');
+		getline(ss, currSem->sem.end_date, ',');
+	}
+
+	fin.close();
+	return year_list;
+}
+void exportYearSemester(YearNode* year_list, const string& filename, ofstream& fout)
+{
+	fout.open(filename);
+	if (!fout.is_open())
+	{
+		cout << "Cannot open " << filename << " to export school year and semester information." << endl;
+		fout.close();
+		return;
+	}
+
+	while (!year_list)
+	{
+		SemesterNode* currSem = year_list->school_year.list_sem;
+		while (!currSem)
+		{
+			fout << year_list->school_year.year_id << ","
+				<< currSem->sem.semester_id << ","
+				<< currSem->sem.start_date << ","
+				<< currSem->sem.end_date << "\n";
+			currSem = currSem->next;
+		}
+		year_list = year_list->next;
+	}
+}
+
+void inputSemester(string& sem_id, string& start_date, string& end_date)
+{
+	int sem_num;
+	cout << "Enter semester number (1, 2, or 3): ";
+	cin >> sem_num;
+	sem_id = "Semester " + to_string(sem_num);
+	cout << "Enter start date (dd/mm/yyyy): ";
+	cin >> start_date;
+	cout << "Enter end date (dd/mm/yyyy): ";
+	cin >> end_date;
+}
 
 Semester createSemester(string sem_id, string start_date, string end_date, CourseNode* course_list)
 {
@@ -13,65 +97,98 @@ Semester createSemester(string sem_id, string start_date, string end_date, Cours
 	sem.course_list = course_list;
 	return sem;
 }
-SemesterNode* initSemesterNode(Semester new_sem)
+SemesterNode* createSemesterNode(Semester new_sem)
 {
 	SemesterNode* newSemNode = new SemesterNode;
 	newSemNode->sem = new_sem;
 	return newSemNode;
 }
-void addSemesterNode(SemesterNode*& sem_list, Semester new_sem)
+void addSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 {
 	if (!sem_list)
-		sem_list = initSemesterNode(new_sem);
+		sem_list = new_sem_node;
 	else
 	{
 		SemesterNode* curr = sem_list;
 		while (curr->next)
 			curr = curr->next;
-		curr->next = initSemesterNode(new_sem);
+		curr->next = new_sem_node;
 	}
 }
-void removeSemesterNode(SemesterNode*& sem_list, int sem_num)
+void removeSemesterNode(YearNode* year_list, string year_id, int sem_num)
 {
-	if (!sem_list)
-		cout << "There are no semesters." << endl;
+	SemesterNode* semNode = searchSemesterNode(year_list, year_id, sem_num);
+	if (!semNode)
+	{
+		cout << "Semester does not exist." << endl;
+		return;
+	}
+
+	// Delete the course list inside the semester node
+	//deleteCourseList(semNode->sem.course_list);
+
+	// Find the prev semester node
+	YearNode* yearNode = searchYearNode(year_list, year_id);
+	if (yearNode->school_year.list_sem == semNode)
+		yearNode->school_year.list_sem = semNode->next;
 	else
 	{
-		string sem = "Semester " + sem_num;
-		if (sem_list->sem.semester_id == sem)
-		{
-			SemesterNode* temp = sem_list;
-			sem_list = sem_list->next;
-			//delete course list,...
-			CourseNode* curr = temp->sem.course_list;
-			while (curr)
-			{
-				CourseNode* tempC = curr;
-				curr = curr->next;
-				delete tempC;
-			}
-			delete temp;
-		}
-		else
-		{
-			SemesterNode* curr = sem_list->next;
-			while (curr->next->next && curr->next->sem.semester_id != sem)
-				curr = curr->next;
-			if (curr->next->sem.semester_id == sem)
-			{
-				SemesterNode* temp = curr->next;
-				curr->next = curr->next->next;
-				//delete course list,...
-				CourseNode* curr = temp->sem.course_list;
-				while (curr)
-				{
-					CourseNode* tempC = curr;
-					curr = curr->next;
-					delete tempC;
-				}
-				delete temp;
-			}
-
-		}
+		SemesterNode* curr = yearNode->school_year.list_sem;
+		while (curr->next != semNode)
+			curr = curr->next;
+		curr->next = semNode->next;
 	}
+
+	delete semNode;
+}
+SemesterNode* searchSemesterNode(YearNode* year_list, string year_id, int sem_num)
+{
+	YearNode* yearNode = searchYearNode(year_list, year_id);
+	if (!yearNode)
+		return nullptr;
+
+	SemesterNode* semNode = yearNode->school_year.list_sem;
+	if (!semNode)
+	{
+		cout << "There are no semesters in school year " << year_id << "." << endl;
+		return nullptr;
+	}
+
+	string sem_id = "Semester " + to_string(sem_num);
+	while (semNode)
+	{
+		if (semNode->sem.semester_id == sem_id)
+			return semNode;
+		semNode = semNode->next;
+	}
+
+	cout << sem_id << " does not exist in school year " << year_id << endl;
+	return nullptr;
+}
+
+void deleteYearList(YearNode*& year_list)
+{
+	YearNode* curr = year_list;
+	while (curr)
+	{
+		deleteSemesterList(curr->school_year.list_sem);
+		YearNode* temp = curr;
+		curr = curr->next;
+		delete temp;
+	}
+	year_list = nullptr;
+}
+void deleteSemesterList(SemesterNode*& sem_list)
+{
+	SemesterNode* curr = sem_list;
+	while (curr)
+	{
+		// Delete the course list inside the semester node
+		//deleteCourseList(curr->sem.course_list);
+
+		SemesterNode* temp = curr;
+		curr = curr->next;
+		delete temp;
+	}
+	sem_list = nullptr;
 }

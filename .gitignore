@@ -1,10 +1,8 @@
 .vscode
 .vs
 debug
-semester.vcxproj
-semester.vcxproj.filters
-semester.vcxproj.user
-.vcxproj
-.filters
-.user
-test.cpp
+semester/semester/test.cpp
+semester/semester/outputTest.txt
+semester/semester/semester.vcxproj
+semester/semester/semester.vcxproj.filters
+semester/semester/semester.vcxproj.user
