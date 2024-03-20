@@ -1,6 +1,8 @@
 #include "../semester.h"
 
-//string filename = "../database/semester.csv";
+//database/semester.csv
+//ignore C6011 and C28182 warnings
+
 YearNode* importYearSemester(const string& filename, ifstream& fin)
 {
 	YearNode* year_list = nullptr;
@@ -9,7 +11,7 @@ YearNode* importYearSemester(const string& filename, ifstream& fin)
 	{
 		cout << "Cannot open " << filename << " to import school year and semester information." << endl;
 		fin.close();
-		return;
+		return nullptr;
 	}
 
 	YearNode* currYear = nullptr;
@@ -37,7 +39,7 @@ YearNode* importYearSemester(const string& filename, ifstream& fin)
 			currYear->school_year.list_sem = new SemesterNode;
 			currSem = currYear->school_year.list_sem;
 		}
-		else
+		else if (currSem)
 		{
 			currSem->next = new SemesterNode;
 			currSem = currSem->next;
@@ -61,19 +63,22 @@ void exportYearSemester(YearNode* year_list, const string& filename, ofstream& f
 		return;
 	}
 
-	while (!year_list)
+	while (year_list)
 	{
 		SemesterNode* currSem = year_list->school_year.list_sem;
-		while (!currSem)
+		while (currSem)
 		{
 			fout << year_list->school_year.year_id << ","
 				<< currSem->sem.semester_id << ","
 				<< currSem->sem.start_date << ","
-				<< currSem->sem.end_date << "\n";
+				<< currSem->sem.end_date << endl;
 			currSem = currSem->next;
 		}
+
 		year_list = year_list->next;
 	}
+	fout.flush();
+	fout.close();
 }
 
 void inputSemester(string& sem_id, string& start_date, string& end_date)
@@ -88,13 +93,12 @@ void inputSemester(string& sem_id, string& start_date, string& end_date)
 	cin >> end_date;
 }
 
-Semester createSemester(string sem_id, string start_date, string end_date, CourseNode* course_list)
+Semester createSemester(string sem_id, string start_date, string end_date)
 {
 	Semester sem;
 	sem.semester_id = sem_id;
 	sem.start_date = start_date;
 	sem.end_date = end_date;
-	sem.course_list = course_list;
 	return sem;
 }
 SemesterNode* createSemesterNode(Semester new_sem)
@@ -112,6 +116,7 @@ void addSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 		SemesterNode* curr = sem_list;
 		while (curr->next)
 			curr = curr->next;
+
 		curr->next = new_sem_node;
 	}
 }
@@ -136,6 +141,7 @@ void removeSemesterNode(YearNode* year_list, string year_id, int sem_num)
 		SemesterNode* curr = yearNode->school_year.list_sem;
 		while (curr->next != semNode)
 			curr = curr->next;
+
 		curr->next = semNode->next;
 	}
 
@@ -159,6 +165,7 @@ SemesterNode* searchSemesterNode(YearNode* year_list, string year_id, int sem_nu
 	{
 		if (semNode->sem.semester_id == sem_id)
 			return semNode;
+
 		semNode = semNode->next;
 	}
 
@@ -176,6 +183,7 @@ void deleteYearList(YearNode*& year_list)
 		curr = curr->next;
 		delete temp;
 	}
+
 	year_list = nullptr;
 }
 void deleteSemesterList(SemesterNode*& sem_list)
@@ -185,10 +193,10 @@ void deleteSemesterList(SemesterNode*& sem_list)
 	{
 		// Delete the course list inside the semester node
 		//deleteCourseList(curr->sem.course_list);
-
 		SemesterNode* temp = curr;
 		curr = curr->next;
 		delete temp;
 	}
+
 	sem_list = nullptr;
 }
