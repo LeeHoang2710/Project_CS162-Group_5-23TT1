@@ -107,7 +107,26 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
     }
     file.close();
 }
-
+bool readStudentFromTerminal(StudentNode*& liststu) {
+    Student person;
+    string line;
+    getline(cin, line);
+    stringstream ss(line);
+    string number;
+    getline(ss, number, ',');
+    person.num = stoi(number);
+    if (person.num == 0) return false;
+    getline(ss, person.student_id, ',');
+    getline(ss, person.first_name, ',');
+    getline(ss, person.last_name, ',');
+    getline(ss, number, ',');
+    person.gender = stoi(number);
+    getline(ss, person.dob, ',');
+    getline(ss, person.social_id, ',');
+    getline(ss, person.student_class, ',');
+    addNewStudentNode(liststu, person);
+    return true;
+}
 void displayStudent(StudentNode* StuHead) {
     if (StuHead == NULL) return;
     while (StuHead != NULL) {

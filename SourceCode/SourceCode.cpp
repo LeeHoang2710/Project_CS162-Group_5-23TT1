@@ -43,7 +43,18 @@ void InputCourse(CourseNode*& head ) {
 	cin >> cs.teaching_session[0].session_no;
 	ifstream ip;
 	StudentNode* liststu = NULL;
-	readStudentFromFile(ip, liststu);
+	cout << "enter 1 if your want to input from file, enter 0 if your want to input by hand";
+	bool choice;
+	cin >> choice;
+	cin.ignore();
+	if (choice==1) {
+		readStudentFromFile(ip, liststu);
+	}
+	else {
+		cout << "enter info of student you want to add (enter 0 to stop) " << endl;
+		while (readStudentFromTerminal(liststu)) {
+		}
+	}
 	addNewCourseNode(head, cs, liststu);
 }
 void OutputCourse(Course cs) {
