@@ -108,6 +108,25 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
     file.close();
 }
 
+void displayStudent(StudentNode* StuHead) {
+    if (StuHead == NULL) return;
+    while (StuHead != NULL) {
+        cout << StuHead->student.num << ", ";
+        cout << StuHead->student.student_id << ", ";
+        cout << StuHead->student.first_name << " ";
+        cout << StuHead->student.last_name << ", ";
+        if (StuHead->student.gender == 0) {
+            cout << "male, ";
+        }
+        else cout << "female, ";
+        cout << StuHead->student.dob << ", ";
+        cout << StuHead->student.social_id << ", ";
+        cout << StuHead->student.student_class << "\n";
+        StuHead = StuHead->next;
+    }
+    return;
+}
+;
 void exportStudentToFile(ofstream &file, StudentNode *&list_student)
 {
     file.open("../database/output.csv");
@@ -126,7 +145,7 @@ void exportStudentToFile(ofstream &file, StudentNode *&list_student)
             {
                 Student person = list_student->student;
                 file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
-                file << "," << person.social_id << "," << person.password << "," << person.student_class << endl;
+                file << "," << person.social_id << "," << person.student_class << endl;
                 list_student = list_student->next;
             }
         }

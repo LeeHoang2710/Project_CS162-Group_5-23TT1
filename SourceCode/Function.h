@@ -4,7 +4,7 @@ CourseNode* initCourseNode(Course new_course, StudentNode* liststu);
 void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu);
 void InputCourse(CourseNode*& head);
 void OutputCourse(Course cs);
-void display(CourseNode* CourseHead);
+void displayCourse(CourseNode* CourseHead);
 //Login Session
 void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip); //These 2 fucntions will load password file to a linked list
 void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip);

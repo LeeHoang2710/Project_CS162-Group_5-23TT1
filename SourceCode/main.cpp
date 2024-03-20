@@ -6,7 +6,7 @@ int main() {
 	InputCourse(cshead);
 	//AddStudent2Course(cshead, NewCs, ip);
 	InputCourse(cshead);
-	display(cshead);
+	displayCourse(cshead);
 	/*bool role;
 	cout << "enter 0 if staff, 1 if student: ";
 	cin >> role;

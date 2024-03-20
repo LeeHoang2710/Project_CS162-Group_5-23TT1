@@ -47,7 +47,6 @@ void InputCourse(CourseNode*& head ) {
 	addNewCourseNode(head, cs, liststu);
 }
 void OutputCourse(Course cs) {
-	cout << "-----VIEWING INFORMATION------" << endl;
 	cout << cs.course_id << endl;
 	cout << cs.course_name << endl;
 	cout << cs.teacher_name << endl;
@@ -56,31 +55,23 @@ void OutputCourse(Course cs) {
 	cout << "Sesion: "<< cs.teaching_session[0].session_no << endl;
 
 }
-void display(CourseNode* CourseHead) {
-	if (CourseHead == NULL) {
-		cout << "dicl";
-		return;
-	}
+void displayCourse(CourseNode* CourseHead) {
 	for (CourseNode* tmp = CourseHead; tmp != NULL; tmp = tmp->next) {
+		cout << "-----------" << endl;
 		OutputCourse(tmp->course);
 		cout << "Course students: " << endl;
-		StudentNode* tmpstu = tmp->student_list;
-		while (tmpstu != NULL) {
-			cout << tmpstu->student.num << ", ";
-			cout << tmpstu->student.student_id << ", ";
-			cout << tmpstu->student.first_name << " ";
-			cout << tmpstu->student.last_name << ", ";
-			if (tmpstu->student.gender==0) {
-				cout << "male, ";
-			}
-			else cout << "female, ";
-			cout << tmpstu->student.dob << ", ";
-			cout << tmpstu->student.social_id << ", ";
-			cout << tmpstu->student.student_class << "\n";
-			tmpstu = tmpstu->next;
-		}
+		displayStudent(tmp->student_list);
 	}
 }
+
+
+
+
+
+
+
+
+
 //Login session
 void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip) {
 	StudentNode* cur=StuPass;
