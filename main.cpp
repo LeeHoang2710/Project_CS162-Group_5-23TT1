@@ -30,7 +30,7 @@ int main()
         }
         case 4:
         {
-            Add(window, page, is_staff);
+            Year(window, page, is_staff);
             break;
         }
         case 19:

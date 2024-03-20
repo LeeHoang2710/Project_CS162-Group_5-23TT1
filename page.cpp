@@ -1,45 +1,5 @@
 #include "view_function.h"
 
-Object createObject(string input, float x, float y)
-{
-    Object icon;
-    icon.text.loadFromFile(input);
-    icon.draw.setTexture(icon.text);
-    icon.draw.setPosition(x, y);
-    icon.bound = icon.draw.getGlobalBounds();
-    icon.text.setSmooth(true);
-    // The global bounds are the smallest rectangle that contains the entire sprite, in global coordinate(relative to the window, not the sprite)
-    return icon;
-}
-
-Object createBackGround(string input)
-{
-    Object me;
-    me.text.loadFromFile(input);
-    me.draw.setTexture(me.text);
-    me.bound = me.draw.getGlobalBounds();
-    me.text.setSmooth(true);
-    return me;
-}
-
-Info createText(string str, float x, float y)
-{
-    Info input;
-    input.font.loadFromFile("Arial.ttf");
-    input.txt.setFont(input.font);
-    input.txt.setStyle(Text::Bold);
-    input.txt.setCharacterSize(30);
-    input.txt.setFillColor(Color::Black);
-    input.txt.setPosition(x, y);
-    input.bound = input.txt.getGlobalBounds();
-    return input;
-}
-
-bool isHere(FloatRect &bound, Vector2f &mouse)
-{
-    return bound.contains(mouse);
-}
-
 void Scene1(RenderWindow &window, int &page, bool &is_staff)
 {
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -88,6 +48,7 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
 
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
 {
+
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page2/scene2-bg.png", 180, 120);
@@ -160,13 +121,18 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
                 {
                     if (event.text.unicode < 128)
                     {
-                        if (event.text.unicode == 8 && !username.empty()) // backspace character
+                        if (event.text.unicode == 8 && !username.empty())
+                        {
+                            // backspace character
                             username.pop_back();
+                        }
                         else if (event.text.unicode == 13) // enter character
                             isTypingUsername = false;
                         else if (event.text.unicode >= 32)
+                        {
                             username += static_cast<char>(event.text.unicode);
-                        inputUsername.txt.setString(username);
+                        }
+                        inputUsername.txt.setString(username + '_');
                     }
                 }
                 else if (isTypingPassword)
@@ -189,9 +155,9 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
                             hidden_pass += '*';
                         }
                         if (see)
-                            inputPassword.txt.setString(password);
+                            inputPassword.txt.setString(password + '_');
                         else
-                            inputPassword.txt.setString(hidden_pass);
+                            inputPassword.txt.setString(hidden_pass + '_');
                     }
                 }
                 break;
@@ -219,11 +185,11 @@ void homeStaff(RenderWindow &window, int &page)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object o1 = createObject("./image/page3-staff/homeStaff-bg.png", 180, 120);
-    Object o2 = createObject("./image/page3-staff/add.png", 230, 345);
-    Object o3 = createObject("./image/page3-staff/view.png", 230, 456);
-    Object o4 = createObject("./image/page3-staff/update.png", 230, 571);
-    Object o5 = createObject("./image/page3-staff/other.png", 230, 686);
+    Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/home/year.png", 235, 348);
+    Object o3 = createObject("./image/page3-staff/home/course.png", 235, 462);
+    Object o4 = createObject("./image/page3-staff/home/class.png", 235, 580);
+    Object o5 = createObject("./image/page3-staff/home/other.png", 235, 698);
     while (window.isOpen() && page == 3)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -241,6 +207,10 @@ void homeStaff(RenderWindow &window, int &page)
                     if (isHere(o2.bound, mouse))
                     {
                         page = 4;
+                    }
+                    if (isHere(o3.bound, mouse))
+                    {
+                        page = 10;
                     }
                     if (isHere(o5.bound, mouse))
                     {
@@ -262,18 +232,22 @@ void homeStaff(RenderWindow &window, int &page)
     }
 }
 
-void Add(RenderWindow &window, int &page, bool is_staff)
+void Year(RenderWindow &window, int &page, bool is_staff)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
-    Object o1 = createObject("./image/page3-staff/add/add-bg.png", 180, 120);
-    Object o2 = createObject("./image/page3-staff/add/school-year.png", 230, 339);
-    Object o3 = createObject("./image/page3-staff/add/semester.png", 230, 442);
-    Object o4 = createObject("./image/page3-staff/add/course.png", 230, 551);
-    Object o5 = createObject("./image/page3-staff/add/class.png", 230, 661);
-    Object o6 = createObject("./image/page3-staff/add/infor.png", 230, 770);
+    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object o1 = createObject("./image/page3-staff/school_year/year-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/school_year/2020.png", 235, 348);
+    Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 462);
+    Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 580);
+    Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
+    Object add = createObject("./image/page3-staff/school_year/create.png", 263, 259);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    bool add_year = false;
     while (window.isOpen() && page == 4)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -292,26 +266,30 @@ void Add(RenderWindow &window, int &page, bool is_staff)
                         page = 5;
                     else if (isHere(b.bound, mouse))
                         page = 3;
-                    /*else if (isHere(o3.bound, mouse))
-                    {
-                        is_staff = false;
-                        page = 2;
-                    }
-                }*/
+                    else if (isHere(add.bound, mouse))
+                        add_year = true;
+                    else if (isHere(menu.bound, mouse))
+                        page = 3;
                 }
-                break;
             }
+            break;
             }
+
             window.clear();
             window.draw(screen.draw);
             window.draw(o1.draw);
             window.draw(o2.draw);
             window.draw(o3.draw);
             window.draw(o4.draw);
-            window.draw(o5.draw);
-            window.draw(o6.draw);
+
+            window.draw(add.draw);
+            if (add_year)
+                window.draw(o5.draw);
             window.draw(f.draw);
             window.draw(b.draw);
+            window.draw(prev.draw);
+            window.draw(next.draw);
+            window.draw(menu.draw);
             window.display();
         }
     }
@@ -327,6 +305,7 @@ void Other(RenderWindow &window, int &page, bool is_staff)
     Object o2 = createObject("./image/page3-staff/other/log-out.png", 230, 354);
     Object o3 = createObject("./image/page3-staff/other/change-pass.png", 230, 465);
     Object o4 = createObject("./image/page3-staff/other/profile.png", 230, 576);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
 
     while (window.isOpen() && page == 19)
     {
@@ -363,6 +342,7 @@ void Other(RenderWindow &window, int &page, bool is_staff)
             window.draw(o4.draw);
             window.draw(f.draw);
             window.draw(b.draw);
+            window.draw(menu.draw);
             window.display();
         }
     }
@@ -486,9 +466,9 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
                             hidden_old += '*';
                         }
                         if (seeOld)
-                            oldPassword.txt.setString(old_pass);
+                            oldPassword.txt.setString(old_pass + '_');
                         else
-                            oldPassword.txt.setString(hidden_old);
+                            oldPassword.txt.setString(hidden_old + '_');
                     }
                 }
                 else if (isTypingNew)
@@ -511,9 +491,9 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
                             hidden_new += '*';
                         }
                         if (seeNew)
-                            newPassword.txt.setString(new_pass);
+                            newPassword.txt.setString(new_pass + '_');
                         else
-                            newPassword.txt.setString(hidden_new);
+                            newPassword.txt.setString(hidden_new + '_');
                     }
                 }
                 break;
