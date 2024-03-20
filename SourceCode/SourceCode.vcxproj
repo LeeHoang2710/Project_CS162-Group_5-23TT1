@@ -127,18 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\function_student.cpp" />
+    <ClCompile Include="function_student.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SourceCode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\struct and function\struct_and_library.h" />
+    <ClInclude Include="..\struct and function\student.h" />
     <ClInclude Include="Function.h" />
-    <ClInclude Include="student.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
     <None Include="..\database\Staff_Password.csv" />
+    <None Include="..\database\student.csv" />
     <None Include="..\database\Students_Password.csv" />
     <None Include="..\database\testcourse.csv" />
   </ItemGroup>

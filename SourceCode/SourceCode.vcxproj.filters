@@ -21,7 +21,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\function_student.cpp">
+    <ClCompile Include="function_student.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="..\struct and function\struct_and_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="student.h">
+    <ClInclude Include="..\struct and function\student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,6 +47,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\database\Staff_Password.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\database\student.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

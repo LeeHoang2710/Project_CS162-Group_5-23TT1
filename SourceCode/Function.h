@@ -1,8 +1,9 @@
 #pragma once
 #include "C:\Users\LEGION\Desktop\branches\Project_CS162\struct and function\struct_and_library.h"
-void InputCourse(Course& cs, ifstream& ip);
+CourseNode* initCourseNode(Course new_course, StudentNode* liststu);
+void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu);
+void InputCourse(CourseNode*& head);
 void OutputCourse(Course cs);
-void AddStudent2Course(CourseNode*& csnode, Course cs, ifstream& ip);
 void display(CourseNode* CourseHead);
 //Login Session
 void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip); //These 2 fucntions will load password file to a linked list

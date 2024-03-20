@@ -1,7 +1,7 @@
-#include "../struct_and_function/student.h"
+#include "../struct and function/student.h"
 using namespace std;
 
-Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class)
+Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_class)
 {
     Student person;
     person.num = p_num;
@@ -11,7 +11,6 @@ Student createStudent(int p_num, string p_student_id, string p_first, string p_l
     person.gender = p_gender;
     person.dob = p_dob;
     person.social_id = p_social_id;
-    person.password = p_pass;
     person.student_class = p_class;
     return person;
 }
@@ -101,7 +100,6 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
             person.gender = stoi(number);
             getline(ss, person.dob, ',');
             getline(ss, person.social_id, ',');
-            getline(ss, person.password, ',');
             getline(ss, person.student_class, ',');
 
             addNewStudentNode(list_student, person);
@@ -136,14 +134,3 @@ void exportStudentToFile(ofstream &file, StudentNode *&list_student)
     file.close();
 }
 
-int main()
-{
-    cout << "Hello world";
-    ifstream fin;
-    ofstream fout;
-    StudentNode *ditmethangNam = nullptr;
-    readStudentFromFile(fin, ditmethangNam);
-    exportStudentToFile(fout, ditmethangNam);
-
-    return 0;
-}

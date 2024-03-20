@@ -1,19 +1,20 @@
 #include "C:\Users\LEGION\Desktop\branches\Project_CS162\struct and function\struct_and_library.h"
 #include "Function.h"
+#include "../struct and function/student.h"
 #include <fstream>
 #include <iostream>
-CourseNode* initCourseNode(Course new_course)
+CourseNode* initCourseNode(Course new_course, StudentNode* liststu)
 {
 	CourseNode* new_course_node = new CourseNode;
 	new_course_node->next = NULL;
 	new_course_node->course = new_course;
+	new_course_node->student_list = liststu;
 	return new_course_node;
 }
-void addNewCourseNode(CourseNode*& head, Course cs) {
+void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu) {
 	//semester id 
 	// year id
-	InputCourse(cs);
-	CourseNode* new_course_node = initCourseNode(cs);
+	CourseNode* new_course_node = initCourseNode(cs, liststu);
 	if (!head)
 		head = new_course_node;
 	else {
@@ -24,8 +25,8 @@ void addNewCourseNode(CourseNode*& head, Course cs) {
 		list_course->next = new_course_node;
 	}
 }
-
-void InputCourse(Course& cs) {
+void InputCourse(CourseNode*& head ) {
+	Course cs;
 	cout << "Course id: ";
 	cin >> cs.course_id; 
 	cout << "Course name: ";
@@ -40,56 +41,10 @@ void InputCourse(Course& cs) {
 	cin >> cs.teaching_session[0].day_of_the_week;
 	cout << "Session_no (time): ";//this should output the session to choose
 	cin >> cs.teaching_session[0].session_no;
-}
-void AddStudent2Course(CourseNode*& csnode, Course cs,ifstream& ip) {
-	ip.open("../database/testcourse.csv");
-	if (csnode == NULL) {
-		csnode = new CourseNode();
-		csnode->next = NULL;
-		csnode->course = cs;
-	}
-	//input student list from file
-	StudentNode* cur = csnode->student_list;
-	Student tmp;
-	ip >> tmp.num;
-	ip.ignore();
-	getline(ip, tmp.student_id, ',');
-	getline(ip, tmp.first_name,',');
-	getline(ip, tmp.last_name,',');
-	ip >> tmp.gender;
-	ip.ignore();
-	getline(ip, tmp.dob,',');
-	getline(ip, tmp.social_id,',');
-	getline(ip, tmp.password, ',');
-	getline(ip, tmp.student_class,'\n');
-	while(1) {
-		if (csnode->student_list == nullptr) {
-			csnode->student_list = new StudentNode;
-			cur = csnode->student_list;
-		}
-		else {
-			cur->next = new StudentNode();
-			cur = cur->next;
-		}
-		cur->student = tmp;
-		cur->next = NULL;
-		if (ip.eof()) {
-			ip.close();
-			return;
-		}
-		ip >> tmp.num;
-		ip.ignore();
-		getline(ip, tmp.student_id, ',');
-		getline(ip, tmp.first_name, ',');
-		getline(ip, tmp.last_name, ',');
-		ip >> tmp.gender;
-		ip.ignore();
-		getline(ip, tmp.dob, ',');
-		getline(ip, tmp.social_id, ',');
-		getline(ip, tmp.password, ',');
-		getline(ip, tmp.student_class, '\n');
-	}
-	ip.close();
+	ifstream ip;
+	StudentNode* liststu = NULL;
+	readStudentFromFile(ip, liststu);
+	addNewCourseNode(head, cs, liststu);
 }
 void OutputCourse(Course cs) {
 	cout << "-----VIEWING INFORMATION------" << endl;
@@ -102,6 +57,10 @@ void OutputCourse(Course cs) {
 
 }
 void display(CourseNode* CourseHead) {
+	if (CourseHead == NULL) {
+		cout << "dicl";
+		return;
+	}
 	for (CourseNode* tmp = CourseHead; tmp != NULL; tmp = tmp->next) {
 		OutputCourse(tmp->course);
 		cout << "Course students: " << endl;
@@ -117,7 +76,6 @@ void display(CourseNode* CourseHead) {
 			else cout << "female, ";
 			cout << tmpstu->student.dob << ", ";
 			cout << tmpstu->student.social_id << ", ";
-			cout << tmpstu->student.password << ", ";
 			cout << tmpstu->student.student_class << "\n";
 			tmpstu = tmpstu->next;
 		}

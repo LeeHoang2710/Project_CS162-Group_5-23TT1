@@ -1,12 +1,11 @@
 #pragma once
 #include "Function.h"
-
+#include "../struct and function/student.h"
 int main() {
-	Course NewCs;
 	CourseNode* cshead=NULL;
-	ifstream ip;
-	InputCourse(NewCs, ip);
-	AddStudent2Course(cshead, NewCs, ip);
+	InputCourse(cshead);
+	//AddStudent2Course(cshead, NewCs, ip);
+	InputCourse(cshead);
 	display(cshead);
 	/*bool role;
 	cout << "enter 0 if staff, 1 if student: ";
