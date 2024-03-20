@@ -2,6 +2,7 @@
 .vs
 debug
 semester/semester/test.cpp
+semester/semester/copilot.cpp
 outputTest.txt
 semester/semester/semester.vcxproj
 semester/semester/semester.vcxproj.filters
