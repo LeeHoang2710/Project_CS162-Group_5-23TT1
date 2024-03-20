@@ -84,7 +84,7 @@ struct Course
 	string teacher_name;
 	int num_credit;
 	int max_students = 50;
-	Session teaching_session[2];
+	Session teaching_session;
 };
 struct CourseNode
 {
