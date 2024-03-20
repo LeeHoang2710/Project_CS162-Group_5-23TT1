@@ -2,13 +2,13 @@
 #include "Function.h"
 
 int main() {
-	/*Course NewCs;
+	Course NewCs;
 	CourseNode* cshead=NULL;
 	ifstream ip;
 	InputCourse(NewCs, ip);
 	AddStudent2Course(cshead, NewCs, ip);
-	display(cshead);*/
-	bool role;
+	display(cshead);
+	/*bool role;
 	cout << "enter 0 if staff, 1 if student: ";
 	cin >> role;
 	if (role) {
@@ -48,5 +48,5 @@ int main() {
 			UpdateStaffPassFile(StaffPass, op);
 		}
 		StaffPassList.close();
-	}
+	}*/
 }

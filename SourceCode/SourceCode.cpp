@@ -2,7 +2,30 @@
 #include "Function.h"
 #include <fstream>
 #include <iostream>
-void InputCourse(Course& cs, ifstream& ip) {
+CourseNode* initCourseNode(Course new_course)
+{
+	CourseNode* new_course_node = new CourseNode;
+	new_course_node->next = NULL;
+	new_course_node->course = new_course;
+	return new_course_node;
+}
+void addNewCourseNode(CourseNode*& head, Course cs) {
+	//semester id 
+	// year id
+	InputCourse(cs);
+	CourseNode* new_course_node = initCourseNode(cs);
+	if (!head)
+		head = new_course_node;
+	else {
+		CourseNode* list_course = head;
+		while (list_course->next) {
+			list_course = list_course->next;
+		}
+		list_course->next = new_course_node;
+	}
+}
+
+void InputCourse(Course& cs) {
 	cout << "Course id: ";
 	cin >> cs.course_id; 
 	cout << "Course name: ";

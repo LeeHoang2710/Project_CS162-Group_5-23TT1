@@ -76,6 +76,11 @@ struct MyCourse
     string head_teacher;
     StudentNode *student_list = nullptr;
 };
+struct Class {
+    string class_id;
+    string head_teacher;
+    StudentNode* student_list = nullptr;
+};
 struct ClassNode
 {
     Class my_class;
@@ -120,12 +125,4 @@ struct StudentNode
 {
     Student student;
     StudentNode *next;
-};
-
-struct Score
-{
-    float process = 0.0f;
-    float midterm = 0.0f;
-    float final = 0.0f;
-    float overall = 0.0f;
 };
