@@ -101,15 +101,15 @@ Semester createSemester(string sem_id, string start_date, string end_date)
 	sem.end_date = end_date;
 	return sem;
 }
-void addCourseListToSemester(SemesterNode* semNode, CourseNode* course_list)
-{
-	semNode->sem.course_list = course_list;
-}
 SemesterNode* createSemesterNode(Semester new_sem)
 {
 	SemesterNode* newSemNode = new SemesterNode;
 	newSemNode->sem = new_sem;
 	return newSemNode;
+}
+void addCourseListToSemester(SemesterNode* semNode, CourseNode* course_list)
+{
+	semNode->sem.course_list = course_list;
 }
 void addSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 {

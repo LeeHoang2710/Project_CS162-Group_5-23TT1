@@ -1,6 +1,6 @@
 #include "../session.h"
 
-string formatDOTW(int d)
+string itosDOTW(int d)
 {
 	switch (d)
 	{
@@ -20,7 +20,7 @@ string formatDOTW(int d)
 		return "invalid day";
 	}
 }
-string formatSessionNo(int s)
+string itosSessionNo(int s)
 {
 	switch (s)
 	{
@@ -36,6 +36,26 @@ string formatSessionNo(int s)
 		return "invalid session";
 	}
 }
+
+int stoiDOTW(string d)
+{
+	if (d == "MON") return 2;
+	if (d == "TUE") return 3;
+	if (d == "WED") return 4;
+	if (d == "THU") return 5;
+	if (d == "FRI") return 6;
+	if (d == "SAT") return 7;
+	return -1;
+}
+int stoiSessionNo(string s)
+{
+	if (s == "S1 (07:30)") return 1;
+	if (s == "S2 (09:30)") return 2;
+	if (s == "S3 (13:30)") return 3;
+	if (s == "S4 (15:30)") return 4;
+	return -1;
+}
+
 void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofstream& fout)
 {
 	fout.open(filename);
@@ -54,8 +74,10 @@ void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofs
 			<< course->teacher_name << ","
 			<< course->num_credit << ","
 			<< course->max_students << ","
-			<< formatDOTW(course->teaching_session.day_of_the_week) << ","
-			<< formatSessionNo(course->teaching_session.session_no) << endl;
+			<< itosDOTW(course->teaching_session.day_of_the_week) << ","
+			<< itosSessionNo(course->teaching_session.session_no) << endl;
 		course_list = course_list->next;
 	}
+
+	fout.close();
 }
