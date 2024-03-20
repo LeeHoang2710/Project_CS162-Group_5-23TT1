@@ -129,18 +129,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="copilot.cpp" />
     <ClCompile Include="semester.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="year_LeeHoang.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\struct and function\semester.h" />
     <ClInclude Include="..\..\struct and function\struct_and_library.h" />
+    <ClInclude Include="..\..\struct and function\year_LeeHoang.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\database\class.csv" />
     <None Include="..\..\database\course.csv" />
-    <None Include="..\..\database\registration.csv" />
+    <None Include="..\..\database\result.csv" />
+    <None Include="..\..\database\semester.csv" />
     <None Include="..\..\database\staff_list.csv" />
+    <None Include="..\..\database\staff_password.csv" />
+    <None Include="..\..\database\student.csv" />
+    <None Include="..\..\database\student_password.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\outputTest.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
