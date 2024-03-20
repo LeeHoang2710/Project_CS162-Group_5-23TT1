@@ -40,13 +40,14 @@ int main()
 						cout << "2. Create one semester.\n";
 						cout << "3. Add one course to currrent semester.\n";
 						cout << "Update CSV file.\n";
+						cin>>p;
 					}
 				}
 				else if (m == 4) {
-					int m;
+					int p;
 					cout << "1. Add one school year.\n";
 					cout << "2. Add ona class.\n";
-					cin >> m;
+					cin >> p;
 				}
 				else if (m == 5) {
 
