@@ -25,7 +25,6 @@ struct SemesterNode;
 struct Year;
 struct YearNode;
 
-
 struct Score
 {
 	float process = 0.0f;
