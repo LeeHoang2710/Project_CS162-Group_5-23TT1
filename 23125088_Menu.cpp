@@ -41,13 +41,20 @@ int main()
 						cout << "3. Add one course to currrent semester.\n";
 						cout << "Update CSV file.\n";
 						cin>>p;
+                                                if(p==1)
+                                                      break;
 					}
 				}
 				else if (m == 4) {
 					int p;
-					cout << "1. Add one school year.\n";
-					cout << "2. Add ona class.\n";
-					cin >> p;
+					while(1){
+                                               cout<<"1. Go back.\n";
+					       cout << "2. Add one school year.\n";
+					       cout << "3. Add ona class.\n";
+					       cin >> p;
+                                               if(p==1)
+                                                     break;
+					}
 				}
 				else if (m == 5) {
 
