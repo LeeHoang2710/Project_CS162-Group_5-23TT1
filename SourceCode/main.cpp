@@ -2,12 +2,12 @@
 #include "Function.h"
 #include "../struct and function/student.h"
 int main() {
-	CourseNode* cshead=NULL;
-	InputCourse(cshead);
-	//AddStudent2Course(cshead, NewCs, ip);
-	InputCourse(cshead);
-	displayCourse(cshead);
-	/*bool role;
+	//CourseNode* cshead=NULL;
+	//InputCourse(cshead);
+	////AddStudent2Course(cshead, NewCs, ip);
+	//InputCourse(cshead);
+	//displayCourse(cshead);
+	bool role;
 	cout << "enter 0 if staff, 1 if student: ";
 	cin >> role;
 	if (role) {
@@ -47,5 +47,5 @@ int main() {
 			UpdateStaffPassFile(StaffPass, op);
 		}
 		StaffPassList.close();
-	}*/
+	}
 }
