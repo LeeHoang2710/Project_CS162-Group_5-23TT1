@@ -1,9 +1,6 @@
-#include "C:\Users\LEGION\Desktop\branches\Project_CS162\struct and function\struct_and_library.h"
-#include "Function.h"
+#include "../struct and function/struct_and_library.h"
+#include "../struct and function/course.h"
 #include "../struct and function/student.h"
-#include <fstream>
-#include <iostream>
-#include <unordered_map>
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session) {
 	Course tmp;
 	tmp.course_id = course_id;

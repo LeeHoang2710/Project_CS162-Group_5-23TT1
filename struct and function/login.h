@@ -1,14 +1,4 @@
 #pragma once
-#include "C:\Users\LEGION\Desktop\branches\Project_CS162\struct and function\struct_and_library.h"
-CourseNode* initCourseNode(Course new_course, StudentNode* liststu);
-void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu);
-void InputCourse(CourseNode*& head);
-void OutputCourse(Course cs);
-void displayCourse(CourseNode* CourseHead);
-CourseNode* findcourse(CourseNode* CourseHead, string course_find); // it has to update the list everytime the program no need to 
-void updatecourse(CourseNode* CourseHead, string updateCourse); // use findcourse above
-void deletecourse(CourseNode* CourseHead, string delCourse); // usefindcourse above
-//Login Session
 void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip); //These 2 fucntions will load password file to a linked list
 void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip);
 void LoginForStudent(StudentNode* StuList, string& onstatus_ID, StudentNode*& ChangeStuPass); // 1st parameter is the linked list, 2nd parameter is the ID of student who is onl

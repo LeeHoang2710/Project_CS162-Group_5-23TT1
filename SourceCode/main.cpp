@@ -1,6 +1,7 @@
 #pragma once
-#include "Function.h"
+#include "../struct and function/course.h"
 #include "../struct and function/student.h"
+#include "../struct and function/login.h"
 int main() {
 	//CourseNode* cshead=NULL;
 	//InputCourse(cshead);

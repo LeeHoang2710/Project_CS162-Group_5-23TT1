@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceCode.cpp">
+    <ClCompile Include="Course_function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -24,17 +24,9 @@
     <ClCompile Include="function_student.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Function.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\struct and function\struct_and_library.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\struct and function\student.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="Login.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\testcourse.csv">
@@ -52,5 +44,16 @@
     <None Include="..\database\student.csv">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\struct and function\course.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\struct and function\login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\struct and function\student.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

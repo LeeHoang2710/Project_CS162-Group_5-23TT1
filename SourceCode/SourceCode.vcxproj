@@ -128,13 +128,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="function_student.cpp" />
+    <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SourceCode.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\struct and function\struct_and_library.h" />
-    <ClInclude Include="..\struct and function\student.h" />
-    <ClInclude Include="Function.h" />
+    <ClCompile Include="Course_function.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
@@ -142,6 +138,11 @@
     <None Include="..\database\student.csv" />
     <None Include="..\database\Students_Password.csv" />
     <None Include="..\database\testcourse.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\struct and function\course.h" />
+    <ClInclude Include="..\struct and function\login.h" />
+    <ClInclude Include="..\struct and function\student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
