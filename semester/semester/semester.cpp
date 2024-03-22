@@ -93,7 +93,7 @@ void inputSemester(string& sem_id, string& start_date, string& end_date)
 	cin >> end_date;
 }
 
-Semester createSemester(string sem_id, string start_date, string end_date)
+Semester createSemester(const string& sem_id, const string& start_date, const string& end_date)
 {
 	Semester sem;
 	sem.semester_id = sem_id;
@@ -101,13 +101,13 @@ Semester createSemester(string sem_id, string start_date, string end_date)
 	sem.end_date = end_date;
 	return sem;
 }
-SemesterNode* createSemesterNode(Semester new_sem)
+SemesterNode* createSemesterNode(const Semester& new_sem)
 {
 	SemesterNode* newSemNode = new SemesterNode;
 	newSemNode->sem = new_sem;
 	return newSemNode;
 }
-void addCourseListToSemester(SemesterNode* semNode, CourseNode* course_list)
+void addCourseListToSemester(SemesterNode*& semNode, CourseNode* course_list)
 {
 	semNode->sem.course_list = course_list;
 }
@@ -124,7 +124,8 @@ void addSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 		curr->next = new_sem_node;
 	}
 }
-void removeSemesterNode(YearNode* year_list, string year_id, int sem_num)
+//add case of removing the first semester node
+void removeSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
 {
 	SemesterNode* semNode = searchSemesterNode(year_list, year_id, sem_num);
 	if (!semNode)
@@ -151,7 +152,7 @@ void removeSemesterNode(YearNode* year_list, string year_id, int sem_num)
 
 	delete semNode;
 }
-SemesterNode* searchSemesterNode(YearNode* year_list, string year_id, int sem_num)
+SemesterNode* searchSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
 {
 	YearNode* yearNode = searchYearNode(year_list, year_id);
 	if (!yearNode)
@@ -175,6 +176,17 @@ SemesterNode* searchSemesterNode(YearNode* year_list, string year_id, int sem_nu
 
 	cout << sem_id << " does not exist in school year " << year_id << endl;
 	return nullptr;
+}
+void updateSemester(SemesterNode* sem, const string& new_sem_id, const string& new_start_date, const string& new_end_date)
+{
+	if (sem->sem.semester_id != new_sem_id)
+		sem->sem.semester_id = new_sem_id;
+
+	if (sem->sem.start_date != new_start_date)
+		sem->sem.start_date = new_start_date;
+
+	if (sem->sem.end_date != new_end_date)
+		sem->sem.end_date = new_end_date;
 }
 
 void deleteYearList(YearNode*& year_list)
