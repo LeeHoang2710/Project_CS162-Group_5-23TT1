@@ -55,5 +55,8 @@
     <ClInclude Include="..\struct and function\student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\struct and function\struct_and_library.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

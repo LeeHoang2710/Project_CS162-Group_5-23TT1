@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="..\struct and function\course.h" />
     <ClInclude Include="..\struct and function\login.h" />
+    <ClInclude Include="..\struct and function\struct_and_library.h" />
     <ClInclude Include="..\struct and function\student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

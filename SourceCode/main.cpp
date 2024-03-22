@@ -19,7 +19,7 @@ int main() {
 		StorePassWordStudent(StuPass, StuPassList);
 		string ID_Locate;
 		StudentNode* ChangeStuPass;
-		LoginForStudent(StuPass, ID_Locate, ChangeStuPass);
+		if (LoginForStudent(StuPass, ID_Locate, ChangeStuPass)) cout << "successful";
 		bool change;
 		cout << "If you want to change password, enter 1: ";
 		cin >> change;
@@ -38,7 +38,7 @@ int main() {
 		StorePassWordStaff(StaffPass, StaffPassList);
 		string Username_Locate;
 		StaffNode* ChangeStaffPass;
-		LoginForStaff(StaffPass, Username_Locate, ChangeStaffPass);
+		if(LoginForStaff(StaffPass, Username_Locate, ChangeStaffPass)) cout << "successful";
 		bool change;
 		cout << "If you want to change password, enter 1: ";
 		cin >> change;
