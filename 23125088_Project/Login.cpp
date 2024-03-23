@@ -113,39 +113,35 @@ void UpdateStaffPassFile(StaffNode* List, ofstream& op) {
 	}
 	op.close();
 }
-bool ChangePassStudent(StudentNode* current) {
+void ChangePassStudent(StudentNode* current) {
 	while (1) {
 		string input_Pass;
-		// cout << "Enter your current password: ";
+		 cout << "Enter your current password: ";
 		cin >> input_Pass;
 		if (current->student.password == input_Pass) {
-			// cout << "Enter your new password: ";
+			 cout << "Enter your new password: ";
 			cin >> input_Pass;
 			current->student.password = input_Pass;
-			// cout << "Password changed successfully " << endl;
-			return true;
+			 cout << "Password changed successfully " << endl;
 		}
 		else {
-			// cout << "current password is wrong, please try again" << endl;
-			return false;
+			 cout << "current password is wrong, please try again" << endl;
 		}
 	}
 }
-bool ChangePassStaff(StaffNode* current) {
+void ChangePassStaff(StaffNode* current) {
 	while (1) {
 		string input_Pass;
-		// cout << "Enter your current password: ";
+		 cout << "Enter your current password: ";
 		cin >> input_Pass;
 		if (current->staff.password == input_Pass) {
-			// cout << "Enter your new password: ";
+			 cout << "Enter your new password: ";
 			cin >> input_Pass;
 			current->staff.password = input_Pass;
-			// cout << "Password changed successfully" << endl;
-			return true;
+			 cout << "Password changed successfully" << endl;
 		}
 		else {
-			// cout << "current password is wrong, please try again" << endl;
-			return false;
+			 cout << "current password is wrong, please try again" << endl;
 		}
 	}
 }
