@@ -24,7 +24,7 @@ StudentNode* searchStudentNode(StudentNode* head, string student_1_id);
 void readStudentFromFile(ifstream& file, StudentNode*& list_student);
 bool readStudentFromTerminal(StudentNode*& liststu);
 void exportStudentToFile(ofstream& file, StudentNode*& list_student);
-//Course and login
+
 //course
 CourseNode* initCourseNode(Course new_course, StudentNode* liststu);
 void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu);
@@ -36,13 +36,14 @@ void updatecourse(CourseNode* CourseHead, string updateCourse); // use findcours
 void deletecourse(CourseNode* CourseHead, string delCourse); // usefindcourse above
 void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip); //These 2 fucntions will load password file to a linked list
 //login
+void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip); //These 2 fucntions will load password file to a linked list
 void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip);
-void LoginForStudent(StudentNode* StuList, string& onstatus_ID, StudentNode*& ChangeStuPass); // 1st parameter is the linked list, 2nd parameter is the ID of student who is onl
-void LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass); // 3rd parameter is the node store the current id, used it only for changing password
+bool LoginForStudent(StudentNode* StuList, string& onstatus_ID, StudentNode*& ChangeStuPass); // 1st parameter is the linked list, 2nd parameter is the ID of student who is onl
+bool LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass); // 3rd parameter is the node store the current id, used it only for changing password
 void UpdateStuPassFile(StudentNode* List, ofstream& op); //Update the password file when someone change password;
 void UpdateStaffPassFile(StaffNode* List, ofstream& op);
-void ChangePassStudent(StudentNode* current); //get the node of user who is online and change password in it;
-void ChangePassStaff(StaffNode* current);
+bool ChangePassStudent(StudentNode* current); //get the node of user who is online and change password in it;
+bool ChangePassStaff(StaffNode* current);
 //Semester
 YearNode* importYearSemester(const string& filename, ifstream& fin);
 void exportYearSemester(YearNode* year_list, const string& filename, ofstream& fout);
@@ -70,6 +71,6 @@ void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofs
 //Year
 Year createYear(string p_year_id);
 YearNode* initYearNode(Year school_year);
-void addNewYearNode(YearNode*& head, YearNode* new_year_node);
+void addNewYearNode(YearNode*& head, YearNode* year);
 void removeNewYearNode(YearNode*& head, Year year);
 YearNode* searchYearNode(YearNode* head, string year_id);
