@@ -45,7 +45,7 @@ int stoiDOTW(string d)
 	if (d == "THU") return 5;
 	if (d == "FRI") return 6;
 	if (d == "SAT") return 7;
-	return -1;
+	return 0;
 }
 int stoiSessionNo(string s)
 {
@@ -53,7 +53,7 @@ int stoiSessionNo(string s)
 	if (s == "S2 (09:30)") return 2;
 	if (s == "S3 (13:30)") return 3;
 	if (s == "S4 (15:30)") return 4;
-	return -1;
+	return 0;
 }
 
 void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofstream& fout)
