@@ -1,25 +1,29 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <cstring>
+#include <string>
 #include <sstream>
-#include <time.h>
+#include <ctime>
 
 using namespace std;
 
 struct Year;
 struct YearNode;
-struct Class;
-struct ClassNode;
-struct Course;
-struct CourseNode;
-struct MyCourse;
 struct Semester;
 struct SemesterNode;
+
+struct Session;
+struct Course;
+struct CourseNode;
+
+struct Class;
+struct ClassNode;
+
+struct Score;
 struct Student;
 struct StudentNode;
-struct Session;
-struct Score;
+struct MyCourse;
 
 struct Year
 {
@@ -31,18 +35,18 @@ struct YearNode
     Year school_year;
     YearNode *next;
 };
-
-struct Class
+struct Semester
 {
-    string class_id;
-    StudentNode *student_list = nullptr;
+    string start_date;
+    string end_date;
+    string semester_id;
+    CourseNode *course_list = nullptr;
 };
-struct ClassNode
+struct SemesterNode
 {
-    Class my_class;
-    ClassNode *next;
+    Semester sem;
+    SemesterNode *next;
 };
-
 struct Session
 {
     int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
@@ -65,6 +69,17 @@ struct CourseNode
     StudentNode *student_list = nullptr;
     CourseNode *next;
 };
+struct Class
+{
+    string class_id;
+    string head_teacher;
+    StudentNode *student_list = nullptr;
+};
+struct ClassNode
+{
+    Class my_class;
+    ClassNode *next;
+};
 struct Score
 {
     float process = 0.0f;
@@ -72,7 +87,26 @@ struct Score
     float final = 0.0f;
     float overall = 0.0f;
 };
-
+struct Student
+{
+    int num;
+    string student_id;
+    string first_name;
+    string last_name;
+    bool gender; // male(0), female(1)
+    string dob;
+    string social_id;
+    string password = "123456";
+    string student_class;
+    MyCourse *my_course = nullptr;
+    float cur_gpa = 0.0f;
+    float total_gpa = 0.0f;
+};
+struct StudentNode
+{
+    Student student;
+    StudentNode *next;
+};
 struct MyCourse
 {
     Score score;
@@ -83,44 +117,18 @@ struct MyCourse
     MyCourse *next;
 };
 
-struct Semester
+struct Staff
 {
-    string start_date;
-    string end_date;
-    string semester_id;
-    CourseNode *course_list = nullptr;
-};
-struct SemesterNode
-{
-    Semester sem;
-    SemesterNode *next;
-};
-struct RegistrationSession
-{
-    string year;
-    string sem;
-    CourseNode *list_of_courses = nullptr;
-    string start_date;
-    string end_date;
-};
-
-struct Student
-{
-    int num;
-    string student_id;
+    string username;
     string first_name;
     string last_name;
-    bool gender; // male(0), female(1)
+    bool gender;
     string dob;
     string social_id;
-    string password = "default";
-    string student_class;
-    MyCourse *my_course = nullptr;
-    float cur_gpa = 0.0f;
-    float total_gpa = 0.0f;
+    string password;
 };
-struct StudentNode
+struct StaffNode
 {
-    Student student;
-    StudentNode *next;
+    Staff staff;
+    StaffNode *next;
 };

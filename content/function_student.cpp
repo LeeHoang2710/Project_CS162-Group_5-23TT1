@@ -1,5 +1,4 @@
-#include "../struct_and_function/student.h"
-using namespace std;
+#include "../struct_and_function/function.h"
 
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class)
 {
@@ -77,6 +76,25 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
     return nullptr;
 }
 
+StaffNode *searchStaffNode(StaffNode *head, string staff_id)
+{
+    if (!head)
+    {
+        cout << "Cannot find the searched staff..." << endl;
+        return nullptr;
+    }
+    StaffNode *list_staff = head;
+    while (list_staff)
+    {
+        if (list_staff->staff.username == staff_id)
+            return list_staff;
+        else
+            list_staff = list_staff->next;
+    }
+    cout << "Cannot find the searched staff..." << endl;
+    return nullptr;
+}
+
 void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
     file.open("../database/student.csv");
@@ -134,16 +152,4 @@ void exportStudentToFile(ofstream &file, StudentNode *&list_student)
         }
     }
     file.close();
-}
-
-int main()
-{
-    cout << "Hello world";
-    ifstream fin;
-    ofstream fout;
-    StudentNode *ditmethangNam = nullptr;
-    readStudentFromFile(fin, ditmethangNam);
-    exportStudentToFile(fout, ditmethangNam);
-
-    return 0;
 }

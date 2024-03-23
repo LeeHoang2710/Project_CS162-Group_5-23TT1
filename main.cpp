@@ -6,7 +6,14 @@ int main()
     window.create(VideoMode(1440, 960), "CS162-Project", Style::Default);
     int page = 1;
     bool is_staff = false;
+    string username = "";
+    string pass = "";
+    StudentNode *user1 = nullptr;
+    StaffNode *user2 = nullptr;
+    ifstream ip;
 
+    StorePassWordStudent(user1, ip, "../database/student_password.csv");
+    StorePassWordStaff(user2, ip, "../database/staff_password.csv");
     while (page > 0 && window.isOpen())
     {
         switch (page)
@@ -17,7 +24,7 @@ int main()
         case 2:
         {
             bool see = false;
-            logIn(window, page, is_staff, see);
+            logIn(window, page, is_staff, see, user1, user2, username, pass);
             break;
         }
         case 3:
@@ -30,7 +37,7 @@ int main()
         }
         case 4:
         {
-            Year(window, page, is_staff);
+            // School(window, page, is_staff);
             break;
         }
         case 19:

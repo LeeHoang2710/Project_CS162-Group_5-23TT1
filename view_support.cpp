@@ -34,6 +34,17 @@ Info createText(string str, float x, float y)
     input.bound = input.txt.getGlobalBounds();
     return input;
 }
+Info createNew(string str)
+{
+    Info input;
+    input.font.loadFromFile("./image/font/Arial.ttf");
+    input.txt.setFont(input.font);
+    input.txt.setStyle(Text::Bold);
+    input.txt.setCharacterSize(30);
+    input.txt.setFillColor(Color::Black);
+    input.bound = input.txt.getGlobalBounds();
+    return input;
+}
 
 bool isHere(FloatRect &bound, Vector2f &mouse)
 {
@@ -52,6 +63,13 @@ bool chooseDraw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
         window.draw(y.draw);
         return false;
     }
+}
+
+void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)
+{
+    if (isHere(bound, mouse))
+        page = k;
+    return;
 }
 
 void changePosition(Object &a, float x, float y)

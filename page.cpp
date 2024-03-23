@@ -1,5 +1,4 @@
 #include "view_function.h"
-
 void Scene1(RenderWindow &window, int &page, bool &is_staff)
 {
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -46,7 +45,7 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     }
 }
 
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass)
 {
 
     Event event;
@@ -62,7 +61,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
 
     Info inputUsername = createText("", 641.0f, 432.0f);
     Info inputPassword = createText("", 641.0f, 522.0f);
-    bool isTypingUsername = false, isTypingPassword = false;
+    bool isTypingUsername = false, isTypingPassword = false, log_in = true;
     string username = "", password = "", hidden_pass = "";
 
     while (window.isOpen() && page == 2)
@@ -106,7 +105,22 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
                     }
                     // we have to check if the password is right/wrong then move to the next page
                     else if (isHere(o3.bound, mouse))
-                        page = 3;
+                    {
+                        name = username;
+                        pass = password;
+                        if (is_staff && LoginForStaff(user2, name, pass))
+                        {
+                            log_in = true;
+                            page = 3;
+                        }
+                        else if (!is_staff && LoginForStudent(user1, name, pass))
+                        {
+                            log_in = true;
+                            page = 3;
+                        }
+                        else
+                            log_in = false;
+                    }
                     else
                     {
                         isTypingUsername = false;
@@ -164,9 +178,11 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
             }
             }
         }
+
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
+
         window.draw(o2.draw);
         window.draw(o3.draw);
         window.draw(o4.draw);
@@ -177,6 +193,8 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see)
             window.draw(o8.draw);
         else
             window.draw(o7.draw);
+        if (!log_in)
+            window.draw(o6.draw);
         window.display();
     }
 }
@@ -232,22 +250,33 @@ void homeStaff(RenderWindow &window, int &page)
     }
 }
 
-void Year(RenderWindow &window, int &page, bool is_staff)
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object f = createObject("./image/page3-staff/forward.png", 231, 259);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/school_year/year-bg.png", 180, 120);
-    Object o2 = createObject("./image/page3-staff/school_year/2020.png", 235, 348);
-    Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 462);
-    Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 580);
-    Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
-    Object add = createObject("./image/page3-staff/school_year/create.png", 263, 259);
+    // Object o2 = createObject("./image/page3-staff/school_year/2020.png", 235, 347);
+    // Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 464);
+    // Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 581);
+    //  Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
+    Object add[4];
+    Info id[4];
+    Year yr[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        add[i] = createObject("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        id[i] = createText("", 316, 117 * i + 354);
+    }
+    Object create = createObject("./image/page3-staff/school_year/create.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    bool add_year = false;
+
+    bool new_page = false;
+    string str = "";
+    int count = 0, change = 0;
     while (window.isOpen() && page == 4)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -266,10 +295,42 @@ void Year(RenderWindow &window, int &page, bool is_staff)
                         page = 5;
                     else if (isHere(b.bound, mouse))
                         page = 3;
-                    else if (isHere(add.bound, mouse))
-                        add_year = true;
+                    else if (isHere(create.bound, mouse) && is_staff)
+                    {
+                        YearNode *curr = year;
+                        if (!curr)
+                            str = "2023-2024";
+                        // default year
+                        else
+                        {
+                            while (curr->next)
+                            {
+                                curr = curr->next;
+                                count++;
+                            }
+                            str = curr->school_year.year_id;
+                            stringstream input(str);
+                            int start, end;
+                            char dash;
+                            input >> start >> dash >> end;
+                            str = to_string(start + 1) + dash + to_string(end + 1);
+                        }
+                        Year new_year = createYear(str);
+                        addNewYearNode(year, new_year);
+                        count++;
+                    }
                     else if (isHere(menu.bound, mouse))
                         page = 3;
+                    else if (isHere(prev.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 4;
+                    }
+                    else if (isHere(next.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 4;
+                    }
                 }
             }
             break;
@@ -278,13 +339,26 @@ void Year(RenderWindow &window, int &page, bool is_staff)
             window.clear();
             window.draw(screen.draw);
             window.draw(o1.draw);
-            window.draw(o2.draw);
-            window.draw(o3.draw);
-            window.draw(o4.draw);
-
-            window.draw(add.draw);
-            if (add_year)
-                window.draw(o5.draw);
+            if (new_page)
+            {
+                YearNode *temp = year;
+                for (int i = 0; i < change; ++i)
+                    temp = temp->next;
+                for (int i = 0; i < 4; ++i)
+                {
+                    yr[i] = temp->school_year;
+                    id[i].txt.setString(temp->school_year.year_id);
+                    temp = temp->next;
+                }
+                new_page = false;
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                if (id[i].txt.getString() == "")
+                    break;
+                window.draw(add[i].draw);
+                window.draw(id[i].txt);
+            }
             window.draw(f.draw);
             window.draw(b.draw);
             window.draw(prev.draw);
@@ -525,4 +599,14 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
             Change = false;
         window.display();
     }
+}
+
+void Study(RenderWindow &window, int &page, bool is_staff)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
+}
+void Classes(RenderWindow &window, int &page, bool is_staff)
+{
 }
