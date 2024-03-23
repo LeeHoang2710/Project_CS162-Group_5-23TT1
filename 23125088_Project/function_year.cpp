@@ -14,9 +14,8 @@ YearNode* initYearNode(Year p_school_year)
     return new_year_node;
 }
 
-void addNewYearNode(YearNode*& head, Year p_year)
+void addNewYearNode(YearNode*& head, YearNode* new_year_node)
 {
-    YearNode* new_year_node = initYearNode(p_year);
     if (!head)
         head = new_year_node;
     else
@@ -29,7 +28,7 @@ void addNewYearNode(YearNode*& head, Year p_year)
     return;
 }
 
-YearNode* searchYearNode(YearNode* head, Year year)
+YearNode* searchYearNode(YearNode* head, string year_id)
 {
     if (!head)
     {
@@ -39,7 +38,7 @@ YearNode* searchYearNode(YearNode* head, Year year)
     YearNode* list_year = head;
     while (list_year)
     {
-        if (list_year->school_year.year_id == year.year_id)
+        if (list_year->school_year.year_id == year_id)
             return list_year;
         else
             list_year = list_year->next;
