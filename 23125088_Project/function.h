@@ -42,8 +42,8 @@ bool LoginForStudent(StudentNode* StuList, string& onstatus_ID, StudentNode*& Ch
 bool LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass); // 3rd parameter is the node store the current id, used it only for changing password
 void UpdateStuPassFile(StudentNode* List, ofstream& op); //Update the password file when someone change password;
 void UpdateStaffPassFile(StaffNode* List, ofstream& op);
-bool ChangePassStudent(StudentNode* current); //get the node of user who is online and change password in it;
-bool ChangePassStaff(StaffNode* current);
+void ChangePassStudent(StudentNode* current); //get the node of user who is online and change password in it;
+void ChangePassStaff(StaffNode* current);
 //Semester
 YearNode* importYearSemester(const string& filename, ifstream& fin);
 void exportYearSemester(YearNode* year_list, const string& filename, ofstream& fout);
