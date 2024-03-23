@@ -70,6 +70,6 @@ void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofs
 //Year
 Year createYear(string p_year_id);
 YearNode* initYearNode(Year school_year);
-void addNewYearNode(YearNode*& head, Year year);
+void addNewYearNode(YearNode*& head, YearNode* new_year_node);
 void removeNewYearNode(YearNode*& head, Year year);
-YearNode* searchYearNode(YearNode* head, Year year);
+YearNode* searchYearNode(YearNode* head, string year_id);
