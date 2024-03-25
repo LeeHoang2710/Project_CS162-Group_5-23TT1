@@ -2,16 +2,11 @@
 
 Year createYear(string p_year_id)
 {
-	Year new_year;
-	new_year.year_id = p_year_id;
-	return new_year;
+	return Year{ p_year_id, nullptr };
 }
 YearNode* initYearNode(Year p_school_year)
 {
-	YearNode* new_year_node = new YearNode;
-	new_year_node->next = nullptr;
-	new_year_node->school_year = p_school_year;
-	return new_year_node;
+	return new YearNode{ p_school_year, nullptr };
 }
 
 void addNewYearNode(YearNode*& head, YearNode* new_year_node)
@@ -32,7 +27,7 @@ YearNode* searchYearNode(YearNode* head, string year_id)
 {
 	if (!head)
 	{
-		cout << "Cannot find the searched year..." << endl;
+		//cout << "Cannot find the searched year..." << endl;
 		return nullptr;
 	}
 	YearNode* list_year = head;
@@ -43,7 +38,7 @@ YearNode* searchYearNode(YearNode* head, string year_id)
 		else
 			list_year = list_year->next;
 	}
-	cout << "Cannot find the searched year..." << endl;
+	//cout << "Cannot find the searched year..." << endl;
 	return nullptr;
 }
 

@@ -96,9 +96,9 @@ struct CourseNode
 };
 struct Semester
 {
+	string semester_id;
 	string start_date;
 	string end_date;
-	string semester_id;
 	CourseNode* course_list = nullptr;
 };
 struct SemesterNode
