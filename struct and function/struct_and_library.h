@@ -9,7 +9,9 @@
 using namespace std;
 
 struct Score;
-struct MyCourse;
+struct Results;
+struct ResultsNode;
+
 struct Student;
 struct StudentNode;
 
@@ -22,6 +24,7 @@ struct CourseNode;
 
 struct Semester;
 struct SemesterNode;
+
 struct Year;
 struct YearNode;
 
@@ -32,15 +35,21 @@ struct Score
 	float final = 0.0f;
 	float overall = 0.0f;
 };
-struct MyCourse
+
+struct Results
 {
 	Score score;
-	string subject_code;
-	string sem;
-	string year;
 	CourseNode* course = nullptr;
-	MyCourse* next = nullptr;
+	SemesterNode* sem = nullptr;
+	YearNode* year = nullptr;
 };
+
+struct ResultsNode
+{
+	Results results;
+	ResultsNode* next = nullptr;
+};
+
 struct Student
 {
 	int num;
@@ -52,31 +61,36 @@ struct Student
 	string social_id;
 	string password = "123456";
 	string student_class;
-	MyCourse* my_course = nullptr;
+	ResultsNode* results_list = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
+
 struct StudentNode
 {
 	Student student;
 	StudentNode* next = nullptr;
 };
+
 struct Class
 {
 	string class_id;
 	string head_teacher;
 	StudentNode* student_list = nullptr;
 };
+
 struct ClassNode
 {
 	Class my_class;
 	ClassNode* next = nullptr;
 };
+
 struct Session
 {
 	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
 	int session_no;      // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
+
 struct Course
 {
 	string course_id;
@@ -86,6 +100,7 @@ struct Course
 	int max_students = 50;
 	Session teaching_session;
 };
+
 struct CourseNode
 {
 	string semester_id;
@@ -94,6 +109,7 @@ struct CourseNode
 	StudentNode* student_list = nullptr;
 	CourseNode* next = nullptr;
 };
+
 struct Semester
 {
 	string semester_id;
@@ -101,16 +117,19 @@ struct Semester
 	string end_date;
 	CourseNode* course_list = nullptr;
 };
+
 struct SemesterNode
 {
 	Semester sem;
 	SemesterNode* next = nullptr;
 };
+
 struct Year
 {
 	string year_id;
 	SemesterNode* list_sem = nullptr;
 };
+
 struct YearNode
 {
 	Year school_year;

@@ -62,7 +62,6 @@ void exportCourseForDisplay(CourseNode* course_list, const string& filename, ofs
 	if (!fout.is_open())
 	{
 		cout << "Cannot open " << filename << " to export courses for display." << endl;
-		fout.close();
 		return;
 	}
 

@@ -12,7 +12,6 @@ void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 	}
 
 	YearNode* currYear = year_list;
-	SemesterNode* currSem = nullptr;
 	string line;
 	while (getline(fin, line))
 	{
@@ -22,20 +21,21 @@ void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 		getline(ss, sem_id, ',');
 		getline(ss, start_date, ',');
 		getline(ss, end_date, ',');
-		if (!year_list)
+
+		if (!currYear || currYear->school_year.year_id != year_id)
 		{
-			year_list = initYearNode(createYear(year_id));
-			currYear = year_list;
-		}
-		else if (currYear->school_year.year_id != year_id)
-		{
-			currYear->next = initYearNode(createYear(year_id));
-			currYear = currYear->next;
+			YearNode* newYearNode = initYearNode(createYear(year_id));
+			if (!currYear)
+				year_list = newYearNode;
+			else
+				currYear->next = newYearNode;
+
+			currYear = newYearNode;
 		}
 
-		Semester semester = createSemester(sem_id, start_date, end_date);
-		SemesterNode* semNode = createSemesterNode(semester);
-		appendSemesterNode(currYear->school_year.list_sem, semNode);
+			Semester newSem = createSemester(sem_id, start_date, end_date);
+			SemesterNode* newSemNode = createSemesterNode(newSem);
+			appendSemesterNode(currYear->school_year.list_sem, newSemNode);
 	}
 
 	fin.close();
@@ -89,7 +89,6 @@ Semester createSemester(const string& sem_id, const string& start_date, const st
 
 SemesterNode* createSemesterNode(const Semester& new_sem)
 {
-	// In this order: sem, next
 	return new SemesterNode{ new_sem, nullptr };
 }
 
@@ -124,35 +123,6 @@ void updateSemesterInfo(SemesterNode* semNode, const string& new_sem_id, const s
 		semNode->sem.end_date = new_end_date;
 }
 
-//add case of removing the first semester node
-void removeSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
-{
-	SemesterNode* semNode = searchSemesterNode(year_list, year_id, sem_num);
-	if (!semNode)
-	{
-		cout << "Semester does not exist." << endl;
-		return;
-	}
-
-	// Delete the course list inside the semester node
-	//deleteCourseList(semNode->sem.course_list);
-
-	// Find the prev semester node
-	YearNode* yearNode = searchYearNode(year_list, year_id);
-	if (yearNode->school_year.list_sem == semNode)
-		yearNode->school_year.list_sem = semNode->next;
-	else
-	{
-		SemesterNode* curr = yearNode->school_year.list_sem;
-		while (curr->next != semNode)
-			curr = curr->next;
-
-		curr->next = semNode->next;
-	}
-
-	delete semNode;
-}
-
 SemesterNode* searchSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
 {
 	YearNode* yearNode = searchYearNode(year_list, year_id);
@@ -179,6 +149,34 @@ SemesterNode* searchSemesterNode(YearNode* year_list, const string& year_id, int
 	return nullptr;
 }
 
+bool removeSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
+{
+	SemesterNode* semNode = searchSemesterNode(year_list, year_id, sem_num);
+	if (!semNode)
+	{
+		//cout << "Semester does not exist." << endl;
+		return false;
+	}
+
+	YearNode* yearNode = searchYearNode(year_list, year_id);
+
+	if (yearNode->school_year.list_sem == semNode)
+		yearNode->school_year.list_sem = semNode->next;
+	else
+	{
+		SemesterNode* prev = yearNode->school_year.list_sem;
+		while (prev->next != semNode)
+			prev = prev->next;
+
+		prev->next = semNode->next;
+	}
+
+	// delete inside
+	// deleteCourseList(semNode->sem.course_list);
+	delete semNode;
+	return true;
+}
+
 void deleteYearList(YearNode*& year_list)
 {
 	while (year_list)
@@ -198,6 +196,27 @@ void deleteSemesterList(SemesterNode*& sem_list)
 		sem_list = sem_list->next;
 		// deleteCourseList function, and more...
 		// deleteCourseList(temp->sem.course_list);...
+		delete temp;
+	}
+}
+
+void deleteResultsList(ResultsNode* results_list)
+{
+	while (results_list)
+	{
+		ResultsNode* temp = results_list;
+		results_list = results_list->next;
+		delete temp;
+	}
+}
+
+void deleteStudentList(StudentNode*& student_list)
+{
+	while (student_list)
+	{
+		StudentNode* temp = student_list;
+		student_list = student_list->next;
+		deleteResultsList(temp->student.results_list);
 		delete temp;
 	}
 }
