@@ -11,6 +11,15 @@ Object createObject(string input, float x, float y)
     // The global bounds are the smallest rectangle that contains the entire sprite, in global coordinate(relative to the window, not the sprite)
     return icon;
 }
+Object *createObjectTest(string s, float x, float y)
+{
+    Object *me = new Object;
+    me->text.loadFromFile(s);
+    me->draw.setTexture(me->text);
+    me->draw.setPosition(x, y);
+    me->bound = me->draw.getGlobalBounds();
+    return me;
+}
 
 Object createBackGround(string input)
 {
@@ -34,18 +43,19 @@ Info createText(string str, float x, float y)
     input.bound = input.txt.getGlobalBounds();
     return input;
 }
-Info createNew(string str)
-{
-    Info input;
-    input.font.loadFromFile("./image/font/Arial.ttf");
-    input.txt.setFont(input.font);
-    input.txt.setStyle(Text::Bold);
-    input.txt.setCharacterSize(30);
-    input.txt.setFillColor(Color::Black);
-    input.bound = input.txt.getGlobalBounds();
-    return input;
-}
 
+Info *createInfoTest(string s, float x, float y)
+{
+    Info *a = new Info;
+    a->font.loadFromFile("./image/font/Arial.ttf");
+    a->txt.setFont(a->font);
+    a->txt.setCharacterSize(30);
+    a->txt.setPosition(x, y);
+    a->txt.setFillColor(Color::Black);
+    a->txt.setString(s);
+    a->bound = a->txt.getGlobalBounds();
+    return a;
+}
 bool isHere(FloatRect &bound, Vector2f &mouse)
 {
     return bound.contains(mouse);

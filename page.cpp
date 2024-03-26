@@ -62,6 +62,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     Info inputUsername = createText("", 641.0f, 432.0f);
     Info inputPassword = createText("", 641.0f, 522.0f);
     bool isTypingUsername = false, isTypingPassword = false, log_in = true;
+    Clock clock;
     string username = "", password = "", hidden_pass = "";
 
     while (window.isOpen() && page == 2)
@@ -120,6 +121,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                         }
                         else
                             log_in = false;
+                        clock.restart();
                     }
                     else
                     {
@@ -195,6 +197,8 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
             window.draw(o7.draw);
         if (!log_in)
             window.draw(o6.draw);
+        if (!log_in && clock.getElapsedTime().asSeconds() >= 3)
+            log_in = true;
         window.display();
     }
 }
@@ -250,7 +254,7 @@ void homeStaff(RenderWindow &window, int &page)
     }
 }
 
-void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -261,18 +265,18 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
     // Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 464);
     // Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 581);
     //  Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
-    Object add[4];
-    Info id[4];
-    Year yr[4];
-    for (int i = 0; i < 4; ++i)
-    {
-        add[i] = createObject("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        id[i] = createText("", 316, 117 * i + 354);
-    }
     Object create = createObject("./image/page3-staff/school_year/create.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object *add[4];
+    Info *id[4];
+    YearNode *yr[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        id[i] = createInfoTest("", 316, 117 * i + 354);
+    }
 
     bool new_page = false;
     string str = "";
@@ -335,37 +339,41 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
             }
             break;
             }
-
-            window.clear();
-            window.draw(screen.draw);
-            window.draw(o1.draw);
-            if (new_page)
-            {
-                YearNode *temp = year;
-                for (int i = 0; i < change; ++i)
-                    temp = temp->next;
-                for (int i = 0; i < 4; ++i)
-                {
-                    yr[i] = temp->school_year;
-                    id[i].txt.setString(temp->school_year.year_id);
-                    temp = temp->next;
-                }
-                new_page = false;
-            }
-            for (int i = 0; i < 4; ++i)
-            {
-                if (id[i].txt.getString() == "")
-                    break;
-                window.draw(add[i].draw);
-                window.draw(id[i].txt);
-            }
-            window.draw(f.draw);
-            window.draw(b.draw);
-            window.draw(prev.draw);
-            window.draw(next.draw);
-            window.draw(menu.draw);
-            window.display();
         }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        // if (new_page)
+
+        YearNode *temp = year;
+        for (int i = 0; i < change; ++i)
+            temp = temp->next;
+        for (int i = 0; i < 4; ++i)
+        {
+            yr[i] = temp;
+            id[i]->txt.setString(yr[i]->school_year.year_id);
+            temp = temp->next;
+        }
+        new_page = false;
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (id[i]->txt.getString() == "")
+                break;
+            window.draw(add[i]->draw);
+            window.draw(id[i]->txt);
+        }
+        window.draw(create.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        window.display();
+    }
+    for (int i = 0; i < 4; ++i)
+    {
+        delete add[i], id[i], yr[i];
     }
 }
 

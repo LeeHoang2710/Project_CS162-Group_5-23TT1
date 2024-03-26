@@ -10,10 +10,14 @@ int main()
     string pass = "";
     StudentNode *user1 = nullptr;
     StaffNode *user2 = nullptr;
+    YearNode *year = nullptr;
     ifstream ip;
+    ifstream fin;
 
-    StorePassWordStudent(user1, ip, "../database/student_password.csv");
-    StorePassWordStaff(user2, ip, "../database/staff_password.csv");
+    StorePassWordStudent(user1, ip, "./database/student_password.csv");
+    StorePassWordStaff(user2, ip, "./database/staff_password.csv");
+    importYearSemester(year, "./database/semester.csv", fin);
+
     while (page > 0 && window.isOpen())
     {
         switch (page)
@@ -37,7 +41,7 @@ int main()
         }
         case 4:
         {
-            // School(window, page, is_staff);
+            School(window, page, is_staff, year);
             break;
         }
         case 19:
