@@ -69,37 +69,13 @@ void removeNewYearNode(YearNode *&head, Year year)
 void importYearSemester(YearNode *&year_list, string filename, ifstream &fin)
 {
     fin.open(filename);
-    if (!fin.is_open())
-    {
-        cout << "Cannot open " << filename << " to import school year and semester information." << endl;
-        return;
-    }
 
     YearNode *currYear = year_list;
-    SemesterNode *currSem = nullptr;
-    string line;
-    while (getline(fin, line))
+    string year;
+    while (getline(fin, year))
     {
-        istringstream ss(line);
-        string year_id, sem_id, start_date, end_date;
-        getline(ss, year_id, ',');
-        getline(ss, sem_id, ',');
-        getline(ss, start_date, ',');
-        getline(ss, end_date, ',');
-        if (!year_list)
-        {
-            year_list = initYearNode(createYear(year_id));
-            currYear = year_list;
-        }
-        else if (currYear->school_year.year_id != year_id)
-        {
-            currYear->next = initYearNode(createYear(year_id));
-            currYear = currYear->next;
-        }
-
-        Semester semester = createSemester(sem_id, start_date, end_date);
-        SemesterNode *semNode = createSemesterNode(semester);
-        appendSemesterNode(currYear->school_year.list_sem, semNode);
+        Year new_year = createYear(year);
+        addNewYearNode(year_list, new_year);
     }
 
     fin.close();
@@ -108,26 +84,12 @@ void importYearSemester(YearNode *&year_list, string filename, ifstream &fin)
 void exportYearSemester(YearNode *year_list, string filename, ofstream &fout)
 {
     fout.open(filename);
-    if (!fout.is_open())
-    {
-        cout << "Cannot open " << filename << " to export school year and semester information." << endl;
-        fout.close();
-        return;
-    }
 
-    while (year_list)
+    YearNode *currYear = year_list;
+    while (currYear)
     {
-        SemesterNode *currSem = year_list->school_year.list_sem;
-        while (currSem)
-        {
-            fout << year_list->school_year.year_id << ","
-                 << currSem->sem.semester_id << ","
-                 << currSem->sem.start_date << ","
-                 << currSem->sem.end_date << endl;
-            currSem = currSem->next;
-        }
-
-        year_list = year_list->next;
+        fout << currYear->school_year.year_id << endl;
+        currYear = currYear->next;
     }
 
     fout.close();

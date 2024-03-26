@@ -11,11 +11,11 @@ int main()
     StudentNode *user1 = nullptr;
     StaffNode *user2 = nullptr;
     YearNode *year = nullptr;
-    ifstream ip;
+    ofstream fout;
     ifstream fin;
 
-    StorePassWordStudent(user1, ip, "./database/student_password.csv");
-    StorePassWordStaff(user2, ip, "./database/staff_password.csv");
+    StorePassWordStudent(user1, fin, "./database/student_password.csv");
+    StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importYearSemester(year, "./database/semester.csv", fin);
 
     while (page > 0 && window.isOpen())
@@ -59,6 +59,8 @@ int main()
             break;
         }
     }
+    exportYearSemester(year, "./database/semester.csv", fout);
+    deleteYearList(year);
 
     return 0;
 }

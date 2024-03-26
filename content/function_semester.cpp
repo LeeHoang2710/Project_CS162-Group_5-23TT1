@@ -32,7 +32,7 @@ void deleteYearList(YearNode *&year_list)
     {
         YearNode *temp = year_list;
         year_list = year_list->next;
-        deleteSemesterList(temp->school_year.list_sem);
+
         delete temp;
     }
 }

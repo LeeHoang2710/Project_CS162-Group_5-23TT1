@@ -254,7 +254,7 @@ void homeStaff(RenderWindow &window, int &page)
     }
 }
 
-void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -271,14 +271,13 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object *add[4];
     Info *id[4];
-    YearNode *yr[4];
     for (int i = 0; i < 4; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         id[i] = createInfoTest("", 316, 117 * i + 354);
     }
 
-    bool new_page = false;
+    bool new_page = true;
     string str = "";
     int count = 0, change = 0;
     while (window.isOpen() && page == 4)
@@ -297,64 +296,61 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                 {
                     if (isHere(f.bound, mouse))
                         page = 5;
-                    else if (isHere(b.bound, mouse))
+                    if (isHere(b.bound, mouse))
                         page = 3;
-                    else if (isHere(create.bound, mouse) && is_staff)
+                    if (isHere(create.bound, mouse))
                     {
                         YearNode *curr = year;
-                        if (!curr)
-                            str = "2023-2024";
-                        // default year
-                        else
+                        while (curr->next)
                         {
-                            while (curr->next)
-                            {
-                                curr = curr->next;
-                                count++;
-                            }
-                            str = curr->school_year.year_id;
-                            stringstream input(str);
-                            int start, end;
-                            char dash;
-                            input >> start >> dash >> end;
-                            str = to_string(start + 1) + dash + to_string(end + 1);
+                            curr = curr->next;
+                            count++;
                         }
+                        str = curr->school_year.year_id;
+                        stringstream input(str);
+                        int start, end;
+                        char dash;
+                        input >> start >> dash >> end;
+                        str = to_string(start + 1) + dash + to_string(end + 1);
+
                         Year new_year = createYear(str);
                         addNewYearNode(year, new_year);
                         count++;
                     }
-                    else if (isHere(menu.bound, mouse))
+                    if (isHere(menu.bound, mouse))
                         page = 3;
-                    else if (isHere(prev.bound, mouse))
-                    {
-                        new_page = true;
-                        change += 4;
-                    }
-                    else if (isHere(next.bound, mouse) && change != 0)
+                    if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;
                         change -= 4;
                     }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 4;
+                    }
                 }
+                break;
             }
-            break;
+            default:
+                break;
             }
         }
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
-        // if (new_page)
-
-        YearNode *temp = year;
-        for (int i = 0; i < change; ++i)
-            temp = temp->next;
-        for (int i = 0; i < 4; ++i)
+        if (new_page && year)
         {
-            yr[i] = temp;
-            id[i]->txt.setString(yr[i]->school_year.year_id);
-            temp = temp->next;
+            YearNode *temp = year;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 4; ++i)
+            {
+                id[i]->txt.setString(temp->school_year.year_id);
+                temp = temp->next;
+            }
+            new_page = false;
         }
-        new_page = false;
 
         for (int i = 0; i < 4; ++i)
         {
@@ -372,9 +368,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         window.display();
     }
     for (int i = 0; i < 4; ++i)
-    {
-        delete add[i], id[i], yr[i];
-    }
+        delete add[i], id[i];
 }
 
 void Other(RenderWindow &window, int &page, bool is_staff)
