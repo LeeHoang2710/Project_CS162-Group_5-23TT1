@@ -15,7 +15,6 @@ StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 void removeStudentNode(StudentNode *&head, Student student_1);
 StudentNode *searchStudentNode(StudentNode *head, string student_1_id);
-StaffNode *searchStaffNode(StaffNode *head, string staff_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *&list_student);
 
@@ -24,3 +23,13 @@ YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
 void removeNewYearNode(YearNode *&head, Year year);
 YearNode *searchYearNode(YearNode *head, Year year);
+void importYearSemester(YearNode *&year_list, string filename, ifstream &fin);
+void exportYearSemester(YearNode *year_list, string filename, ofstream &fout);
+
+Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
+SemesterNode *createSemesterNode(const Semester &new_sem);
+
+void appendSemesterNode(SemesterNode *&sem_list, SemesterNode *new_sem_node);
+
+void deleteYearList(YearNode *&year_list);
+void deleteSemesterList(SemesterNode *&sem_list);

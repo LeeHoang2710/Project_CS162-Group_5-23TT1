@@ -76,25 +76,6 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
     return nullptr;
 }
 
-StaffNode *searchStaffNode(StaffNode *head, string staff_id)
-{
-    if (!head)
-    {
-        cout << "Cannot find the searched staff..." << endl;
-        return nullptr;
-    }
-    StaffNode *list_staff = head;
-    while (list_staff)
-    {
-        if (list_staff->staff.username == staff_id)
-            return list_staff;
-        else
-            list_staff = list_staff->next;
-    }
-    cout << "Cannot find the searched staff..." << endl;
-    return nullptr;
-}
-
 void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
     file.open("../database/student.csv");
