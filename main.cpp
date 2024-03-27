@@ -16,7 +16,7 @@ int main()
 
     StorePassWordStudent(user1, fin, "./database/student_password.csv");
     StorePassWordStaff(user2, fin, "./database/staff_password.csv");
-    importYearSemester(year, "./database/semester.csv", fin);
+    importYear(year, "./database/semester.csv", fin);
 
     while (page > 0 && window.isOpen())
     {
@@ -59,7 +59,7 @@ int main()
             break;
         }
     }
-    exportYearSemester(year, "./database/year.csv", fout);
+    exportYear(year, "./database/semester.csv", fout);
     deleteYearList(year);
     delete user1, user2;
 

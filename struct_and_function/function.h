@@ -23,8 +23,8 @@ YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
 void removeNewYearNode(YearNode *&head, Year year);
 YearNode *searchYearNode(YearNode *head, Year year);
-void importYearSemester(YearNode *&year_list, string filename, ifstream &fin);
-void exportYearSemester(YearNode *year_list, string filename, ofstream &fout);
+void importYear(YearNode *&year_list, string filename, ifstream &fin);
+void exportYear(YearNode *year_list, string filename, ofstream &fout);
 
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);

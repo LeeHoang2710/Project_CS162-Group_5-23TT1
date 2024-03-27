@@ -66,7 +66,7 @@ void removeNewYearNode(YearNode *&head, Year year)
     }
 }
 
-void importYearSemester(YearNode *&year_list, string filename, ifstream &fin)
+void importYear(YearNode *&year_list, string filename, ifstream &fin)
 {
     fin.open(filename);
 
@@ -81,7 +81,7 @@ void importYearSemester(YearNode *&year_list, string filename, ifstream &fin)
     fin.close();
 }
 
-void exportYearSemester(YearNode *year_list, string filename, ofstream &fout)
+void exportYear(YearNode *year_list, string filename, ofstream &fout)
 {
     fout.open(filename);
 

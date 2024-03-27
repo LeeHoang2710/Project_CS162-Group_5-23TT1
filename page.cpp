@@ -315,6 +315,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                         new_year.list_sem = nullptr;
                         addNewYearNode(year, new_year);
                         count++;
+                        new_page = true;
                     }
                     if (isHere(menu.bound, mouse))
                         page = 3;
