@@ -20,7 +20,7 @@ int main() {
 		StaffNode* StaffCurrent = NULL;//Node of where the current staff is
 		StorePassWordStaff(StaffPass);
 		string input_username, input_password;
-		cout << "-------------LOGIN-------------" <<endl; 
+		cout << "-------------LOGIN-------------" << endl;
 		do {
 			cout << "Username: ";
 			getline(cin, input_username, '\n');
@@ -30,7 +30,7 @@ int main() {
 		//after login
 		bool mainmenu = true;
 		while (mainmenu) {
-			cout <<endl <<  "-------------------------------" << endl;
+			cout << endl << "-------------------------------" << endl;
 			cout << "1. School year " << endl;
 			cout << "2. Course " << endl;
 			cout << "3. Class " << endl;
@@ -42,7 +42,7 @@ int main() {
 			case 1: {
 				bool yearloop = true;
 				while (yearloop) {
-					cout << endl << "-------------------------------" << endl;
+					cout << endl << "-------------SCHOOL YEAR------------------" << endl;
 					cout << "1. Create a new school year " << endl;
 					cout << "2. View school year " << endl;
 					cout << "3. Return " << endl;
@@ -50,8 +50,11 @@ int main() {
 					cin >> choice;
 					switch (choice) {
 					case 1: {
-						cout << endl << "-------------------------------" << endl;
-						cout << "1. Create a class " << endl;
+						cout << endl << "------------------------------" << endl;
+						cout << "Enter year id: " <<endl;
+						//add year id;
+						cout << "1. Add semester " << endl;
+						//add one semester funcion;
 						cout << "2. Return " << endl;
 						cout << "Enter your choice: ";
 						cin >> choice;
@@ -68,24 +71,83 @@ int main() {
 						case 2: {
 							break;
 						}
+						default:
+							cout << "choose again" << endl;
+							break;
 						}
 						break;
 					}
 					case 2: {
+						bool semesterloop = true;
+						while (semesterloop) {
+							cout << "------------------------------------" << endl;
+							cout << "1. Fix year id " << endl;
+							cout << "2. Update semester in a school year " << endl;
+							cout << "3. Return " << endl;
+							cout << "Enter your choice: ";
+							cin >> choice;
+							switch (choice) {
+							case 1: {
+								break;
+							}
+							case 2: {
+								break;
+							}
+							case 3: {
+								semesterloop = false;
+								break;
+							}
+							}
+						}
 						break;
 					}
+					case 3: {
+						yearloop = false;
+						break;
+					}
+					default:
+						cout << "choose again" << endl;
+						break;
 					}
 				}
 				break;
 			}
 			case 2: {
-				cout << "1.  ";
+				bool courseloop = true;
+				while (courseloop) {
+					cout << "---------------COURSE-------------" << endl;
+					cout << "1. Update or fix information of a course" << endl;
+					cout << "2. View courses " << endl; //choose year to view course;
+					cout << "3. Return" << endl;
+					cout << "Enter your choice: ";
+					cin >> choice;
+					switch (choice) {
+					case 1: {
+						break;
+					}
+					case 2: {
+						break;
+					}
+					case 3: {
+						courseloop = false;
+						break;
+					}
+					default:
+						cout << "choose again" <<endl;
+						break;
+					}
+				}
 				break;
 			}
 			case 3: {
-				break; }
+				break; 
+			}
 			case 4: {
-				break; }
+				break;
+			}
+			default:
+				cout << "choose again" << endl;
+				break;
 			}
 		}
 		break;
@@ -105,7 +167,8 @@ int main() {
 		} while (LoginForStudent(StuPass, Stu_Locate, StuCurrent, input_id, input_password) == false);
 		break;
 	}
+	default: 
+		cout << "choose again" << endl;
+		break;
 	}
-	//above is login
-	
 }
