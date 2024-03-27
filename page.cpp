@@ -273,6 +273,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     Info total = createText("", 1050, 258);
     Object *add[4];
     Info *id[4];
+    YearNode *one[4];
     for (int i = 0; i < 4; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
@@ -298,16 +299,9 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    /*for (int i = 0; i < 4; ++i)
-                    {
-                        if (isHere(add[i]->bound, mouse))
-                        {
-                            string yr = id[i]->txt.getString();
-                            Semesters(window, page, year, yr, is_staff);
-                        }
-                    } */
-                    if (isHere(b.bound, mouse))
-                        page = 3;
+
+                    switchPage(b.bound, mouse, 3, page);
+                    switchPage(menu.bound, mouse, 3, page);
                     if (isHere(create.bound, mouse))
                     {
                         YearNode *curr = year;
@@ -326,8 +320,6 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                         count++;
                         new_page = true;
                     }
-                    if (isHere(menu.bound, mouse))
-                        page = 3;
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;
@@ -337,6 +329,14 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                     {
                         new_page = true;
                         change += 4;
+                    }
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (isHere(add[i]->bound, mouse))
+                        {
+                            page = 5;
+                            Semesters(window, page, one[i]);
+                        }
                     }
                 }
                 break;
@@ -366,7 +366,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             {
                 if (temp)
                 {
-                    id[i]->txt.setString(temp->school_year.year_id);
+                    one[i] = temp;
+                    id[i]->txt.setString(one[i]->school_year.year_id);
                     temp = temp->next;
                 }
                 else
@@ -389,7 +390,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         delete add[i], id[i];
 }
 
-void Semesters(RenderWindow &window, int &page, YearNode *&year, string yr, bool is_staff)
+void Semesters(RenderWindow &window, int &page, YearNode *&year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -402,13 +403,13 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, string yr, bool
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object *add[3];
     Info *id[3];
+    SemesterNode *sem[3];
     for (int i = 0; i < 3; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
     }
-    YearNode *check = searchYearNode(year, yr);
-    while (window.isOpen() && page == 4)
+    while (window.isOpen() && page == 5)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         while (window.pollEvent(event))
@@ -422,12 +423,13 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, string yr, bool
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    if (isHere(b.bound, mouse))
-                        School(window, page, is_staff, year);
+                    switchPage(b.bound, mouse, 4, page);
+                    switchPage(menu.bound, mouse, 3, page);
                     if (isHere(create.bound, mouse))
-                        addSemester(window, check, page, is_staff);
-                    if (isHere(menu.bound, mouse))
-                        page = 3;
+                    {
+                        page = 6;
+                        addSemester(window, year, page);
+                    }
                 }
                 break;
             }
@@ -435,12 +437,42 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, string yr, bool
                 break;
             }
         }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(create.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        SemesterNode *temp = year->school_year.list_sem;
+        for (int i = 0; i < 3; ++i)
+        {
+            if (temp)
+            {
+                sem[i] = temp;
+                id[i]->txt.setString(sem[i]->sem.semester_id);
+                temp = temp->next;
+            }
+            else
+                id[i]->txt.setString("");
+        }
+        for (int i = 0; i < 3; ++i)
+        {
+            if (id[i]->txt.getString() == "")
+                break;
+            window.draw(add[i]->draw);
+            window.draw(id[i]->txt);
+        }
+        window.display();
     }
+    for (int i = 0; i < 3; ++i)
+        delete add[i], id[i];
 }
 
-void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staff)
+void addSemester(RenderWindow &window, YearNode *&check, int &page)
 {
-    Event event;
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object f = createObject("./image/page3-staff/forward.png", 231, 256);
@@ -451,8 +483,10 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staf
     Object o4 = createObject("./image/page3-staff/school_year/input.png", 465, 513);
     Object o5 = createObject("./image/page3-staff/school_year/input.png", 465, 579);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object append = createObject("./image/page3-staff/add.png", 384, 260);
-    bool typing_sem = false, typing_st = false, typing_e = false;
+    Object append = createObject("./image/page3-staff/school_year/add.png", 384, 260);
+    Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
+    Clock clock;
+    bool typing_sem = false, typing_st = false, typing_e = false, save = false;
     Info t2 = createText("", 480, 385);
     Info t3 = createText(check->school_year.year_id, 480, 451);
     Info t4 = createText("", 480, 518);
@@ -460,7 +494,7 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staf
     string sem_id;
     string start;
     string end;
-    while (window.isOpen() && page == 4)
+    while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         while (window.pollEvent(event))
@@ -474,6 +508,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staf
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
+                    switchPage(b.bound, mouse, 4, page);
+                    switchPage(menu.bound, mouse, 3, page);
                     if (isHere(o2.bound, mouse))
                     {
                         typing_sem = true;
@@ -496,6 +532,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staf
                     {
                         Semester new_sem = createSemester(sem_id, start, end);
                         appendSemesterNode(check->school_year.list_sem, new_sem);
+                        save = true;
+                        clock.restart();
                     }
                     else
                         typing_sem = typing_st = typing_e = false;
@@ -526,6 +564,7 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool is_staf
             window.draw(b.draw);
             window.draw(menu.draw);
             window.draw(append.draw);
+            objectAppear(window, save, clock, saved);
             window.display();
         }
     }
@@ -755,10 +794,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
             window.draw(o9.draw);
         window.draw(f.draw);
         window.draw(b.draw);
-        if (Change)
-            window.draw(o6.draw);
-        if (Change && clock.getElapsedTime().asSeconds() >= 3)
-            Change = false;
+        objectAppear(window, Change, clock, o6);
         window.display();
     }
 }

@@ -108,3 +108,11 @@ void Typing(bool &texting, Info &infor, string &input, Event event)
         }
     }
 }
+
+void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o)
+{
+    if (change)
+        window.draw(o.draw);
+    if (change && clock.getElapsedTime().asSeconds() >= 2)
+        change = false;
+}
