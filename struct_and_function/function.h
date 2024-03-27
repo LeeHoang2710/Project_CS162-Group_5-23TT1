@@ -29,7 +29,7 @@ void deleteYearList(YearNode *&year_list);
 
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);
-void appendSemesterNode(SemesterNode *&sem_list, SemesterNode *new_sem_node);
+void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
 void importSemester(SemesterNode *&sem_list, istringstream &is);
 void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);

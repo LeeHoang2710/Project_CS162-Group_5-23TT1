@@ -40,6 +40,7 @@ Info createText(string str, float x, float y)
     input.txt.setCharacterSize(30);
     input.txt.setFillColor(Color::Black);
     input.txt.setPosition(x, y);
+    input.txt.setString(str);
     input.bound = input.txt.getGlobalBounds();
     return input;
 }
@@ -88,7 +89,7 @@ void changePosition(Object &a, float x, float y)
     a.bound = a.draw.getGlobalBounds();
 }
 
-void Typing(bool texting, Info &infor, string &input, Event event)
+void Typing(bool &texting, Info &infor, string &input, Event event)
 {
     if (texting)
     {
