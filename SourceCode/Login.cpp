@@ -1,6 +1,8 @@
 #include "../struct and function/struct_and_library.h"
 #include "../struct and function/login.h"
-void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip) {
+void StorePassWordStudent(StudentNode*& StuPass) {
+	ifstream ip;
+	ip.open("../database/Students_Password.csv");
 	StudentNode* cur = StuPass;
 	Student tmp;
 	getline(ip, tmp.student_id, ',');
@@ -16,12 +18,17 @@ void StorePassWordStudent(StudentNode*& StuPass, ifstream& ip) {
 		}
 		cur->student = tmp;
 		cur->next = NULL;
-		if (ip.eof()) return;
+		if (ip.eof()) {
+			ip.close();
+			return;
+		}
 		getline(ip, tmp.student_id, ',');
 		getline(ip, tmp.password, '\n');
 	}
 }
-void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip) {
+void StorePassWordStaff(StaffNode*& StaffPass) {
+	ifstream ip;
+	ip.open("../database/Staff_Password.csv");
 	StaffNode* cur = StaffPass;
 	Staff tmp;
 	getline(ip, tmp.username, ',');
@@ -37,64 +44,47 @@ void StorePassWordStaff(StaffNode*& StaffPass, ifstream& ip) {
 		}
 		cur->staff = tmp;
 		cur->next = NULL;
-		if (ip.eof()) return;
+		if (ip.eof()) {
+			ip.close();
+			return;
+		}
 		getline(ip, tmp.username, ',');
 		getline(ip, tmp.password, '\n');
 	}
 }
-bool LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& ChangeStuPass) {
-	while (1) {
-		string input_ID;
-		string input_Pass;
-		// cout << "Enter your username: ";
-		cin >> input_ID;
-		// cout << "Enter your password: ";
-		cin >> input_Pass;
+bool LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& ChangeStuPass, string input_ID, string input_Pass) {
 		StudentNode* tmp = StuPass;
 		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->student.student_id == input_ID) {
 				if (tmp->student.password == input_Pass) {
 					onstatus_ID = input_ID;
 					ChangeStuPass = tmp;
-					// cout << "Login Succesfully" << endl;
 					return true;
 				}
 				else {
-					// cout << "wrong username or password, please try again" << endl;
 					return false;
 					break;
 				}
 			}
 		}
 		if (tmp == NULL) return false;
-	}
 }
-bool LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass) {
-	while (1) {
-		string input_UserName;
-		string input_Pass;
-		// cout << "Enter your username: ";
-		cin >> input_UserName;
-		// cout << "Enter your password: ";
-		cin >> input_Pass;
+bool LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass, string input_UserName, string input_Pass) {
 		StaffNode* tmp = StaffPass;
 		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->staff.username == input_UserName) {
 				if (tmp->staff.password == input_Pass) {
 					onstatus_UserName = input_UserName;
 					ChangeStaffPass = tmp;
-					// cout << "Login Succesfully" << endl;
 					return true;
 				}
 				else {
-					// cout << "wrong username or password, please try again" << endl;
 					return false;
 					break;
 				}
 			}
 		}
 		if (tmp == NULL) return false;
-	}
 }
 void UpdateStuPassFile(StudentNode* List, ofstream& op) {
 	op.open("../database/Students_Password.csv");
@@ -114,40 +104,24 @@ void UpdateStaffPassFile(StaffNode* List, ofstream& op) {
 	}
 	op.close();
 }
-bool ChangePassStudent(StudentNode* current) {
-	while (1) {
-		string input_Pass;
-		// cout << "Enter your current password: ";
+bool ChangePassStudent(StudentNode* current, string input_Pass) {
+	if (current->student.password == input_Pass) {
 		cin >> input_Pass;
-		if (current->student.password == input_Pass) {
-			// cout << "Enter your new password: ";
-			cin >> input_Pass;
-			current->student.password = input_Pass;
-			// cout << "Password changed successfully " << endl;
-			return true;
-		}
-		else {
-			// cout << "current password is wrong, please try again" << endl;
-			return false;
-		}
+		current->student.password = input_Pass;
+		return true;
+	}
+	else {
+		return false;
 	}
 }
-bool ChangePassStaff(StaffNode* current) {
-	while (1) {
-		string input_Pass;
-		// cout << "Enter your current password: ";
+bool ChangePassStaff(StaffNode* current, string input_Pass) {
+	if (current->staff.password == input_Pass) {
 		cin >> input_Pass;
-		if (current->staff.password == input_Pass) {
-			// cout << "Enter your new password: ";
-			cin >> input_Pass;
-			current->staff.password = input_Pass;
-			// cout << "Password changed successfully" << endl;
-			return true;
-		}
-		else {
-			// cout << "current password is wrong, please try again" << endl;
-			return false;
-		}
+		current->staff.password = input_Pass;
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 //new session

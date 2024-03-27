@@ -61,7 +61,7 @@
     <ClInclude Include="..\struct and function\struct_and_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
+    <ClInclude Include="..\struct and function\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
