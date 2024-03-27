@@ -59,8 +59,9 @@ int main()
             break;
         }
     }
-    exportYearSemester(year, "./database/semester.csv", fout);
+    exportYearSemester(year, "./database/year.csv", fout);
     deleteYearList(year);
+    delete user1, user2;
 
     return 0;
 }

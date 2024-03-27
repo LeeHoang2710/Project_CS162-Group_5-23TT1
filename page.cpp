@@ -254,7 +254,7 @@ void homeStaff(RenderWindow &window, int &page)
     }
 }
 
-void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -274,7 +274,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
     for (int i = 0; i < 4; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        id[i] = createInfoTest("", 316, 117 * i + 354);
+        id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
     }
 
     bool new_page = true;
@@ -294,8 +294,6 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    if (isHere(f.bound, mouse))
-                        page = 5;
                     if (isHere(b.bound, mouse))
                         page = 3;
                     if (isHere(create.bound, mouse))
@@ -314,6 +312,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
                         str = to_string(start + 1) + dash + to_string(end + 1);
 
                         Year new_year = createYear(str);
+                        new_year.list_sem = nullptr;
                         addNewYearNode(year, new_year);
                         count++;
                     }
@@ -339,6 +338,12 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
+        window.draw(create.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
         if (new_page && year)
         {
             YearNode *temp = year;
@@ -346,8 +351,13 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
                 temp = temp->next;
             for (int i = 0; i < 4; ++i)
             {
-                id[i]->txt.setString(temp->school_year.year_id);
-                temp = temp->next;
+                if (temp)
+                {
+                    id[i]->txt.setString(temp->school_year.year_id);
+                    temp = temp->next;
+                }
+                else
+                    id[i]->txt.setString("");
             }
             new_page = false;
         }
@@ -359,12 +369,6 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *year)
             window.draw(add[i]->draw);
             window.draw(id[i]->txt);
         }
-        window.draw(create.draw);
-        window.draw(f.draw);
-        window.draw(b.draw);
-        window.draw(prev.draw);
-        window.draw(next.draw);
-        window.draw(menu.draw);
         window.display();
     }
     for (int i = 0; i < 4; ++i)

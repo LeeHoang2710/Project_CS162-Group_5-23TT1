@@ -33,7 +33,7 @@ void Typing(bool texting, Info &info, string &input, Event event);
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass);
 void homeStaff(RenderWindow &window, int &page);
-void School(RenderWindow &window, int &page, bool is_staff, YearNode *year);
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year);
 void Study(RenderWindow &window, int &page, bool is_staff);
 void Classes(RenderWindow &window, int &page, bool is_staff);
 void Other(RenderWindow &window, int &page, bool is_staff);
