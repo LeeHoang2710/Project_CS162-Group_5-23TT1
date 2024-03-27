@@ -131,6 +131,7 @@
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Course_function.cpp" />
+    <ClCompile Include="menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
@@ -144,6 +145,7 @@
     <ClInclude Include="..\struct and function\login.h" />
     <ClInclude Include="..\struct and function\struct_and_library.h" />
     <ClInclude Include="..\struct and function\student.h" />
+    <ClInclude Include="menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
