@@ -12,8 +12,9 @@ SemesterNode *createSemesterNode(const Semester &new_sem)
     return new SemesterNode{new_sem, nullptr};
 }
 
-void appendSemesterNode(SemesterNode *&sem_list, SemesterNode *new_sem_node)
+void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem)
 {
+    SemesterNode *new_sem_node = createSemesterNode(new_sem);
     if (!sem_list)
         sem_list = new_sem_node;
     else
@@ -21,9 +22,9 @@ void appendSemesterNode(SemesterNode *&sem_list, SemesterNode *new_sem_node)
         SemesterNode *curr = sem_list;
         while (curr->next)
             curr = curr->next;
-
         curr->next = new_sem_node;
     }
+    return;
 }
 void importSemester(SemesterNode *&sem_list, istringstream &is)
 {
