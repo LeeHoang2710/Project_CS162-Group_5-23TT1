@@ -29,7 +29,7 @@ void addNewYearNode(YearNode *&head, Year p_year)
     return;
 }
 
-YearNode *searchYearNode(YearNode *head, Year year)
+YearNode *searchYearNode(YearNode *head, string year)
 {
     if (!head)
     {
@@ -39,7 +39,7 @@ YearNode *searchYearNode(YearNode *head, Year year)
     YearNode *list_year = head;
     while (list_year)
     {
-        if (list_year->school_year.year_id == year.year_id)
+        if (list_year->school_year.year_id == year)
             return list_year;
         else
             list_year = list_year->next;
@@ -70,11 +70,18 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
 {
     fin.open(filename);
 
-    YearNode *currYear = year_list;
-    string year;
-    while (getline(fin, year))
+    string line;
+    while (getline(fin, line))
     {
-        Year new_year = createYear(year);
+        Year new_year = createYear(line);
+        for (int i = 0; i < 3; ++i)
+        {
+            if (getline(fin, line))
+            {
+                istringstream is(line);
+                importSemester(new_year.list_sem, is);
+            }
+        }
         addNewYearNode(year_list, new_year);
     }
 
@@ -89,6 +96,7 @@ void exportYear(YearNode *year_list, string filename, ofstream &fout)
     while (currYear)
     {
         fout << currYear->school_year.year_id << endl;
+        exportSemesterInYear(currYear->school_year.list_sem, fout);
         currYear = currYear->next;
     }
 

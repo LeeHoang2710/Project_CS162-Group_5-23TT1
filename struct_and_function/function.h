@@ -22,14 +22,14 @@ Year createYear(string p_year_id);
 YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
 void removeNewYearNode(YearNode *&head, Year year);
-YearNode *searchYearNode(YearNode *head, Year year);
+YearNode *searchYearNode(YearNode *head, string year);
 void importYear(YearNode *&year_list, string filename, ifstream &fin);
 void exportYear(YearNode *year_list, string filename, ofstream &fout);
+void deleteYearList(YearNode *&year_list);
 
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);
-
 void appendSemesterNode(SemesterNode *&sem_list, SemesterNode *new_sem_node);
-
-void deleteYearList(YearNode *&year_list);
+void importSemester(SemesterNode *&sem_list, istringstream &is);
+void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);
