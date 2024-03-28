@@ -332,10 +332,10 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                     }
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (isHere(add[i]->bound, mouse))
+                        if (isHere(add[i]->bound, mouse) && one[i])
                         {
-                            page = 5;
-                            Semesters(window, page, one[i]);
+                            cout << "Can pressed" << endl;
+                            page = 3;
                         }
                     }
                 }
