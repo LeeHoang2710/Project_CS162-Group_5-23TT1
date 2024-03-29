@@ -3,7 +3,7 @@
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date)
 {
     // In this order: semester_id, start_date, end_date, course_list
-    return Semester{sem_id, start_date, end_date, nullptr};
+    return Semester{start_date, end_date, sem_id, nullptr};
 }
 
 SemesterNode *createSemesterNode(const Semester &new_sem)

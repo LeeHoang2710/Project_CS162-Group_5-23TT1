@@ -33,3 +33,8 @@ void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
 void importSemester(SemesterNode *&sem_list, istringstream &is);
 void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);
+
+Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session);
+CourseNode *initCourseNode(Course new_course, StudentNode *liststu);
+void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
+void deletecourse(CourseNode *CourseHead, string delCourse);
