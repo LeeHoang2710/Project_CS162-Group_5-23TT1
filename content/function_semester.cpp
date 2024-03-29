@@ -34,25 +34,11 @@ void importSemester(SemesterNode *&sem_list, istringstream &is)
     getline(is, start_date, ',');
     getline(is, end_date, '\n');
 
-    // Create a new SemesterNode
-    SemesterNode *new_node = new SemesterNode;
-    new_node->sem.semester_id = tempSem;
-    new_node->sem.start_date = start_date;
-    new_node->sem.end_date = end_date;
-    new_node->next = nullptr;
+    // Create a new Semester
+    Semester new_sem = createSemester(tempSem, start_date, end_date);
 
-    // Add the new node to the sem_list
-    if (sem_list == nullptr)
-        sem_list = new_node;
-    else
-    {
-        SemesterNode *curr = sem_list;
-        while (curr->next)
-        {
-            curr = curr->next;
-        }
-        curr->next = new_node;
-    }
+    // Append the new Semester to the sem_list
+    appendSemesterNode(sem_list, new_sem);
 }
 
 void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout)

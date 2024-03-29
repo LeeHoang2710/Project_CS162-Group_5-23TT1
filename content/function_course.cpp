@@ -31,9 +31,7 @@ void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu)
     {
         CourseNode *list_course = head;
         while (list_course->next)
-        {
             list_course = list_course->next;
-        }
         list_course->next = new_course_node;
     }
 }
