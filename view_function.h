@@ -37,6 +37,8 @@ void homeStaff(RenderWindow &window, int &page);
 void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year);
 void Semesters(RenderWindow &window, int &page, YearNode *&year);
 void addSemester(RenderWindow &window, YearNode *&year, int &page);
+void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem);
+void addCourse(RenderWindow &window, CourseNode *&course, int &page);
 void Study(RenderWindow &window, int &page, bool is_staff);
 void Classes(RenderWindow &window, int &page, bool is_staff);
 void Other(RenderWindow &window, int &page, bool is_staff);

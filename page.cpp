@@ -265,7 +265,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     // Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 464);
     // Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 581);
     //  Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
-    Object create = createObject("./image/page3-staff/school_year/create.png", 263, 259);
+    Object create = createObject("./image/page3-staff/school_year/create_yr.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
@@ -334,8 +334,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                     {
                         if (isHere(add[i]->bound, mouse) && one[i])
                         {
-                            cout << "Can pressed" << endl;
-                            page = 3;
+                            page = 5;
+                            Semesters(window, page, one[i]);
                         }
                     }
                 }
@@ -396,8 +396,8 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object f = createObject("./image/page3-staff/forward.png", 231, 256);
     Object b = createObject("./image/page3-staff/backward.png", 183, 256);
-    Object o1 = createObject("./image/page3-staff/school_year/year-bg.png", 180, 120);
-    Object create = createObject("./image/page3-staff/school_year/create.png", 263, 259);
+    Object o1 = createObject("./image/page3-staff/school_year/semester-bg.png", 180, 120);
+    Object create = createObject("./image/page3-staff/school_year/create_sem.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
@@ -429,6 +429,14 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
                     {
                         page = 6;
                         addSemester(window, year, page);
+                    }
+                    for (int i = 0; i < 3; ++i)
+                    {
+                        if (isHere(add[i]->bound, mouse) && sem[i])
+                        {
+                            page = 7;
+                            Courses(window, sem[i]->sem.course_list, page, year->school_year.year_id, sem[i]->sem.semester_id);
+                        }
                     }
                 }
                 break;
@@ -491,9 +499,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
     Info t3 = createText(check->school_year.year_id, 480, 451);
     Info t4 = createText("", 480, 518);
     Info t5 = createText("", 480, 584);
-    string sem_id;
-    string start;
-    string end;
+    string sem_id, start, end;
+
     while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -513,19 +520,22 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
                     if (isHere(o2.bound, mouse))
                     {
                         typing_sem = true;
-                        typing_st = typing_e = false;
+                        typing_e = false;
+                        typing_st = false;
                         t2.txt.setString(sem_id);
                     }
                     else if (isHere(o4.bound, mouse))
                     {
                         typing_st = true;
-                        typing_sem = typing_e = false;
+                        typing_e = false;
+                        typing_sem = false;
                         t4.txt.setString(start);
                     }
                     else if (isHere(o5.bound, mouse))
                     {
                         typing_e = true;
-                        typing_sem = typing_st = false;
+                        typing_st = false;
+                        typing_sem = false;
                         t5.txt.setString(end);
                     }
                     else if (isHere(append.bound, mouse))
@@ -536,15 +546,19 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
                         clock.restart();
                     }
                     else
-                        typing_sem = typing_st = typing_e = false;
+                    {
+                        typing_sem = false;
+                        typing_st = false;
+                        typing_e = false;
+                    }
                 }
                 break;
             }
             case Event::TextEntered:
             {
                 Typing(typing_sem, t2, sem_id, event);
-                Typing(typing_st, t2, start, event);
-                Typing(typing_e, t2, end, event);
+                Typing(typing_st, t4, start, event);
+                Typing(typing_e, t5, end, event);
                 break;
             }
             }
@@ -568,6 +582,191 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
             window.display();
         }
     }
+}
+
+void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object f = createObject("./image/page3-staff/forward.png", 231, 258);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 258);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object create = createObject("./image/page3-staff/course/create-cour.png", 260, 258);
+    Object del = createObject("./image/page3-staff/course/delete-cour.png", 589, 258);
+    Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
+    Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
+    Info total = createText("", 1050, 258);
+    Info title = createText(yr + "-" + sem, 475, 168);
+    Object *subject[4];
+    Info *inf[4];
+    CourseNode *one[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        subject[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        inf[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+    }
+    bool new_page = true;
+    int count = 0, change = 0;
+    for (CourseNode *curr = course; course; course = course->next)
+        count++;
+    while (window.isOpen() && page == 7)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 5, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(create.draw);
+        window.draw(del.draw);
+        window.draw(sum.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        total.txt.setString(to_string(count) + " courses");
+        window.draw(total.txt);
+        window.draw(title.txt);
+        window.display();
+    }
+    for (int i = 0; i < 4; ++i)
+        delete subject[i], inf[i];
+}
+
+void addCourse(RenderWindow &window, CourseNode *&course, int &page)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
+    Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
+    Object import = createObject("./image/page3-staff/course/import.png", 534, 258);
+    Object update = createObject("./image/page3-staff/course/update.png", 925, 258);
+    Object o1 = createObject("./image/page3-staff/course/create-cour-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
+    Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
+    Object o4 = createObject("./image/page3-staff/course/input.png", 497, 499);
+    Object o5 = createObject("./image/page3-staff/course/input.png", 497, 560);
+    Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
+    Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
+    Clock clock;
+    bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false;
+
+    Info *inf[4];
+    Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        inf[i] = createInfoTest("", 512, 377 + 61 * i);
+        yes_sess[i] = createObjectTest("./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
+        no_sess[i] = createObjectTest("./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672);
+        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672);
+    }
+    Info stu = createText(to_string(course->course.max_students), 525, 625);
+    Info cre = createText(to_string(course->course.num_credit), 985, 625);
+    string cour_id, cour_name, classes, teacher;
+    while (window.isOpen() && page == 8)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 7, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                    if (isHere(o2.bound, mouse))
+                    {
+                        typing_name = true;
+                        typing_class = false;
+                        typing_teacher = false;
+                        inf[0]->txt.setString(cour_id);
+                    }
+                    else if (isHere(o3.bound, mouse))
+                    {
+                        typing_id = true;
+                        typing_class = false;
+                        typing_teacher = false;
+                        inf[1]->txt.setString(cour_name);
+                    }
+                    else if (isHere(o4.bound, mouse))
+                    {
+                        typing_id = true;
+                        typing_name = false;
+                        typing_teacher = false;
+                        inf[2]->txt.setString(classes);
+                    }
+                    else if (isHere(o5.bound, mouse))
+                    {
+                        typing_id = true;
+                        typing_name = false;
+                        typing_class = false;
+                        inf[3]->txt.setString(teacher);
+                    }
+                    /*else if (isHere(append.bound, mouse))
+                    {
+                        Semester new_sem = createSemester(sem_id, start, end);
+                        appendSemesterNode(check->school_year.list_sem, new_sem);
+                        save = true;
+                        clock.restart();
+                    } */
+                    else
+                    {
+                        typing_id = false;
+                        typing_name = false;
+                        typing_class = false;
+                        typing_teacher = false;
+                    }
+                }
+                break;
+            }
+            case Event::TextEntered:
+            {
+                Typing(typing_id, *inf[0], cour_id, event);
+                Typing(typing_name, *inf[1], cour_name, event);
+                Typing(typing_class, *inf[2], classes, event);
+                Typing(typing_teacher, *inf[3], teacher, event);
+                break;
+            }
+            }
+        }
+    }
+    for (int i = 0; i < 4; ++i)
+        delete inf[i], yes_sess[i], no_sess[i];
+    for (int i = 0; i < 6; ++i)
+        delete yes[i], no[i];
 }
 
 void Other(RenderWindow &window, int &page, bool is_staff)
