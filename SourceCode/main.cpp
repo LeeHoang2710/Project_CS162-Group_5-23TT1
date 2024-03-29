@@ -50,3 +50,11 @@
 //		StaffPassList.close();
 //	}
 //}
+
+int main() {
+	CourseNode* cslist = NULL;
+	ifstream fin;
+	ofstream fout;
+	importCourse(cslist, "../database/course.csv", fin);
+	exportCourse(cslist, "../database/testcourse.csv", fout);
+}

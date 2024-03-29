@@ -1,6 +1,7 @@
 #include "../struct and function/struct_and_library.h"
 #include "../struct and function/course.h"
 #include "../struct and function/student.h"
+
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session) {
 	Course tmp;
 	tmp.course_id = course_id;
@@ -10,18 +11,20 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 	tmp.teaching_session[0] = teaching_session;
 	return tmp;
 };
-CourseNode* initCourseNode(Course new_course, StudentNode* liststu)
+CourseNode* initCourseNode(string new_semester_id, string new_year_id, Course new_course, StudentNode* liststu)
 {
 	CourseNode* new_course_node = new CourseNode;
 	new_course_node->next = NULL;
+	new_course_node->semester_id = new_semester_id;
+	new_course_node->year_id = new_year_id;
 	new_course_node->course = new_course;
 	new_course_node->student_list = liststu;
 	return new_course_node;
 }
-void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu) {
+void addNewCourseNode(CourseNode*& head, string semester_id, string year_id, Course cs, StudentNode* liststu) {
 	//semester id 
 	// year id
-	CourseNode* new_course_node = initCourseNode(cs, liststu);
+	CourseNode* new_course_node = initCourseNode(semester_id, year_id, cs, liststu);
 	if (!head)
 		head = new_course_node;
 	else {
@@ -33,6 +36,8 @@ void addNewCourseNode(CourseNode*& head, Course cs, StudentNode* liststu) {
 	}
 }
 void InputCourse(CourseNode*& head ) {
+	string year;
+	string semester;
 	Course cs;
 	cout << "Course id: ";
 	cin >> cs.course_id; 
@@ -62,7 +67,7 @@ void InputCourse(CourseNode*& head ) {
 		while (readStudentFromTerminal(liststu)) {
 		}
 	}
-	addNewCourseNode(head, cs, liststu);
+	addNewCourseNode(head, semester, year, cs, liststu);
 }
 void OutputCourse(Course cs) {
 	cout << cs.course_id << endl;
@@ -150,4 +155,49 @@ void deletecourse(CourseNode* CourseHead,string delCourse) {
 			delete del;
 		}
 	}
+}
+// Import a lot courses from file without students, and export 
+void importCourse(CourseNode*& Courselist, string filename, ifstream& fin) {
+	fin.open(filename);
+	string year;
+	string semester;
+	getline(fin, year, '\n');
+	getline(fin, semester, '\n');
+	while (1) {
+		Course cs;
+		string line;
+		string number;
+		getline(fin, line);
+		stringstream ss(line);
+		getline(ss, cs.course_id, ',');
+		if (cs.course_id == "*") break;
+		getline(ss, cs.course_name, ',');
+		getline(ss, cs.teacher_name, ',');
+		getline(ss, number, ',');
+		cs.num_credit = stoi(number);
+		getline(ss, number, ',');
+		cs.max_students = stoi(number);
+		getline(ss, number, ',');
+		cs.teaching_session[0].day_of_the_week = stoi(number);
+		getline(ss, number, '\n');
+		cs.teaching_session[0].session_no = stoi(number);
+		addNewCourseNode(Courselist, semester, year, cs, nullptr);
+	}
+	fin.close();
+}
+void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
+	fout.open(filename);
+	for (CourseNode* tmp = Courselist; tmp != NULL; tmp = tmp->next) {
+		fout << tmp->year_id << endl;
+		fout << tmp->semester_id << endl;
+		fout << tmp->course.course_id << ",";
+		fout << tmp->course.course_name << ",";
+		fout << tmp->course.teacher_name << ",";
+		fout << tmp->course.num_credit << ",";
+		fout << tmp->course.max_students << ",";
+		fout << tmp->course.teaching_session[0].day_of_the_week << ",";
+		fout << tmp->course.teaching_session[0].session_no << "\n";
+		fout << "*" <<endl;
+	}
+	fout.close();
 }
