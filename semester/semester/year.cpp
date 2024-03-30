@@ -1,6 +1,12 @@
 #include "../year.h"
 #include "../semester.h"
 
+void inputYearId(string& year_id)
+{
+	cout << "Enter year ID: ";
+	cin >> year_id;
+}
+
 Year createYear(const string& p_year_id)
 {
 	return Year{ p_year_id, nullptr };
@@ -22,6 +28,11 @@ void appendYearNode(YearNode*& head, YearNode* new_year_node)
 			curr = curr->next;
 		curr->next = new_year_node;
 	}
+}
+
+void updateYearId(YearNode* yearNode, const string& year_id)
+{
+	yearNode->school_year.year_id = year_id;
 }
 
 bool removeYearNode(YearNode*& head, const string& year_id)
@@ -59,6 +70,5 @@ YearNode* searchYearNode(YearNode* head, const string& year_id)
 		head = head->next;
 	}
 
-	//cout << "Cannot find the searched year..." << endl;
 	return nullptr;
 }

@@ -12,33 +12,40 @@ void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 	}
 
 	YearNode* currYear = year_list;
-	string line;
-	while (getline(fin, line))
+	string year_id;
+	while (getline(fin, year_id))
 	{
-		istringstream ss(line);
-		string year_id, sem_id, start_date, end_date;
-		getline(ss, year_id, ',');
-		getline(ss, sem_id, ',');
-		getline(ss, start_date, ',');
-		getline(ss, end_date, ',');
+		YearNode* newYearNode = initYearNode(createYear(year_id));
+		if (!currYear)
+			year_list = newYearNode;
+		else
+			currYear->next = newYearNode;
 
-		if (!currYear || currYear->school_year.year_id != year_id)
-		{
-			YearNode* newYearNode = initYearNode(createYear(year_id));
-			if (!currYear)
-				year_list = newYearNode;
-			else
-				currYear->next = newYearNode;
-
-			currYear = newYearNode;
-		}
-
-			Semester newSem = createSemester(sem_id, start_date, end_date);
-			SemesterNode* newSemNode = createSemesterNode(newSem);
-			appendSemesterNode(currYear->school_year.list_sem, newSemNode);
+		currYear = newYearNode;
+		createThreeSemesterNode(currYear->school_year.list_sem);
+		importSemesterInYear(currYear->school_year.list_sem, fin);
 	}
 
 	fin.close();
+}
+
+void importSemesterInYear(SemesterNode* sem_list, ifstream& fin)
+{
+	if (!fin.is_open())
+	{
+		cout << "File is not open." << endl;
+		return;
+	}
+	string line;
+	while (getline(fin, line) && sem_list)
+	{
+		istringstream is(line);
+		string tempSem;
+		getline(is, tempSem, ',');
+		getline(is, sem_list->sem.start_date, ',');
+		getline(is, sem_list->sem.end_date, '\n');
+		sem_list = sem_list->next;
+	}
 }
 
 void exportYearSemester(YearNode* year_list, string filename, ofstream& fout)
@@ -53,23 +60,28 @@ void exportYearSemester(YearNode* year_list, string filename, ofstream& fout)
 
 	while (year_list)
 	{
-		SemesterNode* currSem = year_list->school_year.list_sem;
-		while (currSem)
-		{
-			fout << year_list->school_year.year_id << ","
-				<< currSem->sem.semester_id << ","
-				<< currSem->sem.start_date << ","
-				<< currSem->sem.end_date << endl;
-			currSem = currSem->next;
-		}
-
+		fout << year_list->school_year.year_id << endl;
+		exportSemesterInYear(year_list->school_year.list_sem, fout);
 		year_list = year_list->next;
+		if (year_list)
+			fout << endl;
 	}
 
 	fout.close();
 }
 
-void inputSemester(string& sem_id, string& start_date, string& end_date)
+void exportSemesterInYear(SemesterNode* sem_list, ofstream& fout)
+{
+	while (sem_list)
+	{
+		fout << sem_list->sem.semester_id << ","
+			<< sem_list->sem.start_date << ","
+			<< sem_list->sem.end_date << endl;
+		sem_list = sem_list->next;
+	}
+}
+
+void inputSemesterInfo(string& sem_id, string& start_date, string& end_date)
 {
 	int sem_num;
 	cout << "Enter semester number (1, 2, or 3): ";
@@ -83,13 +95,22 @@ void inputSemester(string& sem_id, string& start_date, string& end_date)
 
 Semester createSemester(const string& sem_id, const string& start_date, const string& end_date)
 {
-	// In this order: semester_id, start_date, end_date, course_list
-	return Semester{ sem_id, start_date, end_date, nullptr };
+	return Semester{ start_date, end_date, sem_id, nullptr };
 }
 
 SemesterNode* createSemesterNode(const Semester& new_sem)
 {
 	return new SemesterNode{ new_sem, nullptr };
+}
+
+void createThreeSemesterNode(SemesterNode*& sem_list)
+{
+	Semester sem1 = { "Semester 1", "", "", nullptr };
+	Semester sem2 = { "Semester 2", "", "", nullptr };
+	Semester sem3 = { "Semester 3", "", "", nullptr };
+	sem_list = new SemesterNode{ sem1, nullptr };
+	sem_list->next = new SemesterNode{ sem2, nullptr };
+	sem_list->next->next = new SemesterNode{ sem3, nullptr };
 }
 
 void addCourseListToSemester(SemesterNode*& semNode, CourseNode* course_list)
@@ -111,30 +132,36 @@ void appendSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 	}
 }
 
-void updateSemesterInfo(SemesterNode* semNode, const string& new_sem_id, const string& new_start_date, const string& new_end_date)
+void createAndAddSemesterNode(YearNode*& currYear, const string& sem_id, const string& start_date, const string& end_date)
 {
-	if (semNode->sem.semester_id != new_sem_id)
-		semNode->sem.semester_id = new_sem_id;
+	Semester newSem = createSemester(sem_id, start_date, end_date);
+	SemesterNode* newSemNode = createSemesterNode(newSem);
+	appendSemesterNode(currYear->school_year.list_sem, newSemNode);
+}
 
-	if (semNode->sem.start_date != new_start_date)
+void inputSemesterDates(string& start_date, string& end_date)
+{
+	cout << "Enter zero (0) to skip." << endl;
+	cout << "Enter start date (dd/mm/yyyy): ";
+	cin >> start_date;
+	cout << "Enter end date (dd/mm/yyyy): ";
+	cin >> end_date;
+}
+
+void updateSemesterInfo(SemesterNode* semNode, const string& new_start_date, const string& new_end_date)
+{
+	if (new_start_date != "0" && semNode->sem.start_date != new_start_date)
 		semNode->sem.start_date = new_start_date;
 
-	if (semNode->sem.end_date != new_end_date)
+	if (new_end_date != "0" && semNode->sem.end_date != new_end_date)
 		semNode->sem.end_date = new_end_date;
 }
 
-SemesterNode* searchSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
+SemesterNode* searchSemesterNode(YearNode* yearNode, int sem_num)
 {
-	YearNode* yearNode = searchYearNode(year_list, year_id);
-	if (!yearNode)
-		return nullptr;
-
 	SemesterNode* semNode = yearNode->school_year.list_sem;
 	if (!semNode)
-	{
-		cout << "There are no semesters in school year " << year_id << "." << endl;
 		return nullptr;
-	}
 
 	string sem_id = "Semester " + to_string(sem_num);
 	while (semNode)
@@ -145,7 +172,6 @@ SemesterNode* searchSemesterNode(YearNode* year_list, const string& year_id, int
 		semNode = semNode->next;
 	}
 
-	cout << sem_id << " does not exist in school year " << year_id << endl;
 	return nullptr;
 }
 
