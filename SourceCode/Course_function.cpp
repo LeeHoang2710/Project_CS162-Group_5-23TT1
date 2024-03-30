@@ -186,6 +186,6 @@ void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
 		fout << tmp->course.max_students << ",";
 		fout << tmp->course.teaching_session[0].day_of_the_week << ",";
 		fout << tmp->course.teaching_session[0].session_no << "\n";
-		fout << "*" <<endl;
 	}
+	fout << "*" << endl;
 }

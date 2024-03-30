@@ -51,10 +51,14 @@
 //	}
 //}
 
-int main() {
-	CourseNode* cslist = NULL;
-	ifstream fin;
-	ofstream fout;
-	importCourse(cslist, "../database/course.csv", fin);
-	exportCourse(cslist, "../database/testcourse.csv", fout);
-}
+//int main() {
+//	CourseNode* cslist = NULL;
+//	ifstream fin;
+//	ofstream fout;
+//	fin.open("../database/course.csv");
+//	fout.open("../database/testcourse.csv", ios::app);
+//	importCourse(cslist, "year ", "seme", ".. /database/course.csv", fin);
+//	exportCourse(cslist, "../database/testcourse.csv", fout);
+//	fin.close();
+//	fout.close();
+//}
