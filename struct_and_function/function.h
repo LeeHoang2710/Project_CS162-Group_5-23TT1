@@ -38,3 +38,5 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course, StudentNode *liststu);
 void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void deletecourse(CourseNode *CourseHead, string delCourse);
+void importCourse(CourseNode *&Courselist, istringstream &ss);
+void exportCourse(CourseNode *Courselist, ofstream &fout);

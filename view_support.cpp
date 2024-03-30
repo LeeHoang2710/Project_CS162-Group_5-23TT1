@@ -62,7 +62,7 @@ bool isHere(FloatRect &bound, Vector2f &mouse)
     return bound.contains(mouse);
 }
 
-bool chooseDraw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
+bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
 {
     if (isHere(x.bound, mouse))
     {
@@ -74,6 +74,14 @@ bool chooseDraw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
         window.draw(y.draw);
         return false;
     }
+}
+
+void chooseDraw(RenderWindow &window, Object *x, Object *y, bool check)
+{
+    if (check)
+        window.draw(x->draw);
+    else
+        window.draw(y->draw);
 }
 
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)

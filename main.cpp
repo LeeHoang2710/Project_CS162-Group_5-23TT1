@@ -65,3 +65,13 @@ int main()
 
     return 0;
 }
+
+// page 1: who are you
+// page 2: log in
+// page 3: home staff
+// page 4: school year
+// page 5: semester
+// page 6: create sem
+// page 7: course
+// page 8: create cour
+// page 9: update cour

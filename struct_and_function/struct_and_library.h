@@ -59,20 +59,20 @@ struct Course
     string teacher_name;
     int num_credit;
     int max_students = 50;
-    Session teaching_session[2];
+    Session teaching_session;
 };
 struct CourseNode
 {
     string semester_id;
     string year_id;
     Course course;
+    ClassNode *main_class = nullptr;
     StudentNode *student_list = nullptr;
     CourseNode *next;
 };
 struct Class
 {
     string class_id;
-    string head_teacher;
     StudentNode *student_list = nullptr;
 };
 struct ClassNode

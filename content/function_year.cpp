@@ -78,6 +78,8 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
         {
             if (getline(fin, line))
             {
+                if (line == "#")
+                    break;
                 istringstream is(line);
                 importSemester(new_year.list_sem, is);
             }
@@ -96,7 +98,10 @@ void exportYear(YearNode *year_list, string filename, ofstream &fout)
     while (currYear)
     {
         fout << currYear->school_year.year_id << endl;
-        exportSemesterInYear(currYear->school_year.list_sem, fout);
+        if (!currYear->school_year.list_sem)
+            fout << "#" << endl;
+        else
+            exportSemesterInYear(currYear->school_year.list_sem, fout);
         currYear = currYear->next;
     }
 

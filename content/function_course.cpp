@@ -54,3 +54,42 @@ void deletecourse(CourseNode *CourseHead, string delCourse)
         }
     }
 }
+
+void importCourse(CourseNode *&Courselist, istringstream &ss)
+{
+    while (ss)
+    {
+        Course cs;
+        string line;
+        string number;
+        getline(ss, cs.course_id, ',');
+        if (cs.course_id == "*")
+            break;
+        getline(ss, cs.course_name, ',');
+        getline(ss, cs.teacher_name, ',');
+        getline(ss, number, ',');
+        cs.num_credit = stoi(number);
+        getline(ss, number, ',');
+        cs.max_students = stoi(number);
+        getline(ss, number, ',');
+        cs.teaching_session[0].day_of_the_week = stoi(number);
+        getline(ss, number, '\n');
+        cs.teaching_session[0].session_no = stoi(number);
+        addNewCourseNode(Courselist, cs, nullptr);
+    }
+}
+
+void exportCourse(CourseNode *Courselist, ofstream &fout)
+{
+    for (CourseNode *tmp = Courselist; tmp != NULL; tmp = tmp->next)
+    {
+        fout << tmp->course.course_id << ",";
+        fout << tmp->course.course_name << ",";
+        fout << tmp->course.teacher_name << ",";
+        fout << tmp->course.num_credit << ",";
+        fout << tmp->course.max_students << ",";
+        fout << tmp->course.teaching_session[0].day_of_the_week << ",";
+        fout << tmp->course.teaching_session[0].session_no << endl;
+    }
+    fout << "*" << endl;
+}
