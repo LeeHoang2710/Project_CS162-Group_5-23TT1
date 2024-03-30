@@ -7,3 +7,7 @@ outputTest.txt
 semester/semester/semester.vcxproj
 semester/semester/semester.vcxproj.filters
 semester/semester/semester.vcxproj.user
+*.user
+*.vcxproj
+*.filters
+*.txt
