@@ -150,3 +150,96 @@ void ReadClassfromfile(ClassNode* Listclass[],ifstream &fin)
 		i++;
 	}
 }
+void ReadStudentfromfile(StudentNode*& ListStu, ifstream& fin)
+{
+	string Line;
+	while (getline(fin, Line, '\n'))
+	{
+		stringstream ss(Line);
+		string word;
+		if (!ListStu) 
+		{
+			ListStu = new StudentNode();
+			getline(ss, word, ',');
+			int oder = 0;
+			for (int i = word.length() - 1; i >= 0; --i) 
+			{
+				oder = oder * 10 + word[i] - '0';
+			}
+			ListStu->student.num = oder;
+			getline(ss, word, ',');
+			ListStu->student.student_id = word;
+			getline(ss, word, ',');
+			ListStu->student.first_name = word;
+			string word1, word2;
+			getline(ss, word1, ',');
+			getline(ss, word2, ',');
+			if (word2 != "1" && word2 != "0") 
+			{
+				word = word1 + word2;
+			}
+			else
+				word = word1;
+			ListStu->student.last_name = word;
+			getline(ss, word, ',');
+			if (word == "0")
+			{
+				ListStu->student.gender = 0;
+			}
+			else
+				ListStu->student.gender = 1;
+			getline(ss, word, ',');
+			ListStu->student.dob = word;
+			getline(ss, word, ',');
+			ListStu->student.social_id = word;
+			getline(ss, word, ',');
+			ListStu->student.student_class = word;
+			ListStu->next = 0;
+		}
+		else 
+		{
+			StudentNode* tmp = ListStu;
+			while (tmp->next) 
+			{
+				tmp = tmp->next;
+			}
+			StudentNode* newnode = new StudentNode();
+			getline(ss, word, ',');
+			int oder = 0;
+			for (int i = word.length() - 1; i >= 0; --i) 
+			{
+				oder = oder * 10 + word[i] - '0';
+			}
+			newnode->student.num = oder;
+			getline(ss, word, ',');
+			newnode->student.student_id = word;
+			getline(ss, word, ',');
+			newnode->student.first_name = word;
+			string word1, word2;
+			getline(ss, word1, ',');
+			getline(ss, word2, ',');
+			if (word2 != "1" && word2 != "0") 
+			{
+				word = word1 + word2;
+			}
+			else
+				word = word1;
+			newnode->student.last_name = word;
+			getline(ss, word, ',');
+			if (word == "0")
+			{
+				newnode->student.gender = 0;
+			}
+			else
+				newnode->student.gender = 1;
+			getline(ss, word, ',');
+			newnode->student.dob = word;
+			getline(ss, word, ',');
+			newnode->student.social_id = word;
+			getline(ss, word, ',');
+			newnode->student.student_class = word;
+			newnode->next = 0;
+			tmp->next = newnode;
+		}
+	}
+}
