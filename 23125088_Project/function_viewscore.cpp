@@ -19,7 +19,7 @@ void Viewallmyscore(Student stu)
 		cout << setw(15) << left << resulist->results.score.midterm;
 		cout << setw(15) << left << resulist->results.score.final;
 		cout << setw(15) << left << fixed << setprecision(1) << resulist->results.score.overall;
-		
+		resulist=resulist->next;
 		cout << "\n";
 	}
 	cout << "Your curren gpa is: " << stu.cur_gpa << "\n";
