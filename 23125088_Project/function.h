@@ -14,6 +14,7 @@ void DeleteClassNode(ClassNode*& head, Class del_class);
 ClassNode* SearchClassNode(ClassNode*& head, Class searchclass);
 void AddStudent(ClassNode*& head, string classid, StudentNode* newstudent);
 void ReadClassfromfile(ClassNode* Listclass[], ifstream& fin);
+void ReadStudentfromfile(StudentNode*& ListStu, ifstream& fin);
 //Student
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_class);
 StudentNode* initStudentNode(Student new_student);
