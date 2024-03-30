@@ -47,7 +47,7 @@ void Viewgpaallstudent(StudentNode* stuhead)
 		cout << setw(15) << left << stuhead->student.last_name;
 		cout << setw(15) << left << stuhead->student.first_name;
 		cout << setw(20) << left << stuhead->student.dob;
-		if (stuhead->student.gender)
+		if (!stuhead->student.gender)
 			cout << setw(15) << left << "Male";
 
 		else
