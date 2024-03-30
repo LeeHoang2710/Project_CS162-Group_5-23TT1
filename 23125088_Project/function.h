@@ -74,3 +74,7 @@ YearNode* initYearNode(Year school_year);
 void addNewYearNode(YearNode*& head, YearNode* year);
 void removeNewYearNode(YearNode*& head, Year year);
 YearNode* searchYearNode(YearNode* head, string year_id);
+// View
+void Viewallmyscore(Student stu);
+void Findoverall(StudentNode* stu);
+void Viewgpaallstudent(StudentNode* stuhead);//adding mycourse
