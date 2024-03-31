@@ -30,6 +30,15 @@
     <ClCompile Include="menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\session, year, semester\semester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\session, year, semester\session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\session, year, semester\year.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\testcourse.csv">
@@ -55,13 +64,22 @@
     <ClInclude Include="..\struct and function\login.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\struct and function\student.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\struct and function\struct_and_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\struct and function\menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\struct and function\student.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\session, year, semester\semester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\session, year, semester\session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\session, year, semester\year.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

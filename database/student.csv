@@ -1,5 +1,18 @@
+23TT1
 1,23125057,Hoang,Bui Le,0,27/10/2005,23APCS1
 2,23125078,Chau,Le Kim,0,21/01/2005,23APCS1
 3,23125040,Nam,Vo Hoang,0,09/05/2005,23APCS1
 4,23125088,Phat,Le Thanh,0,15/09/2005,23APCS1
 5,23125064,Nguyen,Cao Hoang,0,03/03/2005,23APCS1
+
+
+clasnode.studenthead
+
+
+23125078, nguyen le quocs, dob,... (studentlist) 20tt1
+
+cin >> classnode.class.studentnode;
+cin >> studentlist (tu do) (intput tu ban phim)
+
+cout << classnode.class.studentnode; (classnode.class.studentnode head)
+cout << studentlist (tu do)

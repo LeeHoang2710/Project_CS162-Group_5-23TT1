@@ -21,11 +21,10 @@ struct Class;
 struct ClassNode;
 
 struct Score;
-struct Results;
-struct ResultsNode;
 struct Student;
 struct StudentNode;
-struct MyCourse;
+struct Result;
+struct ResultsNode;
 
 struct Year
 {
@@ -61,27 +60,21 @@ struct Course
     string teacher_name;
     int num_credit;
     int max_students = 50;
-    Session teaching_session[2];
-
+    Session teaching_session;
+    ClassNode *main_class = nullptr;
+    StudentNode *student_list = nullptr;
 };
 struct CourseNode
 {
     string semester_id;
     string year_id;
     Course course;
-    StudentNode *student_list = nullptr;
     CourseNode *next;
 };
-struct MyCourse
+struct Class
 {
     string class_id;
-    string head_teacher;
     StudentNode *student_list = nullptr;
-};
-struct Class {
-    string class_id;
-    string head_teacher;
-    StudentNode* student_list = nullptr;
 };
 struct ClassNode
 {
@@ -95,19 +88,6 @@ struct Score
     float final = 0.0f;
     float overall = 0.0f;
 };
-struct Staff {
-    string username;
-    string first_name;
-    string last_name;
-    bool gender;
-    string dob;
-    string social_id;
-    string password;
-};
-struct StaffNode {
-    Staff staff;
-    StaffNode* next;
-};
 struct Student
 {
     int num;
@@ -119,7 +99,7 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    ResultsNode* results_list = nullptr;
+    ResultsNode* my_course = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
@@ -128,38 +108,32 @@ struct StudentNode
     Student student;
     StudentNode *next;
 };
-
 struct Results
 {
     Score score;
-    CourseNode* course = nullptr;
-    SemesterNode* sem = nullptr;
-    YearNode* year = nullptr;
+    CourseNode *course = nullptr;
+    SemesterNode *sem = nullptr;
+    YearNode *year = nullptr;
 };
 
 struct ResultsNode
 {
     Results results;
-    ResultsNode* next = nullptr;
+    ResultsNode *next = nullptr;
+}
+;
+struct Staff
+{
+    string username;
+    string first_name;
+    string last_name;
+    bool gender;
+    string dob;
+    string social_id;
+    string password;
 };
-
-// input year, init year node, yearlist head, 2023-2024
-// input 1 semester, insert into semester node, semester list 
-// input course, append courselist,
-// input list of students,
-// iterate student 
-// duyet qua course.class.student
-// tao resultnode,
-// resultnode.result.yearnode= cur year node;
-// semnode= cur semnode;
-// coursenode=cur course
-// append resultnode;
-
-//view course of one student
-// 
-// display 
-
-
-// staff :
-// year -> semester -> listcourse -> course -> studentlist -> 
-// 
+struct StaffNode
+{
+    Staff staff;
+    StaffNode *next;
+};

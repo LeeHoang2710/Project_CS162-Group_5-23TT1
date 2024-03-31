@@ -47,7 +47,7 @@ void InputCourse(CourseNode*& head ) {
 	cout << "Nums of credits: ";
 	cin >> cs.num_credit;
 	cout << "Teaching time ";
-	cout << endl << "Day of the week: "; //this shoulde convert monday tuesday...
+	cout << endl << "Day of the week: "; //this should convert monday tuesday...
 	cin >> cs.teaching_session[0].day_of_the_week;
 	cout << "Session_no (time): ";//this should output the session to choose
 	cin >> cs.teaching_session[0].session_no;
@@ -188,4 +188,25 @@ void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
 		fout << tmp->course.teaching_session[0].session_no << "\n";
 	}
 	fout << "*" << endl;
+}
+
+//Update mycourese whenever add a student into a course
+ResultsNode* initResultsNode(Results res)
+{
+	ResultsNode* new_result_node = new ResultsNode;
+	new_result_node->next = NULL;
+	new_result_node->results = res;
+	return new_result_node;
+}
+void addNewResultsNode(ResultsNode*& head, Results res) {
+	ResultsNode* new_result_node = initResultsNode(res);
+	if (!head)
+		head = new_result_node;
+	else {
+		ResultsNode* list_result = head;
+		while (list_result->next) {
+			list_result = list_result->next;
+		}
+		list_result->next = new_result_node;
+	}
 }

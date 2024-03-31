@@ -5,6 +5,9 @@ using namespace std;
 #include "../struct and function/course.h"
 #include "../struct and function/student.h"
 #include "../struct and function/login.h"
+#include "../session, year, semester/year.h"
+#include "../session, year, semester/session.h"
+#include "../session, year, semester/semester.h"
 
 int main() {
 	cout << "Are you a staff or a student: " << endl;
@@ -29,6 +32,8 @@ int main() {
 		} while (LoginForStaff(StaffPass, Staff_Locate, StaffCurrent, input_username, input_password) == false);
 		//after login
 		bool mainmenu = true;
+		//declare Head of linked list;
+		YearNode* year_list = NULL;
 		while (mainmenu) {
 			cout << endl << "-------------------------------" << endl;
 			cout << "1. School year " << endl;
@@ -51,8 +56,12 @@ int main() {
 					switch (choice) {
 					case 1: {
 						cout << endl << "------------------------------" << endl;
-						cout << "Enter year id: " <<endl;
-						//add year id;
+						string year_id;
+						inputYearId(year_id);
+						//import year, semester list before
+						/*YearNode* newYearNode = initYearNode(createYear(year_id);*/
+						/*appendYearNode(year_list, newYearNode);*/
+						/*cout << "Added school year successfully." << endl;*/
 						cout << "1. Add semester " << endl;
 						//add one semester funcion;
 						cout << "2. Return " << endl;
@@ -60,11 +69,15 @@ int main() {
 						cin >> choice;
 						switch (choice) {
 						case 1: {
-							//class function
+							//class function;
 							cout << "return to main menu?    1.yes || your choice: ";
 							int check = 0;
 							cin >> check;
 							if (check == 1) yearloop = false;
+							/*string sem_id, start_date, end_date;
+							inputSemesterInfo(sem_id, start_date, end_date);
+							SemesterNode* newSem = createSemesterNode(createSemester(sem_id, start_date, end_date));
+							appendSemesterNode(newYearNode->school_year.list_sem, newSem);*/
 							break;
 
 						}

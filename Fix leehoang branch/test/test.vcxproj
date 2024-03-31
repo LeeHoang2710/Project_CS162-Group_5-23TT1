@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{41bc144d-282b-4bec-9712-707a27532942}</ProjectGuid>
-    <RootNamespace>SourceCode</RootNamespace>
+    <ProjectGuid>{ccf824a6-5de4-4a65-b82f-9ee865ed01b4}</ProjectGuid>
+    <RootNamespace>test</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,31 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\session, year, semester\semester.cpp" />
-    <ClCompile Include="..\session, year, semester\session.cpp" />
-    <ClCompile Include="..\session, year, semester\year.cpp" />
-    <ClCompile Include="function_student.cpp" />
-    <ClCompile Include="Login.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Course_function.cpp" />
-    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="..\content\function_course.cpp" />
+    <ClCompile Include="..\content\function_login.cpp" />
+    <ClCompile Include="..\content\function_semester.cpp" />
+    <ClCompile Include="..\content\function_student.cpp" />
+    <ClCompile Include="..\content\function_year.cpp" />
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\struct_and_function\function.h" />
+    <ClInclude Include="..\struct_and_function\struct_and_library.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
-    <None Include="..\database\Staff_Password.csv" />
-    <None Include="..\database\student.csv" />
-    <None Include="..\database\Students_Password.csv" />
-    <None Include="..\database\testcourse.csv" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\session, year, semester\semester.h" />
-    <ClInclude Include="..\session, year, semester\session.h" />
-    <ClInclude Include="..\session, year, semester\year.h" />
-    <ClInclude Include="..\struct and function\course.h" />
-    <ClInclude Include="..\struct and function\login.h" />
-    <ClInclude Include="..\struct and function\menu.h" />
-    <ClInclude Include="..\struct and function\struct_and_library.h" />
-    <ClInclude Include="..\struct and function\student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
