@@ -23,7 +23,8 @@ struct ClassNode;
 struct Score;
 struct Student;
 struct StudentNode;
-struct MyCourse;
+struct Result;
+struct ResultNode;
 
 struct Year
 {
@@ -60,14 +61,14 @@ struct Course
     int num_credit;
     int max_students = 50;
     Session teaching_session;
+    ClassNode *main_class = nullptr;
+    StudentNode *student_list = nullptr;
 };
 struct CourseNode
 {
     string semester_id;
     string year_id;
     Course course;
-    ClassNode *main_class = nullptr;
-    StudentNode *student_list = nullptr;
     CourseNode *next;
 };
 struct Class
@@ -98,7 +99,7 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    MyCourse *my_course = nullptr;
+    ResultsNode *my_course = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
@@ -107,14 +108,18 @@ struct StudentNode
     Student student;
     StudentNode *next;
 };
-struct MyCourse
+struct Results
 {
     Score score;
-    string subject_code;
-    string sem;
-    string year;
     CourseNode *course = nullptr;
-    MyCourse *next;
+    SemesterNode *sem = nullptr;
+    YearNode *year = nullptr;
+};
+
+struct ResultsNode
+{
+    Results results;
+    ResultsNode *next = nullptr;
 };
 
 struct Staff
