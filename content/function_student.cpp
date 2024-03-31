@@ -78,59 +78,43 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
 
 void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
-    file.open("../database/student.csv");
-    if (!file.is_open())
-        cout << "Can not open file" << endl;
-    else
+    string line;
+
+    while (getline(file, line) && line != "*")
     {
-        string line;
+        stringstream ss(line);
+        string number;
+        Student person;
+        getline(ss, number, ',');
+        person.num = stoi(number);
+        getline(ss, person.student_id, ',');
+        getline(ss, person.first_name, ',');
+        getline(ss, person.last_name, ',');
+        getline(ss, number, ',');
+        person.gender = stoi(number);
+        getline(ss, person.dob, ',');
+        getline(ss, person.social_id, ',');
 
-        while (getline(file, line))
-        {
-            stringstream ss(line);
-            string number;
-            Student person;
-
-            getline(ss, number, ',');
-            person.num = stoi(number);
-            getline(ss, person.student_id, ',');
-            getline(ss, person.first_name, ',');
-            getline(ss, person.last_name, ',');
-            getline(ss, number, ',');
-            person.gender = stoi(number);
-            getline(ss, person.dob, ',');
-            getline(ss, person.social_id, ',');
-            getline(ss, person.password, ',');
-            getline(ss, person.student_class, ',');
-
-            addNewStudentNode(list_student, person);
-        }
+        addNewStudentNode(list_student, person);
     }
-    file.close();
 }
 
 void exportStudentToFile(ofstream &file, StudentNode *&list_student)
 {
-    file.open("../database/output.csv");
-    if (!file.is_open())
-        cout << "Can not open file" << endl;
+    if (!list_student)
+    {
+        file.close();
+        return;
+    }
     else
     {
-        if (!list_student)
+        while (list_student)
         {
-            file.close();
-            return;
+            Student person = list_student->student;
+            file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
+            file << "," << person.social_id << endl;
+            list_student = list_student->next;
         }
-        else
-        {
-            while (list_student)
-            {
-                Student person = list_student->student;
-                file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
-                file << "," << person.social_id << "," << person.password << "," << person.student_class << endl;
-                list_student = list_student->next;
-            }
-        }
+        file << "*" << endl;
     }
-    file.close();
 }
