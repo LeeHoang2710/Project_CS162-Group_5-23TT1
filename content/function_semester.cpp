@@ -26,20 +26,24 @@ void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem)
     }
     return;
 }
-void importSemester(SemesterNode *&sem_list, istringstream &is)
+
+void importSemester(SemesterNode *&sem_list, ifstream &fin)
 {
-    string tempSem;
-    getline(is, tempSem, ',');
-    string start_date, end_date;
+
+    string line;
+    getline(fin, line);
+    stringstream is(line);
+    string start_date, end_date, sem_id;
+    getline(is, sem_id, ',');
     getline(is, start_date, ',');
     getline(is, end_date, '\n');
 
     // Create a new Semester
-    Semester new_sem = createSemester(tempSem, start_date, end_date);
+    Semester new_sem = createSemester(sem_id, start_date, end_date);
 
     // Append the new Semester to the sem_list
     appendSemesterNode(sem_list, new_sem);
-    // importCourse(sem_list->sem.course_list, is);
+    importCourse(sem_list->sem.course_list, fin);
 }
 
 void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout)

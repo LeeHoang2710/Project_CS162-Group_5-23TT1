@@ -6,6 +6,7 @@ Class CreateClass(string classid)
     newclass.student_list = nullptr;
     return newclass;
 }
+
 ClassNode *InitializeClassNode(Class newclass)
 {
     ClassNode *newclassnode = new ClassNode();
@@ -13,6 +14,7 @@ ClassNode *InitializeClassNode(Class newclass)
     newclassnode->next = nullptr;
     return newclassnode;
 }
+
 void AddClassNode(ClassNode *&head, Class newclass)
 {
     ClassNode *newclassnode = InitializeClassNode(newclass);
@@ -28,6 +30,7 @@ void AddClassNode(ClassNode *&head, Class newclass)
         List_Class->next = newclassnode;
     }
 }
+
 void DeleteClassNode(ClassNode *&head, Class del_class)
 {
     if (!head)
@@ -62,6 +65,7 @@ void DeleteClassNode(ClassNode *&head, Class del_class)
         cout << "the class that need to remove don't exist.\n";
     }
 }
+
 ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
 {
     if (!head)
@@ -83,6 +87,7 @@ ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
         return nullptr;
     }
 }
+
 void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent)
 {
     if (!head)
@@ -111,6 +116,7 @@ void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent)
         cout << "The class you want to join don't exist!\n";
     }
 }
+
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
 {
     fin.open(file_name);

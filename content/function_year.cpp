@@ -76,13 +76,12 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
         Year new_year = createYear(line);
         for (int i = 0; i < 3; ++i)
         {
-            if (getline(fin, line))
-            {
-                if (line == "#")
-                    break;
-                istringstream is(line);
-                importSemester(new_year.list_sem, is);
-            }
+            if (fin.eof())
+                break;
+            getline(fin, line, '\n');
+            if (line == "#")
+                break;
+            importSemester(new_year.list_sem, fin);
         }
         addNewYearNode(year_list, new_year);
     }

@@ -93,7 +93,7 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
         getline(ss, number, ',');
         person.gender = stoi(number);
         getline(ss, person.dob, ',');
-        getline(ss, person.social_id, ',');
+        getline(ss, person.social_id, '\n');
 
         addNewStudentNode(list_student, person);
     }
