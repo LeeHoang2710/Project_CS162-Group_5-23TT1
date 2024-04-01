@@ -387,7 +387,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         window.display();
     }
     for (int i = 0; i < 4; ++i)
-        delete add[i], id[i];
+        delete add[i], id[i], one[i];
 }
 
 void Semesters(RenderWindow &window, int &page, YearNode *&year)
@@ -609,7 +609,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     }
     bool new_page = true;
     int count = 0, change = 0;
-    for (CourseNode *curr = course; course; course = course->next)
+    for (CourseNode *curr = course; curr; curr = curr->next)
         count++;
     while (window.isOpen() && page == 7)
     {
@@ -627,6 +627,29 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                 {
                     switchPage(b.bound, mouse, 5, page);
                     switchPage(menu.bound, mouse, 3, page);
+                    if (isHere(create.bound, mouse))
+                    {
+                        page = 8;
+                        addCourse(window, course, page);
+                    }
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 4;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 4;
+                    }
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (isHere(subject[i]->bound, mouse) && one[i])
+                        {
+                            page = 9;
+                            updateCourse(window, one[i], page);
+                        }
+                    }
                 }
                 break;
             }
@@ -648,10 +671,35 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         total.txt.setString(to_string(count) + " courses");
         window.draw(total.txt);
         window.draw(title.txt);
+        if (new_page && course)
+        {
+            CourseNode *temp = course;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    inf[i]->txt.setString(one[i]->course.course_id + "-" + one[i]->course.course_name);
+                    temp = temp->next;
+                }
+                else
+                    inf[i]->txt.setString("");
+            }
+            new_page = false;
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            if (inf[i]->txt.getString() == "")
+                break;
+            window.draw(subject[i]->draw);
+            window.draw(inf[i]->txt);
+        }
         window.display();
     }
     for (int i = 0; i < 4; ++i)
-        delete subject[i], inf[i];
+        delete subject[i], inf[i], one[i];
 }
 
 void addCourse(RenderWindow &window, CourseNode *&course, int &page)
@@ -664,7 +712,6 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
     Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
     Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
     Object import = createObject("./image/page3-staff/course/import.png", 534, 258);
-    Object update = createObject("./image/page3-staff/course/update.png", 925, 258);
     Object o1 = createObject("./image/page3-staff/course/create-cour-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
     Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
@@ -673,24 +720,28 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
     Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
     Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
     Clock clock;
-    bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false;
+    bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_stu = false, typing_cre = false, save = false;
 
     Info *inf[4];
     Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    bool check_day[6], check_sess[4];
     for (int i = 0; i < 4; ++i)
     {
         inf[i] = createInfoTest("", 512, 377 + 61 * i);
         yes_sess[i] = createObjectTest("./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
         no_sess[i] = createObjectTest("./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+        check_sess[i] = false;
     }
     for (int i = 0; i < 6; ++i)
     {
-        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672);
-        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672);
+        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
+        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
+        check_day[i] = false;
     }
-    Info stu = createText(to_string(course->course.max_students), 525, 625);
-    Info cre = createText(to_string(course->course.num_credit), 985, 625);
-    string cour_id, cour_name, classes, teacher;
+    Info stu = createText("", 525, 625);
+    Info cre = createText("", 985, 625);
+    string cour_id, cour_name, classes, teacher, num, credit;
+    int day = 0, sess = 0;
     while (window.isOpen() && page == 8)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -707,47 +758,111 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
                 {
                     switchPage(b.bound, mouse, 7, page);
                     switchPage(menu.bound, mouse, 3, page);
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        if (isHere(no[i]->bound, mouse))
+                        {
+                            check_day[i] = true;
+                            day = i + 2;
+                        }
+                        else if (isHere(yes[i]->bound, mouse))
+                        {
+                            check_day[i] = false;
+                            day = 0;
+                        }
+                    }
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (isHere(no_sess[i]->bound, mouse))
+                        {
+                            check_sess[i] = true;
+                            sess = i + 1;
+                        }
+                        else if (isHere(yes_sess[i]->bound, mouse))
+                        {
+                            check_sess[i] = false;
+                            sess = 0;
+                        }
+                    }
                     if (isHere(o2.bound, mouse))
                     {
-                        typing_name = true;
+                        typing_id = true;
                         typing_class = false;
                         typing_teacher = false;
+                        typing_name = false;
+                        typing_stu = false;
+                        typing_cre = false;
                         inf[0]->txt.setString(cour_id);
                     }
                     else if (isHere(o3.bound, mouse))
                     {
-                        typing_id = true;
+                        typing_name = true;
+                        typing_id = false;
                         typing_class = false;
                         typing_teacher = false;
+                        typing_stu = false;
+                        typing_cre = false;
                         inf[1]->txt.setString(cour_name);
                     }
                     else if (isHere(o4.bound, mouse))
                     {
-                        typing_id = true;
+                        typing_class = true;
                         typing_name = false;
+                        typing_id = false;
                         typing_teacher = false;
+                        typing_stu = false;
+                        typing_cre = false;
                         inf[2]->txt.setString(classes);
                     }
                     else if (isHere(o5.bound, mouse))
                     {
-                        typing_id = true;
+                        typing_teacher = true;
+                        typing_id = false;
                         typing_name = false;
                         typing_class = false;
+                        typing_stu = false;
+                        typing_cre = false;
                         inf[3]->txt.setString(teacher);
                     }
-                    /*else if (isHere(append.bound, mouse))
+                    else if (isHere(o6.bound, mouse))
                     {
-                        Semester new_sem = createSemester(sem_id, start, end);
-                        appendSemesterNode(check->school_year.list_sem, new_sem);
+                        typing_stu = true;
+                        typing_id = false;
+                        typing_name = false;
+                        typing_class = false;
+                        typing_teacher = false;
+                        typing_cre = false;
+                        stu.txt.setString(num);
+                    }
+                    else if (isHere(o7.bound, mouse))
+                    {
+                        typing_cre = true;
+                        typing_id = false;
+                        typing_name = false;
+                        typing_class = false;
+                        typing_teacher = false;
+                        typing_stu = false;
+                        cre.txt.setString(credit);
+                    }
+                    else if (isHere(append.bound, mouse))
+                    {
+
+                        Session s1;
+                        s1.day_of_the_week = day;
+                        s1.session_no = sess;
+                        Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), s1);
+                        appendNewCourseNode(course, new_cour);
                         save = true;
                         clock.restart();
-                    } */
+                    }
                     else
                     {
                         typing_id = false;
                         typing_name = false;
                         typing_class = false;
                         typing_teacher = false;
+                        typing_stu = false;
+                        typing_cre = false;
                     }
                 }
                 break;
@@ -758,10 +873,263 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
                 Typing(typing_name, *inf[1], cour_name, event);
                 Typing(typing_class, *inf[2], classes, event);
                 Typing(typing_teacher, *inf[3], teacher, event);
+                Typing(typing_stu, stu, num, event);
+                Typing(typing_cre, cre, credit, event);
                 break;
             }
             }
         }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(o2.draw);
+        window.draw(o3.draw);
+        window.draw(o4.draw);
+        window.draw(o5.draw);
+        window.draw(o6.draw);
+        window.draw(o7.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(menu.draw);
+        window.draw(append.draw);
+        window.draw(import.draw);
+        window.draw(stu.txt);
+        window.draw(cre.txt);
+        for (int i = 0; i < 4; ++i)
+        {
+            window.draw(inf[i]->txt);
+            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
+        }
+        for (int i = 0; i < 6; ++i)
+            chooseDraw(window, yes[i], no[i], check_day[i]);
+        objectAppear(window, save, clock, saved);
+        window.display();
+    }
+    for (int i = 0; i < 4; ++i)
+        delete inf[i], yes_sess[i], no_sess[i];
+    for (int i = 0; i < 6; ++i)
+        delete yes[i], no[i];
+}
+
+void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
+    Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
+    Object update = createObject("./image/page3-staff/course/update.png", 530, 258);
+    Object o1 = createObject("./image/page3-staff/course/create-cour-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
+    Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
+    Object o4 = createObject("./image/page3-staff/course/input.png", 497, 499);
+    Object o5 = createObject("./image/page3-staff/course/input.png", 497, 560);
+    Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
+    Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
+    Clock clock;
+    bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_stu = false, typing_cre = false, save = false;
+    bool updating = false;
+
+    Info *inf[4];
+    Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    bool check_day[6], check_sess[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        inf[i] = createInfoTest("", 512, 377 + 61 * i);
+        yes_sess[i] = createObjectTest("./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
+        no_sess[i] = createObjectTest("./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+        check_sess[i] = false;
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
+        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
+        check_day[i] = false;
+    }
+    Info stu = createText(to_string(course->course.max_students), 525, 625);
+    Info cre = createText(to_string(course->course.num_credit), 985, 625);
+    string cour_id, cour_name, classes, teacher, num, credit;
+    int day = 0, sess = 0;
+    while (window.isOpen() && page == 9)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 7, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                    if (isHere(update.bound, mouse))
+                    {
+                        updating = true;
+                    }
+                    if (updating)
+                    {
+                        for (int i = 0; i < 6; ++i)
+                        {
+                            if (isHere(no[i]->bound, mouse))
+                            {
+                                check_day[i] = true;
+                                day = i + 2;
+                            }
+                            else if (isHere(yes[i]->bound, mouse))
+                            {
+                                check_day[i] = false;
+                                day = 0;
+                            }
+                        }
+                        for (int i = 0; i < 4; ++i)
+                        {
+                            if (isHere(no_sess[i]->bound, mouse))
+                            {
+                                check_sess[i] = true;
+                                sess = i + 1;
+                            }
+                            else if (isHere(yes_sess[i]->bound, mouse))
+                            {
+                                check_sess[i] = false;
+                                sess = 0;
+                            }
+                        }
+                        if (isHere(o2.bound, mouse))
+                        {
+                            typing_id = true;
+                            typing_class = false;
+                            typing_teacher = false;
+                            typing_name = false;
+                            typing_stu = false;
+                            typing_cre = false;
+                            inf[0]->txt.setString(cour_id);
+                        }
+                        else if (isHere(o3.bound, mouse))
+                        {
+                            typing_name = true;
+                            typing_id = false;
+                            typing_class = false;
+                            typing_teacher = false;
+                            typing_stu = false;
+                            typing_cre = false;
+                            inf[1]->txt.setString(cour_name);
+                        }
+                        else if (isHere(o4.bound, mouse))
+                        {
+                            typing_class = true;
+                            typing_name = false;
+                            typing_id = false;
+                            typing_teacher = false;
+                            typing_stu = false;
+                            typing_cre = false;
+                            inf[2]->txt.setString(classes);
+                        }
+                        else if (isHere(o5.bound, mouse))
+                        {
+                            typing_teacher = true;
+                            typing_id = false;
+                            typing_name = false;
+                            typing_class = false;
+                            typing_stu = false;
+                            typing_cre = false;
+                            inf[3]->txt.setString(teacher);
+                        }
+                        else if (isHere(o6.bound, mouse))
+                        {
+                            typing_stu = true;
+                            typing_id = false;
+                            typing_name = false;
+                            typing_class = false;
+                            typing_teacher = false;
+                            typing_cre = false;
+                            stu.txt.setString(num);
+                        }
+                        else if (isHere(o7.bound, mouse))
+                        {
+                            typing_cre = true;
+                            typing_id = false;
+                            typing_name = false;
+                            typing_class = false;
+                            typing_teacher = false;
+                            typing_stu = false;
+                            cre.txt.setString(credit);
+                        }
+                        else if (isHere(append.bound, mouse))
+                        {
+
+                            Session s1;
+                            s1.day_of_the_week = day;
+                            s1.session_no = sess;
+                            Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), s1);
+                            appendNewCourseNode(course, new_cour);
+                            save = true;
+                            clock.restart();
+                        }
+                        else
+                        {
+                            typing_id = false;
+                            typing_name = false;
+                            typing_class = false;
+                            typing_teacher = false;
+                            typing_stu = false;
+                            typing_cre = false;
+                        }
+                    }
+                }
+                break;
+            }
+            case Event::TextEntered:
+            {
+                if (updating)
+                {
+                    Typing(typing_id, *inf[0], cour_id, event);
+                    Typing(typing_name, *inf[1], cour_name, event);
+                    Typing(typing_class, *inf[2], classes, event);
+                    Typing(typing_teacher, *inf[3], teacher, event);
+                    Typing(typing_stu, stu, num, event);
+                    Typing(typing_cre, cre, credit, event);
+                }
+                break;
+            }
+            }
+        }
+        inf[0]->txt.setString(course->course.course_id);
+        inf[1]->txt.setString(course->course.course_name);
+        inf[3]->txt.setString(course->course.teacher_name);
+        int sess = course->course.teaching_session.session_no;
+        check_day[course->course.teaching_session.day_of_the_week - 2] = true;
+        check_sess[course->course.teaching_session.session_no - 1] = true;
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(o2.draw);
+        window.draw(o3.draw);
+        window.draw(o4.draw);
+        window.draw(o5.draw);
+        window.draw(o6.draw);
+        window.draw(o7.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(menu.draw);
+        window.draw(append.draw);
+        window.draw(update.draw);
+        window.draw(stu.txt);
+        window.draw(cre.txt);
+        for (int i = 0; i < 4; ++i)
+        {
+            window.draw(inf[i]->txt);
+            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
+        }
+        for (int i = 0; i < 6; ++i)
+            chooseDraw(window, yes[i], no[i], check_day[i]);
+        objectAppear(window, save, clock, saved);
+        window.display();
     }
     for (int i = 0; i < 4; ++i)
         delete inf[i], yes_sess[i], no_sess[i];
@@ -1003,7 +1371,4 @@ void Study(RenderWindow &window, int &page, bool is_staff)
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
-}
-void Classes(RenderWindow &window, int &page, bool is_staff)
-{
 }
