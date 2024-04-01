@@ -139,7 +139,7 @@ void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
     fin.close();
 }
 
-void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout)
+void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
 {
     fout.open(file_name);
     if (!fout.is_open())

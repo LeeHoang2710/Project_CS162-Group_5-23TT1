@@ -40,20 +40,19 @@ void importSemester(SemesterNode *&sem_list, ifstream &fin)
 
     // Create a new Semester
     Semester new_sem = createSemester(sem_id, start_date, end_date);
-
+    importCourse(new_sem.course_list, fin);
     // Append the new Semester to the sem_list
     appendSemesterNode(sem_list, new_sem);
-    importCourse(sem_list->sem.course_list, fin);
 }
 
-void exportSemesterInYear(SemesterNode *sem_list, ofstream &fout)
+void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout)
 {
     while (sem_list)
     {
         fout << sem_list->sem.semester_id << ","
              << sem_list->sem.start_date << ","
              << sem_list->sem.end_date << endl;
-        // exportCourse(sem_list->sem.course_list, fout);
+        exportCourse(sem_list->sem.course_list, fout);
         sem_list = sem_list->next;
     }
 }

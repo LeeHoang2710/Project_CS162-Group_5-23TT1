@@ -73,11 +73,10 @@ void deletecourse(CourseNode *CourseHead, string delCourse)
 
 void importCourse(CourseNode *&Courselist, ifstream &fin)
 {
-    while (1)
+    string number;
+    while (getline(fin, number))
     {
         Course cs;
-        string number;
-        getline(fin, number, '\n');
         if (number == "*")
             return;
         stringstream line(number);
@@ -96,17 +95,18 @@ void importCourse(CourseNode *&Courselist, ifstream &fin)
     }
 }
 
-void exportCourse(CourseNode *Courselist, ofstream &fout)
+void exportCourse(CourseNode *&Courselist, ofstream &fout)
 {
-    for (CourseNode *tmp = Courselist; tmp != NULL; tmp = tmp->next)
+    while (Courselist)
     {
-        fout << tmp->course.course_id << ",";
-        fout << tmp->course.course_name << ",";
-        fout << tmp->course.teacher_name << ",";
-        fout << tmp->course.num_credit << ",";
-        fout << tmp->course.max_students << ",";
-        fout << tmp->course.teaching_session.day_of_the_week << ",";
-        fout << tmp->course.teaching_session.session_no << endl;
+        fout << Courselist->course.course_id << ",";
+        fout << Courselist->course.course_name << ",";
+        fout << Courselist->course.teacher_name << ",";
+        fout << Courselist->course.num_credit << ",";
+        fout << Courselist->course.max_students << ",";
+        fout << Courselist->course.teaching_session.day_of_the_week << ",";
+        fout << Courselist->course.teaching_session.session_no << endl;
+        Courselist = Courselist->next;
     }
     fout << "*" << endl;
 }

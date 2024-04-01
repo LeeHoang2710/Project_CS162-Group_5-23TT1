@@ -99,7 +99,7 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    ResultsNode *my_course = nullptr;
+    ResultNode *my_course = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
@@ -116,10 +116,10 @@ struct Results
     YearNode *year = nullptr;
 };
 
-struct ResultsNode
+struct ResultNode
 {
     Results results;
-    ResultsNode *next = nullptr;
+    ResultNode *next = nullptr;
 };
 
 struct Staff
