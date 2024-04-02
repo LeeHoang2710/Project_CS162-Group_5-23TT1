@@ -8,21 +8,20 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 	tmp.course_name = course_name;
 	tmp.teacher_name = teacher_name;
 	tmp.num_credit = num_credit;
-	tmp.teaching_session[0] = teaching_session;
+	tmp.teaching_session = teaching_session;
 	return tmp;
 };
-CourseNode* initCourseNode(string new_year_id, string new_semester_id, Course new_course, StudentNode* liststu)
+CourseNode* initCourseNode(string new_year_id, string new_semester_id, Course new_course)
 {
 	CourseNode* new_course_node = new CourseNode;
 	new_course_node->next = NULL;
 	new_course_node->semester_id = new_semester_id;
 	new_course_node->year_id = new_year_id;
 	new_course_node->course = new_course;
-	new_course_node->student_list = liststu;
 	return new_course_node;
 }
-void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Course cs, StudentNode* liststu) {
-	CourseNode* new_course_node = initCourseNode(semester_id, year_id, cs, liststu);
+void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Course cs) {
+	CourseNode* new_course_node = initCourseNode(semester_id, year_id, cs);
 	if (!head)
 		head = new_course_node;
 	else {
@@ -33,7 +32,7 @@ void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Cou
 		list_course->next = new_course_node;
 	}
 }
-void InputCourse(CourseNode*& head ) {
+void InputCourse(CourseNode*& head, Course cs ) {
 	string year;
 	string semester;
 	Course cs;
@@ -48,33 +47,30 @@ void InputCourse(CourseNode*& head ) {
 	cin >> cs.num_credit;
 	cout << "Teaching time ";
 	cout << endl << "Day of the week: "; //this should convert monday tuesday...
-	cin >> cs.teaching_session[0].day_of_the_week;
+	cin >> cs.teaching_session.day_of_the_week;
 	cout << "Session_no (time): ";//this should output the session to choose
-	cin >> cs.teaching_session[0].session_no;
+	cin >> cs.teaching_session.session_no;
 	ifstream ip;
-	StudentNode* liststu = NULL;
-	cout << "enter 1 if your want to input from file, enter 0 if your want to input by hand";
+	cout << "enter 1 if your want to input from file, enter 0 if your want to input from keyboard";
 	bool choice;
 	cin >> choice;
 	cin.ignore();
 	if (choice==1) {
-		readStudentFromFile(ip, liststu);
+		readStudentFromFile(ip, cs.main_class->my_class.student_list);
 	}
 	else {
 		cout << "enter info of student you want to add (enter 0 to stop) " << endl;
-		while (readStudentFromTerminal(liststu)) {
-		}
+		readStudentFromTerminal(cs.student_list);
 	}
-	addNewCourseNode(head, semester, year, cs, liststu);
+	addNewCourseNode(head, semester, year, cs);
 }
 void OutputCourse(Course cs) {
 	cout << cs.course_id << endl;
 	cout << cs.course_name << endl;
 	cout << cs.teacher_name << endl;
 	cout << "Credits: "<< cs.num_credit  << endl;
-	cout << "Day: " << cs.teaching_session[0].day_of_the_week  << endl;
-	cout << "Sesion: "<< cs.teaching_session[0].session_no << endl;
-
+	cout << "Day: " << cs.teaching_session.day_of_the_week  << endl;
+	cout << "Sesion: "<< cs.teaching_session.session_no << endl;
 }
 void displayCourse(CourseNode* CourseHead) {
 	for (CourseNode* tmp = CourseHead; tmp != NULL; tmp = tmp->next) {
@@ -84,7 +80,7 @@ void displayCourse(CourseNode* CourseHead) {
 		bool choice;
 		cout << "enter 1 if you want to see students, 0 if not: ";
 		cin >> choice;
-		if (choice) displayStudent(tmp->student_list);
+		if (choice) displayStudent(tmp->course.main_class->my_class.student_list);
 	}
 }
 CourseNode* findcourse(CourseNode* CourseHead, string course_find) {
@@ -130,9 +126,9 @@ void importCourse(CourseNode*& Courselist,string year, string semester, string f
 		getline(ss, number, ',');
 		cs.max_students = stoi(number);
 		getline(ss, number, ',');
-		cs.teaching_session[0].day_of_the_week = stoi(number);
+		cs.teaching_session.day_of_the_week = stoi(number);
 		getline(ss, number, '\n');
-		cs.teaching_session[0].session_no = stoi(number);
+		cs.teaching_session.session_no = stoi(number);
 		addNewCourseNode(Courselist, year, semester, cs, nullptr);
 	}
 }
@@ -143,13 +139,20 @@ void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
 		fout << tmp->course.teacher_name << ",";
 		fout << tmp->course.num_credit << ",";
 		fout << tmp->course.max_students << ",";
-		fout << tmp->course.teaching_session[0].day_of_the_week << ",";
-		fout << tmp->course.teaching_session[0].session_no << "\n";
+		fout << tmp->course.teaching_session.day_of_the_week << ",";
+		fout << tmp->course.teaching_session.session_no << "\n";
 	}
 	fout << "*" << endl;
 }
 
 //Update mycourese whenever add a student into a course
+Results createResults(string year_cur, string sem_cur, Course cour_cur) {
+	Results tmp;
+	tmp.year = year_cur;
+	tmp.semester = sem_cur;
+	tmp.course = cour_cur;
+	return tmp;
+}
 ResultsNode* initResultsNode(Results res)
 {
 	ResultsNode* new_result_node = new ResultsNode;
@@ -157,7 +160,7 @@ ResultsNode* initResultsNode(Results res)
 	new_result_node->results = res;
 	return new_result_node;
 }
-void addNewResultsNode(ResultsNode*& head, Results res) {
+void appendNewResultsNode(ResultsNode*& head, Results res) {
 	ResultsNode* new_result_node = initResultsNode(res);
 	if (!head)
 		head = new_result_node;
@@ -170,8 +173,10 @@ void addNewResultsNode(ResultsNode*& head, Results res) {
 	}
 }
 
-void comparecourse(Course& old, Course& cre) {
-	if (cre.course_id == "") cre.course_id = old.course_id;
-	if (cre.course_name == "") cre.course_name = old.course_name;
-	if (cre.num_credit ) 
+void CourseEnroll(StudentNode*& student_list, CourseNode* curr) {
+	if (student_list == nullptr) return;
+	for (StudentNode* tmp = student_list; tmp != NULL; tmp = tmp->next) {
+		Results res = createResults(curr->year_id, curr->semester_id, curr->course);
+		appendNewResultsNode(tmp->student.my_course, res);
+	}
 }

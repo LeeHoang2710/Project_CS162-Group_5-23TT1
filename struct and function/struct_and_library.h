@@ -100,7 +100,7 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    ResultNode* my_course = nullptr;
+    ResultsNode* my_course = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
@@ -112,15 +112,15 @@ struct StudentNode
 struct Results
 {
     Score score;
-    CourseNode* course = nullptr;
-    SemesterNode* sem = nullptr;
-    YearNode* year = nullptr;
+    Course course;
+    string semester;
+    string year;
 };
 
-struct ResultNode
+struct ResultsNode
 {
     Results results;
-    ResultNode* next = nullptr;
+    ResultsNode* next = nullptr;
 };
 
 struct Staff
