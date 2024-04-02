@@ -95,50 +95,9 @@ CourseNode* findcourse(CourseNode* CourseHead, string course_find) {
 	}
 	return NULL;
 }
-void updatecourse(CourseNode* CourseHead,string updateCourse) {
-	/*findCourse */
+void updatecourse(CourseNode* CourseHead,string updateCourse, Course newone) {
 	CourseNode* target = findcourse(CourseHead, updateCourse);
-	//ask user what they want to change
-	//target.semesterid
-	//....
-	int choice;
-	cout << "enter information you want to update: ";
-	cout << "1. course id" << endl;
-	cout << "2. course name" << endl;
-	cout << "3. teacher name" << endl;
-	cout << "4. numbers of credit " << endl;
-	cout << "5. teaching session " << endl;
-	cout << "6. student list" << endl; // not yet 
-	while (1) {
-		cout << endl << "enter your choice (enter 0 if you do not want to update anymore)";
-		cin >> choice;
-		switch (choice) {
-		case 1:
-			cout << "new course id: ";
-			cin >> target->course.course_id;
-			break;
-		case 2:
-			cout << "new course name: ";
-			cin >> target->course.course_name;
-			break;
-		case 3:
-			cout << "new teacher name: ";
-			cin >> target->course.teacher_name;
-			break;
-		case 4:
-			cout << "new numbers of credits: ";
-			cin >> target->course.num_credit;
-			break;
-		case 5:
-			cout << "new teaching session ";
-			cout << endl << "day of the week: ";
-			cin >> target->course.teaching_session[0].day_of_the_week;
-			cout << endl << "session: ";
-			cin >> target->course.teaching_session[0].session_no;
-		case 0:
-			return;
-		}
-	}
+	target->course = newone;
 }
 void deletecourse(CourseNode* CourseHead,string delCourse) {
 	if (CourseHead->course.course_id == delCourse) {
@@ -210,3 +169,5 @@ void addNewResultsNode(ResultsNode*& head, Results res) {
 		list_result->next = new_result_node;
 	}
 }
+
+void updatecourse()
