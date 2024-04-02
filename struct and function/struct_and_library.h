@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -21,33 +22,32 @@ struct Class;
 struct ClassNode;
 
 struct Score;
-struct Results;
-struct ResultsNode;
 struct Student;
 struct StudentNode;
-struct MyCourse;
+struct Result;
+struct ResultsNode;
 
 struct Year
 {
     string year_id;
-    SemesterNode *list_sem = nullptr;
+    SemesterNode* list_sem = nullptr;
 };
 struct YearNode
 {
     Year school_year;
-    YearNode *next;
+    YearNode* next;
 };
 struct Semester
 {
     string start_date;
     string end_date;
     string semester_id;
-    CourseNode *course_list = nullptr;
+    CourseNode* course_list = nullptr;
 };
 struct SemesterNode
 {
     Semester sem;
-    SemesterNode *next;
+    SemesterNode* next;
 };
 struct Session
 {
@@ -61,32 +61,26 @@ struct Course
     string teacher_name;
     int num_credit;
     int max_students = 50;
-    Session teaching_session[2];
-
+    Session teaching_session;
+    ClassNode* main_class = nullptr;
+    StudentNode* student_list = nullptr;
 };
 struct CourseNode
 {
     string semester_id;
     string year_id;
     Course course;
-    StudentNode *student_list = nullptr;
-    CourseNode *next;
+    CourseNode* next;
 };
-struct MyCourse
+struct Class
 {
     string class_id;
-    string head_teacher;
-    StudentNode *student_list = nullptr;
-};
-struct Class {
-    string class_id;
-    string head_teacher;
     StudentNode* student_list = nullptr;
 };
 struct ClassNode
 {
     Class my_class;
-    ClassNode *next;
+    ClassNode* next;
 };
 struct Score
 {
@@ -94,19 +88,6 @@ struct Score
     float midterm = 0.0f;
     float final = 0.0f;
     float overall = 0.0f;
-};
-struct Staff {
-    string username;
-    string first_name;
-    string last_name;
-    bool gender;
-    string dob;
-    string social_id;
-    string password;
-};
-struct StaffNode {
-    Staff staff;
-    StaffNode* next;
 };
 struct Student
 {
@@ -119,16 +100,15 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    ResultsNode* results_list = nullptr;
+    ResultNode* my_course = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
 struct StudentNode
 {
     Student student;
-    StudentNode *next;
+    StudentNode* next;
 };
-
 struct Results
 {
     Score score;
@@ -137,10 +117,26 @@ struct Results
     YearNode* year = nullptr;
 };
 
-struct ResultsNode
+struct ResultNode
 {
     Results results;
-    ResultsNode* next = nullptr;
+    ResultNode* next = nullptr;
+};
+
+struct Staff
+{
+    string username;
+    string first_name;
+    string last_name;
+    bool gender;
+    string dob;
+    string social_id;
+    string password;
+};
+struct StaffNode
+{
+    Staff staff;
+    StaffNode* next;
 };
 
 // input year, init year node, yearlist head, 2023-2024

@@ -170,4 +170,8 @@ void addNewResultsNode(ResultsNode*& head, Results res) {
 	}
 }
 
-void updatecourse()
+void comparecourse(Course& old, Course& cre) {
+	if (cre.course_id == "") cre.course_id = old.course_id;
+	if (cre.course_name == "") cre.course_name = old.course_name;
+	if (cre.num_credit ) 
+}
