@@ -51,10 +51,10 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page2/scene2-bg.png", 180, 120);
-    Object o2 = createObject("./image/page2/login-bg.png", 340, 279);
-    Object o3 = createObject("./image/page2/login-button.png", 589, 606);
-    Object o4 = createObject("./image/page2/username.png", 603.0f, 432.0f);
-    Object o5 = createObject("./image/page2/password.png", 603.0f, 522.0f);
+    Object o2 = createObject("./image/page2/login-bg.png", 340, 282);
+    Object o3 = createObject("./image/page2/login-button.png", 589, 646);
+    Object o4 = createObject("./image/page2/username.png", 604, 468);
+    Object o5 = createObject("./image/page2/password.png", 603.0f, 570);
     Object o6 = createObject("./image/page2/alert.png", 423, 351);
     Object o7 = createObject("./image/page2/open.png", 1003, 533);
     Object o8 = createObject("./image/page2/closed.png", 1003, 533);
@@ -1480,8 +1480,8 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object f = createObject("./image/page3-staff/forward.png", 231, 259);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
-    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
-    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 780);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 780);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object o1 = createObject("./image/page3-staff/class/student-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/class/create-cla.png", 270, 262);
@@ -1494,13 +1494,13 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
     StudentNode *stu_list = class_list->my_class.student_list;
     for (int i = 0; i < 7; ++i)
     {
-        stu[i][0] = createInfoTest("", 254, 426 + 48 * i);
+        stu[i][0] = createInfoTest("", 264, 426 + 48 * i);
         stu[i][1] = createInfoTest("", 320, 426 + 48 * i);
-        stu[i][2] = createInfoTest("", 468, 426 + 48 * i);
-        stu[i][3] = createInfoTest("", 613, 426 + 48 * i);
-        stu[i][4] = createInfoTest("", 751, 426 + 48 * i);
+        stu[i][2] = createInfoTest("", 475, 426 + 48 * i);
+        stu[i][3] = createInfoTest("", 617, 426 + 48 * i);
+        stu[i][4] = createInfoTest("", 800, 426 + 48 * i);
         stu[i][5] = createInfoTest("", 872, 426 + 48 * i);
-        stu[i][6] = createInfoTest("", 1004, 426 + 48 * i);
+        stu[i][6] = createInfoTest("", 1034, 426 + 48 * i);
     }
     bool new_page = true;
     int count = 0, change = 0;
