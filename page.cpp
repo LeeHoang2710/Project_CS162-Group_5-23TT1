@@ -1065,7 +1065,11 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                             Session s1;
                             s1.day_of_the_week = day;
                             s1.session_no = sess;
-                            Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), s1);
+                            string temp = credit;
+                            if (temp == "")
+                                temp = "0";
+                            Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(temp), s1);
+                            comparecourse(course->course, new_cour);
                             updatecourse(course, new_cour);
                             updating = false;
                             save = true;
