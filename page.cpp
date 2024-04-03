@@ -226,18 +226,10 @@ void homeStaff(RenderWindow &window, int &page)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    if (isHere(o2.bound, mouse))
-                    {
-                        page = 4;
-                    }
-                    if (isHere(o3.bound, mouse))
-                    {
-                        page = 10;
-                    }
-                    if (isHere(o5.bound, mouse))
-                    {
-                        page = 19;
-                    }
+                    switchPage(o2.bound, mouse, 4, page);
+                    switchPage(o3.bound, mouse, 10, page);
+                    switchPage(o4.bound, mouse, 16, page);
+                    switchPage(o5.bound, mouse, 19, page);
                 }
             }
             break;
