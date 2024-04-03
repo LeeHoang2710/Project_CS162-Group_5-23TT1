@@ -978,26 +978,26 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                         {
                             if (isHere(no[i]->bound, mouse))
                             {
-                                check_day[i] = true;
-                                day = i + 2;
+                                check_day[i] = !check_day[i];
+                                day = check_day[i] ? i + 2 : 0;
                             }
                             else if (isHere(yes[i]->bound, mouse))
                             {
-                                check_day[i] = false;
-                                day = 0;
+                                check_day[i] = !check_day[i];
+                                day = check_day[i] ? 0 : i + 2;
                             }
                         }
                         for (int i = 0; i < 4; ++i)
                         {
                             if (isHere(no_sess[i]->bound, mouse))
                             {
-                                check_sess[i] = true;
-                                sess = i + 1;
+                                check_sess[i] = !check_sess[i];
+                                sess = check_sess[i] ? i + 1 : 0;
                             }
                             else if (isHere(yes_sess[i]->bound, mouse))
                             {
-                                check_sess[i] = false;
-                                sess = 0;
+                                check_sess[i] = !check_sess[i];
+                                sess = check_sess[i] ? 0 : i + 1;
                             }
                         }
                         if (isHere(o2.bound, mouse))
@@ -1069,8 +1069,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                             if (temp == "")
                                 temp = "0";
                             Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(temp), s1);
-                            comparecourse(course->course, new_cour);
-                            updatecourse(course, new_cour);
+                            compareCourse(course->course, new_cour);
+                            replaceCourse(course, new_cour);
                             updating = false;
                             save = true;
                             clock.restart();

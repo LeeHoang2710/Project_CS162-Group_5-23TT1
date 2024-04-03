@@ -111,7 +111,7 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
     fout << "*" << endl;
 }
 
-void comparecourse(Course &old, Course &newone)
+void compareCourse(Course &old, Course &newone)
 {
     if (newone.course_id == "")
         newone.course_id = old.course_id;
@@ -132,7 +132,7 @@ void comparecourse(Course &old, Course &newone)
         newone.teaching_session.session_no = old.teaching_session.session_no;
 }
 
-void updatecourse(CourseNode *&curr, Course newone)
+void replaceCourse(CourseNode *&curr, Course newone)
 {
     if (curr)
         curr->course = newone;
