@@ -175,16 +175,14 @@ SemesterNode* searchSemesterNode(YearNode* yearNode, int sem_num)
 	return nullptr;
 }
 
-bool removeSemesterNode(YearNode* year_list, const string& year_id, int sem_num)
+bool removeSemesterNode(YearNode* yearNode, int sem_num)
 {
-	SemesterNode* semNode = searchSemesterNode(year_list, year_id, sem_num);
+	SemesterNode* semNode = searchSemesterNode(yearNode, sem_num);
 	if (!semNode)
 	{
 		//cout << "Semester does not exist." << endl;
 		return false;
 	}
-
-	YearNode* yearNode = searchYearNode(year_list, year_id);
 
 	if (yearNode->school_year.list_sem == semNode)
 		yearNode->school_year.list_sem = semNode->next;
@@ -242,10 +240,7 @@ void deleteStudentList(StudentNode*& student_list)
 	{
 		StudentNode* temp = student_list;
 		student_list = student_list->next;
-		deleteResultsList(temp->student.results_list);
+		deleteResultsList(temp->student.my_course);
 		delete temp;
 	}
-}
-void inputyear() {
-	input
 }

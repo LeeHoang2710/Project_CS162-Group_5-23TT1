@@ -32,7 +32,7 @@ void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Cou
 		list_course->next = new_course_node;
 	}
 }
-void InputCourse(CourseNode*& head, Course cs ) {
+void InputCourse(CourseNode*& head) {
 	string year;
 	string semester;
 	Course cs;
@@ -56,7 +56,7 @@ void InputCourse(CourseNode*& head, Course cs ) {
 	cin >> choice;
 	cin.ignore();
 	if (choice==1) {
-		readStudentFromFile(ip, cs.main_class->my_class.student_list);
+		readStudentFromFile(ip, cs.main_class);
 	}
 	else {
 		cout << "enter info of student you want to add (enter 0 to stop) " << endl;
@@ -129,7 +129,7 @@ void importCourse(CourseNode*& Courselist,string year, string semester, string f
 		cs.teaching_session.day_of_the_week = stoi(number);
 		getline(ss, number, '\n');
 		cs.teaching_session.session_no = stoi(number);
-		addNewCourseNode(Courselist, year, semester, cs, nullptr);
+		addNewCourseNode(Courselist, year, semester, cs);
 	}
 }
 void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
@@ -146,11 +146,11 @@ void exportCourse(CourseNode* Courselist, string filename, ofstream& fout) {
 }
 
 //Update mycourese whenever add a student into a course
-Results createResults(string year_cur, string sem_cur, Course cour_cur) {
+Results createResults(string year_cur, string sem_cur, string cour_cur) {
 	Results tmp;
-	tmp.year = year_cur;
-	tmp.semester = sem_cur;
-	tmp.course = cour_cur;
+	tmp.year_id = year_cur;
+	tmp.semester_id = sem_cur;
+	tmp.course_id = cour_cur;
 	return tmp;
 }
 ResultsNode* initResultsNode(Results res)
@@ -176,7 +176,7 @@ void appendNewResultsNode(ResultsNode*& head, Results res) {
 void CourseEnroll(StudentNode*& student_list, CourseNode* curr) {
 	if (student_list == nullptr) return;
 	for (StudentNode* tmp = student_list; tmp != NULL; tmp = tmp->next) {
-		Results res = createResults(curr->year_id, curr->semester_id, curr->course);
+		Results res = createResults(curr->year_id, curr->semester_id, curr->course.course_id);
 		appendNewResultsNode(tmp->student.my_course, res);
 	}
 }

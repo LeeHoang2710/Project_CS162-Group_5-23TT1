@@ -6,6 +6,6 @@ void addNewStudentNode(StudentNode*& head, Student new_student);
 void removeStudentNode(StudentNode*& head, Student student_1);
 void displayStudent(StudentNode* StuHead);
 StudentNode* searchStudentNode(StudentNode* head, string student_1_id);
-void readStudentFromFile(ifstream& file, StudentNode*& list_student);
+void readStudentFromFile(ifstream& file, ClassNode*& main_class);
 bool readStudentFromTerminal(StudentNode*& liststu);
 void exportStudentToFile(ofstream& file, StudentNode*& list_student);

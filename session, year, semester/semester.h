@@ -18,7 +18,7 @@ void createThreeSemesterNode(SemesterNode*& sem_list);
 void inputSemesterDates(string& start_date, string& end_date);
 void updateSemesterInfo(SemesterNode* semNode, const string& new_start_date, const string& new_end_date);
 SemesterNode* searchSemesterNode(YearNode* yearNode, int sem_num);
-bool removeSemesterNode(YearNode* year_list, const string& year_id, int sem_num);
+bool removeSemesterNode(YearNode* yearNode, int sem_num);
 
 void deleteYearList(YearNode*& year_list);
 void deleteSemesterList(SemesterNode*& sem_list);

@@ -112,9 +112,9 @@ struct StudentNode
 struct Results
 {
     Score score;
-    Course course;
-    string semester;
-    string year;
+    string course_id;
+    string semester_id;
+    string year_id;
 };
 
 struct ResultsNode
