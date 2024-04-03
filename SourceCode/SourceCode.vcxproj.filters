@@ -39,6 +39,9 @@
     <ClCompile Include="..\session, year, semester\year.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\testcourse.csv">
@@ -80,6 +83,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\session, year, semester\year.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,6 +8,7 @@ using namespace std;
 #include "../session, year, semester/year.h"
 #include "../session, year, semester/session.h"
 #include "../session, year, semester/semester.h"
+#include "class.h"
 
 int main() {
 	cout << "Are you a staff or a student: " << endl;
@@ -18,6 +19,8 @@ int main() {
 	switch (role) {
 	case 1:
 	{
+		ifstream ip;
+		ofstream op;
 		StaffNode* StaffPass = NULL; // linked list of the whole password
 		string Staff_Locate; // store the id to locate which staff is using
 		StaffNode* StaffCurrent = NULL;//Node of where the current staff is
@@ -62,7 +65,12 @@ int main() {
 						Year temp=createYear(year_id);
 						YearNode* newyear= initYearNode(temp);
 						appendYearNode(yearlist, newyear);
+
+						//
+
+						//
 						cout << "1. Add semester " << endl;
+						cout << "2. Add new classes " << endl;
 						cout << "2. Return " << endl;
 						cout << "Enter your choice: ";
 						cin >> choice;
@@ -75,13 +83,31 @@ int main() {
 							SemesterNode* newsemnode = createSemesterNode(newsem);
 							appendSemesterNode(newyear->school_year.list_sem, newsemnode);
 							cout << "A new semester has just been created " << endl;
-							int check = 0;
+							bool check = 0;
 							cin >> check;
 							if (check == 1) yearloop = false;
 							break;
 
 						}
 						case 2: {
+							cout << "-------ADDING CLASSES---------" << endl;
+							while (1) {
+								string classid, headteacher;
+								cout << "Class id: ";
+								cin.ignore();
+								getline(cin, classid, '\n');
+								cout << "Head teacher: ";
+								getline(cin, headteacher, '\n');
+								cout << "Enter filename to add students ";
+								StudentNode* stuhead = nullptr;
+								readStudentFromFile(ip, stuhead);
+								Class newclass = CreateClass(classid, headteacher, stuhead);
+								AddClassNode(newyear->school_year.allclass, newclass);
+								cout << "0. Continue || 1.Exit ";
+								bool exit = 0; // phai thoat ra khoi vong lap
+								cin >> exit;
+								if (exit) break;
+							}
 							break;
 						}
 						default:

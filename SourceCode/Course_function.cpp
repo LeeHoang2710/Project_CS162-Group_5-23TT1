@@ -56,7 +56,7 @@ void InputCourse(CourseNode*& head) {
 	cin >> choice;
 	cin.ignore();
 	if (choice==1) {
-		readStudentFromFile(ip, cs.main_class);
+		readStudentFromFile(ip, cs.main_class->my_class.student_list);
 	}
 	else {
 		cout << "enter info of student you want to add (enter 0 to stop) " << endl;

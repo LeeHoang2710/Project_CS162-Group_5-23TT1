@@ -130,6 +130,7 @@
     <ClCompile Include="..\session, year, semester\semester.cpp" />
     <ClCompile Include="..\session, year, semester\session.cpp" />
     <ClCompile Include="..\session, year, semester\year.cpp" />
+    <ClCompile Include="Class.cpp" />
     <ClCompile Include="function_student.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="..\struct and function\menu.h" />
     <ClInclude Include="..\struct and function\struct_and_library.h" />
     <ClInclude Include="..\struct and function\student.h" />
+    <ClInclude Include="class.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
