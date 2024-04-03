@@ -58,26 +58,26 @@ int main() {
 						cout << endl << "------------------------------" << endl;
 						string year_id;
 						inputYearId(year_id);
-						//import year, semester list before
-						/*YearNode* newYearNode = initYearNode(createYear(year_id);*/
-						/*appendYearNode(year_list, newYearNode);*/
-						/*cout << "Added school year successfully." << endl;*/
+						YearNode* yearlist = nullptr;
+						Year temp=createYear(year_id);
+						YearNode* newyear= initYearNode(temp);
+						appendYearNode(yearlist, newyear);
 						cout << "1. Add semester " << endl;
-						//add one semester funcion;
 						cout << "2. Return " << endl;
 						cout << "Enter your choice: ";
 						cin >> choice;
 						switch (choice) {
 						case 1: {
 							//class function;
-							cout << "return to main menu?    1.yes || your choice: ";
+							string sem_id, start, end;
+							inputSemesterInfo(sem_id, start, end);
+							Semester newsem = createSemester(sem_id, start, end);
+							SemesterNode* newsemnode = createSemesterNode(newsem);
+							appendSemesterNode(newyear->school_year.list_sem, newsemnode);
+							cout << "A new semester has just been created " << endl;
 							int check = 0;
 							cin >> check;
 							if (check == 1) yearloop = false;
-							/*string sem_id, start_date, end_date;
-							inputSemesterInfo(sem_id, start_date, end_date);
-							SemesterNode* newSem = createSemesterNode(createSemester(sem_id, start_date, end_date));
-							appendSemesterNode(newYearNode->school_year.list_sem, newSem);*/
 							break;
 
 						}
