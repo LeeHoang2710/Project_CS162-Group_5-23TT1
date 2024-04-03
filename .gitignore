@@ -1,3 +1,6 @@
 .vscode
 Debug
 Other
+*.vcxproj
+*.filters
+*.user
