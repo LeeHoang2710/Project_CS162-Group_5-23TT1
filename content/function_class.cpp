@@ -147,7 +147,6 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
         while (Listclass)
         {
             fout << Listclass->my_class.class_id << endl;
-            fout << Listclass->my_class.academic_id << endl;
             exportStudentToFile(fout, Listclass->my_class.student_list);
             Listclass = Listclass->next;
         }

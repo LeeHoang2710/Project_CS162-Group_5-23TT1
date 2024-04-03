@@ -18,7 +18,7 @@ int main()
     StorePassWordStudent(user1, fin, "./database/student_password.csv");
     StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importYear(year, "./database/semester.csv", fin);
-    ReadClassfromfile(class_list, "database/class.csv", fin);
+    ReadClassfromfile(class_list, "./database/class.csv", fin);
 
     while (page > 0 && window.isOpen())
     {
