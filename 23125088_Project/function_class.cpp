@@ -221,17 +221,15 @@ void ReadStudentfromfile(StudentNode*& ListStu, ifstream& fin)
 			if (word2 != "1" && word2 != "0") 
 			{
 				word = word1 + word2;
+				newnode->student.last_name = word;
+				getline(ss,word,',');
+				newnode->student.gender=word;
 			}
 			else
-				word = word1;
-			newnode->student.last_name = word;
-			getline(ss, word, ',');
-			if (word == "0")
 			{
-				newnode->student.gender = 0;
-			}
-			else
-				newnode->student.gender = 1;
+				newnode->student.last_name = word1;
+				newnode->student.gender=word2;
+			}					
 			getline(ss, word, ',');
 			newnode->student.dob = word;
 			getline(ss, word, ',');
