@@ -1,7 +1,8 @@
 #include "../struct_and_function/function.h"
-Class CreateClass(string classid)
+Class CreateClass(string classid,string academicid)
 {
     Class newclass;
+    newclass.academic_id = academicid;
     newclass.class_id = classid;
     newclass.student_list = nullptr;
     return newclass;
@@ -38,32 +39,22 @@ void DeleteClassNode(ClassNode *&head, Class del_class)
         cout << "Invalid.\n";
         return;
     }
-    ClassNode *tmp = nullptr;
-    if (head->my_class.class_id == del_class.class_id)
+    ClassNode *tmp = head;
+    while (tmp && tmp->next)
     {
-        tmp = head;
-        head = head->next;
-        delete tmp;
-    }
-    else
-    {
-        tmp = head;
-        while (tmp && tmp->next)
-        {
-            if (tmp->next->my_class.class_id == del_class.class_id)
-            {
+         if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
+         {
                 ClassNode *delnode = tmp->next;
                 tmp->next = tmp->next->next;
                 delete delnode;
                 return;
-            }
-            else
-            {
-                tmp = tmp->next;
-            }
-        }
-        cout << "the class that need to remove don't exist.\n";
+         }
+         else
+         {
+            tmp = tmp->next;
+         }
     }
+    cout << "the class that need to remove don't exist.\n";
 }
 
 ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
@@ -78,7 +69,7 @@ ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
         ClassNode *tmp = head;
         while (tmp)
         {
-            if (tmp->my_class.class_id == searchclass)
+           if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
                 return tmp;
             else
                 tmp = tmp->next;
@@ -88,7 +79,7 @@ ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
     }
 }
 
-void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent)
+void AddStudent(ClassNode *&head, string classid, string academicid, StudentNode *newstudent)
 {
     if (!head)
     {
@@ -98,7 +89,7 @@ void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent)
     ClassNode *tmp = head;
     while (tmp)
     {
-        if (tmp->my_class.class_id == classid)
+        if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
         {
             StudentNode *Stulist = tmp->my_class.student_list;
             while (Stulist->next)
@@ -125,9 +116,13 @@ void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
     else
     {
         string line;
-        while (getline(fin, line))
+        while (getline(fin,line,'\n'))
         {
-            Class new_class = CreateClass(line);
+            string word1,word2;
+            stringstream ss(line);
+            getline(ss,word1,',');
+            getline(ss,word2,',');
+            Class new_class = CreateClass(word1,word2);
             AddClassNode(Listclass, new_class);
             ClassNode *temp = Listclass;
             while (temp->next)
@@ -149,6 +144,7 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
         while (Listclass)
         {
             fout << Listclass->my_class.class_id << endl;
+            fout << Listclass->my_class.academic_id <<endl;
             exportStudentToFile(fout, Listclass->my_class.student_list);
             Listclass = Listclass->next;
         }
