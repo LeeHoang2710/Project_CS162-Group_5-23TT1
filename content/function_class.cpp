@@ -1,5 +1,5 @@
 #include "../struct_and_function/function.h"
-Class CreateClass(string classid,string academicid)
+Class CreateClass(string classid, string academicid)
 {
     Class newclass;
     newclass.academic_id = academicid;
