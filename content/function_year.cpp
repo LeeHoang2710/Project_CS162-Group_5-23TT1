@@ -103,3 +103,16 @@ void exportYear(YearNode *&year_list, string filename, ofstream &fout)
 
     fout.close();
 }
+void Updatingacademic(YearNode* Yearnode, ClassNode*& Classhead)
+{
+	ClassNode* tmp = Classhead;
+	while (tmp->next)
+		tmp = tmp->next;
+	string yearid = Yearnode->school_year.year_id;
+	string s = "";
+	s = yearid.substr(0, 4);
+	ClassNode* newclass = new ClassNode();
+	newclass->my_class.academic_id = 'K' + s;
+	newclass->next = nullptr;
+	tmp->next = newclass;
+}
