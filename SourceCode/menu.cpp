@@ -36,7 +36,9 @@ int main() {
 		//after login
 		bool mainmenu = true;
 		//declare Head of linked list;
-		YearNode* year_list = NULL;
+		YearNode* yearlist = nullptr;
+		YearNode* newyear = nullptr;
+		string filename;
 		while (mainmenu) {
 			cout << endl << "-------------------------------" << endl;
 			cout << "1. School year " << endl;
@@ -44,6 +46,7 @@ int main() {
 			cout << "3. Class " << endl;
 			cout << "4. Profile " << endl;
 			cout << "5. Log out " << endl;
+			cout << "6. Semester " << endl;
 			cout << "Enter your choice: ";
 			int choice; cin >> choice;
 			switch (choice) {
@@ -61,9 +64,8 @@ int main() {
 						cout << endl << "------------------------------" << endl;
 						string year_id;
 						inputYearId(year_id);
-						YearNode* yearlist = nullptr;
 						Year temp=createYear(year_id);
-						YearNode* newyear= initYearNode(temp);
+						 newyear= initYearNode(temp);
 						appendYearNode(yearlist, newyear);
 
 						//
@@ -76,13 +78,12 @@ int main() {
 						cin >> choice;
 						switch (choice) {
 						case 1: {
-							//class function;
-							string sem_id, start, end;
-							inputSemesterInfo(sem_id, start, end);
+							/*string sem_id, start, end;*/
+							/*inputSemesterInfo(sem_id, start, end);
 							Semester newsem = createSemester(sem_id, start, end);
 							SemesterNode* newsemnode = createSemesterNode(newsem);
 							appendSemesterNode(newyear->school_year.list_sem, newsemnode);
-							cout << "A new semester has just been created " << endl;
+							cout << "A new semester has just been created " << endl;*/
 							bool check = 0;
 							cin >> check;
 							if (check == 1) yearloop = false;
@@ -100,7 +101,7 @@ int main() {
 								getline(cin, headteacher, '\n');
 								cout << "Enter filename to add students ";
 								StudentNode* stuhead = nullptr;
-								readStudentFromFile(ip, stuhead);
+								readStudentFromFile(ip, filename, stuhead);
 								Class newclass = CreateClass(classid, headteacher, stuhead);
 								AddClassNode(newyear->school_year.allclass, newclass);
 								cout << "0. Continue || 1.Exit ";
@@ -182,6 +183,24 @@ int main() {
 				break; 
 			}
 			case 4: {
+				break;
+			}
+			case 6:
+			{
+				string sem_id, start, end;
+				inputSemesterInfo(sem_id, start, end);
+				Semester newsem = createSemester(sem_id, start, end);
+				SemesterNode* newsemnode = createSemesterNode(newsem);
+				appendSemesterNode(newyear->school_year.list_sem, newsemnode);
+				cout << "A new semester has just been created " << endl;
+				cout << "Add courses to this semester: " <<endl;
+		/*		while (1) {*/
+					InputCourse(newsemnode->sem.course_list);
+					cout << "0. Continue || 1. Finish: ";
+					/*bool exit;
+					cin >> exit;
+					if (exit) break;*/
+				
 				break;
 			}
 			default:

@@ -21,9 +21,10 @@ CourseNode* initCourseNode(string new_year_id, string new_semester_id, Course ne
 	return new_course_node;
 }
 void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Course cs) {
-	CourseNode* new_course_node = initCourseNode(semester_id, year_id, cs);
+	CourseNode* new_course_node = initCourseNode(year_id,semester_id, cs);
 	if (!head)
-		head = new_course_node;
+		/*head = new_course_node;*/
+		cout << "cc";
 	else {
 		CourseNode* list_course = head;
 		while (list_course->next) {
@@ -33,8 +34,8 @@ void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Cou
 	}
 }
 void InputCourse(CourseNode*& head) {
-	string year;
-	string semester;
+	string year="1";
+	string semester="1";
 	Course cs;
 	cout << "Course id: ";
 	cin >> cs.course_id; 
@@ -51,17 +52,10 @@ void InputCourse(CourseNode*& head) {
 	cout << "Session_no (time): ";//this should output the session to choose
 	cin >> cs.teaching_session.session_no;
 	ifstream ip;
-	cout << "enter 1 if your want to input from file, enter 0 if your want to input from keyboard";
-	bool choice;
-	cin >> choice;
-	cin.ignore();
-	if (choice==1) {
-		readStudentFromFile(ip, cs.main_class->my_class.student_list);
-	}
-	else {
-		cout << "enter info of student you want to add (enter 0 to stop) " << endl;
-		readStudentFromTerminal(cs.student_list);
-	}
+	string filename;
+	cout << "Students of this class: " << endl;
+	cout << "Enter filename to add students: " <<endl;
+	readStudentFromFile(ip,filename, cs.main_class->my_class.student_list);
 	addNewCourseNode(head, semester, year, cs);
 }
 void OutputCourse(Course cs) {

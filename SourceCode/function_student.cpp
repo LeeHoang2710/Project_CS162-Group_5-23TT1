@@ -76,7 +76,7 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
     return nullptr;
 }
 
-void readStudentFromFile(ifstream &file, StudentNode*& liststu)
+void readStudentFromFile(ifstream &file, string filename, StudentNode*& liststu)
 {
     file.open("../database/student.csv");
     if (!file.is_open())
@@ -100,7 +100,6 @@ void readStudentFromFile(ifstream &file, StudentNode*& liststu)
             getline(ss, person.dob, ',');
             getline(ss, person.social_id, ',');
             getline(ss, person.student_class, ',');
-
             addNewStudentNode(liststu, person);
         }
     }
