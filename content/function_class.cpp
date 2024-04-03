@@ -62,19 +62,23 @@ void DeleteClassNode(ClassNode *&head, Class del_class)
     cout << "the class that need to remove don't exist.\n";
 }
 
-ClassNode *SearchClassNode(ClassNode *&head, string searchclass)
+ClassNode *SearchClassNode(ClassNode *&head, string searchclassid1,string searchclassid2)
 {
     if (!head)
     {
         cout << "the class that need to find don't exist.\n";
         return nullptr;
     }
+    if (head->my_class.class_id == searchclassid1 && head->my_class.academic_id == searchclassid2) 
+    {
+        return head;
+    }
     else
     {
-        ClassNode *tmp = head;
+        ClassNode *tmp = head->next;
         while (tmp)
         {
-           if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
+           if (tmp->my_class.class_id == searchclassid1 && tmp->my_class.academic_id == searchclassid2)
                 return tmp;
             else
                 tmp = tmp->next;
