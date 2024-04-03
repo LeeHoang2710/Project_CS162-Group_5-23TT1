@@ -5,7 +5,7 @@ void importClassResults(ClassNode* class_list, const string& filename, ifstream&
 void importStudentResults(ClassNode* currClass, ifstream& fin);
 void importCourseResults(StudentNode* currStudent, ifstream& fin);
 
-void exportResults(ResultsNode* results_list, ofstream& fout);
+void exportResults(ClassNode* class_list, const string& filename, ofstream& fout);
 
 void inputScore(float& process, float& midterm, float& final);
 void updateCourseOverall(Score& score);
@@ -23,4 +23,5 @@ string getCurrYearId(ResultsNode* results_list);
 ResultsNode* getCurrSemResultsNode(ResultsNode* results_list, const string& currSemId);
 ResultsNode* getCurrYearResultsNode(ResultsNode* results_list, const string& currYearId);
 
-void deleteResultsList();
+bool removeResultsNode(ResultsNode*& results_list, string course_id);
+void deleteResultsList(ResultsNode* results_list, string courseid);

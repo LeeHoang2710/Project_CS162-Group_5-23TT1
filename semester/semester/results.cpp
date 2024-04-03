@@ -73,7 +73,7 @@ void importCourseResults(StudentNode* currStudent, ifstream& fin)
 	}
 }
 
-void exportResults(ResultsNode* results_list, const string& filename, ofstream& fout)
+void exportResults(ClassNode* class_list, const string& filename, ofstream& fout)
 {
 	fout.open(filename);
 	if (!fout.is_open())
@@ -82,8 +82,32 @@ void exportResults(ResultsNode* results_list, const string& filename, ofstream& 
 		return;
 	}
 
-	while (results_list)
+	while (class_list)
 	{
+		fout << class_list->my_class.class_id << "\n";
+		StudentNode* stulist = class_list->my_class.student_list;
+		while (stulist)
+		{
+			fout << stulist->student.student_id << ','
+				<< stulist->student.first_name << "\n";
+			ResultsNode* results_list = stulist->student.results_list;
+			while (results_list)
+			{
+				fout << results_list->results.course_id << ','
+					<< results_list->results.year_id << ','
+					<< results_list->results.sem_id << ','
+					<< results_list->results.score.process << ','
+					<< results_list->results.score.midterm << ','
+					<< results_list->results.score.final << "\n";
+				results_list = results_list->next;
+			}
+
+			stulist = stulist->next;
+			fout << "*\n";
+		}
+
+		class_list = class_list->next;
+		fout << "//\n";
 	}
 
 	fout.close();
@@ -205,4 +229,42 @@ ResultsNode* getCurrYearResultsNode(ResultsNode* results_list, const string& cur
 	while (results_list && results_list->results.year_id != currYearId)
 		results_list = results_list->next;
 	return results_list;
+}
+
+ResultsNode* searchResultsNode(ResultsNode* results_list, string courseid)
+{
+	while (results_list && results_list->results.course_id != courseid)
+		results_list = results_list->next;
+
+	return results_list;
+}
+
+bool removeResultsNode(ResultsNode*& results_list, string course_id)
+{
+	ResultsNode* target = searchResultsNode(results_list, course_id);
+	if (!target)
+		return false;
+
+	ResultsNode* dummy = new ResultsNode;
+	dummy->next = results_list;
+
+	ResultsNode* curr = dummy;
+	while (curr->next != target)
+		curr = curr->next;
+
+	curr->next = target->next;
+	delete target;
+	results_list = dummy->next;
+	delete dummy;
+	return true;
+}
+
+void deleteResultsList(ResultsNode* results_list, string courseid)
+{
+	while (results_list)
+	{
+		ResultsNode* temp = results_list;
+		results_list = results_list->next;
+		delete temp;
+	}
 }
