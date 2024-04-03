@@ -194,12 +194,13 @@ int main() {
 				appendSemesterNode(newyear->school_year.list_sem, newsemnode);
 				cout << "A new semester has just been created " << endl;
 				cout << "Add courses to this semester: " <<endl;
-		/*		while (1) {*/
+				while (1) {
 					InputCourse(newsemnode->sem.course_list);
 					cout << "0. Continue || 1. Finish: ";
-					/*bool exit;
+				    bool exit;
 					cin >> exit;
-					if (exit) break;*/
+					if (exit) break;
+				}
 				
 				break;
 			}

@@ -23,8 +23,7 @@ CourseNode* initCourseNode(string new_year_id, string new_semester_id, Course ne
 void addNewCourseNode(CourseNode*& head, string year_id, string semester_id, Course cs) {
 	CourseNode* new_course_node = initCourseNode(year_id,semester_id, cs);
 	if (!head)
-		/*head = new_course_node;*/
-		cout << "cc";
+		head = new_course_node;
 	else {
 		CourseNode* list_course = head;
 		while (list_course->next) {
@@ -55,7 +54,7 @@ void InputCourse(CourseNode*& head) {
 	string filename;
 	cout << "Students of this class: " << endl;
 	cout << "Enter filename to add students: " <<endl;
-	readStudentFromFile(ip,filename, cs.main_class->my_class.student_list);
+	readStudentFromFile(ip,filename, cs.main_class.student_list);
 	addNewCourseNode(head, semester, year, cs);
 }
 void OutputCourse(Course cs) {
@@ -74,7 +73,7 @@ void displayCourse(CourseNode* CourseHead) {
 		bool choice;
 		cout << "enter 1 if you want to see students, 0 if not: ";
 		cin >> choice;
-		if (choice) displayStudent(tmp->course.main_class->my_class.student_list);
+		if (choice) displayStudent(tmp->course.main_class.student_list);
 	}
 }
 CourseNode* findcourse(CourseNode* CourseHead, string course_find) {

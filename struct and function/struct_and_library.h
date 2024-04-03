@@ -15,11 +15,12 @@ struct Semester;
 struct SemesterNode;
 
 struct Session;
-struct Course;
-struct CourseNode;
 
 struct Class;
 struct ClassNode;
+
+struct Course;
+struct CourseNode;
 
 struct Score;
 struct Student;
@@ -55,24 +56,6 @@ struct Session
     int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
     int session_no;      // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
-struct Course
-{
-    string course_id;
-    string course_name;
-    string teacher_name;
-    int num_credit;
-    int max_students = 50;
-    Session teaching_session;
-    ClassNode* main_class = nullptr;
-    StudentNode* student_list = nullptr;
-};
-struct CourseNode
-{
-    string semester_id;
-    string year_id;
-    Course course;
-    CourseNode* next;
-};
 struct Class
 {
     string class_id;
@@ -85,6 +68,36 @@ struct ClassNode
     Class my_class;
     ClassNode* next;
 };
+struct Course
+{
+    string course_id;
+    string course_name;
+    string teacher_name;
+    int num_credit;
+    int max_students = 50;
+    Session teaching_session;
+    Class main_class;
+    StudentNode* student_list = nullptr;
+};
+struct CourseNode
+{
+    string semester_id;
+    string year_id;
+    Course course;
+    CourseNode* next;
+};
+//struct Class
+//{
+//    string class_id;
+//    string academic_id;
+//    string head_teacher;
+//    StudentNode* student_list = nullptr;
+//};
+//struct ClassNode
+//{
+//    Class my_class;
+//    ClassNode* next;
+//};
 struct Score
 {
     float process = 0.0f;
