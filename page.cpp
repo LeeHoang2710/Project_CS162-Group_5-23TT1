@@ -1365,7 +1365,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
     }
 }
 
-void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_list)
+void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1474,7 +1474,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_l
         delete add[i], id[i], one[i];
 }
 
-void Students(RenderWindow &window, int &page, ClassNode *&class_list)
+void Students(RenderWindow &window, int &page, ClassNode *class_list)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1590,9 +1590,9 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
         }
         window.display();
     }
-    for (int i = 0; i < 7; ++i)
-        delete one[i];
-    for (int i = 0; i < 7; ++i)
-        for (int j = 0; j < 7; ++j)
-            delete stu[i][j];
+    // for (int i = 0; i < 7; ++i)
+    //     delete one[i];
+    // for (int i = 0; i < 7; ++i)
+    //     for (int j = 0; j < 7; ++j)
+    //         delete stu[i][j];
 }
