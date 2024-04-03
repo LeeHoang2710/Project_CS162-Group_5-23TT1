@@ -39,6 +39,11 @@ void DeleteClassNode(ClassNode *&head, Class del_class)
         cout << "Invalid.\n";
         return;
     }
+    if (head->next->my_class.class_id == del_class.class_id && head->next->my_class.academic_id == del_class.academic_id)
+    {
+        delete head;
+        return;
+    }
     ClassNode *tmp = head;
     while (tmp && tmp->next)
     {
