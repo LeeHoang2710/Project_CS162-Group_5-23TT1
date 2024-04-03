@@ -74,6 +74,7 @@ struct CourseNode
 struct Class
 {
     string class_id;
+    string academic_id;
     StudentNode *student_list = nullptr;
 };
 struct ClassNode
@@ -91,6 +92,7 @@ struct Score
 struct Student
 {
     int num;
+    string academic_id;
     string student_id;
     string first_name;
     string last_name;
