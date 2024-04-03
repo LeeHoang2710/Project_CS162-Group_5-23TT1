@@ -1418,14 +1418,14 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_l
                         new_page = true;
                         change += 4;
                     }
-                    // for (int i = 0; i < 4; ++i)
-                    // {
-                    //     if (isHere(add[i]->bound, mouse) && one[i])
-                    //     {
-                    //         page = 16;
-                    //         Classes(window, page, is_staff, one[i]);
-                    //     }
-                    // }
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (isHere(add[i]->bound, mouse) && one[i])
+                        {
+                            page = 17;
+                            Students(window, page, one[i]);
+                        }
+                    }
                 }
                 break;
             }

@@ -42,5 +42,6 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
 void addCourse(RenderWindow &window, CourseNode *&course, int &page);
 void updateCourse(RenderWindow &window, CourseNode *&course, int &page);
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_list);
+void Students(RenderWindow &window, int &page, ClassNode *&class_list);
 void Other(RenderWindow &window, int &page, bool is_staff);
 void changePassword(RenderWindow &window, int &page, bool is_staff);
