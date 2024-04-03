@@ -911,7 +911,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
         delete yes[i], no[i];
 }
 
-void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
+void updateCourse(RenderWindow& window, CourseNode*& course, int& page)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -932,8 +932,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_stu = false, typing_cre = false, save = false;
     bool updating = false;
 
-    Info *inf[4];
-    Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    Info* inf[4];
+    Object* yes[6], * no[6], * yes_sess[4], * no_sess[4];
     bool check_day[6], check_sess[4];
     for (int i = 0; i < 4; ++i)
     {
@@ -1062,12 +1062,16 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                         }
                         else if (isHere(append.bound, mouse))
                         {
-
                             Session s1;
                             s1.day_of_the_week = day;
                             s1.session_no = sess;
-                            Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), s1);
-                            appendNewCourseNode(course, new_cour);
+                            string temp = credit;
+                            if (temp == "")
+                                temp = "0";
+                            Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(temp), s1);
+                            comparecourse(course->course, new_cour);
+                            updatecourse(course, new_cour);
+                            updating = false;
                             save = true;
                             clock.restart();
                         }
@@ -1099,12 +1103,15 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
             }
             }
         }
-        inf[0]->txt.setString(course->course.course_id);
-        inf[1]->txt.setString(course->course.course_name);
-        inf[3]->txt.setString(course->course.teacher_name);
-        int sess = course->course.teaching_session.session_no;
-        check_day[course->course.teaching_session.day_of_the_week - 2] = true;
-        check_sess[course->course.teaching_session.session_no - 1] = true;
+        if (!updating)
+        {
+            inf[0]->txt.setString(course->course.course_id);
+            inf[1]->txt.setString(course->course.course_name);
+            inf[3]->txt.setString(course->course.teacher_name);
+            check_day[course->course.teaching_session.day_of_the_week - 2] = true;
+            check_sess[course->course.teaching_session.session_no - 1] = true;
+        }
+
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);

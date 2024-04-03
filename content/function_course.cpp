@@ -110,3 +110,31 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
     }
     fout << "*" << endl;
 }
+
+void comparecourse(Course& old, Course& newone)
+{
+        if (newone.course_id == "")
+            newone.course_id = old.course_id;
+
+        if (newone.course_name == "")
+            newone.course_name = old.course_name;
+        
+        if (newone.teacher_name == "")
+            newone.teacher_name = old.teacher_name;
+
+        if (newone.num_credit == 0)
+            newone.num_credit = old.num_credit;
+        
+        if (newone.teaching_session.day_of_the_week == 0)
+            newone.teaching_session.day_of_the_week = old.teaching_session.day_of_the_week;
+        
+        if (newone.teaching_session.session_no == 0)
+            newone.teaching_session.session_no = old.teaching_session.session_no;
+
+}
+
+void updatecourse(CourseNode*& curr, Course newone)
+{
+    if (curr)
+        curr->course = newone;
+}
