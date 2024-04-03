@@ -39,9 +39,9 @@ struct Score
 struct Results
 {
 	Score score;
-	CourseNode* course = nullptr;
-	SemesterNode* sem = nullptr;
-	YearNode* year = nullptr;
+	string course_id;
+	string sem_id;
+	string year_id;
 };
 
 struct ResultsNode
@@ -106,6 +106,7 @@ struct CourseNode
 	string semester_id;
 	string year_id;
 	Course course;
+	ClassNode* main_class;
 	StudentNode* student_list = nullptr;
 	CourseNode* next = nullptr;
 };
