@@ -1,10 +1,10 @@
-#include "struct_and_library.h"
 #include "function.h"
-Class CreateClass(string classid,string headteacher,StudentNode* studenthead)
+Class CreateClass(string classid,string headteacher,StudentNode* studenthead,string academicid)
 {
 	Class newclass;
+	newclass.academic_id = academicid;
 	newclass.class_id = classid;
-	newclass.class_id = headteacher;
+	newclass.head_teacher = headteacher;
 	newclass.student_list = studenthead;
 	return newclass;
 }
@@ -41,7 +41,7 @@ void DeleteClassNode(ClassNode* &head,Class del_class)
 		return;
 	}
 	ClassNode* tmp = nullptr;
-	if (head->my_class.class_id == del_class.class_id)
+	if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
 	{
 		tmp = head;
 		head = head->next;
@@ -52,7 +52,7 @@ void DeleteClassNode(ClassNode* &head,Class del_class)
 		tmp = head;
 		while (tmp->next) 
 		{
-			if (tmp->next->my_class.class_id == del_class.class_id) 
+			if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
 			{
 				ClassNode* delnode = tmp->next;
 				tmp->next = tmp->next->next;
@@ -67,19 +67,19 @@ void DeleteClassNode(ClassNode* &head,Class del_class)
 		cout << "the class that need to remove don't exist.\n";
 	}
 }
-ClassNode* SearchClassNode(ClassNode*& head,Class searchclass) 
+ClassNode* SearchClassNode(ClassNode*& head, Class searchclass)
 {
-	if (!head) 
+	if (!head)
 	{
 		cout << "the class that need to find don't exist.\n";
 		return nullptr;
 	}
-	else 
+	else
 	{
 		ClassNode* tmp = head;
 		while (tmp)
 		{
-			if (tmp->my_class.class_id == searchclass.class_id)
+			if (tmp->my_class.class_id == searchclass.class_id && tmp->my_class.academic_id == searchclass.academic_id)
 				return tmp;
 			else
 				tmp = tmp->next;
@@ -88,7 +88,7 @@ ClassNode* SearchClassNode(ClassNode*& head,Class searchclass)
 		return nullptr;
 	}
 }
-void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent) 
+void AddStudent(ClassNode* &head,string classid,string academicid,StudentNode* newstudent) 
 {
 	if (!head) 
 	{
@@ -98,7 +98,7 @@ void AddStudent(ClassNode* &head,string classid,StudentNode* newstudent)
 	ClassNode* tmp = head;
 	while (tmp) 
 	{
-		if (tmp->my_class.class_id == classid)
+		if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
 		{
 			StudentNode* Stulist = tmp->my_class.student_list;
 			while (Stulist->next)
@@ -127,22 +127,25 @@ void ReadClassfromfile(ClassNode* Listclass[],ifstream &fin)
 	while (getline(fin, line, '\n'))
 	{
 		stringstream ss(line);
-		string newclass;
-		while (getline(ss, newclass, ',')) 
+		string s1, s2;
+		while (getline(ss,s1, ',')&&getline(ss,s2,','))
 		{
 			ClassNode* tmp = 0;
-			if (!Listclass[i]) 
+			if (!Listclass[i])
 			{
 				Listclass[i] = new ClassNode();
-				Listclass[i]->my_class.class_id = newclass;
+				Listclass[i]->my_class.academic_id = s1;
+				Listclass[i]->my_class.class_id = s2;
 				Listclass[i]->next = 0;
 			}
-			else {
+			else
+			{
 				tmp = Listclass[i];
 				while (tmp->next)
 					tmp = tmp->next;
 				ClassNode* newclassnode = new ClassNode();
-				newclassnode->my_class.class_id = newclass;
+				newclassnode->my_class.academic_id = s1;
+				newclassnode->my_class.class_id = s2;
 				newclassnode->next = 0;
 				tmp->next = newclassnode;
 			}
@@ -219,32 +222,31 @@ void ReadStudentfromfile(StudentNode*& ListStu, ifstream& fin)
 			getline(ss, word1, ',');
 			getline(ss, word2, ',');
 			if (word2 != "1" && word2 != "0") 
-                        {
-	                    word = word1 + word2;
-	                    newnode->student.last_name = word;
-	                    getline(ss,word,',');
-	                    if (word == "1")
-		                newnode->student.gender = 1;
-	                    else
-		                newnode->student.gender = 0;
-	
-                         }
-                          else
-                          {
-	                      newnode->student.last_name = word1;
-	                      if (word2 == "1")
-		                  newnode->student.gender = 1;
-	                      else
-		                  newnode->student.gender = 0;
-                          }						
-			 getline(ss, word, ',');
-			 newnode->student.dob = word;
-			 getline(ss, word, ',');
-			 newnode->student.social_id = word;
-			 getline(ss, word, ',');
-			 newnode->student.student_class = word;
-			 newnode->next = 0;
-			 tmp->next = newnode;
+			{
+				word = word1 + word2;
+				newnode->student.last_name = word;
+				getline(ss,word,',');
+				if (word == "1")
+					newnode->student.gender = 1;
+				else
+					newnode->student.gender = 0;			
+			}
+			else
+			{
+				newnode->student.last_name = word1;
+				if (word2 == "1")
+					newnode->student.gender = 1;
+				else
+					newnode->student.gender = 0;
+			}					
+			getline(ss, word, ',');
+			newnode->student.dob = word;
+			getline(ss, word, ',');
+			newnode->student.social_id = word;
+			getline(ss, word, ',');
+			newnode->student.student_class = word;
+			newnode->next = 0;
+			tmp->next = newnode;
 		}
 	}
 }
