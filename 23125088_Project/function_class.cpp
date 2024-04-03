@@ -219,25 +219,32 @@ void ReadStudentfromfile(StudentNode*& ListStu, ifstream& fin)
 			getline(ss, word1, ',');
 			getline(ss, word2, ',');
 			if (word2 != "1" && word2 != "0") 
-			{
-				word = word1 + word2;
-				newnode->student.last_name = word;
-				getline(ss,word,',');
-				newnode->student.gender=word;
-			}
-			else
-			{
-				newnode->student.last_name = word1;
-				newnode->student.gender=word2;
-			}					
-			getline(ss, word, ',');
-			newnode->student.dob = word;
-			getline(ss, word, ',');
-			newnode->student.social_id = word;
-			getline(ss, word, ',');
-			newnode->student.student_class = word;
-			newnode->next = 0;
-			tmp->next = newnode;
+                        {
+	                    word = word1 + word2;
+	                    newnode->student.last_name = word;
+	                    getline(ss,word,',');
+	                    if (word == "1")
+		                newnode->student.gender = 1;
+	                    else
+		                newnode->student.gender = 0;
+	
+                         }
+                          else
+                          {
+	                      newnode->student.last_name = word1;
+	                      if (word2 == "1")
+		                  newnode->student.gender = 1;
+	                      else
+		                  newnode->student.gender = 0;
+                          }						
+			 getline(ss, word, ',');
+			 newnode->student.dob = word;
+			 getline(ss, word, ',');
+			 newnode->student.social_id = word;
+			 getline(ss, word, ',');
+			 newnode->student.student_class = word;
+			 newnode->next = 0;
+			 tmp->next = newnode;
 		}
 	}
 }
