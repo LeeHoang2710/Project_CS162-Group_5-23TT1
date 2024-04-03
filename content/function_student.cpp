@@ -114,7 +114,7 @@ void exportStudentToFile(ofstream &file, StudentNode *&list_student)
         {
             Student person = list_student->student;
             file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
-            file << "," << person.social_id << endl;
+            file << "," << person.dob << "," << person.social_id << endl;
             list_student = list_student->next;
         }
         file << "*" << endl;

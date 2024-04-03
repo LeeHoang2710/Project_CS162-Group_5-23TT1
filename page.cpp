@@ -1473,3 +1473,126 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_l
     for (int i = 0; i < 4; ++i)
         delete add[i], id[i], one[i];
 }
+
+void Students(RenderWindow &window, int &page, ClassNode *&class_list)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object o1 = createObject("./image/page3-staff/class/student-bg.png", 180, 120);
+    Object create = createObject("./image/page3-staff/class/create-cla.png", 270, 262);
+    Object del = createObject("image/page3-staff/class/delete-stu.png", 581, 262);
+    Object eXport = createObject("image/page3-staff/class/export.png", 910, 262);
+    Object res = createObject("image/page3-staff/class/result.png", 1075, 204);
+    Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
+    Info *stu[7][7];
+    StudentNode *one[7];
+    StudentNode *stu_list = class_list->my_class.student_list;
+    for (int i = 0; i < 7; ++i)
+    {
+        stu[i][0] = createInfoTest("", 254, 426 + 48 * i);
+        stu[i][1] = createInfoTest("", 320, 426 + 48 * i);
+        stu[i][2] = createInfoTest("", 468, 426 + 48 * i);
+        stu[i][3] = createInfoTest("", 613, 426 + 48 * i);
+        stu[i][4] = createInfoTest("", 751, 426 + 48 * i);
+        stu[i][5] = createInfoTest("", 872, 426 + 48 * i);
+        stu[i][6] = createInfoTest("", 1004, 426 + 48 * i);
+    }
+    bool new_page = true;
+    int count = 0, change = 0;
+    for (StudentNode *curr = stu_list; curr; curr = curr->next)
+        count++;
+    while (window.isOpen() && page == 17)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 16, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                    // if (isHere(create.bound, mouse))
+                    // {
+                    //     page = 8;
+                    //     addCourse(window, course, page);
+                    // }
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 7;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 7;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(create.draw);
+        window.draw(del.draw);
+        window.draw(eXport.draw);
+        window.draw(res.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        window.draw(title.txt);
+        if (new_page && stu_list)
+        {
+            StudentNode *temp = stu_list;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 7; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    stu[i][0]->txt.setString(to_string(one[i]->student.num));
+                    stu[i][1]->txt.setString(one[i]->student.student_id);
+                    stu[i][2]->txt.setString(one[i]->student.first_name);
+                    stu[i][3]->txt.setString(one[i]->student.last_name);
+                    stu[i][4]->txt.setString(to_string(one[i]->student.gender));
+                    stu[i][5]->txt.setString(one[i]->student.dob);
+                    stu[i][6]->txt.setString(one[i]->student.social_id);
+                    temp = temp->next;
+                }
+                else
+                    stu[i][0]->txt.setString("");
+            }
+            new_page = false;
+        }
+        for (int i = 0; i < 7; ++i)
+        {
+            if (stu[i][0]->txt.getString() == "")
+                break;
+            for (int j = 0; j < 7; ++j)
+                window.draw(stu[i][j]->txt);
+        }
+        window.display();
+    }
+    for (int i = 0; i < 7; ++i)
+        delete one[i];
+    for (int i = 0; i < 7; ++i)
+        for (int j = 0; j < 7; ++j)
+            delete stu[i][j];
+}
