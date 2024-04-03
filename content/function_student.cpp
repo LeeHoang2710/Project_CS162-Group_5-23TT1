@@ -80,8 +80,10 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
     string line;
 
-    while (getline(file, line) && line != "*")
+    while (getline(file, line))
     {
+        if (line == "*")
+            break;
         stringstream ss(line);
         string number;
         Student person;

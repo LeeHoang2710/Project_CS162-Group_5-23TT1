@@ -1373,9 +1373,111 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
     }
 }
 
-void Study(RenderWindow &window, int &page, bool is_staff)
+void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *&class_list)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
+    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object o1 = createObject("./image/page3-staff/class/class-bg.png", 180, 120);
+    Object create = createObject("./image/page3-staff/class/create-cla.png", 263, 259);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
+    Info total = createText("", 1050, 258);
+    Object *add[4];
+    Info *id[4];
+    ClassNode *one[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+    }
+    bool new_page = true;
+    int count = 0, change = 0;
+    for (ClassNode *curr = class_list; curr; curr = curr->next)
+        count++;
+    while (window.isOpen() && page == 16)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+
+                    switchPage(b.bound, mouse, 3, page);
+                    switchPage(menu.bound, mouse, 3, page);
+
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 4;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 4;
+                    }
+                    // for (int i = 0; i < 4; ++i)
+                    // {
+                    //     if (isHere(add[i]->bound, mouse) && one[i])
+                    //     {
+                    //         page = 16;
+                    //         Classes(window, page, is_staff, one[i]);
+                    //     }
+                    // }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(f.draw);
+        window.draw(b.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(sum.draw);
+        if (new_page && class_list)
+        {
+            ClassNode *temp = class_list;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    id[i]->txt.setString(one[i]->my_class.class_id);
+                    temp = temp->next;
+                }
+                else
+                    id[i]->txt.setString("");
+            }
+            new_page = false;
+        }
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (id[i]->txt.getString() == "")
+                break;
+            window.draw(add[i]->draw);
+            window.draw(id[i]->txt);
+        }
+
+        window.display();
+    }
+    for (int i = 0; i < 4; ++i)
+        delete add[i], id[i], one[i];
 }

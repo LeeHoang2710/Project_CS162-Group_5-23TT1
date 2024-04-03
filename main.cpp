@@ -11,12 +11,14 @@ int main()
     StudentNode *user1 = nullptr;
     StaffNode *user2 = nullptr;
     YearNode *year = nullptr;
+    ClassNode *class_list = nullptr;
     ofstream fout;
     ifstream fin;
 
     StorePassWordStudent(user1, fin, "./database/student_password.csv");
     StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importYear(year, "./database/semester.csv", fin);
+    ReadClassfromfile(class_list, "database/class.csv", fin);
 
     while (page > 0 && window.isOpen())
     {
@@ -44,6 +46,10 @@ int main()
             School(window, page, is_staff, year);
             break;
         }
+        case 16:
+        {
+            Classes(window, page, is_staff, class_list);
+        }
         case 19:
         {
             Other(window, page, is_staff);
@@ -60,6 +66,7 @@ int main()
         }
     }
     exportYear(year, "./database/semester.csv", fout);
+    ExportClassTFile(class_list, "./database/class.csv", fout);
     deleteYearList(year);
     delete user1, user2;
 

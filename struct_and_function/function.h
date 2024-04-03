@@ -57,3 +57,4 @@ ClassNode *SearchClassNode(ClassNode *&head, string searchclass);
 void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent);
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
 void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout);
+void findClass(ClassNode *head, string input, bool *arr);

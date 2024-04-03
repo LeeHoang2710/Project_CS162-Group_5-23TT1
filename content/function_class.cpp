@@ -1,8 +1,7 @@
 #include "../struct_and_function/function.h"
-Class CreateClass(string classid, string academicid)
+Class CreateClass(string classid)
 {
     Class newclass;
-    newclass.academic_id = academicid;
     newclass.class_id = classid;
     newclass.student_list = nullptr;
     return newclass;
@@ -32,92 +31,92 @@ void AddClassNode(ClassNode *&head, Class newclass)
     }
 }
 
-void DeleteClassNode(ClassNode *&head, Class del_class)
-{
-    if (!head)
-    {
-        cout << "Invalid.\n";
-        return;
-    }
-    if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
-    {
-        ClassNode* tmp=head;
-        head=head->next;
-        delete tmp;
-        return;
-    }
-    ClassNode *tmp = head;
-    while (tmp && tmp->next)
-    {
-         if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
-         {
-                ClassNode *delnode = tmp->next;
-                tmp->next = tmp->next->next;
-                delete delnode;
-                return;
-         }
-         else
-         {
-            tmp = tmp->next;
-         }
-    }
-    cout << "the class that need to remove don't exist.\n";
-}
+// void DeleteClassNode(ClassNode *&head, Class del_class)
+// {
+//     if (!head)
+//     {
+//         cout << "Invalid.\n";
+//         return;
+//     }
+//     if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
+//     {
+//         ClassNode *tmp = head;
+//         head = head->next;
+//         delete tmp;
+//         return;
+//     }
+//     ClassNode *tmp = head;
+//     while (tmp && tmp->next)
+//     {
+//         if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
+//         {
+//             ClassNode *delnode = tmp->next;
+//             tmp->next = tmp->next->next;
+//             delete delnode;
+//             return;
+//         }
+//         else
+//         {
+//             tmp = tmp->next;
+//         }
+//     }
+//     cout << "the class that need to remove don't exist.\n";
+// }
 
-ClassNode *SearchClassNode(ClassNode *&head, string searchclassid1,string searchclassid2)
-{
-    if (!head)
-    {
-        cout << "the class that need to find don't exist.\n";
-        return nullptr;
-    }
-    if (head->my_class.class_id == searchclassid1 && head->my_class.academic_id == searchclassid2) 
-    {
-        return head;
-    }
-    else
-    {
-        ClassNode *tmp = head->next;
-        while (tmp)
-        {
-           if (tmp->my_class.class_id == searchclassid1 && tmp->my_class.academic_id == searchclassid2)
-                return tmp;
-            else
-                tmp = tmp->next;
-        }
-        cout << "the class that need to find don't exist.\n";
-        return nullptr;
-    }
-}
+// ClassNode *SearchClassNode(ClassNode *&head, string searchclassid1, string searchclassid2)
+// {
+//     if (!head)
+//     {
+//         cout << "the class that need to find don't exist.\n";
+//         return nullptr;
+//     }
+//     if (head->my_class.class_id == searchclassid1 && head->my_class.academic_id == searchclassid2)
+//     {
+//         return head;
+//     }
+//     else
+//     {
+//         ClassNode *tmp = head->next;
+//         while (tmp)
+//         {
+//             if (tmp->my_class.class_id == searchclassid1 && tmp->my_class.academic_id == searchclassid2)
+//                 return tmp;
+//             else
+//                 tmp = tmp->next;
+//         }
+//         cout << "the class that need to find don't exist.\n";
+//         return nullptr;
+//     }
+// }
 
-void AddStudent(ClassNode *&head, string classid, string academicid, StudentNode *newstudent)
-{
-    if (!head)
-    {
-        cout << "The class you want to join don't exist!\n";
-        return;
-    }
-    ClassNode *tmp = head;
-    while (tmp)
-    {
-        if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
-        {
-            StudentNode *Stulist = tmp->my_class.student_list;
-            while (Stulist->next)
-                Stulist = Stulist->next;
-            Stulist->next = newstudent;
-            return;
-        }
-        else
-        {
-            tmp = tmp->next;
-        }
-    }
-    if (!tmp)
-    {
-        cout << "The class you want to join don't exist!\n";
-    }
-}
+// void AddStudent(ClassNode *&head, string classid, string academicid, StudentNode *newstudent)
+// {
+//     if (!head)
+//     {
+//         cout << "The class you want to join don't exist!\n";
+//         return;
+//     }
+//     ClassNode *tmp = head;
+//     while (tmp)
+//     {
+//         if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
+//         {
+//             StudentNode *Stulist = tmp->my_class.student_list;
+//             while (Stulist->next)
+//                 Stulist = Stulist->next;
+//             Stulist->next = newstudent;
+//             return;
+//         }
+//         else
+//         {
+//             tmp = tmp->next;
+//         }
+//     }
+//     if (!tmp)
+//     {
+//         cout << "The class you want to join don't exist!\n";
+//     }
+// }
 
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
 {
@@ -127,18 +126,11 @@ void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
     else
     {
         string line;
-        while (getline(fin,line,'\n'))
+        while (getline(fin, line, '\n'))
         {
-            string word1,word2;
-            stringstream ss(line);
-            getline(ss,word1,',');
-            getline(ss,word2,',');
-            Class new_class = CreateClass(word1,word2);
+            Class new_class = CreateClass(line);
+            readStudentFromFile(fin, new_class.student_list);
             AddClassNode(Listclass, new_class);
-            ClassNode *temp = Listclass;
-            while (temp->next)
-                temp = temp->next;
-            readStudentFromFile(fin, temp->my_class.student_list);
         }
     }
 
@@ -155,9 +147,28 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
         while (Listclass)
         {
             fout << Listclass->my_class.class_id << endl;
-            fout << Listclass->my_class.academic_id <<endl;
+            fout << Listclass->my_class.academic_id << endl;
             exportStudentToFile(fout, Listclass->my_class.student_list);
             Listclass = Listclass->next;
         }
+    }
+}
+
+void findClass(ClassNode *head, string input, bool *arr)
+{
+    ClassNode *curr = head;
+    int i = 0;
+    while (curr)
+    {
+        if (curr->my_class.class_id.find(input) != string::npos)
+        {
+            arr[i] = true;
+            cout << curr->my_class.class_id << ' ';
+        }
+        else
+            arr[i] = false;
+
+        i++;
+        curr = curr->next;
     }
 }
