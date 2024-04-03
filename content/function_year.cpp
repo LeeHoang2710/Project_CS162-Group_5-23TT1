@@ -97,10 +97,7 @@ void exportYear(YearNode *&year_list, string filename, ofstream &fout)
     while (currYear)
     {
         fout << currYear->school_year.year_id << endl;
-        if (!currYear->school_year.list_sem)
-            fout << "#" << endl;
-        else
-            exportSemesterInYear(currYear->school_year.list_sem, fout);
+        exportSemesterInYear(currYear->school_year.list_sem, fout);
         currYear = currYear->next;
     }
 
