@@ -110,3 +110,9 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
     }
     fout << "*" << endl;
 }
+
+void updatecourse(CourseNode *&curr, Course newone)
+{
+    if (curr)
+        curr->course = newone;
+}

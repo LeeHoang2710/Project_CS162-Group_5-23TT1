@@ -45,6 +45,7 @@ void appendNewCourseNode(CourseNode *&head, Course cs);
 void deletecourse(CourseNode *CourseHead, string delCourse);
 void importCourse(CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
+void updatecourse(CourseNode *&curr, Course newone);
 
 // Class
 Class CreateClass(string classid);
