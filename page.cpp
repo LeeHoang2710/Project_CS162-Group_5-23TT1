@@ -1,4 +1,5 @@
 #include "view_function.h"
+
 void Scene1(RenderWindow &window, int &page, bool &is_staff)
 {
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -75,7 +76,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
             case Event::Closed:
                 window.close();
                 break;
-            case Event::MouseButtonPressed:
+            case Event::MouseButtonReleased:
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
@@ -1227,7 +1228,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
             case Event::Closed:
                 window.close();
                 break;
-            case Event::MouseButtonPressed:
+            case Event::MouseButtonReleased:
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
