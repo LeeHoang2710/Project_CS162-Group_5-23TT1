@@ -11,9 +11,9 @@ Object createObject(string input, float x, float y)
 	// The global bounds are the smallest rectangle that contains the entire sprite, in global coordinate(relative to the window, not the sprite)
 	return icon;
 }
-Object* createObjectTest(string s, float x, float y)
+Object *createObjectTest(string s, float x, float y)
 {
-	Object* me = new Object;
+	Object *me = new Object;
 	me->text.loadFromFile(s);
 	me->draw.setTexture(me->text);
 	me->draw.setPosition(x, y);
@@ -45,9 +45,9 @@ Info createText(string str, float x, float y)
 	return input;
 }
 
-Info* createInfoTest(string s, float x, float y)
+Info *createInfoTest(string s, float x, float y)
 {
-	Info* a = new Info;
+	Info *a = new Info;
 	a->font.loadFromFile("./image/font/Arial.ttf");
 	a->txt.setFont(a->font);
 	a->txt.setCharacterSize(30);
@@ -57,12 +57,20 @@ Info* createInfoTest(string s, float x, float y)
 	a->bound = a->txt.getGlobalBounds();
 	return a;
 }
-bool isHere(FloatRect& bound, Vector2f& mouse)
+bool isHere(FloatRect &bound, Vector2f &mouse)
 {
 	return bound.contains(mouse);
 }
 
-bool Draw(RenderWindow& window, Vector2f& mouse, Object x, Object y)
+void updateColorOnHover(RenderWindow &window, Object &o)
+{
+	if (o.isHover(window))
+		o.draw.setColor(Color::Magenta);
+	else
+		o.draw.setColor(Color::White);
+}
+
+bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
 {
 	if (isHere(x.bound, mouse))
 	{
@@ -76,7 +84,7 @@ bool Draw(RenderWindow& window, Vector2f& mouse, Object x, Object y)
 	}
 }
 
-void chooseDraw(RenderWindow& window, Object* x, Object* y, bool check)
+void chooseDraw(RenderWindow &window, Object *x, Object *y, bool check)
 {
 	if (check)
 		window.draw(x->draw);
@@ -84,20 +92,20 @@ void chooseDraw(RenderWindow& window, Object* x, Object* y, bool check)
 		window.draw(y->draw);
 }
 
-void switchPage(FloatRect& bound, Vector2f& mouse, int k, int& page)
+void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)
 {
 	if (isHere(bound, mouse))
 		page = k;
 	return;
 }
 
-void changePosition(Object& a, float x, float y)
+void changePosition(Object &a, float x, float y)
 {
 	a.draw.setPosition(x, y);
 	a.bound = a.draw.getGlobalBounds();
 }
 
-void Typing(bool& texting, Info& infor, string& input, Event event)
+void Typing(bool &texting, Info &infor, string &input, Event event)
 {
 	if (texting)
 	{
@@ -112,12 +120,12 @@ void Typing(bool& texting, Info& infor, string& input, Event event)
 				texting = false;
 			else if (event.text.unicode >= 32)
 				input += static_cast<char>(event.text.unicode);
-			infor.txt.setString(input + '_');
+			infor.txt.setString(input + '|');
 		}
 	}
 }
 
-void objectAppear(RenderWindow& window, bool& change, Clock& clock, Object& o)
+void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o)
 {
 	if (change)
 		window.draw(o.draw);

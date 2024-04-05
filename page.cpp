@@ -10,6 +10,8 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     while (window.isOpen() && page == 1)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, o2);
+        updateColorOnHover(window, o3);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -53,9 +55,9 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page2/scene2-bg.png", 180, 120);
     Object o2 = createObject("./image/page2/login-bg.png", 340, 282);
-    Object o3 = createObject("./image/page2/login-button.png", 589, 646);
-    Object o4 = createObject("./image/page2/username.png", 604, 468);
-    Object o5 = createObject("./image/page2/password.png", 603.0f, 570);
+    Object o3 = createObject("./image/page2/login-button.png", 589, 608);
+    Object o4 = createObject("./image/page2/username.png", 604, 435);
+    Object o5 = createObject("./image/page2/password.png", 603, 525);
     Object o6 = createObject("./image/page2/alert.png", 423, 351);
     Object o7 = createObject("./image/page2/open.png", 1003, 533);
     Object o8 = createObject("./image/page2/closed.png", 1003, 533);
@@ -69,6 +71,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     while (window.isOpen() && page == 2)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, o3);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -149,7 +152,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                         {
                             username += static_cast<char>(event.text.unicode);
                         }
-                        inputUsername.txt.setString(username + '_');
+                        inputUsername.txt.setString(username + '|');
                     }
                 }
                 else if (isTypingPassword)
@@ -172,13 +175,15 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                             hidden_pass += '*';
                         }
                         if (see)
-                            inputPassword.txt.setString(password + '_');
+                            inputPassword.txt.setString(password + '|');
                         else
-                            inputPassword.txt.setString(hidden_pass + '_');
+                            inputPassword.txt.setString(hidden_pass + '|');
                     }
                 }
                 break;
             }
+            default:
+                break;
             }
         }
 
@@ -216,6 +221,10 @@ void homeStaff(RenderWindow &window, int &page)
     while (window.isOpen() && page == 3)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, o2);
+        updateColorOnHover(window, o3);
+        updateColorOnHover(window, o4);
+        updateColorOnHover(window, o5);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -232,8 +241,10 @@ void homeStaff(RenderWindow &window, int &page)
                     switchPage(o4.bound, mouse, 16, page);
                     switchPage(o5.bound, mouse, 19, page);
                 }
+                break;
             }
-            break;
+            default:
+                break;
             }
         }
         window.clear();
@@ -251,13 +262,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/school_year/year-bg.png", 180, 120);
-    // Object o2 = createObject("./image/page3-staff/school_year/2020.png", 235, 347);
-    // Object o3 = createObject("./image/page3-staff/school_year/2021.png", 235, 464);
-    // Object o4 = createObject("./image/page3-staff/school_year/2022.png", 235, 581);
-    //  Object o5 = createObject("./image/page3-staff/school_year/2023.png", 235, 698);
     Object create = createObject("./image/page3-staff/school_year/create_yr.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
@@ -281,6 +287,16 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     while (window.isOpen() && page == 4)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, create);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        updateColorOnHover(window, menu);
+        for (int i = 0; i < 4; ++i)
+        {
+            Object &addRef = *add[i];
+            updateColorOnHover(window, addRef);
+        }
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -343,7 +359,6 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         window.draw(screen.draw);
         window.draw(o1.draw);
         window.draw(create.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
@@ -387,13 +402,12 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
     Object o1 = createObject("./image/page3-staff/school_year/semester-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/school_year/create_sem.png", 263, 259);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object *add[3];
     Info *id[3];
     SemesterNode *sem[3];
@@ -405,6 +419,16 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
     while (window.isOpen() && page == 5)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, create);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        updateColorOnHover(window, menu);
+        for (int i = 0; i < 3; ++i)
+        {
+            Object &addRef = *add[i];
+            updateColorOnHover(window, addRef);
+        }
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -442,7 +466,6 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
         window.draw(screen.draw);
         window.draw(o1.draw);
         window.draw(create.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
@@ -476,16 +499,15 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
     Object o1 = createObject("./image/page3-staff/school_year/new-semester-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/school_year/input.png", 465, 380);
     Object o3 = createObject("./image/page3-staff/school_year/input.png", 465, 446);
     Object o4 = createObject("./image/page3-staff/school_year/input.png", 465, 513);
     Object o5 = createObject("./image/page3-staff/school_year/input.png", 465, 579);
-    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object append = createObject("./image/page3-staff/school_year/add.png", 384, 260);
     Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Clock clock;
     bool typing_sem = false, typing_st = false, typing_e = false, save = false;
     Info t2 = createText("", 480, 385);
@@ -497,6 +519,9 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
     while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, append);
+        updateColorOnHover(window, menu);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -554,6 +579,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
                 Typing(typing_e, t5, end, event);
                 break;
             }
+            default:
+                break;
             }
 
             window.clear();
@@ -567,7 +594,6 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
             window.draw(t3.txt);
             window.draw(t4.txt);
             window.draw(t5.txt);
-            window.draw(f.draw);
             window.draw(b.draw);
             window.draw(menu.draw);
             window.draw(append.draw);
@@ -581,11 +607,10 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 258);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 258);
-    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object create = createObject("./image/page3-staff/course/create-cour.png", 260, 258);
     Object del = createObject("./image/page3-staff/course/delete-cour.png", 589, 258);
     Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
@@ -607,6 +632,16 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     while (window.isOpen() && page == 7)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, create);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        updateColorOnHover(window, menu);
+        for (int i = 0; i < 4; ++i)
+        {
+            Object &subjectRef = *subject[i];
+            updateColorOnHover(window, subjectRef);
+        }
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -656,7 +691,6 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         window.draw(create.draw);
         window.draw(del.draw);
         window.draw(sum.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
@@ -699,9 +733,8 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
     Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
     Object import = createObject("./image/page3-staff/course/import.png", 534, 258);
@@ -738,6 +771,10 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
     while (window.isOpen() && page == 8)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, append);
+        updateColorOnHover(window, import);
+        updateColorOnHover(window, menu);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -870,6 +907,8 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
                 Typing(typing_cre, cre, credit, event);
                 break;
             }
+            default:
+                break;
             }
         }
         window.clear();
@@ -881,7 +920,6 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
         window.draw(o5.draw);
         window.draw(o6.draw);
         window.draw(o7.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(menu.draw);
         window.draw(append.draw);
@@ -908,9 +946,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
     Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
     Object update = createObject("./image/page3-staff/course/update.png", 530, 258);
@@ -948,6 +985,10 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
     while (window.isOpen() && page == 9)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, append);
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, update);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -962,9 +1003,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                     switchPage(b.bound, mouse, 7, page);
                     switchPage(menu.bound, mouse, 3, page);
                     if (isHere(update.bound, mouse))
-                    {
                         updating = true;
-                    }
                     if (updating)
                     {
                         for (int i = 0; i < 6; ++i)
@@ -1094,6 +1133,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
                 }
                 break;
             }
+            default:
+                break;
             }
         }
         if (!updating)
@@ -1114,7 +1155,6 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
         window.draw(o5.draw);
         window.draw(o6.draw);
         window.draw(o7.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(menu.draw);
         window.draw(append.draw);
@@ -1141,17 +1181,20 @@ void Other(RenderWindow &window, int &page, bool is_staff)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 256);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 256);
     Object o1 = createObject("./image/page3-staff/other/other-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/other/log-out.png", 230, 354);
     Object o3 = createObject("./image/page3-staff/other/change-pass.png", 230, 465);
     Object o4 = createObject("./image/page3-staff/other/profile.png", 230, 576);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     while (window.isOpen() && page == 19)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, o2);
+        updateColorOnHover(window, o3);
+        updateColorOnHover(window, o4);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1172,8 +1215,10 @@ void Other(RenderWindow &window, int &page, bool is_staff)
                     else if (isHere(o3.bound, mouse))
                         page = 20;
                 }
+                break;
             }
-            break;
+            default:
+                break;
             }
 
             window.clear();
@@ -1182,7 +1227,6 @@ void Other(RenderWindow &window, int &page, bool is_staff)
             window.draw(o2.draw);
             window.draw(o3.draw);
             window.draw(o4.draw);
-            window.draw(f.draw);
             window.draw(b.draw);
             window.draw(menu.draw);
             window.display();
@@ -1194,8 +1238,6 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 200);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 200);
     Object o1 = createObject("./image/page2/scene2-bg.png", 180, 120);
     Object o2 = createObject("./image/page2/changePass/change-bg.png", 340, 279);
     Object o3 = createObject("./image/page2/changePass/change-button.png", 589, 606);
@@ -1207,6 +1249,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
     Object o8 = createObject("./image/page2/closed.png", 1003, 443);
     Object o9 = createObject("./image/page2/open.png", 1003, 533);
     Object o10 = createObject("./image/page2/closed.png", 1003, 533);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
 
     Info oldPassword = createText("", 665.0f, 432.0f);
     Info newPassword = createText("", 665.0f, 522.0f);
@@ -1221,6 +1264,8 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
     while (window.isOpen() && page == 20)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, o3);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1308,9 +1353,9 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
                             hidden_old += '*';
                         }
                         if (seeOld)
-                            oldPassword.txt.setString(old_pass + '_');
+                            oldPassword.txt.setString(old_pass + '|');
                         else
-                            oldPassword.txt.setString(hidden_old + '_');
+                            oldPassword.txt.setString(hidden_old + '|');
                     }
                 }
                 else if (isTypingNew)
@@ -1333,13 +1378,15 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
                             hidden_new += '*';
                         }
                         if (seeNew)
-                            newPassword.txt.setString(new_pass + '_');
+                            newPassword.txt.setString(new_pass + '|');
                         else
-                            newPassword.txt.setString(hidden_new + '_');
+                            newPassword.txt.setString(hidden_new + '|');
                     }
                 }
                 break;
             }
+            default:
+                break;
             }
         }
         window.clear();
@@ -1359,7 +1406,6 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
             window.draw(o10.draw);
         else
             window.draw(o9.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         objectAppear(window, Change, clock, o6);
         window.display();
@@ -1370,14 +1416,13 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/class/class-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/class/create-cla.png", 263, 259);
+    Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Info total = createText("", 1050, 258);
     Object *add[4];
     Info *id[4];
@@ -1394,6 +1439,15 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     while (window.isOpen() && page == 16)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        for (int i = 0; i < 4; ++i)
+        {
+            Object &addRef = *add[i];
+            updateColorOnHover(window, addRef);
+        }
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1437,7 +1491,6 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
@@ -1479,29 +1532,30 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object f = createObject("./image/page3-staff/forward.png", 231, 259);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
-    Object prev = createObject("./image/page3-staff/prev.png", 180, 780);
-    Object next = createObject("./image/page3-staff/next.png", 1212, 780);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/class/student-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/class/create-cla.png", 270, 262);
-    Object del = createObject("image/page3-staff/class/delete-stu.png", 581, 262);
-    Object eXport = createObject("image/page3-staff/class/export.png", 910, 262);
-    Object res = createObject("image/page3-staff/class/result.png", 1075, 204);
+    Object del = createObject("./image/page3-staff/class/delete-stu.png", 581, 262);
+    Object eXport = createObject("./image/page3-staff/class/export.png", 910, 262);
+    Object res = createObject("./image/page3-staff/class/result.png", 1075, 204);
     Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
     Info *stu[7][7];
     StudentNode *one[7];
     StudentNode *stu_list = class_list->my_class.student_list;
     for (int i = 0; i < 7; ++i)
     {
-        stu[i][0] = createInfoTest("", 264, 426 + 48 * i);
-        stu[i][1] = createInfoTest("", 320, 426 + 48 * i);
-        stu[i][2] = createInfoTest("", 475, 426 + 48 * i);
-        stu[i][3] = createInfoTest("", 617, 426 + 48 * i);
-        stu[i][4] = createInfoTest("", 800, 426 + 48 * i);
-        stu[i][5] = createInfoTest("", 872, 426 + 48 * i);
-        stu[i][6] = createInfoTest("", 1034, 426 + 48 * i);
+        stu[i][0] = createInfoTest("", 270, 426 + 48 * i);
+        stu[i][1] = createInfoTest("", 325, 426 + 48 * i);
+        stu[i][2] = createInfoTest("", 485, 426 + 48 * i);
+        stu[i][3] = createInfoTest("", 590, 426 + 48 * i);
+        stu[i][4] = createInfoTest("", 820, 426 + 48 * i);
+        stu[i][5] = createInfoTest("", 895, 426 + 48 * i);
+        stu[i][6] = createInfoTest("", 1050, 426 + 48 * i);
+        for (int j = 0; j < 7; ++j)
+            stu[i][j]->txt.setCharacterSize(24);
     }
     bool new_page = true;
     int count = 0, change = 0;
@@ -1510,6 +1564,14 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     while (window.isOpen() && page == 17)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        updateColorOnHover(window, create);
+        updateColorOnHover(window, del);
+        updateColorOnHover(window, eXport);
+        updateColorOnHover(window, res);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1552,7 +1614,6 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         window.draw(del.draw);
         window.draw(eXport.draw);
         window.draw(res.draw);
-        window.draw(f.draw);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
