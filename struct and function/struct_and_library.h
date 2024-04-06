@@ -107,7 +107,7 @@ struct CourseNode
 	string year_id;
 	Course course;
 	ClassNode* main_class;
-	StudentNode* student_list = nullptr;
+	StudentNode* extra_student_list = nullptr;
 	CourseNode* next = nullptr;
 };
 

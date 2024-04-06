@@ -1,7 +1,5 @@
 #include "../semester.h"
 
-//database/semester.csv
-
 void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 {
 	fin.open(filename);
@@ -11,19 +9,17 @@ void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 		return;
 	}
 
-	YearNode* currYear = year_list;
-	string year_id;
-	while (getline(fin, year_id))
+	string line;
+	while (getline(fin, line))
 	{
-		YearNode* newYearNode = initYearNode(createYear(year_id));
-		if (!currYear)
-			year_list = newYearNode;
-		else
-			currYear->next = newYearNode;
-
-		currYear = newYearNode;
-		createThreeSemesterNode(currYear->school_year.list_sem);
-		importSemesterInYear(currYear->school_year.list_sem, fin);
+		Year new_year = createYear(line);
+		for (int i = 0; i < 3; ++i)
+		{
+			if (fin.eof() || line == "#")
+				break;
+			importSemesterInYear(new_year.list_sem, fin);
+		}
+		appendYearNode(year_list, initYearNode(new_year));
 	}
 
 	fin.close();
@@ -31,21 +27,19 @@ void importYearSemester(YearNode*& year_list, string filename, ifstream& fin)
 
 void importSemesterInYear(SemesterNode* sem_list, ifstream& fin)
 {
-	if (!fin.is_open())
-	{
-		cout << "File is not open." << endl;
-		return;
-	}
 	string line;
-	while (getline(fin, line) && sem_list)
-	{
-		istringstream is(line);
-		string tempSem;
-		getline(is, tempSem, ',');
-		getline(is, sem_list->sem.start_date, ',');
-		getline(is, sem_list->sem.end_date, '\n');
-		sem_list = sem_list->next;
-	}
+	getline(fin, line);
+	stringstream is(line);
+	string start_date, end_date, sem_id;
+	getline(is, sem_id, ',');
+	getline(is, start_date, ',');
+	getline(is, end_date, '\n');
+
+	// Create a new Semester
+	Semester new_sem = createSemester(sem_id, start_date, end_date);
+	importCourse(new_sem.course_list, fin);
+	// Append the new Semester to the sem_list
+	appendSemesterNode(sem_list, createSemesterNode(new_sem));
 }
 
 void exportYearSemester(YearNode* year_list, string filename, ofstream& fout)
