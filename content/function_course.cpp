@@ -137,3 +137,16 @@ void replaceCourse(CourseNode *&curr, Course newone)
     if (curr)
         curr->course = newone;
 }
+
+CourseNode *findCourse(CourseNode *head, string input)
+{
+    CourseNode *sort = nullptr;
+    CourseNode *curr = head;
+    while (curr)
+    {
+        if (curr->course.course_id.find(input) != string::npos)
+            appendNewCourseNode(sort, curr->course);
+        curr = curr->next;
+    }
+    return sort;
+}

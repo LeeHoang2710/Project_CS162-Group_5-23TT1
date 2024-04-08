@@ -10,6 +10,12 @@ struct Object
     Texture text;
     Sprite draw;
     FloatRect bound;
+    bool isHover(RenderWindow &window)
+    {
+        Vector2i mousePos = Mouse::getPosition(window);
+        Vector2f worldPos = window.mapPixelToCoords(mousePos);
+        return bound.contains(worldPos);
+    }
 };
 
 struct Info
@@ -25,6 +31,7 @@ Object createBackGround(string s);
 Info createText(string s, float x, float y);
 Info *createInfoTest(string s, float x, float y);
 bool isHere(FloatRect &bound, Vector2f &mouse);
+void updateColorOnHover(RenderWindow &window, Object &o);
 bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y);
 void chooseDraw(RenderWindow &window, Object *x, Object *y, bool check);
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page);

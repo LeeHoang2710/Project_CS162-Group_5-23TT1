@@ -277,6 +277,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        id[i]->txt.setFillColor(Color::Yellow);
+        id[i]->txt.setStyle(Text::Bold);
     }
 
     bool new_page = true;
@@ -415,6 +417,8 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        id[i]->txt.setFillColor(Color::Yellow);
+        id[i]->txt.setStyle(Text::Bold);
     }
     while (window.isOpen() && page == 5)
     {
@@ -624,6 +628,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     {
         subject[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         inf[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        inf[i]->txt.setFillColor(Color::Yellow);
+        inf[i]->txt.setStyle(Text::Bold);
     }
     bool new_page = true;
     int count = 0, change = 0;
@@ -1423,16 +1429,21 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object sort = createObject("./image/page3-staff/class/search-cla.png", 270, 262);
     Info total = createText("", 1050, 258);
+    Info sort_input = createText("", 285, 270);
     Object *add[4];
     Info *id[4];
-    ClassNode *one[4];
+    ClassNode *one[4], *res = nullptr;
     for (int i = 0; i < 4; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        id[i]->txt.setFillColor(Color::Yellow);
+        id[i]->txt.setStyle(Text::Bold);
     }
-    bool new_page = true;
+    bool new_page = true, find_class = false;
+    string input;
     int count = 0, change = 0;
     for (ClassNode *curr = class_list; curr; curr = curr->next)
         count++;
@@ -1473,6 +1484,8 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                         new_page = true;
                         change += 4;
                     }
+                    if (isHere(sort.bound, mouse))
+                        find_class = true;
                     for (int i = 0; i < 4; ++i)
                     {
                         if (isHere(add[i]->bound, mouse) && one[i])
@@ -1484,6 +1497,22 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                 }
                 break;
             }
+            case Event::TextEntered:
+            {
+                Typing(find_class, sort_input, input, event);
+                if (event.text.unicode == 13)
+                {
+                    res = findClass(class_list, input);
+                    new_page = true;
+                    cout << "Input: " << input << endl;
+                    if (res)
+                        cout << "Found: " << res->my_class.class_id << endl;
+                    else
+                        cout << "Not found" << endl;
+                }
+                break;
+            }
+
             default:
                 break;
             }
@@ -1495,11 +1524,29 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(sum.draw);
-        if (new_page && class_list)
+        window.draw(sort.draw);
+        window.draw(sort_input.txt);
+        if (new_page && class_list && !find_class)
         {
             ClassNode *temp = class_list;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    id[i]->txt.setString(one[i]->my_class.class_id);
+                    temp = temp->next;
+                }
+                else
+                    id[i]->txt.setString("");
+            }
+            new_page = false;
+        }
+        if (new_page && res && find_class)
+        {
+            ClassNode *temp = res;
             for (int i = 0; i < 4; ++i)
             {
                 if (temp)
@@ -1521,7 +1568,6 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
             window.draw(add[i]->draw);
             window.draw(id[i]->txt);
         }
-
         window.display();
     }
     for (int i = 0; i < 4; ++i)
@@ -1549,8 +1595,8 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     {
         stu[i][0] = createInfoTest("", 270, 426 + 48 * i);
         stu[i][1] = createInfoTest("", 325, 426 + 48 * i);
-        stu[i][2] = createInfoTest("", 485, 426 + 48 * i);
-        stu[i][3] = createInfoTest("", 590, 426 + 48 * i);
+        stu[i][2] = createInfoTest("", 490, 426 + 48 * i);
+        stu[i][3] = createInfoTest("", 595, 426 + 48 * i);
         stu[i][4] = createInfoTest("", 820, 426 + 48 * i);
         stu[i][5] = createInfoTest("", 895, 426 + 48 * i);
         stu[i][6] = createInfoTest("", 1050, 426 + 48 * i);

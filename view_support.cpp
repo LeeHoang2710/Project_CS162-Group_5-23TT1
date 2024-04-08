@@ -65,7 +65,7 @@ bool isHere(FloatRect &bound, Vector2f &mouse)
 void updateColorOnHover(RenderWindow &window, Object &o)
 {
 	if (o.isHover(window))
-		o.draw.setColor(Color::Magenta);
+		o.draw.setColor(Color::Cyan);
 	else
 		o.draw.setColor(Color::White);
 }

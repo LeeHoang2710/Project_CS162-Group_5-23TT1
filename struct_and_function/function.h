@@ -33,7 +33,7 @@ void deleteYearList(YearNode *&year_list);
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);
 void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
-void importSemester(SemesterNode *&sem_list,stringstream& is, ifstream &fin);
+void importSemester(SemesterNode *&sem_list, stringstream &is, ifstream &fin);
 void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);
 
@@ -47,6 +47,7 @@ void importCourse(CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode *&curr, Course newone);
+CourseNode *findCourse(CourseNode *head, string input);
 
 // Class
 Class CreateClass(string classid);
@@ -57,4 +58,4 @@ ClassNode *SearchClassNode(ClassNode *&head, string searchclass);
 void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent);
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
 void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout);
-void findClass(ClassNode *head, string input, bool *arr);
+ClassNode *findClass(ClassNode *head, string input);

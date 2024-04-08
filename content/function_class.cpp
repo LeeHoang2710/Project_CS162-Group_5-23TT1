@@ -153,21 +153,15 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
     }
 }
 
-void findClass(ClassNode *head, string input, bool *arr)
+ClassNode *findClass(ClassNode *head, string input)
 {
+    ClassNode *sort = nullptr;
     ClassNode *curr = head;
-    int i = 0;
     while (curr)
     {
         if (curr->my_class.class_id.find(input) != string::npos)
-        {
-            arr[i] = true;
-            cout << curr->my_class.class_id << ' ';
-        }
-        else
-            arr[i] = false;
-
-        i++;
+            AddClassNode(sort, curr->my_class);
         curr = curr->next;
     }
+    return sort;
 }
