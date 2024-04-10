@@ -1,11 +1,15 @@
 #include "struct_and_library.h"
-void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) {
+void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) 
+{
 	StudentNode* tmp1 = nullptr;
 	string Line;
-	while (getline(fin, Line, '\n') && Line != "") {
-		if (Line != "*") {
+	while (getline(fin, Line, '\n') && Line != "") 
+	{
+		if (Line != "*")
+		{
 			StudentNode* tmp = nullptr;
-			if (!Studentlist) {
+			if (!Studentlist)
+			{
 				Studentlist = new StudentNode();
 				Studentlist->next = nullptr;
 				stringstream ss1(Line);
@@ -19,7 +23,8 @@ void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) {
 				tmp1 = Studentlist;
 				tmp = Studentlist;
 			}
-			else {
+			else 
+			{
 				StudentNode* newstudent = new StudentNode();
 				newstudent->next = nullptr;
 				stringstream ss1(Line);
@@ -36,9 +41,12 @@ void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) {
 			}
 			ResultsNode* Resulist = nullptr;
 			ResultsNode* tmp2 = nullptr;
-			while (getline(fin, Line, '\n')) {
-				if (Line != "*") {
-					if (!Resulist) {
+			while (getline(fin, Line, '\n')) 
+			{
+				if (Line != "*") 
+				{
+					if (!Resulist) 
+					{
 						Resulist = new ResultsNode();
 						Resulist->next = nullptr;
 						stringstream ss2(Line);
@@ -51,29 +59,34 @@ void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) {
 						Resulist->results.sem_id = s2;
 						float fl;
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3) 
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							Resulist->results.score.process = fl;
 						}
 						else
 							Resulist->results.score.process = (float)(s2[0] - '0');
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3) 
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							Resulist->results.score.midterm = fl;
 						}
 						else
 							Resulist->results.score.midterm = (float)(s2[0] - '0');
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3) 
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							Resulist->results.score.final = fl;
 						}
 						else
 							Resulist->results.score.final = (float)(s2[0] - '0');
+						Resulist->results.score.overall = 0.35 * Resulist->results.score.process + 0.25 * Resulist->results.score.midterm + 0.4 * Resulist->results.score.final;
 						tmp2 = Resulist;
 					}
-					else {
+					else 
+					{
 						ResultsNode* newResulist = new ResultsNode();
 						newResulist->next = nullptr;
 						stringstream ss2(Line);
@@ -86,26 +99,30 @@ void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist) {
 						newResulist->results.sem_id = s2;
 						float fl;
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3)
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							newResulist->results.score.process = fl;
 						}
 						else
 							newResulist->results.score.process = (float)(s2[0] - '0');
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3) 
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							newResulist->results.score.midterm = fl;
 						}
 						else
 							newResulist->results.score.midterm = (float)(s2[0] - '0');
 						getline(ss2, s2, ',');
-						if (s2.size() == 3) {
+						if (s2.size() == 3)
+						{
 							fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
 							newResulist->results.score.final = fl;
 						}
 						else
 							newResulist->results.score.final = (float)(s2[0] - '0');
+						newResulist->results.score.overall = 0.35 * newResulist->results.score.process + 0.25 * newResulist->results.score.midterm + 0.4 * newResulist->results.score.final;
 						tmp2->next = newResulist;
 						tmp2 = tmp2->next;
 					}
@@ -145,14 +162,6 @@ void Viewallscore(StudentNode* Studentlist)
 			cout << "\n";
 		}
 		Studentlist = Studentlist->next;
-	}
-}
-void Findoverall(StudentNode* stu)
-{
-	while (stu)
-	{
-		stu->student.results_list->results.score.overall = stu->student.results_list->results.score.process * 0.35 + stu->student.results_list->results.score.midterm * 0.25 + stu->student.results_list->results.score.final * 0.35;
-		stu = stu->next;
 	}
 }
 void Viewgpaallstudent(StudentNode* stuhead)
