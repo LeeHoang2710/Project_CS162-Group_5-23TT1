@@ -330,7 +330,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                         input >> start >> dash >> end;
                         str = to_string(start + 1) + dash + to_string(end + 1);
 
-                        Year new_year = createYear(str);
+                        Year new_year = createYear(str, nullptr);
                         new_year.list_sem = nullptr;
                         addNewYearNode(year, new_year);
                         count++;
