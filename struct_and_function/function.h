@@ -59,3 +59,5 @@ void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent);
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
 void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout);
 ClassNode *findClass(ClassNode *head, string input);
+void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
+void exportClass(ClassNode *class_list, ofstream &fout);

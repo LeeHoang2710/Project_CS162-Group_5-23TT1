@@ -269,6 +269,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
+    Object alert = createObject("./image/page3-staff/school_year/add-1st-class-bg.png", 301, 295);
     Info total = createText("", 1050, 258);
     Object *add[4];
     Info *id[4];
@@ -281,7 +282,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         id[i]->txt.setStyle(Text::Bold);
     }
 
-    bool new_page = true;
+    bool new_page = true, new_class = false;
     string str = "";
     int count = 0, change = 0;
     for (YearNode *curr = year; curr; curr = curr->next)
@@ -346,7 +347,12 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                         if (isHere(add[i]->bound, mouse) && one[i])
                         {
                             page = 5;
-                            Semesters(window, page, one[i]);
+                            if (!one[i]->school_year.allclass)
+                            {
+                                new_class = true;
+                            }
+                            else
+                                Semesters(window, page, one[i]);
                         }
                     }
                 }
@@ -393,7 +399,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             window.draw(add[i]->draw);
             window.draw(id[i]->txt);
         }
-
+        if (new_class)
+            window.draw(alert.draw);
         window.display();
     }
     for (int i = 0; i < 4; ++i)

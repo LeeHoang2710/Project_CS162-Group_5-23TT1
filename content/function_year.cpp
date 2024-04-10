@@ -74,14 +74,24 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
     while (getline(fin, line))
     {
         Year new_year = createYear(line);
+        getline(fin, line, '\n');
+        stringstream clstr(line);
+        if (line == "#")
+        {
+            addNewYearNode(year_list, new_year);
+            continue;
+        }
+        else
+            importClass(year_list->school_year.allclass, clstr, fin);
         for (int i = 0; i < 3; ++i)
         {
             if (fin.eof())
                 break;
             getline(fin, line, '\n');
-            if (line == "#") break;
+            if (line == "#")
+                break;
             stringstream ss(line);
-            importSemester(new_year.list_sem,ss, fin);
+            importSemester(new_year.list_sem, ss, fin);
         }
         addNewYearNode(year_list, new_year);
     }
@@ -97,22 +107,11 @@ void exportYear(YearNode *&year_list, string filename, ofstream &fout)
     while (currYear)
     {
         fout << currYear->school_year.year_id << endl;
+        exportClass(year_list->school_year.allclass, fout);
+        fout << endl;
         exportSemesterInYear(currYear->school_year.list_sem, fout);
         currYear = currYear->next;
     }
 
     fout.close();
-}
-void Updatingacademic(YearNode* Yearnode, ClassNode*& Classhead)
-{
-	ClassNode* tmp = Classhead;
-	while (tmp->next)
-		tmp = tmp->next;
-	string yearid = Yearnode->school_year.year_id;
-	string s = "";
-	s = yearid.substr(0, 4);
-	ClassNode* newclass = new ClassNode();
-	newclass->my_class.academic_id = 'K' + s;
-	newclass->next = nullptr;
-	tmp->next = newclass;
 }

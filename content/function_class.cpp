@@ -165,3 +165,22 @@ ClassNode *findClass(ClassNode *head, string input)
     }
     return sort;
 }
+
+void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
+{
+    string oneclass;
+    while (getline(ss, oneclass, ','))
+    {
+        Class newclass = CreateClass(oneclass);
+        AddClassNode(classes, newclass);
+    }
+};
+
+void exportClass(ClassNode *class_list, ofstream &fout)
+{
+    while (class_list)
+    {
+        fout << class_list->my_class.class_id << ",";
+        class_list = class_list->next;
+    }
+};

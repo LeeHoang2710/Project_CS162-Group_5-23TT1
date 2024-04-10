@@ -29,6 +29,7 @@ struct ResultNode;
 struct Year
 {
     string year_id;
+    ClassNode *allclass = nullptr;
     SemesterNode *list_sem = nullptr;
 };
 struct YearNode
@@ -62,7 +63,7 @@ struct Course
     int max_students = 50;
     Session teaching_session;
     ClassNode *main_class = nullptr;
-    StudentNode *student_list = nullptr;
+    // StudentNode *student_list = nullptr;
 };
 struct CourseNode
 {
@@ -74,7 +75,6 @@ struct CourseNode
 struct Class
 {
     string class_id;
-    string academic_id;
     StudentNode *student_list = nullptr;
 };
 struct ClassNode
