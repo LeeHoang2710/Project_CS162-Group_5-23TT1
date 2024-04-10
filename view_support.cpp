@@ -84,12 +84,20 @@ bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
 	}
 }
 
-void chooseDraw(RenderWindow &window, Object *x, Object *y, bool check)
+void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check)
 {
 	if (check)
 		window.draw(x->draw);
 	else
 		window.draw(y->draw);
+}
+
+void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check)
+{
+	if (check)
+		window.draw(x.draw);
+	else
+		window.draw(y.draw);
 }
 
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)

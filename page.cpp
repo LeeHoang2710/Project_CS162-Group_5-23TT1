@@ -935,10 +935,10 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page)
         for (int i = 0; i < 4; ++i)
         {
             window.draw(inf[i]->txt);
-            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
+            chooseDraw_1(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw(window, yes[i], no[i], check_day[i]);
+            chooseDraw_1(window, yes[i], no[i], check_day[i]);
         objectAppear(window, save, clock, saved);
         window.display();
     }
@@ -1170,10 +1170,10 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
         for (int i = 0; i < 4; ++i)
         {
             window.draw(inf[i]->txt);
-            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
+            chooseDraw_1(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw(window, yes[i], no[i], check_day[i]);
+            chooseDraw_1(window, yes[i], no[i], check_day[i]);
         objectAppear(window, save, clock, saved);
         window.display();
     }
@@ -1430,8 +1430,10 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object sort = createObject("./image/page3-staff/class/search-cla.png", 270, 262);
+    Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 264);
+    Object inval = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
     Info total = createText("", 1050, 258);
-    Info sort_input = createText("", 285, 270);
+    Info sort_input = createText("", 330, 264);
     Object *add[4];
     Info *id[4];
     ClassNode *one[4], *res = nullptr;
@@ -1486,6 +1488,11 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                     }
                     if (isHere(sort.bound, mouse))
                         find_class = true;
+                    if (isHere(confirm.bound, mouse))
+                    {
+                        res = findClass(class_list, input);
+                        new_page = true;
+                    }
                     for (int i = 0; i < 4; ++i)
                     {
                         if (isHere(add[i]->bound, mouse) && one[i])
@@ -1498,21 +1505,8 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                 break;
             }
             case Event::TextEntered:
-            {
                 Typing(find_class, sort_input, input, event);
-                if (event.text.unicode == 13)
-                {
-                    res = findClass(class_list, input);
-                    new_page = true;
-                    cout << "Input: " << input << endl;
-                    if (res)
-                        cout << "Found: " << res->my_class.class_id << endl;
-                    else
-                        cout << "Not found" << endl;
-                }
                 break;
-            }
-
             default:
                 break;
             }
@@ -1525,6 +1519,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.draw(next.draw);
         window.draw(sum.draw);
         window.draw(sort.draw);
+        window.draw(confirm.draw);
         window.draw(sort_input.txt);
         if (new_page && class_list && !find_class)
         {
@@ -1560,6 +1555,11 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
             }
             new_page = false;
         }
+        // else if (!res && find_class)
+        // {
+        //     window.draw(inval.draw);
+        //     find_class = false;
+        // }
 
         for (int i = 0; i < 4; ++i)
         {
@@ -1583,10 +1583,12 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/class/student-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/class/result-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/class/create-cla.png", 270, 262);
     Object del = createObject("./image/page3-staff/class/delete-stu.png", 581, 262);
     Object eXport = createObject("./image/page3-staff/class/export.png", 910, 262);
-    Object res = createObject("./image/page3-staff/class/result.png", 1075, 204);
+    Object res = createObject("./image/page3-staff/class/result.png", 1080, 204);
+    Object infor = createObject("./image/page3-staff/class/infor.png", 951, 204);
     Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
     Info *stu[7][7];
     StudentNode *one[7];
@@ -1594,8 +1596,8 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     for (int i = 0; i < 7; ++i)
     {
         stu[i][0] = createInfoTest("", 270, 426 + 48 * i);
-        stu[i][1] = createInfoTest("", 325, 426 + 48 * i);
-        stu[i][2] = createInfoTest("", 490, 426 + 48 * i);
+        stu[i][1] = createInfoTest("", 342, 426 + 48 * i);
+        stu[i][2] = createInfoTest("", 498, 426 + 48 * i);
         stu[i][3] = createInfoTest("", 595, 426 + 48 * i);
         stu[i][4] = createInfoTest("", 820, 426 + 48 * i);
         stu[i][5] = createInfoTest("", 895, 426 + 48 * i);
@@ -1603,7 +1605,7 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         for (int j = 0; j < 7; ++j)
             stu[i][j]->txt.setCharacterSize(24);
     }
-    bool new_page = true;
+    bool new_page = true, result = false;
     int count = 0, change = 0;
     for (StudentNode *curr = stu_list; curr; curr = curr->next)
         count++;
@@ -1618,6 +1620,7 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         updateColorOnHover(window, del);
         updateColorOnHover(window, eXport);
         updateColorOnHover(window, res);
+        updateColorOnHover(window, infor);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1636,6 +1639,10 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
                     //     page = 8;
                     //     addCourse(window, course, page);
                     // }
+                    if (isHere(res.bound, mouse))
+                        result = true;
+                    else if (isHere(infor.bound, mouse))
+                        result = false;
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;
@@ -1655,17 +1662,17 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         }
         window.clear();
         window.draw(screen.draw);
-        window.draw(o1.draw);
+        chooseDraw_2(window, o2, o1, result);
         window.draw(create.draw);
         window.draw(del.draw);
         window.draw(eXport.draw);
-        window.draw(res.draw);
+        chooseDraw_2(window, infor, res, result);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(menu.draw);
         window.draw(title.txt);
-        if (new_page && stu_list)
+        if (new_page && stu_list && !result)
         {
             StudentNode *temp = stu_list;
             for (int i = 0; i < change; ++i)
@@ -1679,7 +1686,7 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
                     stu[i][1]->txt.setString(one[i]->student.student_id);
                     stu[i][2]->txt.setString(one[i]->student.first_name);
                     stu[i][3]->txt.setString(one[i]->student.last_name);
-                    stu[i][4]->txt.setString(to_string(one[i]->student.gender));
+                    stu[i][4]->txt.setString((one[i]->student.gender) ? "F" : "M");
                     stu[i][5]->txt.setString(one[i]->student.dob);
                     stu[i][6]->txt.setString(one[i]->student.social_id);
                     temp = temp->next;
