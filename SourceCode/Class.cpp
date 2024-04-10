@@ -1,10 +1,9 @@
 #include "../struct and function/struct_and_library.h"
 
-Class CreateClass(string classid, string headteacher, StudentNode* studenthead)
+Class CreateClass(string classid, StudentNode* studenthead)
 {
 	Class newclass;
 	newclass.class_id = classid;
-	newclass.class_id = headteacher;
 	newclass.student_list = studenthead;
 	return newclass;
 }

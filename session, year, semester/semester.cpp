@@ -118,8 +118,9 @@ void addCourseListToSemester(SemesterNode*& semNode, CourseNode* course_list)
 	semNode->sem.course_list = course_list;
 }
 
-void appendSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
+void appendSemesterNode(SemesterNode*& sem_list, Semester new_sem)
 {
+	SemesterNode* new_sem_node = createSemesterNode(new_sem);
 	if (!sem_list)
 		sem_list = new_sem_node;
 	else
@@ -127,16 +128,15 @@ void appendSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node)
 		SemesterNode* curr = sem_list;
 		while (curr->next)
 			curr = curr->next;
-
 		curr->next = new_sem_node;
 	}
+	return;
 }
-
 void createAndAddSemesterNode(YearNode*& currYear, const string& sem_id, const string& start_date, const string& end_date)
 {
 	Semester newSem = createSemester(sem_id, start_date, end_date);
 	SemesterNode* newSemNode = createSemesterNode(newSem);
-	appendSemesterNode(currYear->school_year.list_sem, newSemNode);
+	/*appendSemesterNode(currYear->school_year.list_sem, newSemNode);*/
 }
 
 void inputSemesterDates(string& start_date, string& end_date)
@@ -243,4 +243,69 @@ void deleteStudentList(StudentNode*& student_list)
 		deleteResultsList(temp->student.my_course);
 		delete temp;
 	}
+}
+
+void importSemester(SemesterNode*& sem_list, stringstream& ss, ifstream& fin)
+{
+	string tempSem;
+	getline(ss, tempSem, ',');
+	string start_date, end_date;
+	getline(ss, start_date, ',');
+	getline(ss, end_date, '\n');
+
+	// Create a new Semester
+	Semester new_sem = createSemester(tempSem, start_date, end_date);
+
+	// Append the new Semester to the sem_list
+
+	appendSemesterNode(sem_list, new_sem);
+	importCourse(sem_list->sem.course_list, fin);
+	return;
+}
+
+void importCourse(CourseNode*& Courselist, ifstream& fin)
+{
+	while (1)
+	{
+		Course cs;
+		string number;
+		getline(fin, number, '\n');
+		if (number == "*") return;
+		stringstream line(number);
+		getline(line, cs.course_id, ',');
+		getline(line, cs.course_name, ',');
+		getline(line, cs.teacher_name, ',');
+		getline(line, number, ',');
+		cs.num_credit = stoi(number);
+		getline(line, number, ',');
+		cs.max_students = stoi(number);
+		getline(line, number, ',');
+		cs.teaching_session.day_of_the_week = stoi(number);
+		getline(line, number, '\n');
+		cs.teaching_session.session_no = stoi(number);
+		appendNewCourseNode(Courselist, cs);
+	}
+}
+void appendNewCourseNode(CourseNode*& head, Course cs)
+{
+	// semester id
+	//  year id
+	CourseNode* new_course_node = initCourseNode(cs);
+	if (!head)
+		head = new_course_node;
+	else
+	{
+		CourseNode* list_course = head;
+		while (list_course->next)
+			list_course = list_course->next;
+		list_course->next = new_course_node;
+	}
+}
+CourseNode* initCourseNode(Course new_course)
+{
+	CourseNode* new_course_node = new CourseNode;
+	new_course_node->next = NULL;
+	new_course_node->course = new_course;
+
+	return new_course_node;
 }

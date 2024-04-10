@@ -11,7 +11,7 @@ void inputSemesterInfo(string& sem_id, string& start_date, string& end_date);
 Semester createSemester(const string& sem_id, const string& start_date, const string& end_date);
 SemesterNode* createSemesterNode(const Semester& new_sem);
 void addCourseListToSemester(SemesterNode*& semNode, CourseNode* course_list);
-void appendSemesterNode(SemesterNode*& sem_list, SemesterNode* new_sem_node);
+void appendSemesterNode(SemesterNode*& sem_list, Semester new_sem);
 void createAndAddSemesterNode(YearNode*& currYear, const string& sem_id, const string& start_date, const string& end_date);
 void createThreeSemesterNode(SemesterNode*& sem_list);
 
@@ -24,3 +24,8 @@ void deleteYearList(YearNode*& year_list);
 void deleteSemesterList(SemesterNode*& sem_list);
 void deleteResultsList(ResultsNode* results_list);
 void deleteStudentList(StudentNode*& student_list);
+
+void importSemester(SemesterNode*& sem_list, stringstream& ss, ifstream& fin);
+void importCourse(CourseNode*& Courselist, ifstream& fin);
+void appendNewCourseNode(CourseNode*& head, Course cs);
+CourseNode* initCourseNode(Course new_course);

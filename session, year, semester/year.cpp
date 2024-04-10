@@ -1,5 +1,6 @@
 #include "./year.h"
 #include "./semester.h"
+#include "../SourceCode/class.h"
 
 void inputYearId(string& year_id)
 {
@@ -28,6 +29,20 @@ void appendYearNode(YearNode*& head, YearNode* new_year_node)
 			curr = curr->next;
 		curr->next = new_year_node;
 	}
+}
+void addNewYearNode(YearNode*& head, Year p_year)
+{
+	YearNode* new_year_node = initYearNode(p_year);
+	if (!head)
+		head = new_year_node;
+	else
+	{
+		YearNode* list_year = head;
+		while (list_year->next)
+			list_year = list_year->next;
+		list_year->next = new_year_node;
+	}
+	return;
 }
 
 void updateYearId(YearNode* yearNode, const string& year_id)
@@ -72,3 +87,73 @@ YearNode* searchYearNode(YearNode* head, const string& year_id)
 
 	return nullptr;
 }
+void importClass(ClassNode*& classes, stringstream& ss, ifstream& fin) {
+	string oneclass;
+	while (getline(ss, oneclass, ',')) {
+		Class newclass = CreateClass(oneclass, nullptr);
+		AddClassNode(classes, newclass);
+	}
+};
+void importYear(YearNode*& year_list, string filename, ifstream& fin)
+{
+	fin.open(filename);
+
+	string line;
+	while (getline(fin, line))
+	{
+		Year new_year = createYear(line);
+		getline(fin, line, 'n');
+		stringstream clstr(line);
+		if (line == "#") continue;
+		else importClass(year_list->school_year.allclass, clstr, fin);
+		for (int i = 0; i < 3; ++i)
+		{
+			if (fin.eof()) break;
+			getline(fin, line, '\n');
+			if (line == "#") break;
+			stringstream ss(line);
+			importSemester(new_year.list_sem, ss, fin);
+		}
+		addNewYearNode(year_list, new_year);
+	}
+
+	fin.close();
+}
+
+void exportYear(YearNode* year_list, string filename, ofstream& fout)
+{
+	fout.open(filename);
+
+	YearNode* currYear = year_list;
+	while (currYear)
+	{
+		fout << currYear->school_year.year_id << endl;
+		if (!currYear->school_year.list_sem)
+			fout << "#" << endl;
+		else
+			exportSemesterInYear(currYear->school_year.list_sem, fout);
+		currYear = currYear->next;
+	}
+
+	fout.close();
+}
+void exportYear(YearNode*& year_list, string filename, ofstream& fout)
+{
+	fout.open(filename);
+
+	YearNode* currYear = year_list;
+	while (currYear)
+	{
+		fout << currYear->school_year.year_id << endl;
+		exportSemesterInYear(currYear->school_year.list_sem, fout);
+		currYear = currYear->next;
+	}
+
+	fout.close();
+}
+void exportClass(ClassNode* class_list, ofstream& fout) {
+	while (class_list) {
+		fout << class_list->my_class.class_id << ",";
+		class_list = class_list->next;
+	}
+};
