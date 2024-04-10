@@ -12,9 +12,9 @@ void Viewallmyscore(Student stu)
 	ResultsNode* resulist = stu.results_list;
 	while (resulist)
 	{
-		cout << setw(15) << left << resulist->results.course->course.course_id;
-		cout << setw(15) << left << resulist->results.year->school_year.year_id;
-		cout << setw(15) << left << resulist->results.sem->sem.semester_id;
+		cout << setw(15) << left << resulist->results.course_id;
+                cout << setw(15) << left << resulist->results.year_id;
+                cout << setw(15) << left << resulist->results.sem_id;
 		cout << setw(15) << left << resulist->results.score.process;
 		cout << setw(15) << left << resulist->results.score.midterm;
 		cout << setw(15) << left << resulist->results.score.final;
