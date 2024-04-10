@@ -1,9 +1,10 @@
 #include "../struct_and_function/function.h"
 
-Year createYear(string p_year_id)
+Year createYear(string p_year_id, ClassNode* allclass)
 {
     Year new_year;
     new_year.year_id = p_year_id;
+    new_year.allclass = allclass;
     return new_year;
 }
 YearNode *initYearNode(Year p_school_year)
@@ -66,14 +67,14 @@ void removeNewYearNode(YearNode *&head, Year year)
     }
 }
 
-void importYear(YearNode *&year_list, string filename, ifstream &fin)
+void importYear(YearNode*& year_list, string filename, ifstream& fin)
 {
     fin.open(filename);
-
     string line;
     while (getline(fin, line))
     {
-        Year new_year = createYear(line);
+        //ClassNode* allc
+        Year new_year = createYear(line, nullptr);
         getline(fin, line, '\n');
         stringstream clstr(line);
         if (line == "#")
@@ -82,7 +83,7 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
             continue;
         }
         else
-            importClass(year_list->school_year.allclass, clstr, fin);
+            importClass(new_year.allclass, clstr, fin);
         for (int i = 0; i < 3; ++i)
         {
             if (fin.eof())
@@ -93,6 +94,7 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
             stringstream ss(line);
             importSemester(new_year.list_sem, ss, fin);
         }
+        //new_year.allclass = allclass;
         addNewYearNode(year_list, new_year);
     }
 
@@ -107,8 +109,7 @@ void exportYear(YearNode *&year_list, string filename, ofstream &fout)
     while (currYear)
     {
         fout << currYear->school_year.year_id << endl;
-        exportClass(year_list->school_year.allclass, fout);
-        fout << endl;
+        exportClass(currYear->school_year.allclass, fout);
         exportSemesterInYear(currYear->school_year.list_sem, fout);
         currYear = currYear->next;
     }

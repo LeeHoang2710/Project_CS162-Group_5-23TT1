@@ -1,5 +1,5 @@
 2020-2021
-20APCS1,21APCS1
+20APCS1,21APCS1,
 Semester 1,1/10/2020,3/1/2021
 CS162,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1
 MTH252,Linear Algebra,Nguyen Huu Anh,4,50,5,2
@@ -13,7 +13,7 @@ Semester 2,8/1/2021,12/5/2021
 Semester 3,19/5/2021,4/8/2021
 *
 2021-2022
-20APCS1,21APCS1
+20APCS1,19APCS1,
 Semester 1,1/10/2021,3/1/2022
 *
 Semester 2,8/1/2022,12/5/2022
@@ -23,7 +23,7 @@ CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1
 PH213,Quantum Physics,Le Quynh Giao,5,50,7,4
 *
 2022-2023
-20APCS1,21APCS1
+22APCS1,22APCS2,
 Semester 1,1/10/2022,3/1/2023
 *
 Semester 2,8/1/2023,12/5/2023
@@ -31,5 +31,5 @@ Semester 2,8/1/2023,12/5/2023
 Semester 3,19/5/2023,4/8/2023
 *
 2023-2024
-23APCS1,23CLC1
+23APCS1,23CLC1,
 #
