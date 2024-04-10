@@ -189,7 +189,7 @@ void exportClass(ClassNode *class_list, ofstream &fout)
     fout << endl;
 };
 
-bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
+bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin)
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -200,10 +200,14 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
     string oneclass;
     while (getline(fin, oneclass, ','))
     {
+        if (oneclass.empty() || fin.eof()) // Check if the line is empty or we've reached the end of the file
+            break;
+
         Class newclass = CreateClass(oneclass);
         AddClassNode(Listclass, newclass);
     }
-    ClassNode *tmp = Listclass;
+    ClassNode* tmp = Listclass;
+    
     while (tmp)
     {
         cout << tmp->my_class.class_id << ",";

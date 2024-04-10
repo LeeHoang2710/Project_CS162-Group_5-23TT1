@@ -289,7 +289,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     }
 
     bool new_page = true, new_class = false, typing_path = false, Import = false;
-    ClassNode *target = nullptr;
+    YearNode *target = nullptr;
     string str = "", file_path = "";
     int count = 0, change = 0;
     for (YearNode *curr = year; curr; curr = curr->next)
@@ -366,7 +366,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                             if (!one[i]->school_year.allclass)
                             {
                                 new_class = true;
-                                target = one[i]->school_year.allclass;
+                                target = one[i];
                             }
                             else
                             {
@@ -435,16 +435,20 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             if (Import)
             {
                 ifstream fin;
-                if (ReadClassFile(target, file_path, fin))
+                if (ReadClassFile(target->school_year.allclass, file_path, fin))
+                {
                     window.draw(valid.draw);
+                    cout << "true" << endl;
+                }
                 else
                     window.draw(invalid.draw);
+                Import = false;
             }
         }
         window.display();
     }
     for (int i = 0; i < 4; ++i)
-        delete add[i], id[i], one[i];
+        delete add[i], id[i]; //one[i];
 }
 
 void Semesters(RenderWindow &window, int &page, YearNode *&year)

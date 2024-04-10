@@ -73,7 +73,6 @@ void importYear(YearNode*& year_list, string filename, ifstream& fin)
     string line;
     while (getline(fin, line))
     {
-        //ClassNode* allc
         Year new_year = createYear(line, nullptr);
         getline(fin, line, '\n');
         stringstream clstr(line);
@@ -94,7 +93,7 @@ void importYear(YearNode*& year_list, string filename, ifstream& fin)
             stringstream ss(line);
             importSemester(new_year.list_sem, ss, fin);
         }
-        //new_year.allclass = allclass;
+        
         addNewYearNode(year_list, new_year);
     }
 
