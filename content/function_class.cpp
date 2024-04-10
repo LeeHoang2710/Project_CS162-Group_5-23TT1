@@ -188,3 +188,28 @@ void exportClass(ClassNode *class_list, ofstream &fout)
     }
     fout << endl;
 };
+
+bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
+{
+    fin.open(file_name);
+    if (!fin.is_open())
+    {
+        cout << "Can not open file" << endl;
+        return false;
+    }
+    string oneclass;
+    while (getline(fin, oneclass, ','))
+    {
+        Class newclass = CreateClass(oneclass);
+        AddClassNode(Listclass, newclass);
+    }
+    ClassNode *tmp = Listclass;
+    while (tmp)
+    {
+        cout << tmp->my_class.class_id << ",";
+        tmp = tmp->next;
+    }
+
+    fin.close();
+    return true;
+}

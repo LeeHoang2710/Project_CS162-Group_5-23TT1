@@ -273,6 +273,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
     Object path = createObject("./image/page3-staff/school_year/file-path.png", 539, 482);
     Object import = createObject("./image/page3-staff/school_year/import.png", 589, 591);
     Object exit = createObject("./image/page2/exit.png", 1070, 305);
+    Object valid = createObject("./image/page2/import-succ.png", 423, 351);
+    Object invalid = createObject("image/page2/invalid-path.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info file = createText("", 560, 490);
     Object *add[4];
@@ -286,7 +288,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
         id[i]->txt.setStyle(Text::Bold);
     }
 
-    bool new_page = true, new_class = false;
+    bool new_page = true, new_class = false, typing_path = false, Import = false;
+    ClassNode *target = nullptr;
     string str = "", file_path = "";
     int count = 0, change = 0;
     for (YearNode *curr = year; curr; curr = curr->next)
@@ -348,16 +351,28 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                     }
                     if (isHere(exit.bound, mouse))
                         new_class = false;
-
+                    if (isHere(import.bound, mouse))
+                        Import = true;
+                    if (isHere(path.bound, mouse))
+                    {
+                        typing_path = true;
+                        file.txt.setString(file_path);
+                    }
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (isHere(add[i]->bound, mouse) && one[i])
+                        if (isHere(add[i]->bound, mouse) && one[i] && !new_class)
                         {
-                            page = 5;
+
                             if (!one[i]->school_year.allclass)
+                            {
                                 new_class = true;
+                                target = one[i]->school_year.allclass;
+                            }
                             else
+                            {
+                                page = 5;
                                 Semesters(window, page, one[i]);
+                            }
                         }
                     }
                 }
@@ -365,7 +380,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             }
             case Event::TextEntered:
             {
-                Typing(new_class, file, file_path, event);
+                Typing(typing_path, file, file_path, event);
                 break;
             }
             default:
@@ -415,7 +430,16 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
             window.draw(path.draw);
             window.draw(import.draw);
             window.draw(exit.draw);
-            window.draw(file.txt);
+            if (typing_path)
+                window.draw(file.txt);
+            if (Import)
+            {
+                ifstream fin;
+                if (ReadClassFile(target, file_path, fin))
+                    window.draw(valid.draw);
+                else
+                    window.draw(invalid.draw);
+            }
         }
         window.display();
     }

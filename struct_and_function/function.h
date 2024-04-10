@@ -20,7 +20,7 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *&list_student);
 
 // Year
-Year createYear(string p_year_id, ClassNode* allclass);
+Year createYear(string p_year_id, ClassNode *allclass);
 YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
 void removeNewYearNode(YearNode *&head, Year year);
@@ -61,3 +61,4 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout);
 ClassNode *findClass(ClassNode *head, string input);
 void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
 void exportClass(ClassNode *class_list, ofstream &fout);
+bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin);
