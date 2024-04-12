@@ -446,9 +446,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year)
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 3)
-            {
                 chooseDraw_2(window, valid, invalid, checkPath);
-            }
             else if (clock.getElapsedTime().asSeconds() >= 3)
                 showImportResult = false;
         }
@@ -678,10 +676,13 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Object del = createObject("./image/page3-staff/course/delete-cour.png", 589, 258);
     Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
     Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
+
     Object o2 = createObject("./image/page3-staff/course/delete-bg.png", 301, 385);
     Object exit = createObject("./image/page2/exit.png", 1044, 398);
     Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
     Object confirm = createObject("./image/page3-staff/course/confirm.png", 583, 566);
+    Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
+    Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info title = createText(yr + "-" + sem, 475, 168);
     Info kill = createText("", 560, 490);
@@ -695,7 +696,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         inf[i]->txt.setFillColor(Color::Yellow);
         inf[i]->txt.setStyle(Text::Bold);
     }
-    bool new_page = true, del_course = false, typing_id = false;
+    bool new_page = true, del_course = false, typing_id = false, showDelResult = false;
+    bool Confirm = false;
     int count = 0, change = 0;
     string cour_id = "";
     Clock clock;
@@ -744,10 +746,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         change += 4;
                     }
                     if (isHere(del.bound, mouse))
-                    {
                         del_course = true;
-                        clock.restart();
-                    }
                     if (isHere(id.bound, mouse))
                     {
                         typing_id = true;
@@ -757,9 +756,9 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         del_course = false;
                     if (isHere(confirm.bound, mouse))
                     {
-                        deleteCourse(course, cour_id);
-                        count--;
-                        del_course = false;
+                        Confirm = true;
+                        showDelResult = true;
+                        clock.restart();
                     }
                     for (int i = 0; i < 4; ++i)
                     {
@@ -821,19 +820,23 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         }
         if (del_course)
         {
+            bool checkDel;
             window.draw(o2.draw);
             window.draw(id.draw);
             window.draw(confirm.draw);
             window.draw(exit.draw);
             if (typing_id)
                 window.draw(kill.txt);
-            // if (clock.getElapsedTime().asSeconds() < 3)
-            // {
-            //     deleteCourse(course, cour_id);
-            //     count--;
-            // }
-            // if (clock.getElapsedTime().asSeconds() >= 3)
-            //     del_course = false;
+            if (Confirm)
+            {
+                checkDel = deleteCourse(course, cour_id);
+                count--;
+                Confirm = false;
+            }
+            if (showDelResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid, invalid, checkDel);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showDelResult = false;
         }
         window.display();
     }
@@ -1689,13 +1692,23 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object o1 = createObject("./image/page3-staff/class/student-bg.png", 180, 120);
+
     Object o2 = createObject("./image/page3-staff/class/result-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/class/create-cla.png", 270, 262);
     Object del = createObject("./image/page3-staff/class/delete-stu.png", 581, 262);
     Object eXport = createObject("./image/page3-staff/class/export.png", 910, 262);
     Object res = createObject("./image/page3-staff/class/result.png", 1080, 204);
     Object infor = createObject("./image/page3-staff/class/infor.png", 951, 204);
+
+    Object o3 = createObject("./image/page3-staff/class/delete-bg.png", 301, 385);
+    Object exit = createObject("./image/page2/exit.png", 1044, 398);
+    Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
+    Object confirm = createObject("./image/page3-staff/course/confirm.png", 583, 566);
+    Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
+    Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
+
     Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
+    Info kill = createText("", 560, 490);
     Info *stu[7][7];
     StudentNode *one[7];
     StudentNode *stu_list = class_list->my_class.student_list;
@@ -1717,7 +1730,10 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         detail[i] = createObjectTest("./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
     }
 
-    bool new_page = true, result = false;
+    bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
+    bool Confirm = false;
+    Clock clock;
+    string stu_id = "";
     int count = 0, change = 0;
     for (StudentNode *curr = stu_list; curr; curr = curr->next)
         count++;
@@ -1761,12 +1777,32 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
                         new_page = true;
                         change -= 7;
                     }
+                    if (isHere(exit.bound, mouse))
+                        del_stu = false;
                     if (isHere(next.bound, mouse))
                     {
                         new_page = true;
                         change += 7;
                     }
+                    if (isHere(del.bound, mouse))
+                        del_stu = true;
+                    if (isHere(id.bound, mouse))
+                    {
+                        typing_id = true;
+                        kill.txt.setString(stu_id);
+                    }
+                    if (isHere(confirm.bound, mouse))
+                    {
+                        Confirm = true;
+                        showDelResult = true;
+                        clock.restart();
+                    }
                 }
+                break;
+            }
+            case Event::TextEntered:
+            {
+                Typing(typing_id, kill, stu_id, event);
                 break;
             }
             default:
@@ -1819,7 +1855,26 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
         for (int i = 0; i < count; ++i)
             if (result)
                 window.draw(detail[i]->draw);
-
+        if (del_stu)
+        {
+            bool checkDel;
+            window.draw(o3.draw);
+            window.draw(id.draw);
+            window.draw(confirm.draw);
+            window.draw(exit.draw);
+            if (typing_id)
+                window.draw(kill.txt);
+            if (Confirm)
+            {
+                checkDel = removeStudentNode(class_list->my_class.student_list, stu_id);
+                count--;
+                Confirm = false;
+            }
+            if (showDelResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid, invalid, checkDel);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showDelResult = false;
+        }
         window.display();
     }
     // for (int i = 0; i < 7; ++i)
