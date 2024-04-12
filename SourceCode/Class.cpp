@@ -128,7 +128,7 @@ bool ReadClassfromfile(ClassNode*& Listclass, string file_name, ifstream& fin)
 		while (getline(fin, line, '\n'))
 		{
 			Class new_class = CreateClass(line);
-			readStudentFromFile(fin, new_class.student_list);
+			//readStudentFromFile(fin, new_class.student_list);
 			AddClassNode(Listclass, new_class);
 		}
 	}

@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\database\course.csv" />
+    <None Include="..\database\staff_list.csv" />
     <None Include="..\database\Staff_Password.csv" />
     <None Include="..\database\student.csv" />
     <None Include="..\database\Students_Password.csv" />

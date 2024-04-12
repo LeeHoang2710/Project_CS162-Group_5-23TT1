@@ -52,35 +52,29 @@ void StorePassWordStaff(StaffNode*& StaffPass) {
 		getline(ip, tmp.password, '\n');
 	}
 }
-bool LoginForStudent(StudentNode* StuPass, string& onstatus_ID, StudentNode*& ChangeStuPass, string input_ID, string input_Pass) {
+bool LoginForStudent(StudentNode* StuPass, string input_ID, string input_Pass) {
 		StudentNode* tmp = StuPass;
 		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->student.student_id == input_ID) {
 				if (tmp->student.password == input_Pass) {
-					onstatus_ID = input_ID;
-					ChangeStuPass = tmp;
 					return true;
 				}
 				else {
 					return false;
-					break;
 				}
 			}
 		}
 		if (tmp == NULL) return false;
 }
-bool LoginForStaff(StaffNode* StaffPass, string& onstatus_UserName, StaffNode*& ChangeStaffPass, string input_UserName, string input_Pass) {
+bool LoginForStaff(StaffNode* StaffPass, string input_UserName, string input_Pass) {
 		StaffNode* tmp = StaffPass;
 		for (tmp; tmp != NULL; tmp = tmp->next) {
 			if (tmp->staff.username == input_UserName) {
 				if (tmp->staff.password == input_Pass) {
-					onstatus_UserName = input_UserName;
-					ChangeStaffPass = tmp;
 					return true;
 				}
 				else {
 					return false;
-					break;
 				}
 			}
 		}
@@ -104,20 +98,20 @@ void UpdateStaffPassFile(StaffNode* List, ofstream& op) {
 	}
 	op.close();
 }
-bool ChangePassStudent(StudentNode* current, string input_Pass) {
+bool ChangePassStudent(StudentNode* current, string input_Pass, string newpass) {
 	if (current->student.password == input_Pass) {
-		cin >> input_Pass;
-		current->student.password = input_Pass;
+		current->student.password = newpass;
 		return true;
+		//remember to inform user
 	}
 	else {
 		return false;
 	}
 }
-bool ChangePassStaff(StaffNode* current, string input_Pass) {
+bool ChangePassStaff(StaffNode* current, string input_Pass, string newpass) {
 	if (current->staff.password == input_Pass) {
-		cin >> input_Pass;
-		current->staff.password = input_Pass;
+		current->staff.password = newpass;
+		// remember to inform user
 		return true;
 	}
 	else {
@@ -125,6 +119,24 @@ bool ChangePassStaff(StaffNode* current, string input_Pass) {
 	}
 }
 //new session
+StaffNode* searchStaffNode(StaffNode* head, string staff_1_id)
+{
+	if (!head)
+	{
+		cout << "Cannot find the searched staff..." << endl;
+		return nullptr;
+	}
+	StaffNode* list_staff = head;
+	while (list_staff)
+	{
+		if (list_staff->staff.username == staff_1_id)
+			return list_staff;
+		else
+			list_staff= list_staff->next;
+	}
+	cout << "Cannot find the searched staff..." << endl;
+	return nullptr;
+}
 void profilestaff(ifstream& ip, string staff_id) {
 	ip.open("../database/staff_list.csv");
 	if (!ip.is_open())
@@ -144,7 +156,7 @@ void profilestaff(ifstream& ip, string staff_id) {
 			person.gender = stoi(number);
 			getline(ss, person.dob, ',');
 			getline(ss, person.social_id, '\n');
-			if (person.username == staff_id);
+			if (person.username == staff_id)
 			{
 				cout << person.username << endl;
 				cout << person.last_name << " ";
@@ -163,4 +175,42 @@ void profilestaff(ifstream& ip, string staff_id) {
 	ip.close();
 }
 
-void profilestudent()
+void profilestudent(ifstream& ip, string stu_id) {
+	ip.open("../database/student.csv");
+	if (!ip.is_open())
+		cout << "Can not open file" << endl;
+	else
+	{
+		string line;
+		while (getline(ip, line))
+		{
+			stringstream ss(line);
+			string number;
+			Student person;
+			getline(ss, person.student_id, ',');
+			getline(ss, person.first_name, ',');
+			getline(ss, person.last_name, ',');
+			getline(ss, number, ',');
+			person.gender = stoi(number);
+			getline(ss, person.dob, ',');
+			getline(ss, person.social_id, ',');
+			getline(ss, person.student_class, '\n');
+			if (person.student_id == stu_id)
+			{
+				cout << person.student_id << endl;
+				cout << person.last_name << " ";
+				cout << person.first_name << endl;
+				if (person.gender == 1) {
+					cout << "Female" << endl;
+				}
+				else cout << "Male" << endl;
+				cout << person.dob << endl;
+				cout << person.social_id << endl;
+				cout << person.student_class << endl;
+				break;
+			}
+
+		}
+	}
+	ip.close();
+}

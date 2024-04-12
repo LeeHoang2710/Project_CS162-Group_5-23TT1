@@ -90,7 +90,7 @@ YearNode* searchYearNode(YearNode* head, const string& year_id)
 void importClass(ClassNode*& classes, stringstream& ss, ifstream& fin) {
 	string oneclass;
 	while (getline(ss, oneclass, ',')) {
-		Class newclass = CreateClass(oneclass, nullptr);
+		Class newclass = CreateClass(oneclass);
 		AddClassNode(classes, newclass);
 	}
 };
