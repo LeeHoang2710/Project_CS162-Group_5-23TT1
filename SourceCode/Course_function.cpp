@@ -173,3 +173,4 @@ void CourseEnroll(StudentNode*& student_list, CourseNode* curr) {
 		appendNewResultsNode(tmp->student.my_course, res);
 	}
 }
+void ViewCourses(StudentNode* )

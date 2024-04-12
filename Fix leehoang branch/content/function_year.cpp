@@ -47,7 +47,7 @@ YearNode *searchYearNode(YearNode *head, string year)
     cout << "Cannot find the searched year..." << endl;
     return nullptr;
 }
-
+z
 void removeNewYearNode(YearNode *&head, Year year)
 {
     if (!head)

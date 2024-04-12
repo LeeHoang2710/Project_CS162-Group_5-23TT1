@@ -1,10 +1,9 @@
 #include "../struct and function/struct_and_library.h"
-
-Class CreateClass(string classid, StudentNode* studenthead)
+#include "../struct and function/student.h"
+Class CreateClass(string classid)
 {
 	Class newclass;
 	newclass.class_id = classid;
-	newclass.student_list = studenthead;
 	return newclass;
 }
 ClassNode* InitializeClassNode(Class newclass)
@@ -114,4 +113,39 @@ void AddStudent(ClassNode*& head, string classid, string academicid, StudentNode
 	{
 		cout << "The class you want to join don't exist!\n";
 	}
+}
+
+bool ReadClassfromfile(ClassNode*& Listclass, string file_name, ifstream& fin)
+{
+	fin.open(file_name);
+	if (!fin.is_open()) {
+		cout << "Can not open file" << endl;
+		return false;
+	}
+	else
+	{
+		string line;
+		while (getline(fin, line, '\n'))
+		{
+			Class new_class = CreateClass(line);
+			readStudentFromFile(fin, new_class.student_list);
+			AddClassNode(Listclass, new_class);
+		}
+	}
+
+	fin.close();
+}
+bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin) {
+	fin.open(file_name);
+	if (fin.is_open()) {
+		cout << "Can not open file" << endl;
+		return false;
+	}
+	string oneclass;
+	while (getline(fin, oneclass, ',')) {
+		Class newclass = CreateClass(oneclass);
+		AddClassNode(Listclass, newclass);
+	}
+	return true;
+	fin.close();
 }

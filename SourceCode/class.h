@@ -1,6 +1,6 @@
 #include "../struct and function/struct_and_library.h"
 
-Class CreateClass(string classid, StudentNode* studenthead);
+Class CreateClass(string classid);
 ClassNode* InitializeClassNode(Class newclass);
 void AddClassNode(ClassNode*& head, Class newclass);
 void DeleteClassNode(ClassNode*& head, Class del_class);

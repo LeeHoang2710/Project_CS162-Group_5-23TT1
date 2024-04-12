@@ -143,6 +143,8 @@
     <None Include="..\database\student.csv" />
     <None Include="..\database\Students_Password.csv" />
     <None Include="..\database\testcourse.csv" />
+    <None Include="cc.csv" />
+    <None Include="scorecourse.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\session, year, semester\semester.h" />
