@@ -14,7 +14,7 @@ bool ChangePassStaff(StaffNode *current);
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class);
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
-void removeStudentNode(StudentNode *&head, Student student_1);
+bool removeStudentNode(StudentNode *&head, string studentId);
 StudentNode *searchStudentNode(StudentNode *head, string student_1_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *&list_student);
@@ -42,7 +42,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course);
 // void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
-void deleteCourse(CourseNode *&CourseHead, string delCourse);
+bool deleteCourse(CourseNode *&CourseHead, string delCourse);
 void importCourse(CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);

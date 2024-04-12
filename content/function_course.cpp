@@ -52,13 +52,14 @@ void appendNewCourseNode(CourseNode *&head, Course cs)
     }
 }
 
-void deleteCourse(CourseNode *&CourseHead, string delCourse)
+bool deleteCourse(CourseNode *&CourseHead, string delCourse)
 {
     if (CourseHead->course.course_id == delCourse)
     {
         CourseNode *tmp = CourseHead;
         CourseHead = CourseHead->next;
         delete tmp;
+        return true;
     }
     for (CourseNode *tmp = CourseHead; tmp->next != nullptr; tmp = tmp->next)
     {
@@ -67,8 +68,10 @@ void deleteCourse(CourseNode *&CourseHead, string delCourse)
             CourseNode *del = tmp->next;
             tmp->next = tmp->next->next;
             delete del;
+            return true;
         }
     }
+    return false;
 }
 
 void importCourse(CourseNode *&Courselist, ifstream &fin)

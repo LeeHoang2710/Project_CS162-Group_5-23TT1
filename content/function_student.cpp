@@ -38,23 +38,26 @@ void addNewStudentNode(StudentNode *&head, Student new_student)
     return;
 }
 
-void removeStudentNode(StudentNode *&head, Student student_1)
+bool removeStudentNode(StudentNode *&head, string studentId)
 {
-    if (!head)
-        return;
-    StudentNode *person = head;
-    while (person && person->next)
+    if (head->student.student_id == studentId)
     {
-        if (person->next->student.student_id == student_1.student_id)
-        {
-            StudentNode *temp = person;
-            person->next = person->next->next;
-            delete temp;
-            temp = nullptr;
-        }
-        else
-            person = person->next;
+        StudentNode *tmp = head;
+        head = head->next;
+        delete tmp;
+        return true;
     }
+    for (StudentNode *tmp = head; tmp->next != nullptr; tmp = tmp->next)
+    {
+        if (tmp->next->student.student_id == studentId)
+        {
+            StudentNode *del = tmp->next;
+            tmp->next = tmp->next->next;
+            delete del;
+            return true;
+        }
+    }
+    return false;
 }
 
 StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
