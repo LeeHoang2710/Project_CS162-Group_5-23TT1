@@ -42,7 +42,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course);
 // void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
-void deletecourse(CourseNode *CourseHead, string delCourse);
+void deleteCourse(CourseNode *&CourseHead, string delCourse);
 void importCourse(CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);

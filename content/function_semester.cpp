@@ -27,7 +27,7 @@ void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem)
     return;
 }
 
-void importSemester(SemesterNode *&sem_list,stringstream& is, ifstream &fin)
+void importSemester(SemesterNode *&sem_list, stringstream &is, ifstream &fin)
 {
     string start_date, end_date, sem_id;
     getline(is, sem_id, ',');

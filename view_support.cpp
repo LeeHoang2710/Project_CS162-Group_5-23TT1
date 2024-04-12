@@ -70,20 +70,6 @@ void updateColorOnHover(RenderWindow &window, Object &o)
 		o.draw.setColor(Color::White);
 }
 
-bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y)
-{
-	if (isHere(x.bound, mouse))
-	{
-		window.draw(x.draw);
-		return true;
-	}
-	else
-	{
-		window.draw(y.draw);
-		return false;
-	}
-}
-
 void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check)
 {
 	if (check)

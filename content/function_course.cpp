@@ -52,7 +52,7 @@ void appendNewCourseNode(CourseNode *&head, Course cs)
     }
 }
 
-void deletecourse(CourseNode *CourseHead, string delCourse)
+void deleteCourse(CourseNode *&CourseHead, string delCourse)
 {
     if (CourseHead->course.course_id == delCourse)
     {
