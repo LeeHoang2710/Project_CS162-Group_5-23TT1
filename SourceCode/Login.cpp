@@ -125,3 +125,42 @@ bool ChangePassStaff(StaffNode* current, string input_Pass) {
 	}
 }
 //new session
+void profilestaff(ifstream& ip, string staff_id) {
+	ip.open("../database/staff_list.csv");
+	if (!ip.is_open())
+		cout << "Can not open file" << endl;
+	else
+	{
+		string line;
+		while (getline(ip, line))
+		{
+			stringstream ss(line);
+			string number;
+			Staff person;
+			getline(ss, person.username, ',');
+			getline(ss, person.first_name, ',');
+			getline(ss, person.last_name, ',');
+			getline(ss, number, ',');
+			person.gender = stoi(number);
+			getline(ss, person.dob, ',');
+			getline(ss, person.social_id, '\n');
+			if (person.username == staff_id);
+			{
+				cout << person.username << endl;
+				cout << person.last_name << " ";
+				cout << person.first_name << endl;
+				if (person.gender == 1) {
+					cout << "Female" << endl;
+				}
+				else cout << "Male" << endl;
+				cout << person.dob << endl;
+				cout << person.social_id << endl;
+				break;
+			}
+			
+		}
+	}
+	ip.close();
+}
+
+void profilestudent()
