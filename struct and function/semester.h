@@ -22,5 +22,5 @@ bool removeSemesterNode(YearNode* yearNode, int sem_num);
 
 void deleteYearList(YearNode*& year_list);
 void deleteSemesterList(SemesterNode*& sem_list);
-void deleteResultsList(ResultsNode* results_list);
+void deleteresultList(resultNode* result_list);
 void deleteStudentList(StudentNode*& student_list);

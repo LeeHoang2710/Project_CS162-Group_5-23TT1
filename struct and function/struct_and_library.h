@@ -8,81 +8,49 @@
 
 using namespace std;
 
-struct Score;
-struct Results;
-struct ResultsNode;
-
-struct Student;
-struct StudentNode;
-
-struct Class;
-struct ClassNode;
+struct Year;
+struct YearNode;
+struct Semester;
+struct SemesterNode;
 
 struct Session;
 struct Course;
 struct CourseNode;
 
-struct Semester;
-struct SemesterNode;
+struct Class;
+struct ClassNode;
 
-struct Year;
-struct YearNode;
+struct Score;
+struct Student;
+struct StudentNode;
+struct Result;
+struct ResultNode;
 
-struct Score
+struct Year
 {
-	float process = 0.0f;
-	float midterm = 0.0f;
-	float final = 0.0f;
-	float overall = 0.0f;
-};
-
-struct Results
-{
-	Score score;
-	string course_id;
-	string sem_id;
 	string year_id;
+	ClassNode* allclass = nullptr;
+	SemesterNode* list_sem = nullptr;
 };
 
-struct ResultsNode
+struct YearNode
 {
-	Results results;
-	ResultsNode* next = nullptr;
+	Year school_year;
+	YearNode* next;
 };
 
-struct Student
+struct Semester
 {
-	int num;
-	string student_id;
-	string first_name;
-	string last_name;
-	bool gender; // male(0), female(1)
-	string dob;
-	string social_id;
-	string password = "123456";
-	string student_class;
-	ResultsNode* results_list = nullptr;
-	float cur_gpa = 0.0f;
-	float total_gpa = 0.0f;
+	string start_date;
+	string end_date;
+	string semester_id;
+	CourseNode* course_list = nullptr;
 };
 
-struct StudentNode
+struct SemesterNode
 {
-	Student student;
-	StudentNode* next = nullptr;
-};
-
-struct Class
-{
-	string class_id;
-	string head_teacher;
-	StudentNode* student_list = nullptr;
-};
-
-struct ClassNode
-{
-	Class my_class;
-	ClassNode* next = nullptr;
+	Semester sem;
+	SemesterNode* next;
 };
 
 struct Session
@@ -99,6 +67,8 @@ struct Course
 	int num_credit;
 	int max_students = 50;
 	Session teaching_session;
+	ClassNode* main_class = nullptr;
+	// StudentNode *student_list = nullptr;
 };
 
 struct CourseNode
@@ -106,33 +76,78 @@ struct CourseNode
 	string semester_id;
 	string year_id;
 	Course course;
-	ClassNode* main_class;
-	StudentNode* extra_student_list = nullptr;
-	CourseNode* next = nullptr;
+	CourseNode* next;
 };
 
-struct Semester
+struct Class
 {
-	string semester_id;
-	string start_date;
-	string end_date;
-	CourseNode* course_list = nullptr;
+	string class_id;
+	StudentNode* student_list = nullptr;
 };
 
-struct SemesterNode
+struct ClassNode
 {
-	Semester sem;
-	SemesterNode* next = nullptr;
+	Class my_class;
+	ClassNode* next;
 };
 
-struct Year
+struct Score
 {
-	string year_id;
-	SemesterNode* list_sem = nullptr;
+	float process = 0.0f;
+	float midterm = 0.0f;
+	float final = 0.0f;
+	float overall = 0.0f;
 };
 
-struct YearNode
+struct Student
 {
-	Year school_year;
-	YearNode* next = nullptr;
+	int num;
+	string academic_id;
+	string student_id;
+	string first_name;
+	string last_name;
+	bool gender; // male(0), female(1)
+	string dob;
+	string social_id;
+	string password = "123456";
+	string student_class;
+	ResultNode* result_list = nullptr;
+	float cur_gpa = 0.0f;
+	float total_gpa = 0.0f;
+};
+
+struct StudentNode
+{
+	Student student;
+	StudentNode* next;
+};
+
+struct Result
+{
+	Score score;
+	string course_id = nullptr;
+	string sem_id = nullptr;
+	string year_id = nullptr;
+};
+
+struct ResultNode
+{
+	Result result;
+	ResultNode* next = nullptr;
+};
+
+struct Staff
+{
+	string username;
+	string first_name;
+	string last_name;
+	bool gender;
+	string dob;
+	string social_id;
+	string password;
+};
+struct StaffNode
+{
+	Staff staff;
+	StaffNode* next;
 };
