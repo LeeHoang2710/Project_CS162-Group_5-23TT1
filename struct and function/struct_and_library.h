@@ -23,8 +23,8 @@ struct ClassNode;
 struct Score;
 struct Student;
 struct StudentNode;
-struct Result;
-struct ResultNode;
+struct Results;
+struct ResultsNode;
 
 struct Year
 {
@@ -111,7 +111,7 @@ struct Student
 	string social_id;
 	string password = "123456";
 	string student_class;
-	ResultNode* result_list = nullptr;
+	ResultsNode* results_list = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
@@ -122,18 +122,18 @@ struct StudentNode
 	StudentNode* next;
 };
 
-struct Result
+struct Results
 {
 	Score score;
-	string course_id = nullptr;
-	string sem_id = nullptr;
-	string year_id = nullptr;
+	string course_id;
+	string sem_id;
+	string year_id;
 };
 
-struct ResultNode
+struct ResultsNode
 {
-	Result result;
-	ResultNode* next = nullptr;
+	Results results;
+	ResultsNode* next = nullptr;
 };
 
 struct Staff
