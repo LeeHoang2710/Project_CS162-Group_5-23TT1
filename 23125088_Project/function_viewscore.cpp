@@ -130,7 +130,6 @@ void Loadcoursescorefromfile(ifstream& fin,StudentNode* &Studentlist)
 				else
 					break;
 			}
-
 			tmp->student.results_list = Resulist;
 		}
 	}
@@ -164,6 +163,30 @@ void Viewallscore(StudentNode* Studentlist)
 		Studentlist = Studentlist->next;
 	}
 }
+void viewonestudent(StudentNode* onestudent) {
+	cout << onestudent->student.student_id << ' ';
+	cout << onestudent->student.last_name << ' ' << onestudent->student.first_name << "\n";
+	cout << setw(15) << left << "Course id";
+	cout << setw(15) << left << "Year";
+	cout << setw(15) << left << "Semester";
+	cout << setw(15) << left << "Process";
+	cout << setw(15) << left << "Midterm";
+	cout << setw(15) << left << "Final";
+	cout << setw(15) << left << "Overall";
+	cout << "\n";
+	ResultsNode* resulist = onestudent->student.results_list;
+	while (resulist) {
+		cout << setw(15) << left << resulist->results.course_id;
+		cout << setw(15) << left << resulist->results.year_id;
+		cout << setw(15) << left << resulist->results.sem_id;
+		cout << setw(15) << left << resulist->results.score.process;
+		cout << setw(15) << left << resulist->results.score.midterm;
+		cout << setw(15) << left << resulist->results.score.final;
+		cout << setw(15) << left << fixed << setprecision(1) << resulist->results.score.overall;
+		resulist = resulist->next;
+		cout << "\n";
+	}
+}
 void Viewgpaallstudent(StudentNode* stuhead)
 {
 	cout << setw(15) << left << "Student-id";
@@ -187,5 +210,47 @@ void Viewgpaallstudent(StudentNode* stuhead)
 		cout << setw(15) << left << stuhead->student.cur_gpa;
 		cout << setw(15) << left << stuhead->student.total_gpa << "\n";
 		stuhead = stuhead->next;
+	}
+}
+void Exportallscoretofile(ofstream& fout, StudentNode*& Studentlist) {
+	while (Studentlist) {
+		fout << Studentlist->student.student_id << ',' << Studentlist->student.first_name << ',';
+		fout << Studentlist->student.last_name << "\n";
+		ResultsNode* courselist = Studentlist->student.results_list;
+		while (courselist) {
+			fout << courselist->results.course_id << ',' << courselist->results.year_id << ',';
+			fout << courselist->results.sem_id << ',' << courselist->results.score.process << ',';
+			fout << courselist->results.score.midterm << ',' << courselist->results.score.final << ',';
+			fout <<fixed<<setprecision(1)<< courselist->results.score.overall << "\n";
+			courselist = courselist->next;
+		}
+		fout << "*" << "\n";
+		Studentlist = Studentlist->next;
+	}
+}
+void Viewallscoreincourse(StudentNode* studentlist,string course_id,string year_id) {
+	cout << course_id << ' ' << year_id << "\n";
+	cout << setw(15) << left << "No";
+	cout << setw(15) << left << "Student-id";
+	cout << setw(15) << left << "Name";
+	cout << setw(15) << left << "Process";
+	cout << setw(15) << left << "Midterm";
+	cout << setw(15) << left << "Final";
+	cout << setw(15) << left << "Overall";
+	cout << "\n";
+	int i = 1;
+	while (studentlist) {
+		if (studentlist->student.results_list->results.course_id == course_id && studentlist->student.results_list->results.year_id==year_id) {
+			cout << setw(15) << left << i;
+			cout << setw(15) << left << studentlist->student.student_id;
+			cout << setw(15) << left << studentlist->student.first_name;
+			cout << setw(15) << left << studentlist->student.results_list->results.score.process;
+			cout << setw(15) << left << studentlist->student.results_list->results.score.midterm;
+			cout << setw(15) << left << studentlist->student.results_list->results.score.final;
+			cout << setw(15) << left << fixed << setprecision(1) << studentlist->student.results_list->results.score.overall;
+			cout << "\n";
+			++i;
+		}
+		studentlist = studentlist->next;
 	}
 }
