@@ -63,11 +63,14 @@ void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
 void exportClass(ClassNode *class_list, ofstream &fout);
 bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin);
 
-// Results
 void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist);
+<<<<<<< HEAD
 float updateTotalGpa(StudentNode *studentNode);
 void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
 Results createResults(const string& course_id, const string& sem_id, const string& year_id, float process, float midterm, float final);
 ResultsNode* createResultsNode(const Results& results);
 void appendResultsNode(ResultsNode*& results_list, ResultsNode* resultsNode);
 float updateTotalGpa(StudentNode* studentNode);
+=======
+void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
+>>>>>>> parent of 5db6e4d (update results)
