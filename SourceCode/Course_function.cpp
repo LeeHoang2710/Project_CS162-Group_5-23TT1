@@ -174,7 +174,7 @@ void CourseEnroll(StudentNode*& student_list, CourseNode* curr) {
 	}
 }
 //void ViewCourses(StudentNode* )
-void Loadcoursescorefromfile(ifstream& fin, StudentNode*& Studentlist, CourseNode* curr)
+void Loadcoursescorefromfile(ifstream& fin, StudentNode*& Studentlist, string class_id)
 {
 	StudentNode* tmp1 = nullptr;
 	string Line;
@@ -197,7 +197,7 @@ void Loadcoursescorefromfile(ifstream& fin, StudentNode*& Studentlist, CourseNod
 				Studentlist->student.last_name = s1;
 				getline(ss1, s1, '\n');
 				Studentlist->student.dob = s1;
-				Studentlist->student.student_class = curr->course.main_class.class_id;
+				Studentlist->student.student_class = class_id;
 				tmp1 = Studentlist;
 				tmp = Studentlist;
 			}
@@ -317,7 +317,7 @@ bool addmainclass(CourseNode*& curr, string class_id, ifstream& ip) {
 	Course temp;
 	while (!ip.eof()) {
 		getline(ip, temp.main_class.class_id, '\n');
-		Loadcoursescorefromfile(ip, temp.main_class.student_list, curr);
+		Loadcoursescorefromfile(ip, temp.main_class.student_list, temp.main_class.class_id);
 		if (temp.main_class.class_id == class_id) {
 			curr->course = temp;
 		}
