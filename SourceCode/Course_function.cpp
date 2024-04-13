@@ -321,6 +321,7 @@ bool addmainclass(CourseNode*& curr, string class_id, ifstream& ip) {
 		if (temp.main_class.class_id == class_id) {
 			curr->course = temp;
 		}
+		CourseEnroll(curr->course.main_class.student_list, curr);
 		ip.close();
 		return true;
 	}
