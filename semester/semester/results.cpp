@@ -1,6 +1,6 @@
 #include "../results.h"
 
-void importClassResult(ClassNode* class_list, const string& filename, ifstream& fin)
+void importClassResults(ClassNode* class_list, const string& filename, ifstream& fin)
 {
 	fin.open(filename);
 	if (!fin.is_open())
@@ -19,13 +19,13 @@ void importClassResult(ClassNode* class_list, const string& filename, ifstream& 
 			return;
 		}
 
-		importStudentResult(currClass, fin);
+		importStudentResults(currClass, fin);
 	}
 
 	fin.close();
 }
 
-void importStudentResult(ClassNode* currClass, ifstream& fin)
+void importStudentResults(ClassNode* currClass, ifstream& fin)
 {
 	string student;
 	while (getline(fin, student) && student != "//")
@@ -40,22 +40,22 @@ void importStudentResult(ClassNode* currClass, ifstream& fin)
 			return;
 		}
 
-		importCourseResult(currStudent, fin);
+		importCourseResults(currStudent, fin);
 	}
 }
 
-void importCourseResult(StudentNode* currStudent, ifstream& fin)
+void importCourseResults(StudentNode* currStudent, ifstream& fin)
 {
-	string result;
-	while (getline(fin, result) && result != "*")
+	string results;
+	while (getline(fin, results) && results != "*")
 	{
-		istringstream iss(result);
+		istringstream iss(results);
 		string course_id, sProcess, sMidterm, sFinal;
 		getline(iss, course_id, ',');
-		ResultNode* currResult = searchResultNode(currStudent->student.result_list, course_id);
-		if (!currResult)
+		ResultsNode* currResults = searchResultsNode(currStudent->student.results_list, course_id);
+		if (!currResults)
 		{
-			cout << "Cannot find " << course_id << " ResultNode for " << currStudent->student.student_id << endl;
+			cout << "Cannot find " << course_id << " ResultsNode for " << currStudent->student.student_id << endl;
 			return;
 		}
 		//skip through year_id, sem_id and go to score
@@ -69,13 +69,13 @@ void importCourseResult(StudentNode* currStudent, ifstream& fin)
 		float process = stof(sProcess),
 			midterm = stof(sMidterm),
 			final = stof(sFinal);
-		updateScore(currResult->result.score, process, midterm, final);
+		updateScore(currResults->results.score, process, midterm, final);
 	}
 	updateCurrentSemGpa(currStudent);
 	updateTotalGpa(currStudent);
 }
 
-void exportResult(ClassNode* class_list, const string& filename, ofstream& fout)
+void exportResults(ClassNode* class_list, const string& filename, ofstream& fout)
 {
 	fout.open(filename);
 	if (!fout.is_open())
@@ -92,16 +92,16 @@ void exportResult(ClassNode* class_list, const string& filename, ofstream& fout)
 		{
 			fout << stulist->student.student_id << ','
 				<< stulist->student.first_name << "\n";
-			ResultNode* result_list = stulist->student.result_list;
-			while (result_list)
+			ResultsNode* results_list = stulist->student.results_list;
+			while (results_list)
 			{
-				fout << result_list->result.course_id << ','
-					<< result_list->result.year_id << ','
-					<< result_list->result.sem_id << ','
-					<< result_list->result.score.process << ','
-					<< result_list->result.score.midterm << ','
-					<< result_list->result.score.final << "\n";
-				result_list = result_list->next;
+				fout << results_list->results.course_id << ','
+					<< results_list->results.year_id << ','
+					<< results_list->results.sem_id << ','
+					<< results_list->results.score.process << ','
+					<< results_list->results.score.midterm << ','
+					<< results_list->results.score.final << "\n";
+				results_list = results_list->next;
 			}
 
 			stulist = stulist->next;
@@ -132,15 +132,15 @@ void updateCourseOverall(Score& score)
 
 void updateCurrentSemGpa(StudentNode* studentNode)
 {
-	string currSemId = getCurrSemId(studentNode->student.result_list);
-	ResultNode* currResultNode = getCurrSemResultNode(studentNode->student.result_list, currSemId);
+	string currSemId = getCurrSemId(studentNode->student.results_list);
+	ResultsNode* currResultsNode = getCurrSemResultsNode(studentNode->student.results_list, currSemId);
 	float cur_gpa = 0.0f;
 	unsigned short count = 0;
-	while (currResultNode)
+	while (currResultsNode)
 	{
-		cur_gpa += currResultNode->result.score.overall;
+		cur_gpa += currResultsNode->results.score.overall;
 		++count;
-		currResultNode = currResultNode->next;
+		currResultsNode = currResultsNode->next;
 	}
 
 	studentNode->student.cur_gpa = cur_gpa / count;
@@ -148,51 +148,51 @@ void updateCurrentSemGpa(StudentNode* studentNode)
 
 void updateTotalGpa(StudentNode* studentNode)
 {
-	ResultNode* currResultNode = studentNode->student.result_list;
+	ResultsNode* currResultsNode = studentNode->student.results_list;
 	float total = 0.0f;
 	unsigned short count = 0;
 
-	while (currResultNode)
+	while (currResultsNode)
 	{
-		total += currResultNode->result.score.overall;
+		total += currResultsNode->results.score.overall;
 		++count;
-		currResultNode = currResultNode->next;
+		currResultsNode = currResultsNode->next;
 	}
 
 	studentNode->student.total_gpa = total / count;
 }
 
-Result createResult(const string& course_id, const string& sem_id, const string& year_id)
+Results createResults(const string& course_id, const string& sem_id, const string& year_id)
 {
-	Result newResult;
-	newResult.course_id = course_id;
-	newResult.sem_id = sem_id;
-	newResult.year_id = year_id;
-	return newResult;
+	Results newResults;
+	newResults.course_id = course_id;
+	newResults.sem_id = sem_id;
+	newResults.year_id = year_id;
+	return newResults;
 }
 
-ResultNode* createResultNode(const Result& result)
+ResultsNode* createResultsNode(const Results& results)
 {
-	return new ResultNode{ result };
+	return new ResultsNode{ results };
 }
 
-void appendResultNode(ResultNode*& result_list, ResultNode* resultNode)
+void appendResultsNode(ResultsNode*& results_list, ResultsNode* resultsNode)
 {
-	if (!result_list)
-		result_list = resultNode;
+	if (!results_list)
+		results_list = resultsNode;
 	else
 	{
-		ResultNode* curr = result_list;
+		ResultsNode* curr = results_list;
 		while (curr->next)
 			curr = curr->next;
 
-		curr->next = resultNode;
+		curr->next = resultsNode;
 	}
 }
 
 void updateScore(Score& score, const float& process, const float& midterm, const float& final)
 {
-	//Pass ResultNode.Result.score in
+	//Pass ResultsNode.Results.score in
 	//Pass/enter -1 to skip
 	if (process != -1 && process != score.process)
 		score.process = process;
@@ -203,68 +203,80 @@ void updateScore(Score& score, const float& process, const float& midterm, const
 	updateCourseOverall(score);
 }
 
-string getCurrSemId(ResultNode* result_list)
+void addResultsNodeToClass(ClassNode* classNode, const string& year_id, const string& sem_id, const string& course_id)
 {
-	while (result_list->next)
-		result_list = result_list->next;
-	return result_list->result.sem_id;
+	StudentNode* currStudent = classNode->my_class.student_list;
+	while (currStudent)
+	{
+		Results newResults = createResults(course_id, sem_id, year_id);
+		ResultsNode* newResultsNode = createResultsNode(newResults);
+		appendResultsNode(currStudent->student.results_list, newResultsNode);
+		currStudent = currStudent->next;
+	}
 }
 
-string getCurrYearId(ResultNode* result_list)
+string getCurrSemId(ResultsNode* results_list)
 {
-	while (result_list->next)
-		result_list = result_list->next;
-	return result_list->result.year_id;
+	while (results_list->next)
+		results_list = results_list->next;
+	return results_list->results.sem_id;
 }
 
-ResultNode* getCurrSemResultNode(ResultNode* result_list, const string& currSemId)
+string getCurrYearId(ResultsNode* results_list)
 {
-	while (result_list && result_list->result.sem_id != currSemId)
-		result_list = result_list->next;
-	return result_list;
+	while (results_list->next)
+		results_list = results_list->next;
+	return results_list->results.year_id;
 }
 
-ResultNode* getCurrYearResultNode(ResultNode* result_list, const string& currYearId)
+ResultsNode* getCurrSemResultsNode(ResultsNode* results_list, const string& currSemId)
 {
-	while (result_list && result_list->result.year_id != currYearId)
-		result_list = result_list->next;
-	return result_list;
+	while (results_list && results_list->results.sem_id != currSemId)
+		results_list = results_list->next;
+	return results_list;
 }
 
-ResultNode* searchResultNode(ResultNode* result_list, string courseid)
+ResultsNode* getCurrYearResultsNode(ResultsNode* results_list, const string& currYearId)
 {
-	while (result_list && result_list->result.course_id != courseid)
-		result_list = result_list->next;
-
-	return result_list;
+	while (results_list && results_list->results.year_id != currYearId)
+		results_list = results_list->next;
+	return results_list;
 }
 
-bool removeResultNode(ResultNode*& result_list, string course_id)
+ResultsNode* searchResultsNode(ResultsNode* results_list, string courseid)
 {
-	ResultNode* target = searchResultNode(result_list, course_id);
+	while (results_list && results_list->results.course_id != courseid)
+		results_list = results_list->next;
+
+	return results_list;
+}
+
+bool removeResultsNode(ResultsNode*& results_list, string course_id)
+{
+	ResultsNode* target = searchResultsNode(results_list, course_id);
 	if (!target)
 		return false;
 
-	ResultNode* dummy = new ResultNode;
-	dummy->next = result_list;
+	ResultsNode* dummy = new ResultsNode;
+	dummy->next = results_list;
 
-	ResultNode* curr = dummy;
+	ResultsNode* curr = dummy;
 	while (curr->next != target)
 		curr = curr->next;
 
 	curr->next = target->next;
 	delete target;
-	result_list = dummy->next;
+	results_list = dummy->next;
 	delete dummy;
 	return true;
 }
 
-void deleteResultList(ResultNode* result_list, string courseid)
+void deleteResultsList(ResultsNode* results_list, string courseid)
 {
-	while (result_list)
+	while (results_list)
 	{
-		ResultNode* temp = result_list;
-		result_list = result_list->next;
+		ResultsNode* temp = results_list;
+		results_list = results_list->next;
 		delete temp;
 	}
 }

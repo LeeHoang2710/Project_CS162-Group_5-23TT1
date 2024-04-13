@@ -20,7 +20,7 @@ bool importClassFromStaff(ifstream& fin, const string& filename, ClassNode*& cla
     return true;
 }
 
-bool importResultFromStaff(ifstream& fin, const string& filename, CourseNode* courseNode)
+bool importResultsFromStaff(ifstream& fin, const string& filename, CourseNode* courseNode)
 {
     fin.open(filename);
     if (!fin.is_open())
@@ -29,13 +29,13 @@ bool importResultFromStaff(ifstream& fin, const string& filename, CourseNode* co
 		return false;
     }
 
-    importResultInCourse(fin, courseNode);
+    importResultsInCourse(fin, courseNode);
 
     fin.close();
     return true;
 }
 
-bool importResultInCourse(ifstream& fin, CourseNode* courseNode)
+bool importResultsInCourse(ifstream& fin, CourseNode* courseNode)
 {
     string line;
     while (getline(fin, line))
@@ -47,8 +47,100 @@ bool importResultInCourse(ifstream& fin, CourseNode* courseNode)
         getline(iss, midterm, ',');
         getline(iss, final, ',');
         StudentNode* studentNode = searchStudentNode(courseNode->course.main_class->my_class.student_list, student_id);
-        updateScore(studentNode->student.result_list->result.score, stof(process), stof(midterm), stof(final));
+        updateScore(studentNode->student.results_list->results.score, stof(process), stof(midterm), stof(final));
         updateCurrentSemGpa(studentNode);
         updateTotalGpa(studentNode);
     }
+}
+
+// add main_class to course
+// add new ResultNode to each student in class
+bool importCoursesFromStaff(ifstream& fin, const string& filename, YearNode* year_list, YearNode* yearNode, SemesterNode* semNode)
+{
+    fin.open(filename);
+    if (!fin.is_open())
+    {
+        cout << "Cannot open file " << filename << " to get course information." << endl;
+        return false;
+    }
+
+    if (!yearNode || !semNode)
+    {
+		cout << "Year or semester is not exist." << endl;
+		return false;
+	}
+
+    string year_id, sem_id;
+    getline(fin, year_id);
+    getline(fin, sem_id);
+
+    if (year_id != yearNode->school_year.year_id)
+    {
+        cout << "Year id do not match." << endl;
+        return false;
+    }
+
+    if (sem_id != semNode->sem.semester_id)
+    {
+        cout << "Semester id do not match." << endl;
+        return false;
+    }
+
+    bool check = importCourses(fin, year_list, semNode->sem.course_list, year_id, sem_id);
+    if (!check)
+    {
+		cout << "Error when importing courses." << endl;
+		return false;
+	}
+
+    fin.close();
+    return true;
+}
+
+bool importCourses(ifstream& fin, YearNode* year_list, CourseNode*& course_list, const string& year_id, const string& sem_id)
+{
+    string number;
+    while (getline(fin, number))
+    {
+        Course cs;
+        if (number == "*")
+            return;
+        stringstream line(number);
+        getline(line, cs.course_id, ',');
+        getline(line, cs.course_name, ',');
+        getline(line, cs.teacher_name, ',');
+        getline(line, number, ',');
+        cs.num_credit = stoi(number);
+        getline(line, number, ',');
+        cs.max_students = stoi(number);
+        getline(line, number, ',');
+        cs.teaching_session.day_of_the_week = stoi(number);
+        getline(line, number, ',');
+        cs.teaching_session.session_no = stoi(number);
+        getline(line, number, '\n');
+        cs.main_class = searchClassNodeFromAllYears(year_list, number);
+        if (!cs.main_class)
+        {
+			cout << "Cannot find class " << number << endl;
+			return false;
+		}
+
+        appendNewCourseNode(course_list, cs);
+        addResultsNodeToClass(cs.main_class, year_id, sem_id, cs.course_id);
+    }
+
+    return true;
+}
+
+ClassNode* searchClassNodeFromAllYears(YearNode* year_list, const string& class_id)
+{
+    YearNode* currYear = year_list;
+    while (currYear)
+    {
+        ClassNode* currClass = findClass(currYear->school_year.allclass, class_id);
+        if (currClass)
+            return currClass;
+        currYear = currYear->next;
+    }
+    return nullptr;
 }

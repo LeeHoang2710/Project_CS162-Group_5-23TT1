@@ -1,5 +1,6 @@
 #pragma once
 #include "struct_and_library.h"
+#include "function_class.h"
 
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session);
 CourseNode* initCourseNode(Course new_course);

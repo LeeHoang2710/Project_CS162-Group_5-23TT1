@@ -218,12 +218,12 @@ void deleteSemesterList(SemesterNode*& sem_list)
 	}
 }
 
-void deleteresultList(resultNode* result_list)
+void deleteResultsList(ResultsNode* results_list)
 {
-	while (result_list)
+	while (results_list)
 	{
-		resultNode* temp = result_list;
-		result_list = result_list->next;
+		ResultsNode* temp = results_list;
+		results_list = results_list->next;
 		delete temp;
 	}
 }
@@ -234,7 +234,7 @@ void deleteStudentList(StudentNode*& student_list)
 	{
 		StudentNode* temp = student_list;
 		student_list = student_list->next;
-		deleteresultList(temp->student.result_list);
+		deleteResultsList(temp->student.results_list);
 		delete temp;
 	}
 }

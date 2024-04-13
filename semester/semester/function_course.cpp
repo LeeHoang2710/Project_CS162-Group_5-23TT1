@@ -93,6 +93,7 @@ void importCourse(CourseNode *&Courselist, ifstream &fin)
         cs.teaching_session.session_no = stoi(number);
         appendNewCourseNode(Courselist, cs);
     }
+    
 }
 
 void exportCourse(CourseNode *&Courselist, ofstream &fout)

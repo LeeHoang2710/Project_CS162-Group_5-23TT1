@@ -6,8 +6,8 @@ using namespace std;
 #include "../struct and function/course.h"
 #include "../struct and function/student.h"
 #include "../struct and function/login.h"
-#include "../year.h"
-#include "../semester.h"
+#include "../struct and function/year.h"
+#include "../struct and function/semester.h"
 
 int main() {
 	cout << "Are you a staff or a student: " << endl;
