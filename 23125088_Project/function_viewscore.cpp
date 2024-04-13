@@ -254,3 +254,22 @@ void Viewallscoreincourse(StudentNode* studentlist,string course_id,string year_
 		studentlist = studentlist->next;
 	}
 }
+void Gpaincourse(ResultsNode* resultslist) {
+	while (resultslist) {
+		resultslist->results.score.overall =
+		resultslist->results.score.process * 0.35 
+		+ resultslist->results.score.midterm * 0.25
+		+ resultslist->results.score.final * 0.4;
+		resultslist = resultslist->next;
+	}
+}
+void totalgpa(Student student) {
+	float totgpa = 0.0;
+	int k = 0;
+	while (student.results_list) {
+		totgpa += student.results_list->results.score.overall;
+		k++;
+		student.results_list = student.results_list->next;
+	}
+	student.total_gpa = totgpa / k;
+}
