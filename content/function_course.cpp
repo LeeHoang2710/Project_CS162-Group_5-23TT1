@@ -1,11 +1,12 @@
 #include "../struct_and_function/function.h"
 
-Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session)
+Course createCourse(string course_id, string course_name, string teacher_name, string class_id, int num_credit, Session teaching_session)
 {
     Course tmp;
     tmp.course_id = course_id;
     tmp.course_name = course_name;
     tmp.teacher_name = teacher_name;
+    tmp.main_class->my_class.class_id = class_id;
     tmp.num_credit = num_credit;
     tmp.teaching_session = teaching_session;
     return tmp;
@@ -20,11 +21,11 @@ CourseNode *initCourseNode(Course new_course)
     return new_course_node;
 }
 
-// void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu)
+// void addNewCourseNode(CourseNode *&head, Course cs)
 // {
 //     // semester id
 //     //  year id
-//     // CourseNode *new_course_node = initCourseNode(cs, liststu);
+//     CourseNode *new_course_node = initCourseNode(cs, liststu);
 //     if (!head)
 //         head = new_course_node;
 //     else
@@ -92,8 +93,11 @@ void importCourse(CourseNode *&Courselist, ifstream &fin)
         cs.max_students = stoi(number);
         getline(line, number, ',');
         cs.teaching_session.day_of_the_week = stoi(number);
-        getline(line, number, '\n');
+        getline(line, number, ',');
         cs.teaching_session.session_no = stoi(number);
+        string id;
+        getline(line, id, '\n');
+        cs.main_class = searchClassNodeFromAllYears(, id);
         appendNewCourseNode(Courselist, cs);
     }
 }

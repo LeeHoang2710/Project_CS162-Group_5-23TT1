@@ -189,7 +189,7 @@ void exportClass(ClassNode *class_list, ofstream &fout)
     fout << endl;
 };
 
-bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin)
+bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -206,8 +206,8 @@ bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin)
         Class newclass = CreateClass(oneclass);
         AddClassNode(Listclass, newclass);
     }
-    ClassNode* tmp = Listclass;
-    
+    ClassNode *tmp = Listclass;
+
     while (tmp)
     {
         cout << tmp->my_class.class_id << ",";
@@ -216,4 +216,17 @@ bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin)
 
     fin.close();
     return true;
+}
+
+ClassNode *searchClassNodeFromAllYears(YearNode *year_list, const string &class_id)
+{
+    YearNode *currYear = year_list;
+    while (currYear)
+    {
+        ClassNode *currClass = findClass(currYear->school_year.allclass, class_id);
+        if (currClass)
+            return currClass;
+        currYear = currYear->next;
+    }
+    return nullptr;
 }

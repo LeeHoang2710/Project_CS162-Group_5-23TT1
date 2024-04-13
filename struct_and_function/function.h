@@ -38,9 +38,8 @@ void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);
 
 // Course
-Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session);
+Course createCourse(string course_id, string course_name, string teacher_name, string class_id, int num_credit, Session teaching_session);
 CourseNode *initCourseNode(Course new_course);
-// void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
 bool deleteCourse(CourseNode *&CourseHead, string delCourse);
 void importCourse(CourseNode *&Courselist, ifstream &fin);
@@ -62,11 +61,12 @@ ClassNode *findClass(ClassNode *head, string input);
 void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
 void exportClass(ClassNode *class_list, ofstream &fout);
 bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin);
+ClassNode *searchClassNodeFromAllYears(YearNode *year_list, const string &class_id);
 
 // Results
 void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist);
 void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
-Results createResults(const string& course_id, const string& sem_id, const string& year_id, float process, float midterm, float final);
-ResultsNode* createResultsNode(const Results& results);
-void appendResultsNode(ResultsNode*& results_list, ResultsNode* resultsNode);
-float updateTotalGpa(StudentNode* studentNode);
+Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final);
+ResultsNode *createResultsNode(const Results &results);
+void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
+float updateTotalGpa(StudentNode *studentNode);
