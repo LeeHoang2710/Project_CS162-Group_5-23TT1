@@ -2,7 +2,6 @@
 
 void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist)
 {
-    fin.open("../database/result.csv");
     StudentNode *tmp1 = nullptr;
     string Line;
     while (getline(fin, Line, '\n') && Line != "")
