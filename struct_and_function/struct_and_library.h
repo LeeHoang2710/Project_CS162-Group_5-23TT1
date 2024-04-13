@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -23,8 +24,8 @@ struct ClassNode;
 struct Score;
 struct Student;
 struct StudentNode;
-struct Result;
-struct ResultNode;
+struct Results;
+struct ResultsNode;
 
 struct Year
 {
@@ -32,11 +33,13 @@ struct Year
 	ClassNode *allclass = nullptr;
 	SemesterNode *list_sem = nullptr;
 };
+
 struct YearNode
 {
 	Year school_year;
 	YearNode *next;
 };
+
 struct Semester
 {
 	string start_date;
@@ -44,16 +47,19 @@ struct Semester
 	string semester_id;
 	CourseNode *course_list = nullptr;
 };
+
 struct SemesterNode
 {
 	Semester sem;
 	SemesterNode *next;
 };
+
 struct Session
 {
 	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
 	int session_no;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
+
 struct Course
 {
 	string course_id;
@@ -65,6 +71,7 @@ struct Course
 	ClassNode *main_class = nullptr;
 	// StudentNode *student_list = nullptr;
 };
+
 struct CourseNode
 {
 	string semester_id;
@@ -72,16 +79,19 @@ struct CourseNode
 	Course course;
 	CourseNode *next;
 };
+
 struct Class
 {
 	string class_id;
 	StudentNode *student_list = nullptr;
 };
+
 struct ClassNode
 {
 	Class my_class;
 	ClassNode *next;
 };
+
 struct Score
 {
 	float process = 0.0f;
@@ -89,6 +99,20 @@ struct Score
 	float final = 0.0f;
 	float overall = 0.0f;
 };
+struct Results
+{
+	Score score;
+	string course_id;
+	string sem_id;
+	string year_id;
+};
+
+struct ResultsNode
+{
+	Results results;
+	ResultsNode *next = nullptr;
+};
+
 struct Student
 {
 	int num;
@@ -99,29 +123,17 @@ struct Student
 	bool gender; // male(0), female(1)
 	string dob;
 	string social_id;
-	string password = "1";
+	string password = "123456";
 	string student_class;
-	ResultNode *my_course = nullptr;
+	ResultsNode *results_list = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
+
 struct StudentNode
 {
 	Student student;
 	StudentNode *next;
-};
-struct Result
-{
-	Score score;
-	CourseNode *course = nullptr;
-	SemesterNode *sem = nullptr;
-	YearNode *year = nullptr;
-};
-
-struct ResultNode
-{
-	Result Result;
-	ResultNode *next = nullptr;
 };
 
 struct Staff

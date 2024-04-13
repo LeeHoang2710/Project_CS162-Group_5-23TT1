@@ -62,3 +62,6 @@ ClassNode *findClass(ClassNode *head, string input);
 void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
 void exportClass(ClassNode *class_list, ofstream &fout);
 bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin);
+
+void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist);
+void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
