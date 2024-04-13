@@ -48,7 +48,9 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     }
 }
 
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass)
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2,
+
+           string &name, string &pass)
 {
 
     Event event;
@@ -1321,14 +1323,10 @@ void Other(RenderWindow &window, int &page, bool is_staff)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    /*if (isHere(f.bound, mouse))
-                        page = 5; */
-                    if (isHere(b.bound, mouse))
-                        page = 3;
-                    else if (isHere(o2.bound, mouse))
-                        page = 2;
-                    else if (isHere(o3.bound, mouse))
-                        page = 20;
+                    switchPage(b.bound, mouse, 3, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(o2.bound, mouse, 1, page);
+                    switchPage(o3.bound, mouse, 20, page);
                 }
                 break;
             }
@@ -1683,7 +1681,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         delete add[i], id[i], one[i];
 }
 
-void Students(RenderWindow &window, int &page, ClassNode *class_list)
+void Students(RenderWindow &window, int &page, ClassNode *&class_list)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1797,6 +1795,17 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
                         showDelResult = true;
                         clock.restart();
                     }
+                    if (result)
+                    {
+                        for (int i = 0; i < 7; ++i)
+                        {
+                            if (isHere(detail[i]->bound, mouse) && one[i])
+                            {
+                                page = 18;
+                                studentResult(window, page, one[i]);
+                            }
+                        }
+                    }
                 }
                 break;
             }
@@ -1852,7 +1861,7 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
             for (int j = 0; j < 7; ++j)
                 window.draw(stu[i][j]->txt);
         }
-        for (int i = 0; i < count; ++i)
+        for (int i = 0; i < count - change; ++i)
             if (result)
                 window.draw(detail[i]->draw);
         if (del_stu)
@@ -1882,4 +1891,59 @@ void Students(RenderWindow &window, int &page, ClassNode *class_list)
     // for (int i = 0; i < 7; ++i)
     //     for (int j = 0; j < 7; ++j)
     //         delete stu[i][j];
+}
+
+void studentResult(RenderWindow &window, int &page, StudentNode *&student)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object o1 = createObject("./image/page3-staff/result/result-bg.png", 180, 120);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object o2 = createObject("./image/page3-staff/result/full-name.png", 342, 137);
+    Object o3 = createObject("./image/page3-staff/result/id.png", 913, 137);
+    Object o4 = createObject("./image/page3-staff/result/gpa.png", 350, 721);
+    Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
+    Info id = createText(student->student.student_id, 957, 144);
+    Info gpa = createText("9.3", 379, 721);
+    while (window.isOpen() && page == 18)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(menu.bound, mouse, 17, page);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        window.draw(o2.draw);
+        window.draw(o3.draw);
+        window.draw(o4.draw);
+        window.draw(name.txt);
+        window.draw(id.txt);
+        window.draw(gpa.txt);
+        window.display();
+    }
 }
