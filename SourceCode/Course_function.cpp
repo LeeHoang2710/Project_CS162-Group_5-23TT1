@@ -312,19 +312,32 @@ void Loadcoursescorefromfile(ifstream& fin, StudentNode*& Studentlist, string cl
 		}
 	}
 }
-bool addmainclass(CourseNode*& curr, string class_id, ifstream& ip) {
-	ip.open("class.csv");
-	Course temp;
-	while (!ip.eof()) {
-		getline(ip, temp.main_class.class_id, '\n');
-		Loadcoursescorefromfile(ip, temp.main_class.student_list, temp.main_class.class_id);
-		if (temp.main_class.class_id == class_id) {
-			curr->course = temp;
+//bool addmainclass(CourseNode*& curr, ifstream& ip) {
+//	ip.open("class.csv");
+//	Course temp;
+//	while (!ip.eof()) {
+//		getline(ip, temp.main_class.class_id, '\n');
+//		Loadcoursescorefromfile(ip, temp.main_class.student_list, temp.main_class.class_id);
+//		CourseEnroll(curr->course.main_class.student_list, curr);
+//		ip.close();
+//		return true;
+//	}
+//	ip.close();
+//	return false;
+//}
+
+void Exportallscoretofile(ofstream& fout, StudentNode* Studentlist) {
+	while (Studentlist) {
+		fout << Studentlist->student.student_id << ',' << Studentlist->student.first_name << ',';
+		fout << Studentlist->student.last_name << "\n";
+		ResultsNode* courselist = Studentlist->student.results_list;
+		while (courselist) {
+			fout << courselist->results.course_id << ',' << courselist->results.year_id << ',';
+			fout << courselist->results.sem_id << ',' << courselist->results.score.process << ',';
+			fout << courselist->results.score.midterm << ',' << courselist->results.score.final << ',';
+			courselist = courselist->next;
 		}
-		CourseEnroll(curr->course.main_class.student_list, curr);
-		ip.close();
-		return true;
+		fout << "*" << "\n";
+		Studentlist = Studentlist->next;
 	}
-	ip.close();
-	return false;
 }

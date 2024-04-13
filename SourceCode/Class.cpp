@@ -96,7 +96,7 @@ void AddStudent(ClassNode*& head, string classid, string academicid, StudentNode
 	ClassNode* tmp = head;
 	while (tmp)
 	{
-		if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
+		if (tmp->my_class.class_id == classid )
 		{
 			StudentNode* Stulist = tmp->my_class.student_list;
 			while (Stulist->next)
@@ -128,7 +128,7 @@ bool ReadClassfromfile(ClassNode*& Listclass, string file_name, ifstream& fin)
 		while (getline(fin, line, '\n'))
 		{
 			Class new_class = CreateClass(line);
-			//readStudentFromFile(fin, new_class.student_list);
+			readStudentFromFile(fin, file_name, new_class.student_list);
 			AddClassNode(Listclass, new_class);
 		}
 	}

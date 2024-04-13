@@ -59,7 +59,6 @@ struct Session
 struct Class
 {
     string class_id;
-    string academic_id;
     string head_teacher;
     StudentNode* student_list = nullptr;
 };
@@ -116,7 +115,7 @@ struct Student
     string social_id;
     string password = "123456";
     string student_class;
-    ResultsNode* my_course = nullptr;
+    ResultsNode* results_list = nullptr;
     float cur_gpa = 0.0f;
     float total_gpa = 0.0f;
 };
@@ -129,7 +128,7 @@ struct Results
 {
     Score score;
     string course_id;
-    string semester_id;
+    string sem_id;
     string year_id;
 };
 

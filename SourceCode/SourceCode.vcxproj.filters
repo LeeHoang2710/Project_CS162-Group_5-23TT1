@@ -68,6 +68,9 @@
     <None Include="..\database\staff_list.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\database\class.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\struct and function\course.h">

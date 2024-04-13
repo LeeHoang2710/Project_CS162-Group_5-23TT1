@@ -240,7 +240,7 @@ void deleteStudentList(StudentNode*& student_list)
 	{
 		StudentNode* temp = student_list;
 		student_list = student_list->next;
-		deleteResultsList(temp->student.my_course);
+		deleteResultsList(temp->student.results_list);
 		delete temp;
 	}
 }

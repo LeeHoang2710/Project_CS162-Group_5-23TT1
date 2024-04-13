@@ -138,6 +138,7 @@
     <ClCompile Include="menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\database\class.csv" />
     <None Include="..\database\course.csv" />
     <None Include="..\database\staff_list.csv" />
     <None Include="..\database\Staff_Password.csv" />
