@@ -30,7 +30,7 @@ struct ResultsNode;
 struct Year
 {
 	string year_id;
-	ClassNode *allclass = nullptr;
+	string have_class; // !: yes, #:no
 	SemesterNode *list_sem = nullptr;
 };
 
