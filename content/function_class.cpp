@@ -189,7 +189,7 @@ void exportClass(ClassNode *class_list, ofstream &fout)
     fout << endl;
 };
 
-bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
+bool ReadClassFile(ClassNode*& Listclass, string file_name, ifstream& fin)
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -206,8 +206,8 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
         Class newclass = CreateClass(oneclass);
         AddClassNode(Listclass, newclass);
     }
-    ClassNode *tmp = Listclass;
-
+    ClassNode* tmp = Listclass;
+    
     while (tmp)
     {
         cout << tmp->my_class.class_id << ",";

@@ -1684,10 +1684,10 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
     ifstream fin;
     fin.open("./result.csv");
     if (!fin.is_open())
-    {
-        cout << "Can't open file" << endl;
-        return;
-    }
+	{
+		cout << "Can't open file" << endl;
+		return;
+	}
     Loadcoursescorefromfile(fin, class_list->my_class.student_list);
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1902,6 +1902,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
 void studentResult(RenderWindow &window, int &page, StudentNode *&student)
 {
 
+
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/result/result-bg.png", 180, 120);
@@ -1991,10 +1992,10 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
                     res[i][0]->txt.setString(one[i]->results.course_id);
                     res[i][1]->txt.setString(one[i]->results.sem_id);
                     res[i][2]->txt.setString(one[i]->results.year_id);
-                    res[i][3]->txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
-                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
-                    res[i][5]->txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
-                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    res[i][3]->txt.setString(to_string(one[i]->results.score.process).substr(0,4));
+                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm).substr(0,4));
+                    res[i][5]->txt.setString(to_string(one[i]->results.score.final).substr(0,4));
+                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall).substr(0,4));
                     temp = temp->next;
                 }
                 else
