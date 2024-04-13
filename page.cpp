@@ -1682,7 +1682,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 void Students(RenderWindow &window, int &page, ClassNode *&class_list)
 {
     ifstream fin;
-    fin.open("./database/result.csv");
+    fin.open("./result.csv");
     if (!fin.is_open())
     {
         cout << "Can't open file" << endl;
@@ -1918,12 +1918,12 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
     for (int i = 0; i < 8; ++i)
     {
         res[i][0] = createInfoTest("", 210, 298 + 48 * i);
-        res[i][1] = createInfoTest("", 330 + 5, 298 + 48 * i);
-        res[i][2] = createInfoTest("", 500, 298 + 48 * i);
-        res[i][3] = createInfoTest("", 700 - 10, 298 + 48 * i);
-        res[i][4] = createInfoTest("", 850 - 15, 298 + 48 * i);
-        res[i][5] = createInfoTest("", 1000 - 20, 298 + 48 * i);
-        res[i][6] = createInfoTest("", 1150 - 10, 298 + 48 * i);
+        res[i][1] = createInfoTest("", 321, 298 + 48 * i);
+        res[i][2] = createInfoTest("", 486, 298 + 48 * i);
+        res[i][3] = createInfoTest("", 634, 298 + 48 * i);
+        res[i][4] = createInfoTest("", 775, 298 + 48 * i);
+        res[i][5] = createInfoTest("", 900, 298 + 48 * i);
+        res[i][6] = createInfoTest("", 1054, 298 + 48 * i);
         for (int j = 0; j < 7; ++j)
             res[i][j]->txt.setCharacterSize(24);
     }

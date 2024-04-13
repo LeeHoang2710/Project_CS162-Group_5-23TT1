@@ -217,16 +217,3 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
     fin.close();
     return true;
 }
-
-ClassNode *searchClassNodeFromAllYears(YearNode *year_list, const string &class_id)
-{
-    YearNode *currYear = year_list;
-    while (currYear)
-    {
-        ClassNode *currClass = findClass(currYear->school_year.allclass, class_id);
-        if (currClass)
-            return currClass;
-        currYear = currYear->next;
-    }
-    return nullptr;
-}
