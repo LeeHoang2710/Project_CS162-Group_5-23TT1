@@ -15,9 +15,8 @@ ClassNode *InitializeClassNode(Class newclass)
     return newclassnode;
 }
 
-void AddClassNode(ClassNode *&head, Class newclass)
+void AddClassNode(ClassNode *&head, ClassNode* newclassnode)
 {
-    ClassNode *newclassnode = InitializeClassNode(newclass);
     if (!head)
     {
         head = newclassnode;
@@ -130,14 +129,14 @@ void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
         {
             Class new_class = CreateClass(line);
             readStudentFromFile(fin, new_class.student_list);
-            AddClassNode(Listclass, new_class);
+            AddClassNode(Listclass, InitializeClassNode(new_class));
         }
     }
 
     fin.close();
 }
 
-void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
+void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout)
 {
     fout.open(file_name);
     if (!fout.is_open())
@@ -154,34 +153,43 @@ void ExportClassTFile(ClassNode *&Listclass, string file_name, ofstream &fout)
     fout.close();
 }
 
-ClassNode *findClass(ClassNode *head, string input)
+ClassSubNode *findClasses(ClassNode *head, string input)
 {
-    ClassNode *sort = nullptr;
+    ClassSubNode *sort = nullptr;
     ClassNode *curr = head;
     while (curr)
     {
         if (curr->my_class.class_id.find(input) != string::npos)
-            AddClassNode(sort, curr->my_class);
+            appendClassSubNode(sort, createClassSubNode(curr));
         curr = curr->next;
     }
     return sort;
 }
 
-void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
-{
-    string oneclass;
-    while (getline(ss, oneclass, ','))
-    {
-        Class newclass = CreateClass(oneclass);
-        AddClassNode(classes, newclass);
-    }
-};
+//void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
+//{
+//    string oneclass;
+//    while (getline(ss, oneclass, ','))
+//    {
+//        Class newclass = CreateClass(oneclass);
+//        AddClassNode(classes, InitializeClassNode(newclass));
+//    }
+//};
 
-void exportClass(ClassNode *class_list, ofstream &fout)
-{
-    if (!class_list)
-        return;
+//void exportClass(ClassNode *class_list, ofstream &fout)
+//{
+//    if (!class_list)
+//        return;
+//
+//    while (class_list)
+//    {
+//        fout << class_list->my_class.class_id << ",";
+//        class_list = class_list->next;
+//    }
+//    fout << endl;
+//};
 
+<<<<<<< Updated upstream
     while (class_list)
     {
         fout << class_list->my_class.class_id << ",";
@@ -191,6 +199,9 @@ void exportClass(ClassNode *class_list, ofstream &fout)
 };
 
 bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
+=======
+bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, string file_name, ifstream& fin)
+>>>>>>> Stashed changes
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -198,6 +209,7 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
         cout << "Can not open file" << endl;
         return false;
     }
+
     string oneclass;
     while (getline(fin, oneclass, ','))
     {
@@ -205,6 +217,7 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
             break;
 
         Class newclass = CreateClass(oneclass);
+<<<<<<< Updated upstream
         AddClassNode(Listclass, newclass);
     }
     ClassNode *tmp = Listclass;
@@ -213,7 +226,21 @@ bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
     {
         cout << tmp->my_class.class_id << ",";
         tmp = tmp->next;
+=======
+        //readStudentFromFile(fin, newclass.student_list);
+        ClassNode* newClassNode = InitializeClassNode(newclass);
+        AddClassNode(Listclass, newClassNode);
+        appendClassSubNode(currYearNode->school_year.classSublist, createClassSubNode(newClassNode));
+>>>>>>> Stashed changes
     }
+
+    //ClassNode* tmp = Listclass;
+    //
+    //while (tmp)
+    //{
+    //    cout << tmp->my_class.class_id << ",";
+    //    tmp = tmp->next;
+    //}
 
     fin.close();
     return true;

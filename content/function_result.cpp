@@ -48,37 +48,27 @@ void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
     }
 }
 
-void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist, ClassNode *MainClass)
+void importResults(ifstream& fin, ClassNode*& ClassList, string filename)
 {
-    StudentNode *tempStu = Studentlist;
+    fin.open(filename);
     string Line;
-    getline(fin, Line, '\n');
-    if (MainClass->my_class.class_id != Line)
+    while (getline(fin, Line, '\n'))
     {
-        cout << "Error: Class ID does not match" << endl;
-        return;
-    }
-    else
-    {
-        while (tempStu && getline(fin, Line, '\n') && Line != "")
+        ClassNode* currClass = searchClassNode(ClassList, Line);
+        if (!currClass)
+            return;
+        else
         {
-            if (Line != "*")
+            StudentNode* tempStu = currClass->my_class.student_list;
+            while (tempStu && getline(fin, Line, '\n'))
             {
-                if (tempStu)
-                {
-                    stringstream ss1(Line);
-                    string s1;
-                    getline(ss1, s1, ',');
-                    tempStu->student.student_id = s1;
-                    getline(ss1, s1, ',');
-                    tempStu->student.first_name = s1;
-                    getline(ss1, s1, ',');
-                    tempStu->student.last_name = s1;
-                }
-
+                if (Line == "#")
+                    break;
                 while (getline(fin, Line, '\n'))
                 {
-                    if (Line != "*")
+                    if (Line == "*")
+                        break;
+                    else
                     {
                         stringstream ss2(Line);
                         string course, year, sem, p, m, f;
@@ -91,14 +81,10 @@ void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist, ClassNode
                         Results currResults = createResults(course, sem, year, stof(p), stof(m), stof(f));
                         appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
                     }
-                    else
-                        break;
                 }
-
                 tempStu->student.total_gpa = updateTotalGpa(tempStu);
+                tempStu = tempStu->next;
             }
-
-            tempStu = tempStu->next;
         }
     }
 

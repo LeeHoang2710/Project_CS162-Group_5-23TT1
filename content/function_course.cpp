@@ -1,13 +1,16 @@
 #include "../struct_and_function/function.h"
 
-Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, Session teaching_session)
+Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode* class_list)
 {
     Course tmp;
+    if (max_students != 50)
+        tmp.max_students = max_students;
     tmp.course_id = course_id;
     tmp.course_name = course_name;
     tmp.teacher_name = teacher_name;
     tmp.num_credit = num_credit;
     tmp.teaching_session = teaching_session;
+    tmp.main_class = searchClassNode(class_list, class_id);
     return tmp;
 }
 
@@ -74,7 +77,7 @@ bool deleteCourse(CourseNode *&CourseHead, string delCourse)
     return false;
 }
 
-void importCourse(CourseNode *&Courselist, ifstream &fin)
+void importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
 {
     string number;
     while (getline(fin, number))
@@ -92,8 +95,10 @@ void importCourse(CourseNode *&Courselist, ifstream &fin)
         cs.max_students = stoi(number);
         getline(line, number, ',');
         cs.teaching_session.day_of_the_week = stoi(number);
-        getline(line, number, '\n');
+        getline(line, number, ',');
         cs.teaching_session.session_no = stoi(number);
+        getline(line, number, ',');
+        cs.main_class = searchClassNode(allClass, number);
         appendNewCourseNode(Courselist, cs);
     }
 }
@@ -108,7 +113,8 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
         fout << Courselist->course.num_credit << ",";
         fout << Courselist->course.max_students << ",";
         fout << Courselist->course.teaching_session.day_of_the_week << ",";
-        fout << Courselist->course.teaching_session.session_no << endl;
+        fout << Courselist->course.teaching_session.session_no << ",";
+        fout << Courselist->course.main_class->my_class.class_id << endl;
         Courselist = Courselist->next;
     }
     fout << "*" << endl;

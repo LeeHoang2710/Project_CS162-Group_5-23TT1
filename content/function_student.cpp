@@ -38,20 +38,20 @@ void addNewStudentNode(StudentNode *&head, Student new_student)
     return;
 }
 
-bool removeStudentNode(StudentNode *&head, string studentId)
+bool removeStudentNode(StudentNode*& head, string studentId)
 {
     if (head->student.student_id == studentId)
     {
-        StudentNode *tmp = head;
+        StudentNode* tmp = head;
         head = head->next;
         delete tmp;
         return true;
     }
-    for (StudentNode *tmp = head; tmp->next != nullptr; tmp = tmp->next)
+    for (StudentNode* tmp = head; tmp->next != nullptr; tmp = tmp->next)
     {
         if (tmp->next->student.student_id == studentId)
         {
-            StudentNode *del = tmp->next;
+            StudentNode* del = tmp->next;
             tmp->next = tmp->next->next;
             delete del;
             return true;
@@ -98,17 +98,18 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
         getline(ss, number, ',');
         person.gender = stoi(number);
         getline(ss, person.dob, ',');
-        getline(ss, person.social_id, '\n');
-
+        getline(ss, person.social_id, ',');
+        getline(ss, person.password, ',');
+        getline(ss, person.student_class, ',');
         addNewStudentNode(list_student, person);
     }
 }
 
-void exportStudentToFile(ofstream &file, StudentNode *&list_student)
+void exportStudentToFile(ofstream &file, StudentNode *list_student)
 {
     if (!list_student)
     {
-        file.close();
+        file << "*" << endl;
         return;
     }
     else
@@ -117,7 +118,7 @@ void exportStudentToFile(ofstream &file, StudentNode *&list_student)
         {
             Student person = list_student->student;
             file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
-            file << "," << person.dob << "," << person.social_id << endl;
+            file << "," << person.dob << "," << person.social_id << "," << person.password << "," << person.student_class << endl;
             list_student = list_student->next;
         }
         file << "*" << endl;

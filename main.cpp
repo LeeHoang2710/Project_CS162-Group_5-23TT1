@@ -19,8 +19,14 @@ int main()
     // StorePassWordStudent(user1, fin, "./database/student_password.csv");
     // StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importStaff(user2, fin, "./database/staff_list.csv");
-    importYear(year, "./database/semester.csv", fin);
     ReadClassfromfile(class_list, "./database/class.csv", fin);
+    bool checkimportyear = importYear(year, class_list, "./database/semester.csv", fin);
+    if (!checkimportyear)
+    {
+        cout << "Cannot import year" << endl;
+	}
+    importResults(fin, class_list, "./database/result.csv");
+
     StaffNode *user = nullptr;
     while (page > 0 && window.isOpen())
     {
@@ -45,7 +51,7 @@ int main()
         }
         case 4:
         {
-            School(window, page, is_staff, year);
+            School(window, page, is_staff, year, class_list);
             break;
         }
         case 16:
