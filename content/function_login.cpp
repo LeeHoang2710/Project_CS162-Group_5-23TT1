@@ -217,3 +217,16 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id)
     cout << "Cannot find the searched staff..." << endl;
     return nullptr;
 }
+
+void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename)
+{
+    op.open(filename);
+    if (!Staff_list)
+        op << "cc" << endl;
+    for (StaffNode *tmp = Staff_list; tmp != nullptr; tmp = tmp->next)
+    {
+        op << tmp->staff.username << "," << tmp->staff.first_name << "," << tmp->staff.last_name << "," << tmp->staff.gender
+           << "," << tmp->staff.dob << "," << tmp->staff.social_id << "," << tmp->staff.password << endl;
+    }
+    op.close();
+}

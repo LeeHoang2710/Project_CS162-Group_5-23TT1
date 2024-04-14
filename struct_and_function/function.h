@@ -16,6 +16,7 @@ StaffNode *initStaffNode(Staff new_staff);
 void addNewStaffNode(StaffNode *&head, Staff new_staff);
 void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename);
 StaffNode *searchStaffNode(StaffNode *head, string staff_1_id);
+void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename);
 
 // Student
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class);

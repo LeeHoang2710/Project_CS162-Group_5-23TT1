@@ -53,5 +53,5 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 void Students(RenderWindow &window, int &page, ClassNode *&class_list);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
 void Other(RenderWindow &window, int &page, StaffNode *&user);
-void changePassword(RenderWindow &window, int &page, bool is_staff);
+void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user);
 void Profile(RenderWindow &window, int &page, StaffNode *person);

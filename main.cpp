@@ -58,7 +58,7 @@ int main()
         }
         case 20:
         {
-            changePassword(window, page, is_staff);
+            changePassword(window, page, is_staff, user);
             break;
         }
 
@@ -68,6 +68,7 @@ int main()
     }
     exportYear(year, "./database/semester.csv", fout);
     ExportClassTFile(class_list, "./database/class.csv", fout);
+    ExportStaff(user2, fout, "./database/test.csv");
     deleteYearList(year);
     delete user1, user2;
     delete class_list;

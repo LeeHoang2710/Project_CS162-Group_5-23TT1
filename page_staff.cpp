@@ -1356,7 +1356,7 @@ void Other(RenderWindow &window, int &page, StaffNode *&user)
     }
 }
 
-void changePassword(RenderWindow &window, int &page, bool is_staff)
+void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1366,7 +1366,8 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
     // o4 is old pass
     Object o4 = createObject("./image/page2/changePass/new-pass.png", 641, 432.0f);
     Object o5 = createObject("./image/page2/changePass/new-pass.png", 641, 522.0f);
-    Object o6 = createObject("./image/page2/changePass/change.png", 429, 343);
+    Object success = createObject("./image/page2/changePass/change.png", 429, 343);
+    Object fail = createObject("./image/page2/changePass/try-again.png", 429, 343);
     Object o7 = createObject("./image/page2/open.png", 1003, 443);
     Object o8 = createObject("./image/page2/closed.png", 1003, 443);
     Object o9 = createObject("./image/page2/open.png", 1003, 533);
@@ -1375,10 +1376,11 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
 
     Info oldPassword = createText("", 665.0f, 432.0f);
     Info newPassword = createText("", 665.0f, 522.0f);
+    Info res = createText("", 1000, 700);
 
     bool isTypingOld = false, isTypingNew = false;
     bool seeOld = false, seeNew = false;
-    bool Change = false;
+    bool Change;
     Clock clock;
 
     string old_pass = "", new_pass = "", hidden_old = "", hidden_new = "";
@@ -1440,7 +1442,13 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
                     // we confirm the change successfully
                     else if (isHere(o3.bound, mouse))
                     {
-                        Change = true;
+                        if (old_pass == user->staff.password)
+                        {
+                            user->staff.password = new_pass;
+                            Change = true;
+                        }
+                        else
+                            Change = false;
                         clock.restart();
                     }
                     else if (isHere(b.bound, mouse))
@@ -1529,7 +1537,10 @@ void changePassword(RenderWindow &window, int &page, bool is_staff)
         else
             window.draw(o9.draw);
         window.draw(b.draw);
-        objectAppear(window, Change, clock, o6);
+        objectAppear(window, Change, clock, success);
+        if (Change)
+            res.txt.setString(user->staff.password);
+        window.draw(res.txt);
         window.display();
     }
 }
