@@ -10,6 +10,13 @@ void UpdateStaffPassFile(StaffNode *List, ofstream &op);
 bool ChangePassStudent(StudentNode *current);
 bool ChangePassStaff(StaffNode *current);
 
+// Staff
+Staff createStaff(string p_staff_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass);
+StaffNode *initStaffNode(Staff new_staff);
+void addNewStaffNode(StaffNode *&head, Staff new_staff);
+void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename);
+StaffNode *searchStaffNode(StaffNode *head, string staff_1_id);
+
 // Student
 Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class);
 StudentNode *initStudentNode(Student new_student);

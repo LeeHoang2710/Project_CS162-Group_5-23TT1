@@ -117,12 +117,14 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                         {
                             log_in = true;
                             page = 3;
+                            StaffNode *user = searchStaffNode(user2, name);
+                            homeStaff(window, page, user);
                         }
-                        else if (!is_staff && LoginForStudent(user1, name, pass))
-                        {
-                            log_in = true;
-                            page = 3;
-                        }
+                        // else if (!is_staff && LoginForStudent(user1, name, pass))
+                        // {
+                        //     log_in = true;
+                        //     page = 3;
+                        // }
                         else
                             log_in = false;
                         clock.restart();
@@ -209,7 +211,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     }
 }
 
-void homeStaff(RenderWindow &window, int &page)
+void homeStaff(RenderWindow &window, int &page, StaffNode *&user)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -239,7 +241,11 @@ void homeStaff(RenderWindow &window, int &page)
                     switchPage(o2.bound, mouse, 4, page);
                     switchPage(o3.bound, mouse, 10, page);
                     switchPage(o4.bound, mouse, 16, page);
-                    switchPage(o5.bound, mouse, 19, page);
+                    if (isHere(o5.bound, mouse))
+                    {
+                        page = 19;
+                        Other(window, page, user);
+                    }
                 }
                 break;
             }
@@ -1292,7 +1298,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page)
         delete yes[i], no[i];
 }
 
-void Other(RenderWindow &window, int &page, bool is_staff)
+void Other(RenderWindow &window, int &page, StaffNode *&user)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1324,7 +1330,11 @@ void Other(RenderWindow &window, int &page, bool is_staff)
                     switchPage(b.bound, mouse, 3, page);
                     switchPage(menu.bound, mouse, 3, page);
                     switchPage(o2.bound, mouse, 1, page);
-                    switchPage(o3.bound, mouse, 20, page);
+                    if (isHere(o3.bound, mouse))
+                    {
+                        page = 20;
+                        Profile(window, page, user);
+                    }
                 }
                 break;
             }
@@ -2004,6 +2014,80 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
                 break;
             for (int j = 0; j < 7; ++j)
                 window.draw(res[i][j]->txt);
+        }
+        window.display();
+    }
+}
+
+void Profile(RenderWindow &window, int &page, StaffNode *person)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object o1 = createObject("./image/page1/profile/staff-bg.png", 180, 120);
+    Object staff_id = createObject("./image/page1/profile/staff-id.png", 431, 394);
+    Object full_name = createObject("./image/page1/profile/full-namw.png", 467, 467);
+    Object dob = createObject("./image/page1/profile/dob.png", 504, 547);
+    Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object *y[2], *n[2];
+    for (int i = 0; i < 2; ++i)
+    {
+        y[i] = createObjectTest("./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
+        n[i] = createObjectTest("./image/page3-staff/course/no.png", 453 + 354 * i, 637);
+    }
+    Info id = createText(person->staff.username, 475, 259);
+    Info name = createText(person->staff.last_name + " " + person->staff.first_name, 475, 370);
+    Info date = createText(person->staff.dob, 475, 481);
+    Info social = createText(person->staff.social_id, 475, 592);
+
+    while (window.isOpen() && page == 21)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, menu);
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 3, page);
+                    switchPage(menu.bound, mouse, 3, page);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(b.draw);
+        window.draw(menu.draw);
+        window.draw(staff_id.draw);
+        window.draw(full_name.draw);
+        window.draw(dob.draw);
+        window.draw(social_id.draw);
+        window.draw(id.txt);
+        window.draw(name.txt);
+        window.draw(date.txt);
+        window.draw(social.txt);
+        if (person->staff.gender)
+        {
+            window.draw(y[0]->draw);
+            window.draw(n[1]->draw);
+        }
+        else
+        {
+            window.draw(y[1]->draw);
+            window.draw(n[0]->draw);
         }
         window.display();
     }

@@ -42,7 +42,7 @@ void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o);
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass);
-void homeStaff(RenderWindow &window, int &page);
+void homeStaff(RenderWindow &window, int &page, StaffNode *&user);
 void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year);
 void Semesters(RenderWindow &window, int &page, YearNode *&year);
 void addSemester(RenderWindow &window, YearNode *&year, int &page);
@@ -52,5 +52,6 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page);
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list);
 void Students(RenderWindow &window, int &page, ClassNode *&class_list);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
-void Other(RenderWindow &window, int &page, bool is_staff);
+void Other(RenderWindow &window, int &page, StaffNode *&user);
 void changePassword(RenderWindow &window, int &page, bool is_staff);
+void Profile(RenderWindow &window, int &page, StaffNode *person);
