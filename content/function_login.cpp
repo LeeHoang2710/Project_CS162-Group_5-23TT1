@@ -221,9 +221,6 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id)
 void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename)
 {
     op.open(filename);
-    op << "cmm" << endl;
-    if (!Staff_list)
-        op << "cc" << endl;
     for (StaffNode *tmp = Staff_list; tmp != nullptr; tmp = tmp->next)
     {
         op << tmp->staff.username << "," << tmp->staff.first_name << "," << tmp->staff.last_name << "," << tmp->staff.gender << "," << tmp->staff.dob << "," << tmp->staff.social_id << "," << tmp->staff.password << endl;

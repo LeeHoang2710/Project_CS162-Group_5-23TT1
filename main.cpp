@@ -4,6 +4,7 @@ int main()
 {
     RenderWindow window;
     window.create(VideoMode(1440, 960), "CS162-Project", Style::Default);
+    window.setFramerateLimit(60);
     int page = 1;
     bool is_staff = false;
     string username = "";
@@ -50,6 +51,7 @@ int main()
         case 16:
         {
             Classes(window, page, is_staff, class_list);
+            break;
         }
         case 19:
         {
@@ -68,7 +70,7 @@ int main()
     }
     exportYear(year, "./database/semester.csv", fout);
     ExportClassTFile(class_list, "./database/class.csv", fout);
-    ExportStaff(user2, fout, "./database/test.csv");
+    ExportStaff(user2, fout, "./database/staff_list.csv");
     deleteYearList(year);
     delete user1, user2;
     delete class_list;
