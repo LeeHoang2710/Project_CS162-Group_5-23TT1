@@ -167,17 +167,6 @@ ClassNode *findClass(ClassNode *head, string input)
     return sort;
 }
 
-ClassNode *searchClass(ClassNode *allClass, string class_id)
-{
-    while (allClass)
-    {
-        if (allClass->my_class.class_id == class_id)
-			return allClass;
-        allClass = allClass->next;
-    }
-    return nullptr;
-}
-
 void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
 {
     string oneclass;

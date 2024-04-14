@@ -71,7 +71,7 @@ void deletecourse(CourseNode *CourseHead, string delCourse)
     }
 }
 
-void importCourse(CourseNode *&Courselist, ifstream &fin)
+void importCourse(ClassNode* allClass, CourseNode *&Courselist, ifstream &fin)
 {
     string number;
     while (getline(fin, number))
@@ -89,11 +89,11 @@ void importCourse(CourseNode *&Courselist, ifstream &fin)
         cs.max_students = stoi(number);
         getline(line, number, ',');
         cs.teaching_session.day_of_the_week = stoi(number);
-        getline(line, number, '\n');
+        getline(line, number, ',');
         cs.teaching_session.session_no = stoi(number);
+        cs.main_class = searchClassNode(allClass, number);
         appendNewCourseNode(Courselist, cs);
     }
-    
 }
 
 void exportCourse(CourseNode *&Courselist, ofstream &fout)
@@ -106,7 +106,8 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
         fout << Courselist->course.num_credit << ",";
         fout << Courselist->course.max_students << ",";
         fout << Courselist->course.teaching_session.day_of_the_week << ",";
-        fout << Courselist->course.teaching_session.session_no << endl;
+        fout << Courselist->course.teaching_session.session_no << ",";
+        fout << Courselist->course.main_class->my_class.class_id << endl;
         Courselist = Courselist->next;
     }
     fout << "*" << endl;

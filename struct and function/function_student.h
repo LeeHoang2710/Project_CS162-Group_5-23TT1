@@ -8,4 +8,3 @@ void removeStudentNode(StudentNode*& head, Student student_1);
 StudentNode* searchStudentNode(StudentNode* head, string student_1_id);
 void readStudentFromFile(ifstream& file, StudentNode*& list_student);
 void exportStudentToFile(ofstream& file, StudentNode*& list_student);
-ClassNode* searchClass(ClassNode* allClass, string class_id);

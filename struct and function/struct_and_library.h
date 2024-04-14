@@ -37,7 +37,7 @@ struct Year
 struct YearNode
 {
 	Year school_year;
-	YearNode* next;
+	YearNode* next = nullptr;
 };
 
 struct Semester
@@ -51,7 +51,7 @@ struct Semester
 struct SemesterNode
 {
 	Semester sem;
-	SemesterNode* next;
+	SemesterNode* next = nullptr;
 };
 
 struct Session
@@ -77,7 +77,7 @@ struct CourseNode
 	string semester_id;
 	string year_id;
 	Course course;
-	CourseNode* next;
+	CourseNode* next = nullptr;
 };
 
 struct Class
@@ -89,13 +89,13 @@ struct Class
 struct ClassNode
 {
 	Class my_class;
-	ClassNode* next;
+	ClassNode* next = nullptr;
 };
 
 struct ClassSubNode // for Year, classNode Containter
 {
-	ClassNode* class_node;
-	ClassSubNode* next;
+	ClassNode* class_node = nullptr;
+	ClassSubNode* next = nullptr;
 };
 
 struct Score
@@ -126,7 +126,7 @@ struct Student
 struct StudentNode
 {
 	Student student;
-	StudentNode* next;
+	StudentNode* next = nullptr;
 };
 
 struct Results
@@ -151,10 +151,10 @@ struct Staff
 	bool gender;
 	string dob;
 	string social_id;
-	string password;
+	string password = "123";
 };
 struct StaffNode
 {
 	Staff staff;
-	StaffNode* next;
+	StaffNode* next = nullptr;
 };

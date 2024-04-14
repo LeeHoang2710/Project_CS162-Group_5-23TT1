@@ -64,15 +64,21 @@ void exportYearSemester(YearNode* year_list, string filename, ofstream& fout)
 	fout.close();
 }
 
-void exportSemesterInYear(SemesterNode* sem_list, ofstream& fout)
+void exportSemesterInYear(SemesterNode*& sem_list, ofstream& fout)
 {
+	int count = 0;
 	while (sem_list)
 	{
 		fout << sem_list->sem.semester_id << ","
 			<< sem_list->sem.start_date << ","
 			<< sem_list->sem.end_date << endl;
+		exportCourse(sem_list->sem.course_list, fout);
+		++count;
 		sem_list = sem_list->next;
 	}
+
+	if (count < 3)
+		fout << "#" << endl;
 }
 
 void inputSemesterInfo(string& sem_id, string& start_date, string& end_date)

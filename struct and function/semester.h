@@ -1,6 +1,7 @@
 #pragma once
 #include "struct_and_library.h"
 #include "year.h"
+#include "function_course.h"
 
 void importSemesterInYear(SemesterNode* sem_list, ifstream& fin);
 void importYearSemester(YearNode*& year_list, string filename, ifstream& fin);

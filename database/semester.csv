@@ -1,59 +1,41 @@
 2020-2021
-23APCS1
+20APCS1,21APCS1,
 Semester 1,1/10/2020,3/1/2021
-CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,45,3,1
-20TT1
-23125940,1.2,3.4,5.6
-19125040,An,Nguyen Van,1/1/2000,1.2,3.4,5.6
-19135057,Binh,Vo Thi,2/1/2000,2.3,4.5,6.7
-18145050,Chien,Le Ba,3/1/2000,3.4,5.6,7.8
+CS162,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1
+MTH252,Linear Algebra,Nguyen Huu Anh,4,50,5,2
+CM102,Critical Thinking,Duong Nguyen Vu,4,50,6,1
+PH212,General Physics 2,Nguyen Huu Nha,4,50,6,2
+CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2
+CS426,Mobile Application,Vo Hoang Nam,4,50,4,1
 *
-MTH251,Calculus 1,Nguyen Huu Anh,4,45,3,2
-20TT1
-19125099,Danh,Nguyen Van,4/1/2000,1.2,3.4,5.6
-19135088,Hanh,Vo Thi,5/1/2000,2.3,4.5,6.7
-18145077,Kien,Le Ba,6/1/2000,3.4,5.6,7.8
-*
-//
 Semester 2,8/1/2021,12/5/2021
-CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,45,3,1
-20TT1
-19125040,An,Nguyen Van,7/1/2000,1.2,3.4,5.6
-19135057,Binh,Vo Thi,8/1/2000,2.3,4.5,6.7
-18145050,Chien,Le Ba,9/1/2000,3.4,5.6,7.8
 *
-MTH252,Calculus 2,Nguyen Huu Anh,4,45,3,2
-20TT1
-19125099,Danh,Nguyen Van,10/1/2000,1.2,3.4,5.6
-19135088,Hanh,Vo Thi,11/1/2000,2.3,4.5,6.7
-18145077,Kien,Le Ba,12/1/2000,3.4,5.6,7.8
-*
-//
 Semester 3,19/5/2021,4/8/2021
-CS163,Introduction to Computer Science 3,Dinh Ba Tien,4,45,3,1
-20TT1
-19125040,An,Nguyen Van,13/1/2000,1.2,3.4,5.6
-19135057,Binh,Vo Thi,14/1/2000,2.3,4.5,6.7
-18145050,Chien,Le Ba,15/1/2000,3.4,5.6,7.8
 *
-MTH253,Calculus 3,Nguyen Huu Anh,4,45,3,2
-20TT1
-19125099,Danh,Nguyen Van,16/1/2000,1.2,3.4,5.6
-19135088,Hanh,Vo Thi,17/1/2000,2.3,4.5,6.7
-18145077,Kien,Le Ba,18/1/2000,3.4,5.6,7.8
-*
-//
 2021-2022
+20APCS1,19APCS1,
 Semester 1,1/10/2021,3/1/2022
-//
+*
 Semester 2,8/1/2022,12/5/2022
-//
+*
 Semester 3,19/5/2022,4/8/2022
-//
+CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1
+PH213,Quantum Physics,Le Quynh Giao,5,50,7,4
+*
 2022-2023
+22APCS1,22APCS2,
 Semester 1,1/10/2022,3/1/2023
-//
+*
 Semester 2,8/1/2023,12/5/2023
-//
+*
 Semester 3,19/5/2023,4/8/2023
-//
+*
+2023-2024
+23APCS1,23CLC1,
+#
+2024-2025
+24APCS1,24CLC3,24HOH4,
+#
+2025-2026
+24APCS1,24CLC3,24HOH4,
+#

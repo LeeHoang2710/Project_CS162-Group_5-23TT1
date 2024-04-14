@@ -3,12 +3,12 @@
 
 void inputYearId(string& year_id);
 
-Year createYear(const string& p_year_id);
-YearNode* initYearNode(const Year& p_school_year);
-void appendYearNode(YearNode*& head, YearNode* new_year_node);
+Year createYear(string p_year_id, ClassNode* allclass);
+YearNode* initYearNode(Year p_school_year);
+void addNewYearNode(YearNode*& head, Year p_year);
 
 void updateYearId(YearNode* yearNode, const string& year_id);
 
-bool removeYearNode(YearNode*& head, const string& year_id);
+void removeNewYearNode(YearNode*& head, Year year);
 
-YearNode* searchYearNode(YearNode* head, const string& year_id);
+YearNode* searchYearNode(YearNode* head, string year);
