@@ -15,7 +15,7 @@ ClassNode *InitializeClassNode(Class newclass)
     return newclassnode;
 }
 
-void AddClassNode(ClassNode *&head, ClassNode* newclassnode)
+void AddClassNode(ClassNode *&head, ClassNode *newclassnode)
 {
     if (!head)
     {
@@ -166,42 +166,30 @@ ClassSubNode *findClasses(ClassNode *head, string input)
     return sort;
 }
 
-//void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
+// void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
 //{
-//    string oneclass;
-//    while (getline(ss, oneclass, ','))
-//    {
-//        Class newclass = CreateClass(oneclass);
-//        AddClassNode(classes, InitializeClassNode(newclass));
-//    }
-//};
+//     string oneclass;
+//     while (getline(ss, oneclass, ','))
+//     {
+//         Class newclass = CreateClass(oneclass);
+//         AddClassNode(classes, InitializeClassNode(newclass));
+//     }
+// };
 
-//void exportClass(ClassNode *class_list, ofstream &fout)
+// void exportClass(ClassNode *class_list, ofstream &fout)
 //{
-//    if (!class_list)
-//        return;
+//     if (!class_list)
+//         return;
 //
-//    while (class_list)
-//    {
-//        fout << class_list->my_class.class_id << ",";
-//        class_list = class_list->next;
-//    }
-//    fout << endl;
-//};
+//     while (class_list)
+//     {
+//         fout << class_list->my_class.class_id << ",";
+//         class_list = class_list->next;
+//     }
+//     fout << endl;
+// };
 
-<<<<<<< Updated upstream
-    while (class_list)
-    {
-        fout << class_list->my_class.class_id << ",";
-        class_list = class_list->next;
-    }
-    fout << endl;
-};
-
-bool ReadClassFile(ClassNode *&Listclass, string file_name, ifstream &fin)
-=======
-bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, string file_name, ifstream& fin)
->>>>>>> Stashed changes
+bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin)
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -217,31 +205,82 @@ bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, st
             break;
 
         Class newclass = CreateClass(oneclass);
-<<<<<<< Updated upstream
-        AddClassNode(Listclass, newclass);
-    }
-    ClassNode *tmp = Listclass;
-
-    while (tmp)
-    {
-        cout << tmp->my_class.class_id << ",";
-        tmp = tmp->next;
-=======
-        //readStudentFromFile(fin, newclass.student_list);
-        ClassNode* newClassNode = InitializeClassNode(newclass);
+        // readStudentFromFile(fin, newclass.student_list);
+        ClassNode *newClassNode = InitializeClassNode(newclass);
         AddClassNode(Listclass, newClassNode);
         appendClassSubNode(currYearNode->school_year.classSublist, createClassSubNode(newClassNode));
->>>>>>> Stashed changes
     }
 
-    //ClassNode* tmp = Listclass;
+    // ClassNode* tmp = Listclass;
     //
-    //while (tmp)
+    // while (tmp)
     //{
-    //    cout << tmp->my_class.class_id << ",";
-    //    tmp = tmp->next;
-    //}
+    //     cout << tmp->my_class.class_id << ",";
+    //     tmp = tmp->next;
+    // }
 
     fin.close();
     return true;
+}
+
+ClassSubNode *createClassSubNode(ClassNode *classNode)
+{
+    return new ClassSubNode{classNode, nullptr};
+}
+
+void appendClassSubNode(ClassSubNode *&classSublist, ClassSubNode *classSubNode)
+{
+    if (!classSublist)
+    {
+        classSublist = classSubNode;
+        return;
+    }
+
+    ClassSubNode *curr = classSublist;
+    while (curr->next)
+        curr = curr->next;
+    curr->next = classSubNode;
+}
+
+ClassNode *searchClassNode(ClassNode *allClass, string class_id)
+{
+    ClassNode *curr = allClass;
+    while (curr)
+    {
+        if (curr->my_class.class_id == class_id)
+            return curr;
+        curr = curr->next;
+    }
+
+    return nullptr;
+}
+
+bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss)
+{
+    string class_id;
+    while (getline(ss, class_id, ','))
+    {
+        ClassNode *classNode = searchClassNode(allClass, class_id);
+        if (!classNode)
+        {
+            cout << "Class " << class_id << " not found" << endl;
+            return false;
+        }
+
+        ClassSubNode *classSubNode = createClassSubNode(classNode);
+        appendClassSubNode(year.classSublist, classSubNode);
+    }
+
+    return true;
+}
+
+void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout)
+{
+    ClassSubNode *curr = classSublist;
+    while (curr)
+    {
+        fout << curr->class_node->my_class.class_id << ",";
+        curr = curr->next;
+    }
+    fout << endl;
 }

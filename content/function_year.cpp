@@ -1,6 +1,6 @@
 #include "../struct_and_function/function.h"
 
-Year createYear(string p_year_id, ClassSubNode* classSublist)
+Year createYear(string p_year_id, ClassSubNode *classSublist)
 {
     Year new_year;
     new_year.year_id = p_year_id;
@@ -68,51 +68,118 @@ void removeNewYearNode(YearNode *&head, Year year)
     }
 }
 
-//void importYear(YearNode*& year_list, string filename, ifstream& fin)
+// void importYear(YearNode*& year_list, string filename, ifstream& fin)
 //{
-//    fin.open(filename);
-//    string line;
-//    while (getline(fin, line))
-//    {
-//        Year new_year = createYear(line, nullptr);
-//        getline(fin, line, '\n');
-//        stringstream clstr(line);
-//        if (line == "#")
-//        {
-//            addNewYearNode(year_list, new_year);
-//            continue;
-//        }
-//        else
-//            importClass(new_year.allclass, clstr, fin);
-//        for (int i = 0; i < 3; ++i)
-//        {
-//            if (fin.eof())
-//                break;
-//            getline(fin, line, '\n');
-//            if (line == "#")
-//                break;
-//            stringstream ss(line);
-//            importSemester(new_year.list_sem, ss, fin);
-//        }
-//        
-//        addNewYearNode(year_list, new_year);
-//    }
+//     fin.open(filename);
+//     string line;
+//     while (getline(fin, line))
+//     {
+//         Year new_year = createYear(line, nullptr);
+//         getline(fin, line, '\n');
+//         stringstream clstr(line);
+//         if (line == "#")
+//         {
+//             addNewYearNode(year_list, new_year);
+//             continue;
+//         }
+//         else
+//             importClass(new_year.allclass, clstr, fin);
+//         for (int i = 0; i < 3; ++i)
+//         {
+//             if (fin.eof())
+//                 break;
+//             getline(fin, line, '\n');
+//             if (line == "#")
+//                 break;
+//             stringstream ss(line);
+//             importSemester(new_year.list_sem, ss, fin);
+//         }
 //
-//    fin.close();
-//}
+//         addNewYearNode(year_list, new_year);
+//     }
+//
+//     fin.close();
+// }
 
-//void exportYear(YearNode *&year_list, string filename, ofstream &fout)
+// void exportYear(YearNode *&year_list, string filename, ofstream &fout)
 //{
-//    fout.open(filename);
+//     fout.open(filename);
 //
-//    YearNode *currYear = year_list;
-//    while (currYear)
-//    {
-//        fout << currYear->school_year.year_id << endl;
-//        exportClass(currYear->school_year.allclass, fout);
-//        exportSemesterInYear(currYear->school_year.list_sem, fout);
-//        currYear = currYear->next;
-//    }
+//     YearNode *currYear = year_list;
+//     while (currYear)
+//     {
+//         fout << currYear->school_year.year_id << endl;
+//         exportClass(currYear->school_year.allclass, fout);
+//         exportSemesterInYear(currYear->school_year.list_sem, fout);
+//         currYear = currYear->next;
+//     }
 //
-//    fout.close();
-//}
+//     fout.close();
+// }
+
+bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin)
+{
+    fin.open(filename);
+    if (!fin.is_open())
+    {
+        cout << "Cannot open file " << filename << endl;
+        return false;
+    }
+
+    string line;
+    while (getline(fin, line))
+    {
+        Year new_year = createYear(line, nullptr);
+        getline(fin, line, '\n');
+        stringstream classes(line);
+        if (line == "#")
+        {
+            addNewYearNode(year_list, new_year);
+            continue;
+        }
+
+        bool success = importClassSubNode(allClass, new_year, classes);
+        if (!success)
+            return false;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            if (fin.eof())
+                break;
+
+            getline(fin, line, '\n');
+            if (line == "#")
+                break;
+
+            stringstream ss(line);
+            importSemester(allClass, new_year.list_sem, ss, fin);
+        }
+
+        addNewYearNode(year_list, new_year);
+    }
+
+    fin.close();
+    return true;
+}
+
+bool exportYear(YearNode *&year_list, string filename, ofstream &fout)
+{
+    fout.open(filename);
+    if (!fout.is_open())
+    {
+        cout << "Cannot open file " << filename << endl;
+        return false;
+    }
+
+    YearNode *currYear = year_list;
+    while (currYear)
+    {
+        fout << currYear->school_year.year_id << endl;
+        exportClassSubNode(currYear->school_year.classSublist, fout);
+        exportSemesterInYear(currYear->school_year.list_sem, fout);
+        currYear = currYear->next;
+    }
+
+    fout.close();
+    return true;
+}
