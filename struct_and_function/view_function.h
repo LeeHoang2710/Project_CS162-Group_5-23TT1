@@ -41,7 +41,7 @@ void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o);
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass);
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass, StaffNode *&user);
 void homeStaff(RenderWindow &window, int &page, StaffNode *&user);
 void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year);
 void Semesters(RenderWindow &window, int &page, YearNode *&year);

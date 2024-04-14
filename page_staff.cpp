@@ -48,7 +48,7 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     }
 }
 
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass)
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass, StaffNode *&user)
 {
 
     Event event;
@@ -117,7 +117,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                         {
                             log_in = true;
                             page = 3;
-                            StaffNode *user = searchStaffNode(user2, name);
+                            user = searchStaffNode(user2, name);
                             homeStaff(window, page, user);
                         }
                         // else if (!is_staff && LoginForStudent(user1, name, pass))
@@ -1330,9 +1330,10 @@ void Other(RenderWindow &window, int &page, StaffNode *&user)
                     switchPage(b.bound, mouse, 3, page);
                     switchPage(menu.bound, mouse, 3, page);
                     switchPage(o2.bound, mouse, 1, page);
-                    if (isHere(o3.bound, mouse))
+                    switchPage(o3.bound, mouse, 20, page);
+                    if (isHere(o4.bound, mouse))
                     {
-                        page = 20;
+                        page = 21;
                         Profile(window, page, user);
                     }
                 }
@@ -1633,6 +1634,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(sum.draw);
+        window.draw(menu.draw);
         window.draw(sort.draw);
         window.draw(confirm.draw);
         window.draw(sort_input.txt);
@@ -2029,22 +2031,20 @@ void Profile(RenderWindow &window, int &page, StaffNode *person)
     Object dob = createObject("./image/page1/profile/dob.png", 504, 547);
     Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object *y[2], *n[2];
     for (int i = 0; i < 2; ++i)
     {
         y[i] = createObjectTest("./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
         n[i] = createObjectTest("./image/page3-staff/course/no.png", 453 + 354 * i, 637);
     }
-    Info id = createText(person->staff.username, 475, 259);
-    Info name = createText(person->staff.last_name + " " + person->staff.first_name, 475, 370);
-    Info date = createText(person->staff.dob, 475, 481);
-    Info social = createText(person->staff.social_id, 475, 592);
+    Info id = createText(person->staff.username, 475, 400);
+    Info name = createText(person->staff.last_name + " " + person->staff.first_name, 490, 472);
+    Info date = createText(person->staff.dob, 525, 555);
+    Info social = createText(person->staff.social_id, 475, 708);
 
     while (window.isOpen() && page == 21)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
-        updateColorOnHover(window, b);
         updateColorOnHover(window, menu);
         while (window.pollEvent(event))
         {
@@ -2057,7 +2057,6 @@ void Profile(RenderWindow &window, int &page, StaffNode *person)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 3, page);
                     switchPage(menu.bound, mouse, 3, page);
                 }
                 break;
@@ -2069,7 +2068,6 @@ void Profile(RenderWindow &window, int &page, StaffNode *person)
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
-        window.draw(b.draw);
         window.draw(menu.draw);
         window.draw(staff_id.draw);
         window.draw(full_name.draw);

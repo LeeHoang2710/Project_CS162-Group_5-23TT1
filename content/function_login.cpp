@@ -178,7 +178,7 @@ void addNewStaffNode(StaffNode *&head, Staff new_staff)
 
 void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename)
 {
-    ip.open("filename");
+    ip.open(filename);
     string number;
     while (getline(ip, number))
     {
