@@ -76,13 +76,13 @@ bool importCoursesFromStaff(ifstream& fin, const string& filename, YearNode* yea
 
     if (year_id != yearNode->school_year.year_id)
     {
-        cout << "Year id do not match." << endl;
+        cout << "Year id does not match." << endl;
         return false;
     }
 
     if (sem_id != semNode->sem.semester_id)
     {
-        cout << "Semester id do not match." << endl;
+        cout << "Semester id does not match." << endl;
         return false;
     }
 

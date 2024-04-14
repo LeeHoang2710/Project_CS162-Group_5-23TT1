@@ -19,6 +19,7 @@ struct CourseNode;
 
 struct Class;
 struct ClassNode;
+struct ClassSubNode;
 
 struct Score;
 struct Student;
@@ -29,7 +30,7 @@ struct ResultsNode;
 struct Year
 {
 	string year_id;
-	ClassNode* allclass = nullptr;
+	ClassSubNode* classSublist = nullptr;
 	SemesterNode* list_sem = nullptr;
 };
 
@@ -89,6 +90,12 @@ struct ClassNode
 {
 	Class my_class;
 	ClassNode* next;
+};
+
+struct ClassSubNode // for Year, classNode Containter
+{
+	ClassNode* class_node;
+	ClassSubNode* next;
 };
 
 struct Score
