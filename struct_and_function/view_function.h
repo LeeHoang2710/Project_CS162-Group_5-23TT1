@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
-#include "./struct_and_function/function.h"
+#include "function.h"
 
 using namespace sf;
 using namespace std;

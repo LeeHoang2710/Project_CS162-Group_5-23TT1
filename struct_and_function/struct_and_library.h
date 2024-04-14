@@ -116,6 +116,7 @@ struct ResultsNode
 struct Student
 {
 	int num;
+	string academic_id;
 	string student_id;
 	string first_name;
 	string last_name;

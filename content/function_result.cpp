@@ -1,6 +1,5 @@
 #include "../struct_and_function/function.h"
 
-<<<<<<< HEAD
 float updateTotalGpa(StudentNode *studentNode)
 {
     ResultsNode *currResultsNode = studentNode->student.results_list;
@@ -49,186 +48,60 @@ void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
     }
 }
 
-void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist)
+void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist, ClassNode *MainClass)
 {
     StudentNode *tempStu = Studentlist;
     string Line;
-    while (tempStu && getline(fin, Line, '\n') && Line != "")
+    getline(fin, Line, '\n');
+    if (MainClass->my_class.class_id != Line)
     {
-        if (Line != "*")
-        {
-            if (tempStu)
-            {
-                stringstream ss1(Line);
-                string s1;
-                getline(ss1, s1, ',');
-                tempStu->student.student_id = s1;
-                getline(ss1, s1, ',');
-                tempStu->student.first_name = s1;
-                getline(ss1, s1, ',');
-                tempStu->student.last_name = s1;
-            }
-
-=======
-void Loadcoursescorefromfile(ifstream &fin, StudentNode *&Studentlist)
-{
-    fin.open("../database/result.csv");
-    StudentNode *tmp1 = nullptr;
-    string Line;
-    while (getline(fin, Line, '\n') && Line != "")
+        cout << "Error: Class ID does not match" << endl;
+        return;
+    }
+    else
     {
-        if (Line != "*")
+        while (tempStu && getline(fin, Line, '\n') && Line != "")
         {
-            StudentNode *tmp = nullptr;
-            if (!Studentlist)
+            if (Line != "*")
             {
-                Studentlist = new StudentNode();
-                Studentlist->next = nullptr;
-                stringstream ss1(Line);
-                string s1;
-                getline(ss1, s1, ',');
-                Studentlist->student.student_id = s1;
-                getline(ss1, s1, ',');
-                Studentlist->student.first_name = s1;
-                getline(ss1, s1, ',');
-                Studentlist->student.last_name = s1;
-                tmp1 = Studentlist;
-                tmp = Studentlist;
-            }
-            else
-            {
-                StudentNode *newstudent = new StudentNode();
-                newstudent->next = nullptr;
-                stringstream ss1(Line);
-                string s1;
-                getline(ss1, s1, ',');
-                newstudent->student.student_id = s1;
-                getline(ss1, s1, ',');
-                newstudent->student.first_name = s1;
-                getline(ss1, s1, ',');
-                newstudent->student.last_name = s1;
-                tmp1->next = newstudent;
-                tmp1 = tmp1->next;
-                tmp = newstudent;
-            }
-            ResultsNode *Resulist = nullptr;
-            ResultsNode *tmp2 = nullptr;
->>>>>>> parent of 5db6e4d (update results)
-            while (getline(fin, Line, '\n'))
-            {
-                if (Line != "*")
+                if (tempStu)
                 {
-<<<<<<< HEAD
-                    stringstream ss2(Line);
-                    string course, year, sem, p, m, f;
-                    getline(ss2, course, ',');
-                    getline(ss2, year, ',');
-                    getline(ss2, sem, ',');
-                    getline(ss2, p, ',');
-                    getline(ss2, m, ',');
-                    getline(ss2, f, ',');
-                    Results currResults = createResults(course, sem, year, stof(p), stof(m), stof(f));
-                    appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
-=======
-                    if (!Resulist)
+                    stringstream ss1(Line);
+                    string s1;
+                    getline(ss1, s1, ',');
+                    tempStu->student.student_id = s1;
+                    getline(ss1, s1, ',');
+                    tempStu->student.first_name = s1;
+                    getline(ss1, s1, ',');
+                    tempStu->student.last_name = s1;
+                }
+
+                while (getline(fin, Line, '\n'))
+                {
+                    if (Line != "*")
                     {
-                        Resulist = new ResultsNode();
-                        Resulist->next = nullptr;
                         stringstream ss2(Line);
-                        string s2;
-                        getline(ss2, s2, ',');
-                        Resulist->results.course_id = s2;
-                        getline(ss2, s2, ',');
-                        Resulist->results.year_id = s2;
-                        getline(ss2, s2, ',');
-                        Resulist->results.sem_id = s2;
-                        float fl;
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            Resulist->results.score.process = fl;
-                        }
-                        else
-                            Resulist->results.score.process = (float)(s2[0] - '0');
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            Resulist->results.score.midterm = fl;
-                        }
-                        else
-                            Resulist->results.score.midterm = (float)(s2[0] - '0');
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            Resulist->results.score.final = fl;
-                        }
-                        else
-                            Resulist->results.score.final = (float)(s2[0] - '0');
-                        Resulist->results.score.overall = 0.35 * Resulist->results.score.process + 0.25 * Resulist->results.score.midterm + 0.4 * Resulist->results.score.final;
-                        tmp2 = Resulist;
+                        string course, year, sem, p, m, f;
+                        getline(ss2, course, ',');
+                        getline(ss2, year, ',');
+                        getline(ss2, sem, ',');
+                        getline(ss2, p, ',');
+                        getline(ss2, m, ',');
+                        getline(ss2, f, ',');
+                        Results currResults = createResults(course, sem, year, stof(p), stof(m), stof(f));
+                        appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
                     }
                     else
-                    {
-                        ResultsNode *newResulist = new ResultsNode();
-                        newResulist->next = nullptr;
-                        stringstream ss2(Line);
-                        string s2;
-                        getline(ss2, s2, ',');
-                        newResulist->results.course_id = s2;
-                        getline(ss2, s2, ',');
-                        newResulist->results.year_id = s2;
-                        getline(ss2, s2, ',');
-                        newResulist->results.sem_id = s2;
-                        float fl;
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            newResulist->results.score.process = fl;
-                        }
-                        else
-                            newResulist->results.score.process = (float)(s2[0] - '0');
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            newResulist->results.score.midterm = fl;
-                        }
-                        else
-                            newResulist->results.score.midterm = (float)(s2[0] - '0');
-                        getline(ss2, s2, ',');
-                        if (s2.size() == 3)
-                        {
-                            fl = (float)(s2[0] - '0') + (float)(s2[2] - '0') / 10;
-                            newResulist->results.score.final = fl;
-                        }
-                        else
-                            newResulist->results.score.final = (float)(s2[0] - '0');
-                        newResulist->results.score.overall = 0.35 * newResulist->results.score.process + 0.25 * newResulist->results.score.midterm + 0.4 * newResulist->results.score.final;
-                        tmp2->next = newResulist;
-                        tmp2 = tmp2->next;
-                    }
->>>>>>> parent of 5db6e4d (update results)
+                        break;
                 }
-                else
-                    break;
+
+                tempStu->student.total_gpa = updateTotalGpa(tempStu);
             }
-<<<<<<< HEAD
 
-            tempStu->student.total_gpa = updateTotalGpa(tempStu);
-        }
-
-        tempStu = tempStu->next;
-    }
-
-=======
-            tmp->student.results_list = Resulist;
+            tempStu = tempStu->next;
         }
     }
->>>>>>> parent of 5db6e4d (update results)
+
     fin.close();
 }
 

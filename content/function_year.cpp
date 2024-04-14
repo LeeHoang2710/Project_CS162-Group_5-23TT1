@@ -1,6 +1,6 @@
 #include "../struct_and_function/function.h"
 
-Year createYear(string p_year_id, ClassNode *allclass)
+Year createYear(string p_year_id, ClassNode* allclass)
 {
     Year new_year;
     new_year.year_id = p_year_id;
@@ -67,7 +67,7 @@ void removeNewYearNode(YearNode *&head, Year year)
     }
 }
 
-void importYear(YearNode *&year_list, string filename, ifstream &fin)
+void importYear(YearNode*& year_list, string filename, ifstream& fin)
 {
     fin.open(filename);
     string line;
@@ -93,7 +93,7 @@ void importYear(YearNode *&year_list, string filename, ifstream &fin)
             stringstream ss(line);
             importSemester(new_year.list_sem, ss, fin);
         }
-
+        
         addNewYearNode(year_list, new_year);
     }
 

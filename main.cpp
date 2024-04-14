@@ -1,4 +1,4 @@
-#include "view_function.h"
+#include "./struct_and_function/view_function.h"
 
 int main()
 {

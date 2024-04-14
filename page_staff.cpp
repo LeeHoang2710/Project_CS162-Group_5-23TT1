@@ -1,4 +1,4 @@
-#include "view_function.h"
+#include "./struct_and_function/view_function.h"
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff)
 {
@@ -1682,7 +1682,8 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 void Students(RenderWindow &window, int &page, ClassNode *&class_list)
 {
     ifstream fin;
-    Loadcoursescorefromfile(fin, class_list->my_class.student_list);
+    fin.open("./database/result.csv");
+    Loadcoursescorefromfile(fin, class_list->my_class.student_list, class_list);
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
@@ -1895,29 +1896,6 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
 
 void studentResult(RenderWindow &window, int &page, StudentNode *&student)
 {
-    cout << student->student.student_id << ' ';
-    cout << student->student.last_name << ' ' << student->student.first_name << "\n";
-    cout << setw(15) << left << "Course id";
-    cout << setw(15) << left << "Year";
-    cout << setw(15) << left << "Semester";
-    cout << setw(15) << left << "Process";
-    cout << setw(15) << left << "Midterm";
-    cout << setw(15) << left << "Final";
-    cout << setw(15) << left << "Overall";
-    cout << "\n";
-    ResultsNode *resulist = student->student.results_list;
-    while (resulist)
-    {
-        cout << setw(15) << left << resulist->results.course_id;
-        cout << setw(15) << left << resulist->results.year_id;
-        cout << setw(15) << left << resulist->results.sem_id;
-        cout << setw(15) << left << resulist->results.score.process;
-        cout << setw(15) << left << resulist->results.score.midterm;
-        cout << setw(15) << left << resulist->results.score.final;
-        cout << setw(15) << left << fixed << setprecision(1) << resulist->results.score.overall;
-        resulist = resulist->next;
-        cout << "\n";
-    }
 
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1935,12 +1913,12 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
     for (int i = 0; i < 8; ++i)
     {
         res[i][0] = createInfoTest("", 210, 298 + 48 * i);
-        res[i][1] = createInfoTest("", 321, 298 + 48 * i);
-        res[i][2] = createInfoTest("", 486, 298 + 48 * i);
-        res[i][3] = createInfoTest("", 634, 298 + 48 * i);
-        res[i][4] = createInfoTest("", 775, 298 + 48 * i);
-        res[i][5] = createInfoTest("", 900, 298 + 48 * i);
-        res[i][6] = createInfoTest("", 1054, 298 + 48 * i);
+        res[i][1] = createInfoTest("", 330 + 5, 298 + 48 * i);
+        res[i][2] = createInfoTest("", 500, 298 + 48 * i);
+        res[i][3] = createInfoTest("", 700 - 10, 298 + 48 * i);
+        res[i][4] = createInfoTest("", 850 - 15, 298 + 48 * i);
+        res[i][5] = createInfoTest("", 1000 - 20, 298 + 48 * i);
+        res[i][6] = createInfoTest("", 1150 - 10, 298 + 48 * i);
         for (int j = 0; j < 7; ++j)
             res[i][j]->txt.setCharacterSize(24);
     }
@@ -1969,12 +1947,12 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;
-                        change -= 7;
+                        change -= 8;
                     }
                     if (isHere(next.bound, mouse))
                     {
                         new_page = true;
-                        change += 7;
+                        change += 8;
                     }
                 }
                 break;
@@ -1994,13 +1972,14 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
         window.draw(o4.draw);
         window.draw(name.txt);
         window.draw(id.txt);
+        gpa.txt.setString(to_string(student->student.total_gpa).substr(0, 4));
         window.draw(gpa.txt);
         if (new_page && res_list)
         {
             ResultsNode *temp = res_list;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
-            for (int i = 0; i < 7; ++i)
+            for (int i = 0; i < 8; ++i)
             {
                 if (temp)
                 {
@@ -2008,10 +1987,10 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
                     res[i][0]->txt.setString(one[i]->results.course_id);
                     res[i][1]->txt.setString(one[i]->results.sem_id);
                     res[i][2]->txt.setString(one[i]->results.year_id);
-                    res[i][3]->txt.setString(to_string(one[i]->results.score.process));
-                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm));
-                    res[i][5]->txt.setString(to_string(one[i]->results.score.final));
-                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall));
+                    res[i][3]->txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
+                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
+                    res[i][5]->txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
+                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
                     temp = temp->next;
                 }
                 else
@@ -2019,7 +1998,7 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
             }
             new_page = false;
         }
-        for (int i = 0; i < 7; ++i)
+        for (int i = 0; i < 8; ++i)
         {
             if (res[i][0]->txt.getString() == "")
                 break;
