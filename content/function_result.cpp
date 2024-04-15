@@ -48,22 +48,41 @@ void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
     }
 }
 
-void importResults(ifstream& fin, ClassNode*& ClassList, string filename)
+void addResultsNodeToClass(ClassNode* classNode, const string& year_id, const string& sem_id, const string& course_id)
+{
+    StudentNode* currStudent = classNode->my_class.student_list;
+    while (currStudent)
+    {
+        Results newResults = createResults(course_id, sem_id, year_id, 0.0f, 0.0f, 0.0f);
+        ResultsNode* newResultsNode = createResultsNode(newResults);
+        appendResultsNode(currStudent->student.results_list, newResultsNode);
+        currStudent = currStudent->next;
+    }
+}
+
+bool importResults(ifstream& fin, ClassNode*& ClassList, string filename)
 {
     fin.open(filename);
+    if (!fin.is_open())
+    {
+        cout << "Cannot open " << filename << endl;
+        return false;
+    }
+
     string Line;
     while (getline(fin, Line, '\n'))
     {
+        if (Line.empty())
+            break;
+
         ClassNode* currClass = searchClassNode(ClassList, Line);
         if (!currClass)
-            return;
+            return false;
         else
         {
             StudentNode* tempStu = currClass->my_class.student_list;
-            while (tempStu && getline(fin, Line, '\n'))
+            while (getline(fin, Line, '\n') && tempStu)
             {
-                if (Line == "#")
-                    break;
                 while (getline(fin, Line, '\n'))
                 {
                     if (Line == "*")
@@ -89,6 +108,7 @@ void importResults(ifstream& fin, ClassNode*& ClassList, string filename)
     }
 
     fin.close();
+    return true;
 }
 
 void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist)

@@ -152,7 +152,9 @@ bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifst
                 break;
 
             stringstream ss(line);
-            importSemester(allClass, new_year.list_sem, ss, fin);
+            bool success = importSemester(allClass, new_year.list_sem, ss, fin);
+            if (!success)
+				return false;
         }
 
         addNewYearNode(year_list, new_year);

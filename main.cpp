@@ -23,7 +23,9 @@ int main()
     bool checkimportyear = importYear(year, class_list, "./database/semester.csv", fin);
     if (!checkimportyear)
         cout << "Cannot import year" << endl;
-    importResults(fin, class_list, "./database/result.csv");
+    bool success = importResults(fin, class_list, "./database/result.csv");
+    if (!success)
+		cout << "Cannot import result" << endl;
 
     StaffNode *user = nullptr;
     while (window.isOpen())

@@ -701,7 +701,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         inf[i]->txt.setStyle(Text::Bold);
     }
     bool new_page = true, del_course = false, typing_id = false, showDelResult = false;
-    bool Confirm = false;
+    bool Confirm = false, checkDel = false;
     int count = 0, change = 0;
     string cour_id = "";
     Clock clock;
@@ -828,7 +828,6 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         }
         if (del_course)
         {
-            bool checkDel = false;
             window.draw(o2.draw);
             window.draw(id.draw);
             window.draw(confirm.draw);
@@ -1560,7 +1559,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Info total = createText("", 1050, 258);
     Info sort_input = createText("", 330, 264);
     Object *add[4];
-    Info *id[4];
+    Info* id[4];
     ClassNode *one[4];
     ClassSubNode *res = nullptr;
     for (int i = 0; i < 4; ++i)
@@ -1705,9 +1704,6 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit)
 {
-    // ifstream fin;
-    // fin.open("./database/result.csv");
-    // Loadcoursescorefromfile(fin, class_list);
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
@@ -1752,7 +1748,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         detail[i] = createObjectTest("./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
 
     bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
-    bool Confirm = false;
+    bool Confirm = false, checkDel = false;
     Clock clock;
     string stu_id = "";
     int count = 0, change = 0;
@@ -1891,7 +1887,6 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 window.draw(detail[i]->draw);
         if (del_stu)
         {
-            bool checkDel = false;
             window.draw(o3.draw);
             window.draw(id.draw);
             window.draw(confirm.draw);
@@ -2050,7 +2045,7 @@ void Profile(RenderWindow &window, int &page, StaffNode *person, bool &Exit)
     Object dob = createObject("./image/page1/profile/dob.png", 504, 547);
     Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object *y[2], *n[2];
+    Object* y[2], * n[2];
     for (int i = 0; i < 2; ++i)
     {
         y[i] = createObjectTest("./image/page3-staff/course/yes.png", 453 + 354 * i, 637);

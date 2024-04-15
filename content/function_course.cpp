@@ -77,14 +77,15 @@ bool deleteCourse(CourseNode *&CourseHead, string delCourse)
     return false;
 }
 
-void importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
+bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
 {
     string number;
     while (getline(fin, number))
     {
         Course cs;
         if (number == "*")
-            return;
+            break;
+
         stringstream line(number);
         getline(line, cs.course_id, ',');
         getline(line, cs.course_name, ',');
@@ -99,8 +100,16 @@ void importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
         cs.teaching_session.session_no = stoi(number);
         getline(line, number, ',');
         cs.main_class = searchClassNode(allClass, number);
+        if (!cs.main_class)
+        {
+            cout << "Cannot find class " << number << endl;
+            return false;
+        }
+
         appendNewCourseNode(Courselist, cs);
     }
+
+    return true;
 }
 
 void exportCourse(CourseNode *&Courselist, ofstream &fout)

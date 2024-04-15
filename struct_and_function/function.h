@@ -41,7 +41,7 @@ void deleteYearList(YearNode *&year_list);
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);
 void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
-void importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin);
+bool importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin);
 void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list);
 
@@ -51,7 +51,7 @@ CourseNode *initCourseNode(Course new_course);
 // void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
 bool deleteCourse(CourseNode *&CourseHead, string delCourse);
-void importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin);
+bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode *&curr, Course newone);
@@ -72,7 +72,7 @@ ClassSubNode *findClasses(ClassNode *head, string input);
 bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, string file_name, ifstream& fin);
 
 // Results
-void importResults(ifstream &fin, ClassNode *&MainClass, string filename);
+bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
 void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final);
@@ -85,7 +85,7 @@ bool importYear(YearNode*& year_list, ClassNode* allClass, string filename, ifst
 bool exportYear(YearNode*& year_list, string filename, ofstream& fout);
 ClassSubNode* createClassSubNode(ClassNode* classNode);
 void appendClassSubNode(ClassSubNode*& classSublist, ClassSubNode* classSubNode);
+void addResultsNodeToClass(ClassNode* classNode, const string& year_id, const string& sem_id, const string& course_id);
 ClassNode* searchClassNode(ClassNode* allClass, string class_id);
 bool importClassSubNode(ClassNode* allClass, Year& year, stringstream& ss);
 void exportClassSubNode(ClassSubNode* classSublist, ofstream& fout);
-void importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin);

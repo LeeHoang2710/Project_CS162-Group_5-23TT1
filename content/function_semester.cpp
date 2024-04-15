@@ -27,7 +27,7 @@ void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem)
     return;
 }
 
-void importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin)
+bool importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin)
 {
     string start_date, end_date, sem_id;
     getline(is, sem_id, ',');
@@ -36,7 +36,10 @@ void importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& 
 
     // Create a new Semester
     Semester new_sem = createSemester(sem_id, start_date, end_date);
-    importCourse(allClass, new_sem.course_list, fin);
+    bool success = importCourse(allClass, new_sem.course_list, fin);
+    if (!success)
+		return false;
+
     // Append the new Semester to the sem_list
     appendSemesterNode(sem_list, new_sem);
 }
