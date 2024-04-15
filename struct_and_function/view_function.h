@@ -47,14 +47,9 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
 void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *class_list, bool &Exit);
 void addSemester(RenderWindow &window, YearNode *&year, int &page, bool &Exit);
 void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem, ClassNode *class_list, bool &Exit);
-<<<<<<< Updated upstream
-void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit);
-void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit);
-void resultCourse(RenderWindow &window, CourseNode *&course, int &page);
-=======
 void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit);
 void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit);
->>>>>>> Stashed changes
+void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem);
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list, bool &Exit);
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
