@@ -118,7 +118,6 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                             log_in = true;
                             page = 3;
                             user = searchStaffNode(user2, name);
-                            homeStaff(window, page, user);
                         }
                         // else if (!is_staff && LoginForStudent(user1, name, pass))
                         // {
@@ -211,22 +210,21 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
     }
 }
 
-void homeStaff(RenderWindow &window, int &page, StaffNode *&user)
+void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/home/year.png", 235, 348);
-    Object o3 = createObject("./image/page3-staff/home/course.png", 235, 462);
-    Object o4 = createObject("./image/page3-staff/home/class.png", 235, 580);
-    Object o5 = createObject("./image/page3-staff/home/other.png", 235, 698);
+    Object o3 = createObject("./image/page3-staff/home/class.png", 235, 462);
+    Object o4 = createObject("./image/page3-staff/home/other.png", 235, 580);
+    ;
     while (window.isOpen() && page == 3)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, o2);
         updateColorOnHover(window, o3);
         updateColorOnHover(window, o4);
-        updateColorOnHover(window, o5);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -238,14 +236,9 @@ void homeStaff(RenderWindow &window, int &page, StaffNode *&user)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(o2.bound, mouse, 4, page);
-                    switchPage(o3.bound, mouse, 10, page);
-                    switchPage(o4.bound, mouse, 16, page);
-                    if (isHere(o5.bound, mouse))
-                    {
-                        page = 19;
-                        Other(window, page, user);
-                    }
+                    switchPage(o2.bound, mouse, 4, page, Exit);
+                    switchPage(o3.bound, mouse, 16, page, Exit);
+                    switchPage(o4.bound, mouse, 19, page, Exit);
                 }
                 break;
             }
@@ -259,12 +252,11 @@ void homeStaff(RenderWindow &window, int &page, StaffNode *&user)
         window.draw(o2.draw);
         window.draw(o3.draw);
         window.draw(o4.draw);
-        window.draw(o5.draw);
         window.display();
     }
 }
 
-void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, ClassNode*& class_list)
+void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, ClassNode *&class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -327,8 +319,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                 if (event.mouseButton.button == Mouse::Left)
                 {
 
-                    switchPage(b.bound, mouse, 3, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 3, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(create.bound, mouse))
                     {
                         YearNode *curr = year;
@@ -383,7 +375,9 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                             else
                             {
                                 page = 5;
-                                Semesters(window, page, one[i], class_list);
+                                Semesters(window, page, one[i], class_list, Exit);
+                                if (Exit)
+                                    return;
                             }
                         }
                     }
@@ -463,7 +457,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
         delete add[i], id[i]; // one[i];
 }
 
-void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode* class_list)
+void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -507,19 +501,23 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode* clas
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 4, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 4, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(create.bound, mouse))
                     {
                         page = 6;
-                        addSemester(window, year, page);
+                        addSemester(window, year, page, Exit);
+                        if (Exit)
+                            return;
                     }
                     for (int i = 0; i < 3; ++i)
                     {
                         if (isHere(add[i]->bound, mouse) && sem[i])
                         {
                             page = 7;
-                            Courses(window, sem[i]->sem.course_list, page, year->school_year.year_id, sem[i]->sem.semester_id, class_list);
+                            Courses(window, sem[i]->sem.course_list, page, year->school_year.year_id, sem[i]->sem.semester_id, class_list, Exit);
+                            if (Exit)
+                                return;
                         }
                     }
                 }
@@ -562,7 +560,7 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode* clas
         delete add[i], id[i];
 }
 
-void addSemester(RenderWindow &window, YearNode *&check, int &page)
+void addSemester(RenderWindow &window, YearNode *&check, int &page, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -600,8 +598,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 4, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 4, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(o2.bound, mouse))
                     {
                         typing_sem = true;
@@ -670,7 +668,7 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page)
     }
 }
 
-void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem, ClassNode* class_list)
+void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -734,12 +732,14 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 5, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 5, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(create.bound, mouse))
                     {
                         page = 8;
-                        addCourse(window, course, page, class_list);
+                        addCourse(window, course, page, class_list, Exit);
+                        if (Exit)
+                            return;
                     }
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
@@ -771,7 +771,9 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         if (isHere(subject[i]->bound, mouse) && one[i] && !del_course)
                         {
                             page = 9;
-                            updateCourse(window, one[i], page, class_list);
+                            updateCourse(window, one[i], page, class_list, Exit);
+                            if (Exit)
+                                return;
                         }
                     }
                 }
@@ -846,11 +848,11 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         }
         window.display();
     }
-    // for (int i = 0; i < 4; ++i)
-    //     delete subject[i], inf[i], one[i];
+    for (int i = 0; i < 4; ++i)
+        delete subject[i], inf[i];
 }
 
-void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode* class_list)
+void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -907,8 +909,8 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode* 
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 7, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 7, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     for (int i = 0; i < 6; ++i)
                     {
                         if (isHere(no[i]->bound, mouse))
@@ -1063,7 +1065,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode* 
         delete yes[i], no[i];
 }
 
-void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode* class_list)
+void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1121,8 +1123,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 7, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 7, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(update.bound, mouse))
                         updating = true;
                     if (updating)
@@ -1299,7 +1301,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
         delete yes[i], no[i];
 }
 
-void Other(RenderWindow &window, int &page, StaffNode *&user)
+void Other(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1328,15 +1330,11 @@ void Other(RenderWindow &window, int &page, StaffNode *&user)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 3, page);
-                    switchPage(menu.bound, mouse, 3, page);
-                    switchPage(o2.bound, mouse, 1, page);
-                    switchPage(o3.bound, mouse, 20, page);
-                    if (isHere(o4.bound, mouse))
-                    {
-                        page = 21;
-                        Profile(window, page, user);
-                    }
+                    switchPage(b.bound, mouse, 3, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
+                    switchPage(o2.bound, mouse, 1, page, Exit);
+                    switchPage(o3.bound, mouse, 20, page, Exit);
+                    switchPage(o4.bound, mouse, 21, page, Exit);
                 }
                 break;
             }
@@ -1357,7 +1355,7 @@ void Other(RenderWindow &window, int &page, StaffNode *&user)
     }
 }
 
-void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user)
+void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1402,6 +1400,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
+                    switchPage(b.bound, mouse, 19, page, Exit);
                     if (isHere(o4.bound, mouse))
                     {
                         isTypingOld = true;
@@ -1452,8 +1451,6 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
                             Change = false;
                         clock.restart();
                     }
-                    else if (isHere(b.bound, mouse))
-                        page = 19;
                     else
                     {
                         isTypingOld = false;
@@ -1546,7 +1543,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
     }
 }
 
-void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list)
+void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1564,8 +1561,8 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Info sort_input = createText("", 330, 264);
     Object *add[4];
     Info *id[4];
-    ClassNode* one[4];
-    ClassSubNode* res = nullptr;
+    ClassNode *one[4];
+    ClassSubNode *res = nullptr;
     for (int i = 0; i < 4; ++i)
     {
         add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
@@ -1602,8 +1599,8 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                 if (event.mouseButton.button == Mouse::Left)
                 {
 
-                    switchPage(b.bound, mouse, 3, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 3, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
 
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
@@ -1627,7 +1624,9 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                         if (isHere(add[i]->bound, mouse) && one[i])
                         {
                             page = 17;
-                            Students(window, page, one[i]);
+                            Students(window, page, one[i], Exit);
+                            if (Exit)
+                                return;
                         }
                     }
                 }
@@ -1701,14 +1700,14 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.display();
     }
     for (int i = 0; i < 4; ++i)
-        delete add[i], id[i], one[i];
+        delete add[i], id[i];
 }
 
-void Students(RenderWindow &window, int &page, ClassNode *&class_list)
+void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit)
 {
-    //ifstream fin;
-    //fin.open("./database/result.csv");
-    //Loadcoursescorefromfile(fin, class_list);
+    // ifstream fin;
+    // fin.open("./database/result.csv");
+    // Loadcoursescorefromfile(fin, class_list);
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
@@ -1750,9 +1749,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
     }
     Object *detail[7];
     for (int i = 0; i < 7; ++i)
-    {
         detail[i] = createObjectTest("./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
-    }
 
     bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
     bool Confirm = false;
@@ -1790,8 +1787,8 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 16, page);
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(b.bound, mouse, 16, page, Exit);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(res.bound, mouse))
                         result = true;
                     else if (isHere(infor.bound, mouse))
@@ -1821,7 +1818,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
                         showDelResult = true;
                         clock.restart();
                     }
-                    /*if (result)
+                    if (result)
                     {
                         for (int i = 0; i < 7; ++i)
                         {
@@ -1829,9 +1826,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
                             {
                                 page = 18;
                                 studentResult(window, page, one[i]);
+                                if (Exit)
+                                    return;
                             }
                         }
-                    }*/
+                    }
                 }
                 break;
             }
@@ -1865,14 +1864,14 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
             {
                 if (temp)
                 {
-                    //one[i] = temp;
-                    stu[i][0]->txt.setString(to_string(temp->student.num));
-                    stu[i][1]->txt.setString(temp->student.student_id);
-                    stu[i][2]->txt.setString(temp->student.first_name);
-                    stu[i][3]->txt.setString(temp->student.last_name);
-                    stu[i][4]->txt.setString((temp->student.gender) ? "F" : "M");
-                    stu[i][5]->txt.setString(temp->student.dob);
-                    stu[i][6]->txt.setString(temp->student.social_id);
+                    one[i] = temp;
+                    stu[i][0]->txt.setString(to_string(one[i]->student.num));
+                    stu[i][1]->txt.setString(one[i]->student.student_id);
+                    stu[i][2]->txt.setString(one[i]->student.first_name);
+                    stu[i][3]->txt.setString(one[i]->student.last_name);
+                    stu[i][4]->txt.setString((one[i]->student.gender) ? "F" : "M");
+                    stu[i][5]->txt.setString(one[i]->student.dob);
+                    stu[i][6]->txt.setString(one[i]->student.social_id);
                     temp = temp->next;
                 }
                 else
@@ -1912,11 +1911,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list)
         }
         window.display();
     }
-    // for (int i = 0; i < 7; ++i)
-    //     delete one[i];
-    // for (int i = 0; i < 7; ++i)
-    //     for (int j = 0; j < 7; ++j)
-    //         delete stu[i][j];
+    for (int i = 0; i < 7; ++i)
+        delete detail[i];
+    for (int i = 0; i < 7; ++i)
+        for (int j = 0; j < 7; ++j)
+            delete stu[i][j];
 }
 
 void studentResult(RenderWindow &window, int &page, StudentNode *&student)
@@ -1968,7 +1967,11 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(menu.bound, mouse, 17, page);
+                    if (isHere(menu.bound, mouse))
+                    {
+                        page = 17;
+                        return;
+                    }
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;
@@ -2032,9 +2035,12 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
         }
         window.display();
     }
+    for (int i = 0; i < 8; ++i)
+        for (int j = 0; j < 7; ++j)
+            delete res[i][j];
 }
 
-void Profile(RenderWindow &window, int &page, StaffNode *person)
+void Profile(RenderWindow &window, int &page, StaffNode *person, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -2070,7 +2076,7 @@ void Profile(RenderWindow &window, int &page, StaffNode *person)
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(menu.bound, mouse, 3, page);
+                    switchPage(menu.bound, mouse, 3, page, Exit);
                 }
                 break;
             }

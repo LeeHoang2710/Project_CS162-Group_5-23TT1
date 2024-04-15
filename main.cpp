@@ -6,7 +6,7 @@ int main()
     window.create(VideoMode(1440, 960), "CS162-Project", Style::Default);
     window.setFramerateLimit(60);
     int page = 1;
-    bool is_staff = false;
+    bool is_staff = false, menu = false;
     string username = "";
     string pass = "";
     StudentNode *user1 = nullptr;
@@ -22,13 +22,11 @@ int main()
     ReadClassfromfile(class_list, "./database/class.csv", fin);
     bool checkimportyear = importYear(year, class_list, "./database/semester.csv", fin);
     if (!checkimportyear)
-    {
         cout << "Cannot import year" << endl;
-	}
     importResults(fin, class_list, "./database/result.csv");
 
     StaffNode *user = nullptr;
-    while (page > 0 && window.isOpen())
+    while (window.isOpen())
     {
         switch (page)
         {
@@ -44,29 +42,34 @@ int main()
         case 3:
         {
             if (is_staff)
-                homeStaff(window, page, user);
+                homeStaff(window, page, user, menu);
             /*else
                 homeStudent(window, page); */
             break;
         }
         case 4:
         {
-            School(window, page, is_staff, year, class_list);
+            School(window, page, is_staff, year, class_list, menu);
             break;
         }
         case 16:
         {
-            Classes(window, page, is_staff, class_list);
+            Classes(window, page, is_staff, class_list, menu);
             break;
         }
         case 19:
         {
-            Other(window, page, user);
+            Other(window, page, user, menu);
             break;
         }
         case 20:
         {
-            changePassword(window, page, is_staff, user);
+            changePassword(window, page, is_staff, user, menu);
+            break;
+        }
+        case 21:
+        {
+            Profile(window, page, user, menu);
             break;
         }
 

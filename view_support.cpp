@@ -86,10 +86,14 @@ void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check)
 		window.draw(y.draw);
 }
 
-void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)
+void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu)
 {
 	if (isHere(bound, mouse))
 		page = k;
+	if (page == 3)
+		menu = true;
+	else
+		menu = false;
 	return;
 }
 
