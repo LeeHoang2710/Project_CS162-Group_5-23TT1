@@ -690,7 +690,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
     Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
     Info total = createText("", 1050, 258);
-    Info title = createText(yr + "-" + sem, 475, 168);
+    Info title = createText(yr + " - " + sem, 475, 168);
     Info kill = createText("", 560, 490);
     Object *subject[4];
     Info *inf[4];
@@ -813,7 +813,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                 if (temp)
                 {
                     one[i] = temp;
-                    inf[i]->txt.setString(one[i]->course.course_id + "-" + one[i]->course.course_name);
+                    inf[i]->txt.setString(one[i]->course.course_id + " - " + one[i]->course.course_name + " - " + one[i]->course.main_class->my_class.class_id);
                     temp = temp->next;
                 }
                 else
@@ -1073,8 +1073,12 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object saved = createObject("./image/page3-staff/school_year/save-success.png", 418, 372);
-    Object append = createObject("./image/page3-staff/school_year/add.png", 319, 258);
-    Object update = createObject("./image/page3-staff/course/update.png", 530, 258);
+    Object append = createObject("./image/page3-staff/course/save.png", 530, 258);
+    Object edit = createObject("./image/page3-staff/course/edit.png", 530, 258);
+    Object update = createObject("./image/page3-staff/course/update.png", 319, 258);
+    Object import = createObject("./image/page3-staff/course/import-res.png", 743, 258);
+    Object result = createObject("./image/page3-staff/course/result.png", 743, 258);
+    Object view = createObject("./image/page3-staff/course/view.png", 954, 258);
     Object o1 = createObject("./image/page3-staff/course/create-cour-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
     Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
@@ -1084,7 +1088,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
     Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
     Clock clock;
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_stu = false, typing_cre = false, save = false;
-    bool updating = false;
+    bool updating = false, editing = false, resulting = false;
 
     Info *inf[4];
     Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
@@ -1126,9 +1130,11 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
                 {
                     switchPage(b.bound, mouse, 7, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
+                    if (isHere(edit.bound, mouse))
+                        editing = true;
                     if (isHere(update.bound, mouse))
                         updating = true;
-                    if (updating)
+                    if (updating && editing)
                     {
                         for (int i = 0; i < 6; ++i)
                         {
@@ -1241,6 +1247,16 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
                             typing_cre = false;
                         }
                     }
+                    if (isHere(result.bound, mouse))
+                        resulting = true;
+                    if (resulting && isHere(view.bound, mouse))
+                    {
+                        page = 11;
+                        resultCourse(window, course, page);
+                        if (Exit)
+                            return;
+                    }
+                    // if(isHere(import.bound,mouse)
                 }
                 break;
             }
@@ -1284,6 +1300,10 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
         window.draw(menu.draw);
         window.draw(append.draw);
         window.draw(update.draw);
+        window.draw(edit.draw);
+        window.draw(import.draw);
+        window.draw(result.draw);
+        window.draw(view.draw);
         window.draw(stu.txt);
         window.draw(cre.txt);
         for (int i = 0; i < 4; ++i)
@@ -1300,6 +1320,79 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
         delete inf[i], yes_sess[i], no_sess[i];
     for (int i = 0; i < 6; ++i)
         delete yes[i], no[i];
+}
+
+void resultCourse(RenderWindow &window, CourseNode *&course, int &page)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object o1 = createObject("./image/page3-staff/course/res-cour-bg.png", 180, 120);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object o2 = createObject("./image/page3-staff/result/gpa.png", 410, 721);
+    Info name = createText(course->course.course_id + " - " + course->course.course_name + " - " + course->course.main_class->my_class.class_id, 216, 155);
+    Info num = createText("", 391, 726);
+    int count = 0, change = 0;
+    for (StudentNode *curr = course->course.main_class->my_class.student_list; curr != nullptr; curr = curr->next)
+        count++;
+    num.txt.setString(to_string(count));
+    bool new_page = true;
+    StudentNode *stu_list = course->course.main_class->my_class.student_list;
+    StudentNode *one[8];
+    while (window.isOpen() && page == 11)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    if (isHere(menu.bound, mouse))
+                    {
+                        page = 9;
+                        return;
+                    }
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 8;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 8;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        window.draw(o2.draw);
+        window.draw(name.txt);
+        window.draw(num.txt);
+        if (new_page && stu_list)
+        {
+            ResultsNode *temp;
+        }
+    }
 }
 
 void Other(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)

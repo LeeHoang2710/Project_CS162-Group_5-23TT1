@@ -49,6 +49,7 @@ void addSemester(RenderWindow &window, YearNode *&year, int &page, bool &Exit);
 void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem, ClassNode *class_list, bool &Exit);
 void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit);
 void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit);
+void resultCourse(RenderWindow &window, CourseNode *&course, int &page);
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list, bool &Exit);
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);

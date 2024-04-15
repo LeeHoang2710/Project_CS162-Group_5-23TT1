@@ -42,6 +42,7 @@ bool importSemester(ClassNode *allClass, SemesterNode *&sem_list, stringstream &
 
     // Append the new Semester to the sem_list
     appendSemesterNode(sem_list, new_sem);
+    return true;
 }
 
 void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout)
