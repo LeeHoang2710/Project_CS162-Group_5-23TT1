@@ -54,7 +54,7 @@ bool deleteCourse(CourseNode *&CourseHead, string delCourse);
 bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);
-void replaceCourse(CourseNode *&curr, Course newone);
+void replaceCourse(CourseNode*& curr, Course newOne, string year_id, string sem_id);
 CourseNode *findCourse(CourseNode *head, string input);
 
 // Class
@@ -74,18 +74,20 @@ bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, st
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
-void Exportallscoretofile(ofstream &fout, StudentNode *&Studentlist);
+void Exportallscoretofile(ofstream& fout, string filename, ClassNode* allClass);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final);
 ResultsNode *createResultsNode(const Results &results);
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
 float updateTotalGpa(StudentNode *studentNode);
+ResultsNode* searchResultsNode(ResultsNode* results_list, string course_id, string year_id, string sem_id);
+void updateCourseIdForClass(ClassNode*& classNode, string old_course_id, string new_course_id, string year_id, string sem_id);
 
 //Class helper
 bool importYear(YearNode*& year_list, ClassNode* allClass, string filename, ifstream& fin);
 bool exportYear(YearNode*& year_list, string filename, ofstream& fout);
 ClassSubNode* createClassSubNode(ClassNode* classNode);
 void appendClassSubNode(ClassSubNode*& classSublist, ClassSubNode* classSubNode);
-void addResultsNodeToClass(ClassNode* classNode, const string& year_id, const string& sem_id, const string& course_id);
+void addResultsNodeToClass(ClassNode*& classNode, const string& year_id, const string& sem_id, const string& course_id);
 ClassNode* searchClassNode(ClassNode* allClass, string class_id);
 bool importClassSubNode(ClassNode* allClass, Year& year, stringstream& ss);
 void exportClassSubNode(ClassSubNode* classSublist, ofstream& fout);

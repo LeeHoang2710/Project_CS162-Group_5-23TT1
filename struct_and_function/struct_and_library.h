@@ -75,8 +75,8 @@ struct Course
 
 struct CourseNode
 {
-	string semester_id;
-	string year_id;
+	//string semester_id;
+	//string year_id;
 	Course course;
 	CourseNode* next = nullptr;
 };

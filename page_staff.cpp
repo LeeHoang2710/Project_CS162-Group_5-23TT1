@@ -739,7 +739,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                     if (isHere(create.bound, mouse))
                     {
                         page = 8;
-                        addCourse(window, course, page, class_list, Exit);
+                        addCourse(window, course, page, yr, sem, class_list, Exit);
                         if (Exit)
                             return;
                     }
@@ -773,7 +773,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         if (isHere(subject[i]->bound, mouse) && one[i] && !del_course)
                         {
                             page = 9;
-                            updateCourse(window, one[i], page, class_list, Exit);
+                            updateCourse(window, one[i], page, yr, sem, class_list, Exit);
                             if (Exit)
                                 return;
                         }
@@ -853,7 +853,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         delete subject[i], inf[i];
 }
 
-void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit)
+void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1005,6 +1005,8 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *
                         s1.day_of_the_week = day;
                         s1.session_no = sess;
                         Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), stoi(num), s1, classes, class_list);
+                        ClassNode* temp = searchClassNode(class_list, classes);
+                        addResultsNodeToClass(temp, yr, sem, cour_id);
                         appendNewCourseNode(course, new_cour);
                         save = true;
                         clock.restart();
@@ -1066,7 +1068,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *
         delete yes[i], no[i];
 }
 
-void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNode *class_list, bool &Exit)
+void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1230,9 +1232,11 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, ClassNod
                             string temp = credit;
                             if (temp == "")
                                 temp = "0";
+                            if (num == "")
+								num = "0";
                             Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(temp), stoi(num), s1, classes, class_list);
                             compareCourse(course->course, new_cour);
-                            replaceCourse(course, new_cour);
+                            replaceCourse(course, new_cour, yr, sem);
                             updating = false;
                             save = true;
                             clock.restart();

@@ -11,6 +11,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
     tmp.num_credit = num_credit;
     tmp.teaching_session = teaching_session;
     tmp.main_class = searchClassNode(class_list, class_id);
+    //addResultsNodeToClass(tmp.main_class, year_id, sem_id, course_id);
     return tmp;
 }
 
@@ -100,6 +101,7 @@ bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
         cs.teaching_session.session_no = stoi(number);
         getline(line, number, ',');
         cs.main_class = searchClassNode(allClass, number);
+
         if (!cs.main_class)
         {
             cout << "Cannot find class " << number << endl;
@@ -143,6 +145,12 @@ void compareCourse(Course &old, Course &newone)
     if (newone.num_credit == 0)
         newone.num_credit = old.num_credit;
 
+    if (newone.max_students == 0)
+        newone.max_students = old.max_students;
+
+    if (newone.main_class == nullptr)
+		newone.main_class = old.main_class;
+
     if (newone.teaching_session.day_of_the_week == 0)
         newone.teaching_session.day_of_the_week = old.teaching_session.day_of_the_week;
 
@@ -150,10 +158,15 @@ void compareCourse(Course &old, Course &newone)
         newone.teaching_session.session_no = old.teaching_session.session_no;
 }
 
-void replaceCourse(CourseNode *&curr, Course newone)
+void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id)
 {
+    string old_course_id;
     if (curr)
-        curr->course = newone;
+    {
+        old_course_id = curr->course.course_id;
+        curr->course = newOne;
+        updateCourseIdForClass(curr->course.main_class, old_course_id, curr->course.course_id, year_id, sem_id);
+    }
 }
 
 CourseNode *findCourse(CourseNode *head, string input)

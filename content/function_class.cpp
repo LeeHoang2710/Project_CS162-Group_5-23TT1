@@ -276,6 +276,9 @@ bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss)
 
 void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout)
 {
+    if (!classSublist)
+		return;
+
     ClassSubNode *curr = classSublist;
     while (curr)
     {
