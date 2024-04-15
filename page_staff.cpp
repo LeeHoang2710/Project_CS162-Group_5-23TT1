@@ -623,6 +623,8 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool &Exit)
                     }
                     else if (isHere(append.bound, mouse))
                     {
+                        if (sem_id >= "1" && sem_id <= "3")
+                            sem_id = "Semester " + sem_id;
                         Semester new_sem = createSemester(sem_id, start, end);
                         appendSemesterNode(check->school_year.list_sem, new_sem);
                         save = true;
@@ -1559,7 +1561,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Info total = createText("", 1050, 258);
     Info sort_input = createText("", 330, 264);
     Object *add[4];
-    Info* id[4];
+    Info *id[4];
     ClassNode *one[4];
     ClassSubNode *res = nullptr;
     for (int i = 0; i < 4; ++i)
@@ -2045,7 +2047,7 @@ void Profile(RenderWindow &window, int &page, StaffNode *person, bool &Exit)
     Object dob = createObject("./image/page1/profile/dob.png", 504, 547);
     Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object* y[2], * n[2];
+    Object *y[2], *n[2];
     for (int i = 0; i < 2; ++i)
     {
         y[i] = createObjectTest("./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
