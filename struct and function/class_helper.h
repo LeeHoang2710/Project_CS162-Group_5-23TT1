@@ -18,7 +18,6 @@ ClassNode* searchClassNode(ClassNode* allClass, string class_id);
 bool importClassSubNode(ClassNode* allClass, Year& year, stringstream& ss);
 void exportClassSubNode(ClassSubNode* classSublist, ofstream& fout);
 
-// copied
 void importSemester(ClassNode* allClass, SemesterNode*& sem_list, stringstream& is, ifstream& fin)
 {
 	string start_date, end_date, sem_id;
