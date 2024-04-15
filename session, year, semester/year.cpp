@@ -6,7 +6,7 @@ void inputYearId(string& year_id)
 {
 	cout << "Enter year ID: ";
 	cin >> year_id;
-}3qewtrv 
+}
 
 Year createYear(const string& p_year_id)
 {
