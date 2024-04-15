@@ -2141,7 +2141,8 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 window.draw(file.txt);
             if (Import)
             {
-                // checkPath = importStudent(class_list->my_class.student_list, file_path);
+                ifstream fin;
+                checkPath = importNewStudentsFromStaff(class_list, file_path, fin);
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 3)

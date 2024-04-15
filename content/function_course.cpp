@@ -11,7 +11,6 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
     tmp.num_credit = num_credit;
     tmp.teaching_session = teaching_session;
     tmp.main_class = searchClassNode(class_list, class_id);
-    //addResultsNodeToClass(tmp.main_class, year_id, sem_id, course_id);
     return tmp;
 }
 

@@ -10,7 +10,9 @@ Student createStudent(int p_num, string p_student_id, string p_first, string p_l
     person.gender = p_gender;
     person.dob = p_dob;
     person.social_id = p_social_id;
-    person.password = p_pass;
+    if (!p_pass.empty())
+        person.password = p_pass;
+
     person.student_class = p_class;
     return person;
 }
@@ -123,4 +125,43 @@ void exportStudentToFile(ofstream &file, StudentNode *list_student)
         }
         file << "*" << endl;
     }
+}
+
+bool importNewStudentsFromStaff(ClassNode*& classNode, string file_name, ifstream& fin)
+{
+    fin.open(file_name);
+    if (!fin.is_open())
+    {
+        cout << "Cannot open " << file_name << endl;
+        return false;
+    }
+
+    string line;
+    getline(fin, line);
+    if (classNode->my_class.class_id != line)
+    {
+        cout << "Class id " << line << " does not match with " << classNode->my_class.class_id << endl;
+        return false;
+    }
+    
+    while (getline(fin, line))
+    {
+        Student temp;
+        istringstream iss(line);
+        string field;
+        getline(iss, field, ',');
+        temp.num = stoi(field);
+        getline(iss, temp.student_id, ',');
+        getline(iss, temp.first_name, ',');
+        getline(iss, temp.last_name, ',');
+        getline(iss, field, ',');
+        temp.gender = stoi(field);
+        getline(iss, temp.dob, ',');
+        getline(iss, temp.social_id, ',');
+        getline(iss, temp.password, ',');
+        addNewStudentNode(classNode->my_class.student_list, temp);
+    }
+
+    fin.close();
+    return true;
 }

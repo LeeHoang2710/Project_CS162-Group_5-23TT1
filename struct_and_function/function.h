@@ -26,6 +26,7 @@ bool removeStudentNode(StudentNode *&head, string studentId);
 StudentNode *searchStudentNode(StudentNode *head, string student_1_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
+bool importNewStudentsFromStaff(ClassNode*& classNode, string file_name, ifstream& fin);
 
 // Year
 Year createYear(string p_year_id, ClassSubNode* classSublist);
