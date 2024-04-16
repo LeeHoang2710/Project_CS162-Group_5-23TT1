@@ -6,12 +6,16 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
     if (max_students != 50)
         tmp.max_students = max_students;
 
+    if (class_id.empty())
+        tmp.main_class = nullptr;
+    else
+        tmp.main_class = searchClassNode(class_list, class_id);
+
     tmp.course_id = course_id;
     tmp.course_name = course_name;
     tmp.teacher_name = teacher_name;
     tmp.num_credit = num_credit;
     tmp.teaching_session = teaching_session;
-    tmp.main_class = searchClassNode(class_list, class_id);
     return tmp;
 }
 
@@ -20,7 +24,6 @@ CourseNode *initCourseNode(Course new_course)
     CourseNode *new_course_node = new CourseNode;
     new_course_node->next = NULL;
     new_course_node->course = new_course;
-
     return new_course_node;
 }
 
@@ -165,9 +168,21 @@ void compareCourse(Course &old, Course &newone)
 
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id)
 {
-    string old_course_id;
-    if (curr)
+    if (!curr)
     {
+        cout << "Current CourseNode is nullptr." << endl;
+        return;
+    }
+
+    if (newOne.main_class != curr->course.main_class)
+    {
+		deleteCourseResultsForClass(curr->course.main_class->my_class.student_list, curr->course.course_id, year_id, sem_id);
+		curr->course = newOne;
+        addResultsNodeToClass(curr->course.main_class, year_id, sem_id, curr->course.course_id);
+	}
+    else
+    {
+        string old_course_id;
         old_course_id = curr->course.course_id;
         curr->course = newOne;
         updateCourseIdForClass(curr->course.main_class, old_course_id, curr->course.course_id, year_id, sem_id);

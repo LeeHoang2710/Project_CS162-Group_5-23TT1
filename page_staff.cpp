@@ -1246,13 +1246,21 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                             string temp = credit;
                             if (temp == "")
                                 temp = "0";
+
                             if (num == "")
                                 num = "0";
+
                             Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(temp), stoi(num), s1, classes, class_list);
-                            compareCourse(course->course, new_cour);
-                            replaceCourse(course, new_cour, yr, sem);
+                            if (!classes.empty() && !new_cour.main_class)
+                                save = false;
+                            else
+                            {
+                                compareCourse(course->course, new_cour);
+                                replaceCourse(course, new_cour, yr, sem);
+                                save = true;
+                            }
+
                             editing = false;
-                            save = true;
                             clock.restart();
                         }
                         else
