@@ -282,3 +282,21 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr)
     destination = filename;
     op.close();
 }
+
+void ExportAllResultsToFile(ofstream& op, string& destination, StudentNode* Curr) {
+    string name = Curr->student.last_name + " " + Curr->student.first_name;
+    string id = Curr->student.student_id;
+    string filename = destination + "/" + id + "_scoreboard.csv";
+    op.open(filename);
+    op << "Full Name:" << "," << name <<endl;
+    op << "Student ID:" << "," << id << endl;
+    op << "Total Gpa " << "," << Curr->student.total_gpa << endl;
+    op << "Course,Semester,Year,Process Mark,Midterm Mark,Final Mark,Total Mark" << endl;
+    ResultsNode* restemp = Curr->student.results_list;
+    while (restemp) {
+        op << restemp->results.course_id << "," << restemp->results.sem_id << "," << restemp->results.year_id << ",";
+        op << restemp->results.score.process << "," << restemp->results.score.midterm << "," << restemp->results.score.final << "," << restemp->results.score.overall << endl;
+        restemp = restemp->next;
+    }
+    op.close();
+}

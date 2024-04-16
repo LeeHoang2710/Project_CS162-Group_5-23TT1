@@ -91,7 +91,7 @@ bool deleteResultsNode(ResultsNode *&resultsList, string course_id, string year_
 void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, string year_id, string sem_id);
 void deleteResultsList(ResultsNode *&resultsList);
 void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr);
-
+void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
 // Class helper
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);
 bool exportYear(YearNode *&year_list, string filename, ofstream &fout);
