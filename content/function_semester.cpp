@@ -2,13 +2,11 @@
 
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date)
 {
-    // In this order: semester_id, start_date, end_date, course_list
     return Semester{start_date, end_date, sem_id, nullptr};
 }
 
 SemesterNode *createSemesterNode(const Semester &new_sem)
 {
-    // In this order: sem, next
     return new SemesterNode{new_sem, nullptr};
 }
 
@@ -24,7 +22,6 @@ void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem)
             curr = curr->next;
         curr->next = new_sem_node;
     }
-    return;
 }
 
 bool importSemester(ClassNode *allClass, SemesterNode *&sem_list, stringstream &is, ifstream &fin)
@@ -58,19 +55,9 @@ void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout)
         ++count;
         sem_list = sem_list->next;
     }
+
     if (count < 3)
         fout << "#" << endl;
-}
-
-void deleteYearList(YearNode *&year_list)
-{
-    while (year_list)
-    {
-        YearNode *temp = year_list;
-        year_list = year_list->next;
-        deleteSemesterList(temp->school_year.list_sem);
-        delete temp;
-    }
 }
 
 void deleteSemesterList(SemesterNode *&sem_list)
@@ -78,9 +65,8 @@ void deleteSemesterList(SemesterNode *&sem_list)
     while (sem_list)
     {
         SemesterNode *temp = sem_list;
+        deleteCourseList(temp->sem.course_list);
         sem_list = sem_list->next;
-        // deleteCourseList function, and more...
-        // deleteCourseList(temp->sem.course_list);...
         delete temp;
     }
 }

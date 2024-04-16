@@ -126,6 +126,7 @@ bool importResults(ifstream& fin, ClassNode*& ClassList, string filename)
                         appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
                     }
                 }
+
                 tempStu->student.total_gpa = updateTotalGpa(tempStu);
                 tempStu = tempStu->next;
             }
@@ -174,28 +175,35 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
     fout.close();
 }
 
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr) {
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr)
+{
     fin.open(filename);
-    if (!fin.is_open()) cout << "can not open results file to course" << endl;
+    if (!fin.is_open())
+        cout << "can not open results file to course" << endl;
+
     string course_cpr, year_cpr, sem_cpr;
     getline(fin, course_cpr, '\n');
     getline(fin, year_cpr, '\n');
     getline(fin, sem_cpr, '\n');
-    if (course_cpr != curr.course_id || year_cpr != yr || sem_cpr != sem) {
+    if (course_cpr != curr.course_id || year_cpr != yr || sem_cpr != sem)
+    {
         fin.close();
         cout << "This is not the results of this course, check the course info in files again" << endl;
         return false;
     }
 
-    while (!fin.eof()) {
+    while (!fin.eof())
+    {
         string stu_find;
         getline(fin, stu_find, ',');
         StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
-        if (stuTemp == nullptr) {
+        if (stuTemp == nullptr)
+        {
             cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
             fin.close();
             return false;
         }
+
         ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
         string p, m, f;
         getline(fin, p, ',');
@@ -205,6 +213,55 @@ bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course
         change->results.score.midterm = stof(m);
         change->results.score.final = stof(f);
     }
+
     fin.close();
     return true;
+}
+
+bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_id, string sem_id)
+{
+    ResultsNode* temp = searchResultsNode(resultsList, course_id, year_id, sem_id);
+    if (!temp)
+    {
+        cout << "ResultsNode for course " << course_id << " does not exist." << endl;
+        return false;
+    }
+
+    if (temp == resultsList)
+    {
+        resultsList = resultsList->next;
+        delete temp;
+        return true;
+    }
+
+    ResultsNode* prev = resultsList;
+    while (prev->next != temp)
+        prev = prev->next;
+
+    prev->next = temp->next;
+    delete temp;
+    return true;
+}
+
+void deleteCourseResultsForClass(StudentNode*& studentList, string course_id, string year_id, string sem_id)
+{
+    StudentNode* currStu = studentList;
+    while (currStu)
+    {
+        bool success = deleteResultsNode(currStu->student.results_list, course_id, year_id, sem_id);
+        if (!success)
+            cout << "ResultsNode for " << course_id << " does not exist for " << currStu->student.student_id << endl;
+
+        currStu = currStu->next;
+    }
+}
+
+void deleteResultsList(ResultsNode*& resultsList)
+{
+    while (resultsList)
+    {
+		ResultsNode* temp = resultsList;
+		resultsList = resultsList->next;
+		delete temp;
+	}
 }

@@ -16,11 +16,12 @@ int main()
     ofstream fout;
     ifstream fin;
 
+    bool success;
     // StorePassWordStudent(user1, fin, "./database/student_password.csv");
     // StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importStaff(user2, fin, "./database/staff_list.csv");
     ReadClassfromfile(class_list, "./database/class.csv", fin);
-    bool success = importYear(year, class_list, "./database/semester.csv", fin);
+    success = importYear(year, class_list, "./database/semester.csv", fin);
     if (!success)
         cout << "Cannot import year" << endl;
 
@@ -84,9 +85,10 @@ int main()
     ExportClassTFile(class_list, "./database/class.csv", fout);
     Exportallscoretofile(fout, "./database/result.csv", class_list);
     ExportStaff(user2, fout, "./database/staff_list.csv");
+
+    deleteClassList(class_list);
     deleteYearList(year);
-    delete user, user1, user2;
-    delete class_list;
+    deleteStaffList(user2);
 
     return 0;
 }

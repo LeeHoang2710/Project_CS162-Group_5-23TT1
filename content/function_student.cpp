@@ -1,6 +1,6 @@
 #include "../struct_and_function/function.h"
 
-Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class)
+Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass)
 {
     Student person;
     person.num = p_num;
@@ -13,7 +13,6 @@ Student createStudent(int p_num, string p_student_id, string p_first, string p_l
     if (!p_pass.empty())
         person.password = p_pass;
 
-    person.student_class = p_class;
     return person;
 }
 
@@ -37,7 +36,6 @@ void addNewStudentNode(StudentNode *&head, Student new_student)
             list_Student = list_Student->next;
         list_Student->next = new_student_node;
     }
-    return;
 }
 
 bool removeStudentNode(StudentNode*& head, string studentId)
@@ -49,6 +47,7 @@ bool removeStudentNode(StudentNode*& head, string studentId)
         delete tmp;
         return true;
     }
+
     for (StudentNode* tmp = head; tmp->next != nullptr; tmp = tmp->next)
     {
         if (tmp->next->student.student_id == studentId)
@@ -59,6 +58,7 @@ bool removeStudentNode(StudentNode*& head, string studentId)
             return true;
         }
     }
+
     return false;
 }
 
@@ -69,6 +69,7 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
         cout << "Cannot find the searched student..." << endl;
         return nullptr;
     }
+
     StudentNode *list_student = head;
     while (list_student)
     {
@@ -77,6 +78,7 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
         else
             list_student = list_student->next;
     }
+
     cout << "Cannot find the searched student..." << endl;
     return nullptr;
 }
@@ -84,7 +86,6 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
 void readStudentFromFile(ifstream &file, StudentNode *&list_student)
 {
     string line;
-
     while (getline(file, line))
     {
         if (line == "*")
@@ -102,7 +103,6 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
         getline(ss, person.dob, ',');
         getline(ss, person.social_id, ',');
         getline(ss, person.password, ',');
-        getline(ss, person.student_class, ',');
         addNewStudentNode(list_student, person);
     }
 }
@@ -114,15 +114,23 @@ void exportStudentToFile(ofstream &file, StudentNode *list_student)
         file << "*" << endl;
         return;
     }
+
     else
     {
         while (list_student)
         {
             Student person = list_student->student;
-            file << person.num << "," << person.student_id << "," << person.first_name << "," << person.last_name << "," << person.gender;
-            file << "," << person.dob << "," << person.social_id << "," << person.password << "," << person.student_class << endl;
+            file << person.num << ","
+                << person.student_id << ","
+                << person.first_name << ","
+                << person.last_name << ","
+                << person.gender << ","
+                << person.dob << ","
+                << person.social_id << ","
+                << person.password << endl;
             list_student = list_student->next;
         }
+
         file << "*" << endl;
     }
 }
@@ -164,4 +172,15 @@ bool importNewStudentsFromStaff(ClassNode*& classNode, string file_name, ifstrea
 
     fin.close();
     return true;
+}
+
+void deleteStudentList(StudentNode*& studentList)
+{
+    while (studentList)
+    {
+		StudentNode* temp = studentList;
+        deleteResultsList(temp->student.results_list);
+		studentList = studentList->next;
+		delete temp;
+	}
 }

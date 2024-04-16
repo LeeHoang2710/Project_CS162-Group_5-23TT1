@@ -837,7 +837,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                 window.draw(kill.txt);
             if (Confirm)
             {
-                checkDel = deleteCourse(course, cour_id);
+                checkDel = deleteCourseNode(course, cour_id, yr, sem);
                 count--;
                 Confirm = false;
             }

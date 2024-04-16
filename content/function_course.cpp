@@ -5,6 +5,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
     Course tmp;
     if (max_students != 50)
         tmp.max_students = max_students;
+
     tmp.course_id = course_id;
     tmp.course_name = course_name;
     tmp.teacher_name = teacher_name;
@@ -39,6 +40,7 @@ CourseNode *initCourseNode(Course new_course)
 //     }
 // }
 // cái này là do chưa có student node nên phải tạo hàm test thôi
+
 void appendNewCourseNode(CourseNode *&head, Course cs)
 {
     // semester id
@@ -55,25 +57,29 @@ void appendNewCourseNode(CourseNode *&head, Course cs)
     }
 }
 
-bool deleteCourse(CourseNode *&CourseHead, string delCourse)
+bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id, string sem_id)
 {
-    if (CourseHead->course.course_id == delCourse)
+    if (CourseHead->course.course_id == course_id)
     {
         CourseNode *tmp = CourseHead;
+        deleteCourseResultsForClass(CourseHead->course.main_class->my_class.student_list, course_id, year_id, sem_id);
         CourseHead = CourseHead->next;
         delete tmp;
         return true;
     }
+
     for (CourseNode *tmp = CourseHead; tmp->next != nullptr; tmp = tmp->next)
     {
-        if (tmp->next->course.course_id == delCourse)
+        if (tmp->next->course.course_id == course_id)
         {
             CourseNode *del = tmp->next;
             tmp->next = tmp->next->next;
+            deleteCourseResultsForClass(del->course.main_class->my_class.student_list, course_id, year_id, sem_id);
             delete del;
             return true;
         }
     }
+
     return false;
 }
 
@@ -100,7 +106,6 @@ bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
         cs.teaching_session.session_no = stoi(number);
         getline(line, number, ',');
         cs.main_class = searchClassNode(allClass, number);
-
         if (!cs.main_class)
         {
             cout << "Cannot find class " << number << endl;
@@ -127,6 +132,7 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
         fout << Courselist->course.main_class->my_class.class_id << endl;
         Courselist = Courselist->next;
     }
+
     fout << "*" << endl;
 }
 
@@ -176,7 +182,20 @@ CourseNode *findCourse(CourseNode *head, string input)
     {
         if (curr->course.course_id.find(input) != string::npos)
             appendNewCourseNode(sort, curr->course);
+
         curr = curr->next;
     }
+
     return sort;
+}
+
+void deleteCourseList(CourseNode*& courseList)
+{
+    while (courseList)
+    {
+		CourseNode *temp = courseList;
+        //deleteExtraStudents
+		courseList = courseList->next;
+		delete temp;
+	}
 }
