@@ -174,22 +174,20 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
     fout.close();
 }
 
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr) {
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem,Course& curr) {
     fin.open(filename);
-    if (!fin.is_open()) cout << "can not open results file to course" << endl;
-    string course_cpr, year_cpr, sem_cpr;
-    getline(fin, course_cpr, '\n');
-    getline(fin, year_cpr, '\n');
-    getline(fin, sem_cpr, '\n');
-    if (course_cpr != curr.course_id || year_cpr != yr || sem_cpr != sem) {
+    if (!fin.is_open()) { 
         fin.close();
-        cout << "This is not the results of this course, check the course info in files again" << endl;
+        cout << "can not open results file to course" << endl;
         return false;
     }
-
+    string read;
+    getline(fin, read,'\n');
     while (!fin.eof()) {
-        string stu_find;
+        string no, stu_find, fullname;
+        getline(fin, no, ',');
         getline(fin, stu_find, ',');
+        getline(fin, fullname, ',');
         StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
         if (stuTemp == nullptr) {
             cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
@@ -200,11 +198,29 @@ bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course
         string p, m, f;
         getline(fin, p, ',');
         getline(fin, m, ',');
-        getline(fin, f, '\n');
+        getline(fin, f, ',');
         change->results.score.process = stof(p);
         change->results.score.midterm = stof(m);
         change->results.score.final = stof(f);
     }
     fin.close();
     return true;
+}
+
+void ExportStudentTofile(ofstream& op, string destination, CourseNode* curr) {
+    string year_id = curr->course.main_class->my_class.student_list->student.results_list->results.year_id;
+    string sem_id = curr->course.main_class->my_class.student_list->student.results_list->results.sem_id;
+    string filename = destination + "/" + curr->course.course_id + "_" + year_id + "_" + sem_id + ".csv";
+    cout << filename;
+    op.open(filename);
+    cout << "oke";
+    StudentNode* tempstu = curr->course.main_class->my_class.student_list;
+    op << "No,Student ID,Full name,Process Mark, Midterm Mark,Final Mark, Total Mark" <<endl;
+    while (tempstu) { 
+        op << tempstu->student.num << "," << tempstu->student.student_id << "," << tempstu->student.last_name << " " << tempstu->student.first_name << ",";
+        ResultsNode* findcurr = searchResultsNode(tempstu->student.results_list, curr->course.course_id, year_id, sem_id);
+        op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final <<"," << findcurr->results.score.overall << endl;
+        tempstu = tempstu->next;
+    }
+    op.close();
 }
