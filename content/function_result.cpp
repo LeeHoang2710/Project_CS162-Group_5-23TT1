@@ -173,3 +173,38 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
 
     fout.close();
 }
+
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr) {
+    fin.open(filename);
+    if (!fin.is_open()) cout << "can not open results file to course" << endl;
+    string course_cpr, year_cpr, sem_cpr;
+    getline(fin, course_cpr, '\n');
+    getline(fin, year_cpr, '\n');
+    getline(fin, sem_cpr, '\n');
+    if (course_cpr != curr.course_id || year_cpr != yr || sem_cpr != sem) {
+        fin.close();
+        cout << "This is not the results of this course, check the course info in files again" << endl;
+        return false;
+    }
+
+    while (!fin.eof()) {
+        string stu_find;
+        getline(fin, stu_find, ',');
+        StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
+        if (stuTemp == nullptr) {
+            cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
+            fin.close();
+            return false;
+        }
+        ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
+        string p, m, f;
+        getline(fin, p, ',');
+        getline(fin, m, ',');
+        getline(fin, f, '\n');
+        change->results.score.process = stof(p);
+        change->results.score.midterm = stof(m);
+        change->results.score.final = stof(f);
+    }
+    fin.close();
+    return true;
+}

@@ -82,6 +82,7 @@ void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
 float updateTotalGpa(StudentNode *studentNode);
 ResultsNode* searchResultsNode(ResultsNode* results_list, string course_id, string year_id, string sem_id);
 void updateCourseIdForClass(ClassNode*& classNode, string old_course_id, string new_course_id, string year_id, string sem_id);
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr);
 
 //Class helper
 bool importYear(YearNode*& year_list, ClassNode* allClass, string filename, ifstream& fin);
