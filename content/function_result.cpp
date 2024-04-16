@@ -48,7 +48,7 @@ void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
     }
 }
 
-void addResultsNodeToClass(ClassNode*& classNode, const string& year_id, const string& sem_id, const string& course_id)
+void addResultsNodeToClass(ClassNode *&classNode, const string &year_id, const string &sem_id, const string &course_id)
 {
     if (!classNode)
     {
@@ -56,17 +56,17 @@ void addResultsNodeToClass(ClassNode*& classNode, const string& year_id, const s
         return;
     }
 
-    StudentNode* currStudent = classNode->my_class.student_list;
+    StudentNode *currStudent = classNode->my_class.student_list;
     while (currStudent)
     {
         Results newResults = createResults(course_id, sem_id, year_id, 0.0f, 0.0f, 0.0f);
-        ResultsNode* newResultsNode = createResultsNode(newResults);
+        ResultsNode *newResultsNode = createResultsNode(newResults);
         appendResultsNode(currStudent->student.results_list, newResultsNode);
         currStudent = currStudent->next;
     }
 }
 
-ResultsNode* searchResultsNode(ResultsNode* results_list, string course_id, string year_id, string sem_id)
+ResultsNode *searchResultsNode(ResultsNode *results_list, string course_id, string year_id, string sem_id)
 {
     while (results_list && results_list->results.course_id != course_id && results_list->results.sem_id == sem_id && results_list->results.year_id == year_id)
         results_list = results_list->next;
@@ -74,18 +74,18 @@ ResultsNode* searchResultsNode(ResultsNode* results_list, string course_id, stri
     return results_list;
 }
 
-void updateCourseIdForClass(ClassNode*& classNode, string old_course_id, string new_course_id, string year_id, string sem_id)
+void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string new_course_id, string year_id, string sem_id)
 {
-    StudentNode* currStudent = classNode->my_class.student_list;
+    StudentNode *currStudent = classNode->my_class.student_list;
     while (currStudent)
     {
-        ResultsNode* currResultsNode = currStudent->student.results_list;
+        ResultsNode *currResultsNode = currStudent->student.results_list;
         searchResultsNode(currResultsNode, old_course_id, year_id, sem_id)->results.course_id = new_course_id;
         currStudent = currStudent->next;
     }
 }
 
-bool importResults(ifstream& fin, ClassNode*& ClassList, string filename)
+bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
 {
     fin.open(filename);
     if (!fin.is_open())
@@ -100,12 +100,12 @@ bool importResults(ifstream& fin, ClassNode*& ClassList, string filename)
         if (Line.empty())
             break;
 
-        ClassNode* currClass = searchClassNode(ClassList, Line);
+        ClassNode *currClass = searchClassNode(ClassList, Line);
         if (!currClass)
             return false;
         else
         {
-            StudentNode* tempStu = currClass->my_class.student_list;
+            StudentNode *tempStu = currClass->my_class.student_list;
             while (getline(fin, Line, '\n') && tempStu)
             {
                 while (getline(fin, Line, '\n'))
@@ -137,24 +137,24 @@ bool importResults(ifstream& fin, ClassNode*& ClassList, string filename)
     return true;
 }
 
-void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
+void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass)
 {
     fout.open(filename);
     if (!fout.is_open())
     {
-		cout << "Cannot open " << filename << endl;
-		return;
-	}
+        cout << "Cannot open " << filename << endl;
+        return;
+    }
 
     while (allClass)
     {
         fout << allClass->my_class.class_id << endl;
-        StudentNode* Studentlist = allClass->my_class.student_list;
+        StudentNode *Studentlist = allClass->my_class.student_list;
         while (Studentlist)
         {
             fout << Studentlist->student.student_id << ',' << Studentlist->student.first_name << ',';
             fout << Studentlist->student.last_name << endl;
-            ResultsNode* courselist = Studentlist->student.results_list;
+            ResultsNode *courselist = Studentlist->student.results_list;
             while (courselist)
             {
                 fout << courselist->results.course_id << ',' << courselist->results.year_id << ',';
@@ -175,29 +175,32 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
     fout.close();
 }
 
-
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr) {
+bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course &curr)
+{
     fin.open(filename);
     if (!fin.is_open())
+    {
         cout << "can not open results file to course" << endl;
+        return false;
+    }
     while (!fin.eof())
     {
-        string no, stu_find, fullname;
         string read;
         getline(fin, read, '\n');
-        while (!fin.eof()) {
+        while (!fin.eof())
+        {
             string no, stu_find, fullname;
             getline(fin, no, ',');
             getline(fin, stu_find, ',');
             getline(fin, fullname, ',');
-            StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
+            StudentNode *stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
             if (stuTemp == nullptr)
             {
                 cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
                 fin.close();
                 return false;
             }
-            ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
+            ResultsNode *change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
             string p, m, f;
             getline(fin, p, ',');
             getline(fin, m, ',');
@@ -206,15 +209,14 @@ bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course
             change->results.score.midterm = stof(m);
             change->results.score.final = stof(f);
         }
-
-        fin.close();
-        return true;
     }
+    fin.close();
+    return true;
 }
 
-bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_id, string sem_id)
+bool deleteResultsNode(ResultsNode *&resultsList, string course_id, string year_id, string sem_id)
 {
-    ResultsNode* temp = searchResultsNode(resultsList, course_id, year_id, sem_id);
+    ResultsNode *temp = searchResultsNode(resultsList, course_id, year_id, sem_id);
     if (!temp)
     {
         cout << "ResultsNode for course " << course_id << " does not exist." << endl;
@@ -228,7 +230,7 @@ bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_
         return true;
     }
 
-    ResultsNode* prev = resultsList;
+    ResultsNode *prev = resultsList;
     while (prev->next != temp)
         prev = prev->next;
 
@@ -237,9 +239,9 @@ bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_
     return true;
 }
 
-void deleteCourseResultsForClass(StudentNode*& studentList, string course_id, string year_id, string sem_id)
+void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, string year_id, string sem_id)
 {
-    StudentNode* currStu = studentList;
+    StudentNode *currStu = studentList;
     while (currStu)
     {
         bool success = deleteResultsNode(currStu->student.results_list, course_id, year_id, sem_id);
@@ -250,29 +252,31 @@ void deleteCourseResultsForClass(StudentNode*& studentList, string course_id, st
     }
 }
 
-void deleteResultsList(ResultsNode*& resultsList)
+void deleteResultsList(ResultsNode *&resultsList)
 {
     while (resultsList)
     {
-		ResultsNode* temp = resultsList;
-		resultsList = resultsList->next;
-		delete temp;
-	}
+        ResultsNode *temp = resultsList;
+        resultsList = resultsList->next;
+        delete temp;
+    }
 }
 
-void ExportStudentTofile(ofstream& op, string destination, CourseNode* curr) {
+void ExportStudentTofile(ofstream &op, string destination, CourseNode *curr)
+{
     string year_id = curr->course.main_class->my_class.student_list->student.results_list->results.year_id;
     string sem_id = curr->course.main_class->my_class.student_list->student.results_list->results.sem_id;
     string filename = destination + "/" + curr->course.course_id + "_" + year_id + "_" + sem_id + ".csv";
     cout << filename;
     op.open(filename);
     cout << "oke";
-    StudentNode* tempstu = curr->course.main_class->my_class.student_list;
-    op << "No,Student ID,Full name,Process Mark, Midterm Mark,Final Mark, Total Mark" <<endl;
-    while (tempstu) { 
+    StudentNode *tempstu = curr->course.main_class->my_class.student_list;
+    op << "No,Student ID,Full name,Process Mark, Midterm Mark,Final Mark, Total Mark" << endl;
+    while (tempstu)
+    {
         op << tempstu->student.num << "," << tempstu->student.student_id << "," << tempstu->student.last_name << " " << tempstu->student.first_name << ",";
-        ResultsNode* findcurr = searchResultsNode(tempstu->student.results_list, curr->course.course_id, year_id, sem_id);
-        op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final <<"," << findcurr->results.score.overall << endl;
+        ResultsNode *findcurr = searchResultsNode(tempstu->student.results_list, curr->course.course_id, year_id, sem_id);
+        op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final << "," << findcurr->results.score.overall << endl;
         tempstu = tempstu->next;
     }
     op.close();

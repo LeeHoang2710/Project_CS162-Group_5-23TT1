@@ -9,7 +9,6 @@ int main()
     bool is_staff = false, menu = false;
     string username = "";
     string pass = "";
-    StudentNode *user1 = nullptr;
     StaffNode *user2 = nullptr;
     YearNode *year = nullptr;
     ClassNode *class_list = nullptr;
@@ -30,6 +29,7 @@ int main()
         cout << "Cannot import result" << endl;
 
     StaffNode *user = nullptr;
+    StudentNode *user1 = nullptr;
     while (window.isOpen())
     {
         switch (page)

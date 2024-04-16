@@ -1386,6 +1386,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object o2 = createObject("./image/page3-staff/result/gpa.png", 410, 721);
+    Object eXport = createObject("./image/page3-staff/course/update/export.png", 822, 721);
     Info name = createText(course->course.course_id + " - " + course->course.course_name + " - " + course->course.main_class->my_class.class_id, 216, 155);
     Info num = createText("", 460, 726);
     int count = 0, change = 0;
@@ -1439,6 +1440,12 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                         new_page = true;
                         change += 8;
                     }
+                    if (isHere(eXport.bound, mouse))
+                    {
+                        ofstream op;
+                        string destination = "export";
+                        ExportStudentTofile(op, destination, course);
+                    }
                 }
                 break;
             }
@@ -1452,6 +1459,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(menu.draw);
+        window.draw(eXport.draw);
         window.draw(o2.draw);
         window.draw(name.txt);
         window.draw(num.txt);
