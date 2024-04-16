@@ -28,7 +28,6 @@ void addNewYearNode(YearNode *&head, Year p_year)
             list_year = list_year->next;
         list_year->next = new_year_node;
     }
-    return;
 }
 
 YearNode *searchYearNode(YearNode *head, string year)
@@ -38,6 +37,7 @@ YearNode *searchYearNode(YearNode *head, string year)
         cout << "Cannot find the searched year..." << endl;
         return nullptr;
     }
+
     YearNode *list_year = head;
     while (list_year)
     {
@@ -46,6 +46,7 @@ YearNode *searchYearNode(YearNode *head, string year)
         else
             list_year = list_year->next;
     }
+
     cout << "Cannot find the searched year..." << endl;
     return nullptr;
 }
@@ -54,6 +55,7 @@ void removeNewYearNode(YearNode *&head, Year year)
 {
     if (!head)
         return;
+
     YearNode *list_year = head;
     while (list_year && list_year->next)
     {
@@ -184,4 +186,16 @@ bool exportYear(YearNode *&year_list, string filename, ofstream &fout)
 
     fout.close();
     return true;
+}
+
+void deleteYearList(YearNode*& year_list)
+{
+    while (year_list)
+    {
+        YearNode* temp = year_list;
+        deleteClassSubList(temp->school_year.classSublist);
+        deleteSemesterList(temp->school_year.list_sem);
+        year_list = year_list->next;
+        delete temp;
+    }
 }

@@ -75,8 +75,6 @@ struct Course
 
 struct CourseNode
 {
-	//string semester_id;
-	//string year_id;
 	Course course;
 	CourseNode* next = nullptr;
 };
@@ -117,7 +115,6 @@ struct Student
 	string dob;
 	string social_id;
 	string password = "123456";
-	string student_class;
 	ResultsNode* results_list = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;

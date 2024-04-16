@@ -26,6 +26,7 @@ void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file)
 
     ip.close();
 }
+
 void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
 {
     ip.open(file);
@@ -52,30 +53,37 @@ void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
 
     ip.close();
 }
+
 bool LoginForStudent(StudentNode *StuPass, string &username, string &pass)
 {
     if (!StuPass)
         return false;
+
     StudentNode *tmp = StuPass;
     for (tmp; tmp != NULL; tmp = tmp->next)
     {
         if (tmp->student.student_id == username && tmp->student.password == pass)
             return true;
     }
+
     return false;
 }
+
 bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass)
 {
     if (!StaffPass)
         return false;
+
     StaffNode *tmp = StaffPass;
     for (tmp; tmp != NULL; tmp = tmp->next)
     {
         if (tmp->staff.username == username && tmp->staff.password == pass)
             return true;
     }
+
     return false;
 }
+
 void UpdateStuPassFile(StudentNode *List, ofstream &op)
 {
     op.open("../database/Students_Password.csv");
@@ -86,8 +94,10 @@ void UpdateStuPassFile(StudentNode *List, ofstream &op)
         if (tmp->next != NULL)
             op << endl;
     }
+
     op.close();
 }
+
 void UpdateStaffPassFile(StaffNode *List, ofstream &op)
 {
     op.open("../database/Staff_Password.csv");
@@ -98,8 +108,10 @@ void UpdateStaffPassFile(StaffNode *List, ofstream &op)
         if (tmp->next != NULL)
             op << endl;
     }
+
     op.close();
 }
+
 bool ChangePassStudent(StudentNode *current)
 {
     while (1)
@@ -122,6 +134,7 @@ bool ChangePassStudent(StudentNode *current)
         }
     }
 }
+
 bool ChangePassStaff(StaffNode *current)
 {
     while (1)
@@ -137,9 +150,11 @@ bool ChangePassStaff(StaffNode *current)
             // cout << "Password changed successfully" << endl;
             return true;
         }
+
         return false;
     }
 }
+
 Staff createStaff(string p_staff_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass)
 {
     Staff person;
@@ -173,7 +188,6 @@ void addNewStaffNode(StaffNode *&head, Staff new_staff)
             list_Staff = list_Staff->next;
         list_Staff->next = new_staff_node;
     }
-    return;
 }
 
 void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename)
@@ -196,6 +210,7 @@ void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename)
 
         addNewStaffNode(Staff_list, temp);
     }
+
     ip.close();
 }
 
@@ -206,6 +221,7 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id)
         cout << "Cannot find the searched staff..." << endl;
         return nullptr;
     }
+
     StaffNode *list_staff = head;
     while (list_staff)
     {
@@ -214,6 +230,7 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id)
         else
             list_staff = list_staff->next;
     }
+
     cout << "Cannot find the searched staff..." << endl;
     return nullptr;
 }
@@ -224,7 +241,24 @@ void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename)
     
     for (StaffNode *tmp = Staff_list; tmp != nullptr; tmp = tmp->next)
     {
-        op << tmp->staff.username << "," << tmp->staff.first_name << "," << tmp->staff.last_name << "," << tmp->staff.gender << "," << tmp->staff.dob << "," << tmp->staff.social_id << "," << tmp->staff.password << endl;
+        op << tmp->staff.username << ","
+            << tmp->staff.first_name << ","
+            << tmp->staff.last_name << ","
+            << tmp->staff.gender << ","
+            << tmp->staff.dob << ","
+            << tmp->staff.social_id << ","
+            << tmp->staff.password << endl;
     }
+
     op.close();
+}
+
+void deleteStaffList(StaffNode*& staffList)
+{
+    while (staffList)
+    {
+        StaffNode* temp = staffList;
+		staffList = staffList->next;
+		delete temp;
+	}
 }

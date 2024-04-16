@@ -1,4 +1,5 @@
 #include "../struct_and_function/function.h"
+
 Class CreateClass(string classid)
 {
     Class newclass;
@@ -18,9 +19,7 @@ ClassNode *InitializeClassNode(Class newclass)
 void AddClassNode(ClassNode *&head, ClassNode *newclassnode)
 {
     if (!head)
-    {
         head = newclassnode;
-    }
     else
     {
         ClassNode *List_Class = head;
@@ -30,37 +29,6 @@ void AddClassNode(ClassNode *&head, ClassNode *newclassnode)
     }
 }
 
-// void DeleteClassNode(ClassNode *&head, Class del_class)
-// {
-//     if (!head)
-//     {
-//         cout << "Invalid.\n";
-//         return;
-//     }
-//     if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
-//     {
-//         ClassNode *tmp = head;
-//         head = head->next;
-//         delete tmp;
-//         return;
-//     }
-//     ClassNode *tmp = head;
-//     while (tmp && tmp->next)
-//     {
-//         if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
-//         {
-//             ClassNode *delnode = tmp->next;
-//             tmp->next = tmp->next->next;
-//             delete delnode;
-//             return;
-//         }
-//         else
-//         {
-//             tmp = tmp->next;
-//         }
-//     }
-//     cout << "the class that need to remove don't exist.\n";
-// }
 
 // ClassNode *SearchClassNode(ClassNode *&head, string searchclassid1, string searchclassid2)
 // {
@@ -150,6 +118,7 @@ void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout)
             Listclass = Listclass->next;
         }
     }
+
     fout.close();
 }
 
@@ -163,6 +132,7 @@ ClassSubNode *findClasses(ClassNode *head, string input)
             appendClassSubNode(sort, createClassSubNode(curr));
         curr = curr->next;
     }
+
     return sort;
 }
 
@@ -252,6 +222,7 @@ ClassNode *searchClassNode(ClassNode *allClass, string class_id)
         curr = curr->next;
     }
 
+    cout << "Cannot find class " << class_id << endl;
     return nullptr;
 }
 
@@ -282,8 +253,65 @@ void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout)
     ClassSubNode *curr = classSublist;
     while (curr)
     {
-        fout << curr->class_node->my_class.class_id << ",";
+        fout << curr->class_node->my_class.class_id;
+        if (curr->next)
+			fout << ",";
+
         curr = curr->next;
     }
+
     fout << endl;
 }
+
+ //void DeleteClassNode(ClassNode *&head, Class del_class)
+ //{
+ //    if (!head)
+ //    {
+ //        cout << "Invalid.\n";
+ //        return;
+ //    }
+ //    if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
+ //    {
+ //        ClassNode *tmp = head;
+ //        head = head->next;
+ //        delete tmp;
+ //        return;
+ //    }
+ //    ClassNode *tmp = head;
+ //    while (tmp && tmp->next)
+ //    {
+ //        if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
+ //        {
+ //            ClassNode *delnode = tmp->next;
+ //            tmp->next = tmp->next->next;
+ //            delete delnode;
+ //            return;
+ //        }
+ //        else
+ //        {
+ //            tmp = tmp->next;
+ //        }
+ //    }
+ //    cout << "the class that need to remove don't exist.\n";
+ //}
+
+void deleteClassList(ClassNode*& classList)
+{
+    while (classList)
+    {
+        ClassNode* temp = classList;
+        deleteStudentList(temp->my_class.student_list);
+        classList = classList->next;
+        delete temp;
+    }
+}
+
+ void deleteClassSubList(ClassSubNode*& classSublist)
+ {
+     while (classSublist)
+     {
+		 ClassSubNode *temp = classSublist;
+		 classSublist = classSublist->next;
+		 delete temp;
+	 }
+ }

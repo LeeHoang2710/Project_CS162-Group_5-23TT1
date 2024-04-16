@@ -17,9 +17,10 @@ void addNewStaffNode(StaffNode *&head, Staff new_staff);
 void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename);
 StaffNode *searchStaffNode(StaffNode *head, string staff_1_id);
 void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename);
+void deleteStaffList(StaffNode*& staffList);
 
 // Student
-Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass, string p_class);
+Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass);
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 bool removeStudentNode(StudentNode *&head, string studentId);
@@ -27,6 +28,7 @@ StudentNode *searchStudentNode(StudentNode *head, string student_1_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
 bool importNewStudentsFromStaff(ClassNode*& classNode, string file_name, ifstream& fin);
+void deleteStudentList(StudentNode*& studentList);
 
 // Year
 Year createYear(string p_year_id, ClassSubNode* classSublist);
@@ -51,18 +53,19 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course);
 // void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
-bool deleteCourse(CourseNode *&CourseHead, string delCourse);
+bool deleteCourseNode(CourseNode*& CourseHead, string course_id, string year_id, string sem_id);
 bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode*& curr, Course newOne, string year_id, string sem_id);
 CourseNode *findCourse(CourseNode *head, string input);
+void deleteCourseList(CourseNode*& courseList);
 
 // Class
 Class CreateClass(string classid);
 ClassNode *InitializeClassNode(Class newclass);
 void AddClassNode(ClassNode*& head, ClassNode* newclassnode);
-void DeleteClassNode(ClassNode *&head, Class del_class);
+//void deleteClassNode(ClassNode *&head, Class del_class);
 //ClassNode *SearchClassNode(ClassNode *&head, string searchclass);
 //void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent);
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
@@ -71,6 +74,7 @@ ClassSubNode *findClasses(ClassNode *head, string input);
 //void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
 //void exportClass(ClassNode *class_list, ofstream &fout);
 bool importNewClassesFromStaff(YearNode* currYearNode, ClassNode*& Listclass, string file_name, ifstream& fin);
+void deleteClassList(ClassNode*& classList);
 
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
@@ -83,6 +87,9 @@ float updateTotalGpa(StudentNode *studentNode);
 ResultsNode* searchResultsNode(ResultsNode* results_list, string course_id, string year_id, string sem_id);
 void updateCourseIdForClass(ClassNode*& classNode, string old_course_id, string new_course_id, string year_id, string sem_id);
 bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr);
+bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_id, string sem_id);
+void deleteCourseResultsForClass(StudentNode*& studentList, string course_id, string year_id, string sem_id);
+void deleteResultsList(ResultsNode*& resultsList);
 void ExportStudentTofile(ofstream& op, string destination, CourseNode* curr);
 
 //Class helper
@@ -94,3 +101,4 @@ void addResultsNodeToClass(ClassNode*& classNode, const string& year_id, const s
 ClassNode* searchClassNode(ClassNode* allClass, string class_id);
 bool importClassSubNode(ClassNode* allClass, Year& year, stringstream& ss);
 void exportClassSubNode(ClassSubNode* classSublist, ofstream& fout);
+void deleteClassSubList(ClassSubNode*& classSublist);
