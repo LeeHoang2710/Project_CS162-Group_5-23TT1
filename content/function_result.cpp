@@ -175,55 +175,41 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode* allClass)
     fout.close();
 }
 
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr)
-{
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem,Course& curr) {
+
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem, Course& curr) {
     fin.open(filename);
     if (!fin.is_open())
         cout << "can not open results file to course" << endl;
-
-    string course_cpr, year_cpr, sem_cpr;
-    getline(fin, course_cpr, '\n');
-    getline(fin, year_cpr, '\n');
-    getline(fin, sem_cpr, '\n');
-    if (course_cpr != curr.course_id || year_cpr != yr || sem_cpr != sem)
-    {
-    if (!fin.is_open()) { 
-        fin.close();
-        cout << "can not open results file to course" << endl;
-        return false;
-    }
-
     while (!fin.eof())
     {
-        string stu_find;
-    string read;
-    getline(fin, read,'\n');
-    while (!fin.eof()) {
         string no, stu_find, fullname;
-        getline(fin, no, ',');
-        getline(fin, stu_find, ',');
-        getline(fin, fullname, ',');
-        StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
-        if (stuTemp == nullptr)
-        {
-            cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
-            fin.close();
-            return false;
+        string read;
+        getline(fin, read, '\n');
+        while (!fin.eof()) {
+            string no, stu_find, fullname;
+            getline(fin, no, ',');
+            getline(fin, stu_find, ',');
+            getline(fin, fullname, ',');
+            StudentNode* stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
+            if (stuTemp == nullptr)
+            {
+                cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
+                fin.close();
+                return false;
+            }
+            ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
+            string p, m, f;
+            getline(fin, p, ',');
+            getline(fin, m, ',');
+            getline(fin, f, ',');
+            change->results.score.process = stof(p);
+            change->results.score.midterm = stof(m);
+            change->results.score.final = stof(f);
         }
 
-        ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
-        string p, m, f;
-        getline(fin, p, ',');
-        getline(fin, m, ',');
-        getline(fin, f, ',');
-        change->results.score.process = stof(p);
-        change->results.score.midterm = stof(m);
-        change->results.score.final = stof(f);
+        fin.close();
+        return true;
     }
-
-    fin.close();
-    return true;
 }
 
 bool deleteResultsNode(ResultsNode*& resultsList, string course_id, string year_id, string sem_id)
@@ -272,7 +258,6 @@ void deleteResultsList(ResultsNode*& resultsList)
 		resultsList = resultsList->next;
 		delete temp;
 	}
-}
 }
 
 void ExportStudentTofile(ofstream& op, string destination, CourseNode* curr) {
