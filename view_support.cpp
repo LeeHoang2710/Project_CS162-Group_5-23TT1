@@ -123,10 +123,10 @@ void Typing(bool &texting, Info &infor, string &input, Event event)
 	}
 }
 
-void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o)
+void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period)
 {
 	if (change)
 		window.draw(o.draw);
-	if (change && clock.getElapsedTime().asSeconds() >= 2)
+	if (change && clock.getElapsedTime().asSeconds() >= period)
 		change = false;
 }

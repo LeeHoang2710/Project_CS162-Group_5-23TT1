@@ -38,7 +38,7 @@ void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check);
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu);
 void changePosition(Object &a, float x, float y);
 void Typing(bool &texting, Info &info, string &input, Event event);
-void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o);
+void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass, StaffNode *&user);

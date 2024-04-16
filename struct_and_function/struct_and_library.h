@@ -25,20 +25,21 @@ struct ClassSubNode;
 struct Score;
 struct Student;
 struct StudentNode;
+struct StudentSubNode;
 struct Results;
 struct ResultsNode;
 
 struct Year
 {
 	string year_id;
-	ClassSubNode* classSublist = nullptr;
-	SemesterNode* list_sem = nullptr;
+	ClassSubNode *classSublist = nullptr;
+	SemesterNode *list_sem = nullptr;
 };
 
 struct YearNode
 {
 	Year school_year;
-	YearNode* next = nullptr;
+	YearNode *next = nullptr;
 };
 
 struct Semester
@@ -46,19 +47,19 @@ struct Semester
 	string start_date;
 	string end_date;
 	string semester_id;
-	CourseNode* course_list = nullptr;
+	CourseNode *course_list = nullptr;
 };
 
 struct SemesterNode
 {
 	Semester sem;
-	SemesterNode* next = nullptr;
+	SemesterNode *next = nullptr;
 };
 
 struct Session
 {
 	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
-	int session_no;      // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
+	int session_no;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 
 struct Course
@@ -69,32 +70,32 @@ struct Course
 	int num_credit;
 	int max_students = 50;
 	Session teaching_session;
-	ClassNode* main_class = nullptr;
-	// StudentNode *student_list = nullptr;
+	ClassNode *main_class = nullptr;
+	StudentSubNode *extra_stu = nullptr;
 };
 
 struct CourseNode
 {
 	Course course;
-	CourseNode* next = nullptr;
+	CourseNode *next = nullptr;
 };
 
 struct Class
 {
 	string class_id;
-	StudentNode* student_list = nullptr;
+	StudentNode *student_list = nullptr;
 };
 
 struct ClassNode
 {
 	Class my_class;
-	ClassNode* next = nullptr;
+	ClassNode *next = nullptr;
 };
 
 struct ClassSubNode // for Year, classNode Containter
 {
-	ClassNode* class_node = nullptr;
-	ClassSubNode* next = nullptr;
+	ClassNode *class_node = nullptr;
+	ClassSubNode *next = nullptr;
 };
 
 struct Score
@@ -115,7 +116,7 @@ struct Student
 	string dob;
 	string social_id;
 	string password = "123456";
-	ResultsNode* results_list = nullptr;
+	ResultsNode *results_list = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
@@ -123,7 +124,13 @@ struct Student
 struct StudentNode
 {
 	Student student;
-	StudentNode* next = nullptr;
+	StudentNode *next = nullptr;
+};
+
+struct StudentSubNode
+{
+	StudentNode *student_node = nullptr;
+	StudentSubNode *next = nullptr;
 };
 
 struct Results
@@ -137,7 +144,7 @@ struct Results
 struct ResultsNode
 {
 	Results results;
-	ResultsNode* next = nullptr;
+	ResultsNode *next = nullptr;
 };
 
 struct Staff
@@ -153,5 +160,5 @@ struct Staff
 struct StaffNode
 {
 	Staff staff;
-	StaffNode* next = nullptr;
+	StaffNode *next = nullptr;
 };

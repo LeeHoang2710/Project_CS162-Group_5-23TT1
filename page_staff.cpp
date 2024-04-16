@@ -663,7 +663,7 @@ void addSemester(RenderWindow &window, YearNode *&check, int &page, bool &Exit)
             window.draw(b.draw);
             window.draw(menu.draw);
             window.draw(append.draw);
-            objectAppear(window, save, clock, saved);
+            objectAppear(window, save, clock, saved, 2);
             window.display();
         }
     }
@@ -1058,7 +1058,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
         }
         for (int i = 0; i < 6; ++i)
             chooseDraw_1(window, yes[i], no[i], check_day[i]);
-        objectAppear(window, save, clock, saved);
+        objectAppear(window, save, clock, saved, 2);
         window.display();
     }
     for (int i = 0; i < 4; ++i)
@@ -1354,7 +1354,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         }
         for (int i = 0; i < 6; ++i)
             chooseDraw_1(window, yes[i], no[i], check_day[i]);
-        objectAppear(window, save, clock, saved);
+        objectAppear(window, save, clock, saved, 2);
 
         if (new_stu)
         {
@@ -1380,6 +1380,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
 void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem)
 {
     Event event;
+    Clock clock;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/course/update/res-cour-bg.png", 180, 120);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
@@ -1387,13 +1388,18 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object o2 = createObject("./image/page3-staff/result/gpa.png", 410, 721);
     Object eXport = createObject("./image/page3-staff/course/update/export.png", 822, 721);
+    Object export_file = createObject("./image/page3-staff/course/update/file_path.png", 423, 351);
     Info name = createText(course->course.course_id + " - " + course->course.course_name + " - " + course->course.main_class->my_class.class_id, 216, 155);
+    string destination = "export";
+    Info path = createText("", 474, 513);
+    path.txt.setStyle(Text::Regular);
+    path.txt.setCharacterSize(22);
     Info num = createText("", 460, 726);
     int count = 0, change = 0;
     for (StudentNode *curr = course->course.main_class->my_class.student_list; curr != nullptr; curr = curr->next)
         count++;
     num.txt.setString(to_string(count));
-    bool new_page = true;
+    bool new_page = true, success = false;
     StudentNode *stu_list = course->course.main_class->my_class.student_list;
     StudentNode *one[8];
     Info *res[8][6];
@@ -1443,8 +1449,9 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     if (isHere(eXport.bound, mouse))
                     {
                         ofstream op;
-                        string destination = "export";
                         ExportStudentTofile(op, destination, course);
+                        success = true;
+                        clock.restart();
                     }
                 }
                 break;
@@ -1459,8 +1466,8 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(menu.draw);
-        window.draw(eXport.draw);
         window.draw(o2.draw);
+        window.draw(eXport.draw);
         window.draw(name.txt);
         window.draw(num.txt);
         if (new_page && stu_list)
@@ -1496,6 +1503,14 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
             for (int j = 0; j < 7; ++j)
                 window.draw(res[i][j]->txt);
         }
+        if (success)
+        {
+            window.draw(export_file.draw);
+            path.txt.setString(destination);
+            window.draw(path.txt);
+        }
+        if (success && clock.getElapsedTime().asSeconds() >= 6)
+            success = false;
         window.display();
     }
     for (int i = 0; i < 8; ++i)
@@ -1737,7 +1752,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
         else
             window.draw(o9.draw);
         window.draw(b.draw);
-        objectAppear(window, Change, clock, success);
+        objectAppear(window, Change, clock, success, 2);
         if (Change)
             res.txt.setString(user->staff.password);
         window.draw(res.txt);

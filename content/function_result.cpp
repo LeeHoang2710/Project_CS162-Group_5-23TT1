@@ -262,7 +262,7 @@ void deleteResultsList(ResultsNode *&resultsList)
     }
 }
 
-void ExportStudentTofile(ofstream &op, string destination, CourseNode *curr)
+void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr)
 {
     string year_id = curr->course.main_class->my_class.student_list->student.results_list->results.year_id;
     string sem_id = curr->course.main_class->my_class.student_list->student.results_list->results.sem_id;
@@ -279,5 +279,6 @@ void ExportStudentTofile(ofstream &op, string destination, CourseNode *curr)
         op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final << "," << findcurr->results.score.overall << endl;
         tempstu = tempstu->next;
     }
+    destination = filename;
     op.close();
 }
