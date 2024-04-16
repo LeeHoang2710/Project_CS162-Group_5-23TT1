@@ -26,7 +26,7 @@ int main()
 
     success = importResults(fin, class_list, "./database/result.csv");
     if (!success)
-		cout << "Cannot import result" << endl;
+        cout << "Cannot import result" << endl;
 
     StaffNode *user = nullptr;
     while (window.isOpen())
@@ -85,7 +85,7 @@ int main()
     Exportallscoretofile(fout, "./database/result.csv", class_list);
     ExportStaff(user2, fout, "./database/staff_list.csv");
     deleteYearList(year);
-    delete user1, user2;
+    delete user, user1, user2;
     delete class_list;
 
     return 0;

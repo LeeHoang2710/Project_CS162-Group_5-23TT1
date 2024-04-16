@@ -272,7 +272,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
     Object import = createObject("./image/page3-staff/school_year/import.png", 589, 591);
     Object exit = createObject("./image/page2/exit.png", 1070, 305);
     Object valid = createObject("./image/page2/import-succ.png", 423, 351);
-    Object invalid = createObject("image/page2/invalid-path.png", 423, 351);
+    Object invalid = createObject("./image/page2/invalid-path.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info file = createText("", 560, 490);
     Object *add[4];
@@ -1364,7 +1364,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         {
             window.draw(alert.draw);
             window.draw(path.draw);
-            window.draw(import.draw);
+            window.draw(button.draw);
             window.draw(exit.draw);
             if (typing_path)
                 window.draw(file.txt);
@@ -1921,13 +1921,15 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
     Object exit2 = createObject("./image/page2/exit.png", 1044, 398);
     Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
     Object confirm = createObject("./image/page3-staff/course/confirm.png", 583, 566);
-    Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
-    Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
+    Object valid1 = createObject("./image/page2/delete-succ.png", 423, 351);
+    Object invalid1 = createObject("./image/page2/invalid-id.png", 423, 351);
 
     Object alert = createObject("./image/page3-staff/class/import-stu-bg.png", 301, 295);
     Object path = createObject("./image/page3-staff/school_year/file-path.png", 539, 482);
     Object import = createObject("./image/page3-staff/school_year/import.png", 589, 591);
     Object exit1 = createObject("./image/page2/exit.png", 1070, 305);
+    Object valid2 = createObject("./image/page2/import-succ.png", 423, 351);
+    Object invalid2 = createObject("./image/page2/invalid-path.png", 423, 351);
 
     Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
     Info kill = createText("", 560, 490);
@@ -2126,7 +2128,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 Confirm = false;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 3)
-                chooseDraw_2(window, valid, invalid, checkDel);
+                chooseDraw_2(window, valid1, invalid1, checkDel);
             else if (clock.getElapsedTime().asSeconds() >= 3)
                 showDelResult = false;
         }
@@ -2146,7 +2148,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 3)
-                chooseDraw_2(window, valid, invalid, checkPath);
+                chooseDraw_2(window, valid2, invalid2, checkPath);
             else if (clock.getElapsedTime().asSeconds() >= 3)
                 showImportResult = false;
         }
