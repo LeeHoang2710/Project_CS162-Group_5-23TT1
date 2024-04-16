@@ -275,13 +275,13 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
     Object invalid = createObject("./image/page2/invalid-path.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info file = createText("", 560, 490);
-    Object *add[4];
-    Info *id[4];
+    Object *add[4]{};
+    Info *id[4]{};
     YearNode *one[4];
     for (int i = 0; i < 4; ++i)
     {
-        add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        createObjectTest(add[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        createInfoTest(id[i], "", 316, 117 * i + 354);
         id[i]->txt.setFillColor(Color::Yellow);
         id[i]->txt.setStyle(Text::Bold);
     }
@@ -466,13 +466,13 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
-    Object *add[3];
-    Info *id[3];
+    Object *add[3]{};
+    Info *id[3]{};
     SemesterNode *sem[3];
     for (int i = 0; i < 3; ++i)
     {
-        add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        createObjectTest(add[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        createInfoTest(id[i], "", 316, 117 * i + 354);
         id[i]->txt.setFillColor(Color::Yellow);
         id[i]->txt.setStyle(Text::Bold);
     }
@@ -691,13 +691,13 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Info total = createText("", 1050, 258);
     Info title = createText(yr + " - " + sem, 475, 168);
     Info kill = createText("", 560, 490);
-    Object *subject[4];
-    Info *inf[4];
+    Object *subject[4]{};
+    Info *inf[4]{};
     CourseNode *one[4];
     for (int i = 0; i < 4; ++i)
     {
-        subject[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        inf[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        createObjectTest(subject[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        createInfoTest(inf[i], "", 316, 117 * i + 354);
         inf[i]->txt.setFillColor(Color::Yellow);
         inf[i]->txt.setStyle(Text::Bold);
     }
@@ -871,20 +871,20 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
     Clock clock;
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_stu = false, typing_cre = false, save = false;
 
-    Info *inf[4];
-    Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    Info *inf[4]{};
+    Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
     bool check_day[6], check_sess[4];
     for (int i = 0; i < 4; ++i)
     {
-        inf[i] = createInfoTest("", 512, 377 + 61 * i);
-        yes_sess[i] = createObjectTest("./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
-        no_sess[i] = createObjectTest("./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+        createInfoTest(inf[i], "", 512, 377 + 61 * i);
+        createObjectTest(yes_sess[i], "./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
+        createObjectTest(no_sess[i], "./image/page3-staff/course/no.png", 398 + 185 * i, 732);
         check_sess[i] = false;
     }
     for (int i = 0; i < 6; ++i)
     {
-        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
-        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
+        createObjectTest(yes[i], "./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
+        createObjectTest(no[i], "./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
         check_day[i] = false;
     }
     Info stu = createText("", 525, 625);
@@ -1101,20 +1101,20 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
 
     bool new_stu = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
 
-    Info *inf[4];
-    Object *yes[6], *no[6], *yes_sess[4], *no_sess[4];
+    Info *inf[4]{};
+    Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
     bool check_day[6], check_sess[4];
     for (int i = 0; i < 4; ++i)
     {
-        inf[i] = createInfoTest("", 512, 377 + 61 * i);
-        yes_sess[i] = createObjectTest("./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
-        no_sess[i] = createObjectTest("./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+        createInfoTest(inf[i], "", 512, 377 + 61 * i);
+        createObjectTest(yes_sess[i], "./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
+        createObjectTest(no_sess[i], "./image/page3-staff/course/no.png", 398 + 185 * i, 732);
         check_sess[i] = false;
     }
     for (int i = 0; i < 6; ++i)
     {
-        yes[i] = createObjectTest("./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
-        no[i] = createObjectTest("./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
+        createObjectTest(yes[i], "./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
+        createObjectTest(no[i], "./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
         check_day[i] = false;
     }
     Info stu = createText(to_string(course->course.max_students), 525, 625);
@@ -1410,15 +1410,15 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     bool new_page = true, success = false;
     StudentNode *stu_list = course->course.main_class->my_class.student_list;
     StudentNode *one[8];
-    Info *res[8][6];
+    Info *res[8][6]{};
     for (int i = 0; i < 8; ++i)
     {
-        res[i][0] = createInfoTest("", 220, 298 + 48 * i);
-        res[i][1] = createInfoTest("", 405, 298 + 48 * i);
-        res[i][2] = createInfoTest("", 690, 298 + 48 * i);
-        res[i][3] = createInfoTest("", 835, 298 + 48 * i);
-        res[i][4] = createInfoTest("", 980, 298 + 48 * i);
-        res[i][5] = createInfoTest("", 1140, 298 + 48 * i);
+        createInfoTest(res[i][0], "", 220, 298 + 48 * i);
+        createInfoTest(res[i][1], "", 405, 298 + 48 * i);
+        createInfoTest(res[i][2], "", 690, 298 + 48 * i);
+        createInfoTest(res[i][3], "", 835, 298 + 48 * i);
+        createInfoTest(res[i][4], "", 980, 298 + 48 * i);
+        createInfoTest(res[i][5], "", 1140, 298 + 48 * i);
         for (int j = 0; j < 6; ++j)
             res[i][j]->txt.setCharacterSize(24);
     }
@@ -1783,14 +1783,14 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Object inval = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info sort_input = createText("", 330, 264);
-    Object *add[4];
-    Info *id[4];
+    Object *add[4]{};
+    Info *id[4]{};
     ClassNode *one[4];
     ClassSubNode *res = nullptr;
     for (int i = 0; i < 4; ++i)
     {
-        add[i] = createObjectTest("./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
-        id[i] = createInfoTest("demo-text", 316, 117 * i + 354);
+        createObjectTest(add[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        createInfoTest(id[i], "demo-text", 316, 117 * i + 354);
         id[i]->txt.setFillColor(Color::Yellow);
         id[i]->txt.setStyle(Text::Bold);
     }
@@ -1962,24 +1962,24 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
     Info kill = createText("", 560, 490);
     Info file = createText("", 560, 490);
 
-    Info *stu[7][7];
+    Info *stu[7][7]{};
     StudentNode *one[7];
     StudentNode *stu_list = class_list->my_class.student_list;
     for (int i = 0; i < 7; ++i)
     {
-        stu[i][0] = createInfoTest("", 270, 426 + 48 * i);
-        stu[i][1] = createInfoTest("", 342, 426 + 48 * i);
-        stu[i][2] = createInfoTest("", 498, 426 + 48 * i);
-        stu[i][3] = createInfoTest("", 595, 426 + 48 * i);
-        stu[i][4] = createInfoTest("", 820, 426 + 48 * i);
-        stu[i][5] = createInfoTest("", 895, 426 + 48 * i);
-        stu[i][6] = createInfoTest("", 1050, 426 + 48 * i);
+        createInfoTest(stu[i][0], "", 270, 426 + 48 * i);
+        createInfoTest(stu[i][1], "", 342, 426 + 48 * i);
+        createInfoTest(stu[i][2], "", 498, 426 + 48 * i);
+        createInfoTest(stu[i][3], "", 595, 426 + 48 * i);
+        createInfoTest(stu[i][4], "", 820, 426 + 48 * i);
+        createInfoTest(stu[i][5], "", 895, 426 + 48 * i);
+        createInfoTest(stu[i][6], "", 1050, 426 + 48 * i);
         for (int j = 0; j < 7; ++j)
             stu[i][j]->txt.setCharacterSize(24);
     }
-    Object *detail[7];
+    Object *detail[7]{};
     for (int i = 0; i < 7; ++i)
-        detail[i] = createObjectTest("./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
+        createObjectTest(detail[i], "./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
 
     bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
     bool Confirm = false, checkDel = false;
@@ -2204,16 +2204,16 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
     Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
     Info id = createText(student->student.student_id, 957, 144);
     Info gpa = createText("", 379, 721);
-    Info *res[8][7];
+    Info *res[8][7]{};
     for (int i = 0; i < 8; ++i)
     {
-        res[i][0] = createInfoTest("", 210, 298 + 48 * i);
-        res[i][1] = createInfoTest("", 330 + 5, 298 + 48 * i);
-        res[i][2] = createInfoTest("", 500, 298 + 48 * i);
-        res[i][3] = createInfoTest("", 700 - 10, 298 + 48 * i);
-        res[i][4] = createInfoTest("", 850 - 15, 298 + 48 * i);
-        res[i][5] = createInfoTest("", 1000 - 20, 298 + 48 * i);
-        res[i][6] = createInfoTest("", 1150 - 10, 298 + 48 * i);
+        createInfoTest(res[i][0], "", 210, 298 + 48 * i);
+        createInfoTest(res[i][1], "", 330 + 5, 298 + 48 * i);
+        createInfoTest(res[i][2], "", 500, 298 + 48 * i);
+        createInfoTest(res[i][3], "", 700 - 10, 298 + 48 * i);
+        createInfoTest(res[i][4], "", 850 - 15, 298 + 48 * i);
+        createInfoTest(res[i][5], "", 1000 - 20, 298 + 48 * i);
+        createInfoTest(res[i][6], "", 1150 - 10, 298 + 48 * i);
         for (int j = 0; j < 7; ++j)
             res[i][j]->txt.setCharacterSize(24);
     }
@@ -2321,11 +2321,11 @@ void Profile(RenderWindow &window, int &page, StaffNode *person, bool &Exit)
     Object dob = createObject("./image/page1/profile/dob.png", 504, 547);
     Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object *y[2], *n[2];
+    Object *y[2]{}, *n[2]{};
     for (int i = 0; i < 2; ++i)
     {
-        y[i] = createObjectTest("./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
-        n[i] = createObjectTest("./image/page3-staff/course/no.png", 453 + 354 * i, 637);
+        createObjectTest(y[i], "./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
+        createObjectTest(n[i], "./image/page3-staff/course/no.png", 453 + 354 * i, 637);
     }
     Info id = createText(person->staff.username, 475, 400);
     Info name = createText(person->staff.last_name + " " + person->staff.first_name, 490, 472);

@@ -26,10 +26,12 @@ struct Info
 };
 
 Object createObject(string input, float x, float y);
-Object *createObjectTest(string input, float x, float y);
+// Object *createObjectTest(string input, float x, float y);
+void createObjectTest(Object *&me, string s, float x, float y);
 Object createBackGround(string s);
 Info createText(string s, float x, float y);
-Info *createInfoTest(string s, float x, float y);
+// Info *createInfoTest(string s, float x, float y);
+void createInfoTest(Info *&a, string s, float x, float y);
 bool isHere(FloatRect &bound, Vector2f &mouse);
 void updateColorOnHover(RenderWindow &window, Object &o);
 bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y);
