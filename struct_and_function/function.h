@@ -92,7 +92,8 @@ void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, st
 void deleteResultsList(ResultsNode *&resultsList);
 void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr);
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
-// Class helper
+
+// ClassSubNode
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);
 bool exportYear(YearNode *&year_list, string filename, ofstream &fout);
 ClassSubNode *createClassSubNode(ClassNode *classNode);
@@ -102,3 +103,5 @@ ClassNode *searchClassNode(ClassNode *allClass, string class_id);
 bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss);
 void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout);
 void deleteClassSubList(ClassSubNode *&classSublist);
+
+// StudentSubNode

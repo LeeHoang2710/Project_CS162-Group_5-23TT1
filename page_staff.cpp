@@ -1004,10 +1004,15 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                         s1.day_of_the_week = day;
                         s1.session_no = sess;
                         Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), stoi(num), s1, classes, class_list);
-                        ClassNode *temp = searchClassNode(class_list, classes);
-                        addResultsNodeToClass(temp, yr, sem, cour_id);
-                        appendNewCourseNode(course, new_cour);
-                        save = true;
+                        if (!new_cour.main_class)
+                            save = false;
+                        else
+                        {
+                            addResultsNodeToClass(new_cour.main_class, yr, sem, cour_id);
+                            appendNewCourseNode(course, new_cour);
+                            save = true;
+                        }
+
                         clock.restart();
                     }
                     else
