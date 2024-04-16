@@ -34,7 +34,6 @@ Info createText(string s, float x, float y);
 void createInfoTest(Info *&a, string s, float x, float y);
 bool isHere(FloatRect &bound, Vector2f &mouse);
 void updateColorOnHover(RenderWindow &window, Object &o);
-bool Draw(RenderWindow &window, Vector2f &mouse, Object x, Object y);
 void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check);
 void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check);
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu);
@@ -43,7 +42,7 @@ void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user1, StaffNode *user2, string &name, string &pass, StaffNode *&user);
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user2, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1);
 void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
 void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, ClassNode *&class_list, bool &Exit);
 void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *class_list, bool &Exit);
@@ -55,6 +54,10 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list, bool &Exit);
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
-void Other(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
+void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
 void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, bool &Exit);
-void Profile(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
+void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
+
+void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
+void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
+void Profile2(RenderWindow &window, int &page, StudentNode *person, bool &Exit);

@@ -40,40 +40,49 @@ int main()
         case 2:
         {
             bool see = false;
-            logIn(window, page, is_staff, see, user1, user2, username, pass, user);
+            logIn(window, page, is_staff, see, class_list->my_class.student_list, user2, username, pass, user, user1);
             break;
         }
         case 3:
         {
             if (is_staff)
                 homeStaff(window, page, user, menu);
-            /*else
-                homeStudent(window, page); */
             break;
         }
-        case 4:
+        case 5:
         {
             School(window, page, is_staff, year, class_list, menu);
             break;
         }
-        case 16:
+        case 6:
         {
             Classes(window, page, is_staff, class_list, menu);
             break;
         }
-        case 19:
+        case 7:
         {
-            Other(window, page, user, menu);
+            Other1(window, page, user, menu);
             break;
         }
-        case 20:
+        case 8:
+        {
+            Other2(window, page, user1, menu);
+            break;
+        }
+
+        case 21:
         {
             changePassword(window, page, is_staff, user, menu);
             break;
         }
-        case 21:
+        case 22:
         {
-            Profile(window, page, user, menu);
+            Profile1(window, page, user, menu);
+            break;
+        }
+        case 23:
+        {
+            Profile2(window, page, user1, menu);
             break;
         }
 
@@ -96,9 +105,23 @@ int main()
 // page 1: who are you
 // page 2: log in
 // page 3: home staff
-// page 4: school year
-// page 5: semester
-// page 6: create sem
-// page 7: course
-// page 8: create cour
-// page 9: update cour
+// page 4: home student
+// page 5: school year
+// page 6: class
+// page 7: other - staff
+// page 8: course
+// page 9: scoreboard
+// page 10: other - student
+// page 11: semester
+// page 12: create sem
+// page 13: course
+// page 14: create cour
+// page 15: update cour
+// page 16: result cour
+// page 17: student
+// page 18: result stu
+// page 19: course - student
+// page 20: score - student
+// page 21: change password
+// page 22: profile - staff
+// page 23: profile - student

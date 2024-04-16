@@ -115,6 +115,7 @@ struct Student
 	bool gender; // male(0), female(1)
 	string dob;
 	string social_id;
+	string class_id;
 	string password = "123456";
 	ResultsNode *results_list = nullptr;
 	float cur_gpa = 0.0f;
