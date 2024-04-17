@@ -1898,7 +1898,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     int count = 0, change = 0;
     for (ClassNode *curr = class_list; curr; curr = curr->next)
         count++;
-    total.txt.setString(to_string(count));
+    total.txt.setString(to_string(count) + " classes");
     while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));

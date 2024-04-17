@@ -70,6 +70,11 @@ int main()
             Other1(window, page, user, menu);
             break;
         }
+        case 8:
+        {
+            courseStudent(window, page, year, user1, menu);
+            break;
+        }
         case 10:
         {
             Other2(window, page, user1, menu);
