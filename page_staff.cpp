@@ -353,7 +353,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                         new_page = true;
                         change -= 4;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 4)
                     {
                         new_page = true;
                         change += 4;
@@ -471,8 +471,6 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/school_year/semester-bg.png", 180, 120);
     Object create = createObject("./image/page3-staff/school_year/create_sem.png", 263, 259);
-    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
-    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object *add[3]{};
@@ -485,13 +483,15 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
         id[i]->txt.setFillColor(Color::Yellow);
         id[i]->txt.setStyle(Text::Bold);
     }
+    int count = 0;
+    for (SemesterNode *curr = year->school_year.list_sem; curr; curr = curr->next)
+        count++;
+
     while (window.isOpen() && page == 11)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, b);
         updateColorOnHover(window, create);
-        updateColorOnHover(window, prev);
-        updateColorOnHover(window, next);
         updateColorOnHover(window, menu);
         for (int i = 0; i < 3; ++i)
         {
@@ -511,7 +511,7 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
                 {
                     switchPage(b.bound, mouse, 5, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
-                    if (isHere(create.bound, mouse))
+                    if (isHere(create.bound, mouse) && count < 3)
                     {
                         page = 12;
                         addSemester(window, year, page, Exit);
@@ -540,8 +540,6 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
         window.draw(o1.draw);
         window.draw(create.draw);
         window.draw(b.draw);
-        window.draw(prev.draw);
-        window.draw(next.draw);
         window.draw(menu.draw);
         SemesterNode *temp = year->school_year.list_sem;
         for (int i = 0; i < 3; ++i)
@@ -699,6 +697,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info title = createText(yr + " - " + sem, 475, 168);
+    title.txt.setFillColor(Color::Red);
+    title.txt.setCharacterSize(40);
     Info kill = createText("", 560, 490);
     Object *subject[4]{};
     Info *inf[4]{};
@@ -756,7 +756,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         new_page = true;
                         change -= 4;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 4)
                     {
                         new_page = true;
                         change += 4;
@@ -1557,7 +1557,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                         new_page = true;
                         change -= 8;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 4)
                     {
                         new_page = true;
                         change += 8;
@@ -1690,7 +1690,7 @@ void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)
     }
 }
 
-void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, bool &Exit)
+void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, StudentNode *&person, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -1777,9 +1777,14 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
                     // we confirm the change successfully
                     else if (isHere(o3.bound, mouse))
                     {
-                        if (old_pass == user->staff.password)
+                        if (old_pass == user->staff.password && is_staff)
                         {
                             user->staff.password = new_pass;
+                            Change = true;
+                        }
+                        else if (old_pass == person->student.password && !is_staff)
+                        {
+                            person->student.password = new_pass;
                             Change = true;
                         }
                         else
@@ -1871,9 +1876,6 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
             window.draw(o9.draw);
         window.draw(b.draw);
         objectAppear(window, Change, clock, success, 2);
-        if (Change)
-            res.txt.setString(user->staff.password);
-        window.draw(res.txt);
         window.display();
     }
 }
@@ -1942,7 +1944,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                         new_page = true;
                         change -= 4;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 4)
                     {
                         new_page = true;
                         change += 4;
@@ -2157,7 +2159,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                     }
                     if (isHere(exit2.bound, mouse))
                         del_stu = false;
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 7)
                     {
                         new_page = true;
                         change += 7;
@@ -2405,7 +2407,7 @@ void studentResult(RenderWindow &window, int &page, StudentNode *&student)
                         new_page = true;
                         change -= 8;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 8)
                     {
                         new_page = true;
                         change += 8;

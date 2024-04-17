@@ -56,6 +56,9 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
     Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
     Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
     Info total = createText("", 1050, 258);
+    Info title = createText("Course - " + person->student.last_name + " " + person->student.first_name, 475, 168);
+    title.txt.setFillColor(Color::Red);
+    title.txt.setCharacterSize(40);
 
     ResultsNode *res = person->student.results_list;
     CourseNode *course[20]{};
@@ -126,7 +129,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
                         new_page = true;
                         change -= 4;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 4)
                     {
                         new_page = true;
                         change += 4;
@@ -157,6 +160,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
         window.draw(prev.draw);
         window.draw(next.draw);
         window.draw(total.txt);
+        window.draw(title.txt);
         if (new_page)
         {
 
@@ -190,7 +194,7 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
 
-    Object o1 = createObject("./image/page3-staff/course/update/update-cour-bg.png", 180, 120);
+    Object o1 = createObject("./image/page4-student/home/course-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
     Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
     Object o4 = createObject("./image/page3-staff/course/input.png", 497, 499);
@@ -275,16 +279,18 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object o1 = createObject("./image/page3-staff/result/result-bg.png", 180, 120);
+    Object o1 = createObject("./image/page4-student/home/result-bg.png", 180, 120);
     Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object o2 = createObject("./image/page3-staff/result/full-name.png", 342, 137);
     Object o3 = createObject("./image/page3-staff/result/id.png", 913, 137);
     Object o4 = createObject("./image/page3-staff/result/gpa.png", 350, 721);
+    Object o5 = createObject("./image/page3-staff/result/gpa.png", 684, 721);
     Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
     Info id = createText(student->student.student_id, 957, 144);
-    Info gpa = createText("", 379, 721);
+    Info curr_gpa = createText("", 379, 721);
+    Info total_gpa = createText("", 713, 721);
     Info *res[8][7]{};
     for (int i = 0; i < 8; ++i)
     {
@@ -329,7 +335,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
                         new_page = true;
                         change -= 8;
                     }
-                    if (isHere(next.bound, mouse))
+                    if (isHere(next.bound, mouse) && change <= count - 8)
                     {
                         new_page = true;
                         change += 8;
@@ -350,10 +356,13 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         window.draw(o2.draw);
         window.draw(o3.draw);
         window.draw(o4.draw);
+        window.draw(o5.draw);
         window.draw(name.txt);
         window.draw(id.txt);
-        gpa.txt.setString(to_string(student->student.total_gpa).substr(0, 4));
-        window.draw(gpa.txt);
+        curr_gpa.txt.setString(to_string(student->student.cur_gpa).substr(0, 4));
+        total_gpa.txt.setString(to_string(student->student.total_gpa).substr(0, 4));
+        window.draw(curr_gpa.txt);
+        window.draw(total_gpa.txt);
         if (new_page && res_list)
         {
             ResultsNode *temp = res_list;
@@ -396,7 +405,7 @@ void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
-    Object o1 = createObject("./image/page3-staff/other/other-bg.png", 180, 120);
+    Object o1 = createObject("./image/page4-student/home/other-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/other/log-out.png", 230, 354);
     Object o3 = createObject("./image/page3-staff/other/change-pass.png", 230, 465);
     Object o4 = createObject("./image/page3-staff/other/profile.png", 230, 576);

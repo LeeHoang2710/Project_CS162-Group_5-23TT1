@@ -55,7 +55,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
 void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
-void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, bool &Exit);
+void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, StudentNode *&person, bool &Exit);
 void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
 
 void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);

@@ -88,7 +88,7 @@ int main()
 
         case 21:
         {
-            changePassword(window, page, is_staff, user, menu);
+            changePassword(window, page, is_staff, user, user1, menu);
             break;
         }
         case 22:
