@@ -61,12 +61,13 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
     Object o6 = createObject("./image/page2/alert.png", 423, 351);
     Object o7 = createObject("./image/page2/open.png", 1003, 533);
     Object o8 = createObject("./image/page2/closed.png", 1003, 533);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
 
     Info inputUsername = createText("", 641.0f, 432.0f);
     Info inputPassword = createText("", 641.0f, 522.0f);
     bool isTypingUsername = false, isTypingPassword = false, log_in = true;
     Clock clock;
-    string username = "", password = "", hidden_pass = "";
+    string username = "", password = "", hidden_pass = "", class_id = "";
 
     while (window.isOpen() && page == 2)
     {
@@ -83,6 +84,11 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
+                    if (isHere(menu.bound, mouse))
+                    {
+                        page = 1;
+                        return;
+                    }
                     if (isHere(o4.bound, mouse))
                     {
                         isTypingUsername = true;
@@ -119,11 +125,12 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
                             page = 3;
                             user = searchStaffNode(user3, name);
                         }
-                        else if (!is_staff && LoginForStudent(class_list, name, pass))
+                        else if (!is_staff && LoginForStudent(class_list, name, pass, class_id))
                         {
                             log_in = true;
                             page = 4;
                             user1 = searchStudentNode(class_list, name);
+                            user1->student.class_id = class_id;
                         }
                         else
                             log_in = false;
@@ -2469,7 +2476,7 @@ void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit)
     Info date = createText(person->staff.dob, 525, 555);
     Info social = createText(person->staff.social_id, 475, 708);
 
-    while (window.isOpen() && page == 21)
+    while (window.isOpen() && page == 22)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, menu);

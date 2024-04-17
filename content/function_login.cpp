@@ -54,7 +54,7 @@ void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
     ip.close();
 }
 
-bool LoginForStudent(ClassNode *StuPass, string &username, string &pass)
+bool LoginForStudent(ClassNode *StuPass, string &username, string &pass, string &class_id)
 {
     if (!StuPass)
         return false;
@@ -65,7 +65,10 @@ bool LoginForStudent(ClassNode *StuPass, string &username, string &pass)
         for (tmp; tmp != NULL; tmp = tmp->next)
         {
             if (tmp->student.student_id == username && tmp->student.password == pass)
+            {
+                class_id = login->my_class.class_id;
                 return true;
+            }
         }
     }
 

@@ -49,6 +49,12 @@ int main()
                 homeStaff(window, page, user, menu);
             break;
         }
+        case 4:
+        {
+            if (!is_staff)
+                homeStudent(window, page, user1, menu);
+            break;
+        }
         case 5:
         {
             School(window, page, is_staff, year, class_list, menu);
@@ -64,7 +70,7 @@ int main()
             Other1(window, page, user, menu);
             break;
         }
-        case 8:
+        case 10:
         {
             Other2(window, page, user1, menu);
             break;
@@ -82,7 +88,7 @@ int main()
         }
         case 23:
         {
-            Profile2(window, page, user1, menu);
+            Profile2(window, page, class_list, user1, menu);
             break;
         }
 

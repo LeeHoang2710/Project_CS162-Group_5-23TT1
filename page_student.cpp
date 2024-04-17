@@ -55,7 +55,7 @@ void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
     Object o4 = createObject("./image/page3-staff/other/profile.png", 230, 576);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
-    while (window.isOpen() && page == 8)
+    while (window.isOpen() && page == 10)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, b);
@@ -78,7 +78,7 @@ void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
                     switchPage(menu.bound, mouse, 4, page, Exit);
                     switchPage(o2.bound, mouse, 1, page, Exit);
                     switchPage(o3.bound, mouse, 21, page, Exit);
-                    switchPage(o4.bound, mouse, 22, page, Exit);
+                    switchPage(o4.bound, mouse, 23, page, Exit);
                 }
                 break;
             }
@@ -99,7 +99,7 @@ void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
     }
 }
 
-void Profile2(RenderWindow &window, int &page, StudentNode *person, bool &Exit)
+void Profile2(RenderWindow &window, int &page, ClassNode *class_list, StudentNode *person, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -118,10 +118,10 @@ void Profile2(RenderWindow &window, int &page, StudentNode *person, bool &Exit)
     }
     Info id = createText(person->student.student_id, 475, 400);
     Info name = createText(person->student.last_name + " " + person->student.first_name, 490, 472);
-    Info date = createText(person->student.dob, 520, 555);
-    Info class_id = createText("bug class id", 940, 555);
+    Info date = createText(person->student.dob, 520, 553);
+    Info class_id = createText(person->student.class_id, 940, 553);
     Info social = createText(person->student.social_id, 475, 708);
-    while (window.isOpen() && page == 21)
+    while (window.isOpen() && page == 23)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, menu);

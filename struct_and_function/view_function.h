@@ -60,4 +60,4 @@ void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
 
 void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
 void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
-void Profile2(RenderWindow &window, int &page, StudentNode *person, bool &Exit);
+void Profile2(RenderWindow &window, int &page, ClassNode *class_list, StudentNode *person, bool &Exit);
