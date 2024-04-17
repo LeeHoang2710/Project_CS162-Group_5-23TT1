@@ -16,6 +16,11 @@ float updateTotalGpa(StudentNode *studentNode)
     return total / count;
 }
 
+void updateCourseOverall(Score& score)
+{
+	score.overall = 0.35 * score.process + 0.25 * score.midterm + 0.4 * score.final;
+}
+
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final)
 {
     Results newResults;
@@ -25,7 +30,7 @@ Results createResults(const string &course_id, const string &sem_id, const strin
     newResults.score.process = process;
     newResults.score.midterm = midterm;
     newResults.score.final = final;
-    newResults.score.overall = 0.35 * process + 0.25 * midterm + 0.4 * final;
+    updateCourseOverall(newResults.score);
     return newResults;
 }
 

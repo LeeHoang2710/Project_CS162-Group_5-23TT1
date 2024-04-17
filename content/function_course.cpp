@@ -206,13 +206,13 @@ CourseNode *findCourse(CourseNode *head, string input)
     return sort;
 }
 
-void deleteCourseList(CourseNode*& courseList)
+void deleteCourseList(CourseNode*& courseList, string year_id, string sem_id)
 {
     while (courseList)
     {
 		CourseNode *temp = courseList;
-        //deleteExtraStudents
-		courseList = courseList->next;
+        deleteAllExtraStudents(temp->course.extra_stu, temp->course.course_id, year_id, sem_id);
+        courseList = courseList->next;
 		delete temp;
 	}
 }
