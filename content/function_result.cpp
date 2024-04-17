@@ -15,7 +15,30 @@ float updateTotalGpa(StudentNode *studentNode)
 
     return total / count;
 }
-
+float UpdateCurGpa(StudentNode* studentNode) {
+    ResultsNode* currRes = studentNode->student.results_list;
+    string mostcuryear = "0000-0000", mostcursem = "Semester 0";
+    while (currRes) {
+        if (currRes->results.year_id > mostcuryear) {
+            mostcuryear = currRes->results.year_id;
+            mostcursem = currRes->results.sem_id;
+        }
+        else if (currRes->results.year_id == mostcuryear) {
+            if (currRes->results.sem_id > mostcursem) mostcursem = currRes->results.sem_id;
+        }
+        currRes = currRes->next;
+    }
+    currRes = studentNode->student.results_list;
+    float total = 0.0f;
+    int count = 0;
+    while (currRes) {
+        if (currRes->results.year_id == mostcuryear && currRes->results.sem_id == mostcursem) {
+            total += currRes->results.score.overall;
+            count++;
+        }
+    }
+    return total / count;
+}
 void updateCourseOverall(Score &score)
 {
     score.overall = 0.35 * score.process + 0.25 * score.midterm + 0.4 * score.final;

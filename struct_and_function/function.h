@@ -80,6 +80,7 @@ void deleteClassList(ClassNode *&classList);
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
+float UpdateCurGpa(StudentNode* studentNode);
 void updateCourseOverall(Score &score);
 void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process = 0.0f, float midterm = 0.0f, float final = 0.0f);
