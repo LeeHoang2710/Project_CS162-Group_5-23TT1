@@ -60,5 +60,7 @@ void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
 
 void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
 void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, StudentNode *person, bool &Exit);
+void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Exit);
+void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &Exit);
 void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
 void Profile2(RenderWindow &window, int &page, ClassNode *class_list, StudentNode *person, bool &Exit);

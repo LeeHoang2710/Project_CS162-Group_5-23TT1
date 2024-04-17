@@ -27,7 +27,10 @@ void addNewStudentNode(StudentNode *&head, Student new_student)
 {
     StudentNode *new_student_node = initStudentNode(new_student);
     if (!head)
+    {
         head = new_student_node;
+        head->student.num = 1;
+    }
     else
     {
         StudentNode *list_Student = head;
@@ -96,12 +99,12 @@ void exportStudentToFile(ofstream &file, StudentNode *list_student)
         {
             Student person = list_student->student;
             file << person.student_id << ","
-                << person.first_name << ","
-                << person.last_name << ","
-                << person.gender << ","
-                << person.dob << ","
-                << person.social_id << ","
-                << person.password << endl;
+                 << person.first_name << ","
+                 << person.last_name << ","
+                 << person.gender << ","
+                 << person.dob << ","
+                 << person.social_id << ","
+                 << person.password << endl;
             list_student = list_student->next;
         }
 
@@ -131,9 +134,9 @@ bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstrea
     return true;
 }
 
-void updateStudentsNumBeforeRemoval(StudentNode* studentNodeToDelete)
+void updateStudentsNumBeforeRemoval(StudentNode *studentNodeToDelete)
 {
-    StudentNode* temp = studentNodeToDelete->next;
+    StudentNode *temp = studentNodeToDelete->next;
     while (temp)
     {
         --(temp->student.num);
@@ -141,26 +144,26 @@ void updateStudentsNumBeforeRemoval(StudentNode* studentNodeToDelete)
     }
 }
 
-bool removeStudentNode(StudentNode*& head, string studentId)
+bool removeStudentNode(StudentNode *&head, string studentId)
 {
-    StudentNode* studentNodeToDelete = searchStudentNodeInOneClass(head, studentId);
+    StudentNode *studentNodeToDelete = searchStudentNodeInOneClass(head, studentId);
     if (!studentNodeToDelete)
     {
-		cout << "Student " << studentId << " does not exist." << endl;
-		return false;
-	}
+        cout << "Student " << studentId << " does not exist." << endl;
+        return false;
+    }
 
     updateStudentsNumBeforeRemoval(studentNodeToDelete);
     if (head == studentNodeToDelete)
-		head = head->next;
+        head = head->next;
     else
     {
-		StudentNode* temp = head;
-		while (temp->next != studentNodeToDelete)
-			temp = temp->next;
+        StudentNode *temp = head;
+        while (temp->next != studentNodeToDelete)
+            temp = temp->next;
 
-		temp->next = studentNodeToDelete->next;
-	}
+        temp->next = studentNodeToDelete->next;
+    }
 
     delete studentNodeToDelete;
     return false;
@@ -209,7 +212,7 @@ bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, str
     }
     else
     {
-        StudentNode* temp = searchStudentNodeInOneClass(courseNode->course.main_class->my_class.student_list, student_id);
+        StudentNode *temp = searchStudentNodeInOneClass(courseNode->course.main_class->my_class.student_list, student_id);
         if (temp == studentNode)
         {
             cout << "Student " << student_id << " already exists in course's main class " << courseNode->course.main_class->my_class.class_id << courseNode->course.course_id << endl;

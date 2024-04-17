@@ -58,7 +58,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
     Info total = createText("", 1050, 258);
 
     ResultsNode *res = person->student.results_list;
-    CourseNode* course[20]{};
+    CourseNode *course[20]{};
     Object *subject[4]{};
     Info *inf[4]{};
     for (int i = 0; i < 4; ++i)
@@ -96,7 +96,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
             }
         }
     }
-    total.txt.setString(to_string(count) + "courses");
+    total.txt.setString(to_string(count) + " courses");
     while (window.isOpen() && page == 8)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -130,6 +130,16 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
                     {
                         new_page = true;
                         change += 4;
+                    }
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (isHere(subject[i]->bound, mouse) && course[i])
+                        {
+                            page = 19;
+                            detailStudent(window, page, course[i], Exit);
+                            if (Exit)
+                                return;
+                        }
                     }
                 }
                 break;
@@ -171,6 +181,215 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
     }
     for (int i = 0; i < 4; ++i)
         delete subject[i], inf[i];
+}
+
+void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Exit)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+
+    Object o1 = createObject("./image/page3-staff/course/update/update-cour-bg.png", 180, 120);
+    Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
+    Object o3 = createObject("./image/page3-staff/course/input.png", 497, 438);
+    Object o4 = createObject("./image/page3-staff/course/input.png", 497, 499);
+    Object o5 = createObject("./image/page3-staff/course/input.png", 497, 560);
+    Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
+    Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
+
+    Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
+    Info *inf[4]{};
+    createInfoTest(inf[0], course->course.course_id, 512, 377);
+    createInfoTest(inf[1], course->course.course_name, 512, 438);
+    createInfoTest(inf[2], course->course.main_class->my_class.class_id, 512, 499);
+    createInfoTest(inf[3], course->course.teacher_name, 512, 560);
+    bool check_day[6], check_sess[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        createObjectTest(yes_sess[i], "./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
+        createObjectTest(no_sess[i], "./image/page3-staff/course/no.png", 398 + 185 * i, 732);
+        check_sess[i] = false;
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        createObjectTest(yes[i], "./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
+        createObjectTest(no[i], "./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
+        check_day[i] = false;
+    }
+    Info stu = createText(to_string(course->course.max_students), 525, 625);
+    Info cre = createText(to_string(course->course.num_credit), 985, 625);
+    int day = 0, sess = 0;
+    while (window.isOpen() && page == 19)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, b);
+        updateColorOnHover(window, menu);
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(b.bound, mouse, 8, page, Exit);
+                    switchPage(menu.bound, mouse, 4, page, Exit);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(menu.draw);
+        window.draw(o1.draw);
+        window.draw(o2.draw);
+        window.draw(o3.draw);
+        window.draw(o4.draw);
+        window.draw(o5.draw);
+        window.draw(o6.draw);
+        window.draw(o7.draw);
+        window.draw(b.draw);
+        window.draw(stu.txt);
+        window.draw(cre.txt);
+        check_day[course->course.teaching_session.day_of_the_week - 2] = true;
+        check_sess[course->course.teaching_session.session_no - 1] = true;
+        for (int i = 0; i < 4; ++i)
+        {
+            window.draw(inf[i]->txt);
+            chooseDraw_1(window, yes_sess[i], no_sess[i], check_sess[i]);
+        }
+        for (int i = 0; i < 6; ++i)
+            chooseDraw_1(window, yes[i], no[i], check_day[i]);
+        window.display();
+    }
+}
+
+void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &Exit)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object o1 = createObject("./image/page3-staff/result/result-bg.png", 180, 120);
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object o2 = createObject("./image/page3-staff/result/full-name.png", 342, 137);
+    Object o3 = createObject("./image/page3-staff/result/id.png", 913, 137);
+    Object o4 = createObject("./image/page3-staff/result/gpa.png", 350, 721);
+    Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
+    Info id = createText(student->student.student_id, 957, 144);
+    Info gpa = createText("", 379, 721);
+    Info *res[8][7]{};
+    for (int i = 0; i < 8; ++i)
+    {
+        createInfoTest(res[i][0], "", 210, 298 + 48 * i);
+        createInfoTest(res[i][1], "", 330 + 5, 298 + 48 * i);
+        createInfoTest(res[i][2], "", 500, 298 + 48 * i);
+        createInfoTest(res[i][3], "", 700 - 10, 298 + 48 * i);
+        createInfoTest(res[i][4], "", 850 - 15, 298 + 48 * i);
+        createInfoTest(res[i][5], "", 1000 - 20, 298 + 48 * i);
+        createInfoTest(res[i][6], "", 1150 - 10, 298 + 48 * i);
+        for (int j = 0; j < 7; ++j)
+            res[i][j]->txt.setCharacterSize(24);
+    }
+    int count = 0, change = 0;
+    bool new_page = true;
+    ResultsNode *res_list = student->student.results_list;
+    ResultsNode *one[8];
+    while (window.isOpen() && page == 9)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, menu);
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    if (isHere(menu.bound, mouse))
+                    {
+                        page = 4;
+                        return;
+                    }
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 8;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 8;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(menu.draw);
+        window.draw(o2.draw);
+        window.draw(o3.draw);
+        window.draw(o4.draw);
+        window.draw(name.txt);
+        window.draw(id.txt);
+        gpa.txt.setString(to_string(student->student.total_gpa).substr(0, 4));
+        window.draw(gpa.txt);
+        if (new_page && res_list)
+        {
+            ResultsNode *temp = res_list;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 8; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    res[i][0]->txt.setString(one[i]->results.course_id);
+                    res[i][1]->txt.setString(one[i]->results.sem_id);
+                    res[i][2]->txt.setString(one[i]->results.year_id);
+                    res[i][3]->txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
+                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
+                    res[i][5]->txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
+                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    temp = temp->next;
+                }
+                else
+                    res[i][0]->txt.setString("");
+            }
+            new_page = false;
+        }
+        for (int i = 0; i < 8; ++i)
+        {
+            if (res[i][0]->txt.getString() == "")
+                break;
+            for (int j = 0; j < 7; ++j)
+                window.draw(res[i][j]->txt);
+        }
+        window.display();
+    }
+    for (int i = 0; i < 8; ++i)
+        for (int j = 0; j < 7; ++j)
+            delete res[i][j];
 }
 
 void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)

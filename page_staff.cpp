@@ -876,13 +876,14 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
     Object o5 = createObject("./image/page3-staff/course/input.png", 497, 560);
     Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
     Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
+    Object success = createObject("./image/page2/import-succ.png", 423, 351);
 
     Object valid2 = createObject("./image/page3-staff/school_year/save-success.png", 423, 351);
     Object invalid2 = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
     Clock clock;
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_num = false, typing_cre = false;
 
-    bool save = false, check_class = false;
+    bool save = false, check_class = false, added = false;
 
     Info *inf[4]{};
     Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
@@ -1028,12 +1029,14 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
 
                         clock.restart();
                     }
-                    else if (isHere(import.bound, mouse)) {
+                    else if (isHere(import.bound, mouse))
+                    {
                         ifstream fin;
                         string filename;
-                        filename = "./database/manycourses.csv";
-                        importmanycourses(fin, filename, class_list, course, yr, sem);
-                        //them hien thi succcessfully; va nhap filename;
+                        filename = "./import/manycourses.csv";
+                        if (importmanycourses(fin, filename, class_list, course, yr, sem))
+                            added = true;
+                        // them hien thi succcessfully; va nhap filename;
                     }
                     else
                     {
@@ -1087,6 +1090,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
             objectAppear(window, save, clock, valid2, 2);
         else
             objectAppear(window, save, clock, invalid2, 2);
+        objectAppear(window, added, clock, success, 2);
         window.display();
     }
     for (int i = 0; i < 4; ++i)
