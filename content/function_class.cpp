@@ -29,62 +29,6 @@ void AddClassNode(ClassNode *&head, ClassNode *newclassnode)
     }
 }
 
-
-// ClassNode *SearchClassNode(ClassNode *&head, string searchclassid1, string searchclassid2)
-// {
-//     if (!head)
-//     {
-//         cout << "the class that need to find don't exist.\n";
-//         return nullptr;
-//     }
-//     if (head->my_class.class_id == searchclassid1 && head->my_class.academic_id == searchclassid2)
-//     {
-//         return head;
-//     }
-//     else
-//     {
-//         ClassNode *tmp = head->next;
-//         while (tmp)
-//         {
-//             if (tmp->my_class.class_id == searchclassid1 && tmp->my_class.academic_id == searchclassid2)
-//                 return tmp;
-//             else
-//                 tmp = tmp->next;
-//         }
-//         cout << "the class that need to find don't exist.\n";
-//         return nullptr;
-//     }
-// }
-
-// void AddStudent(ClassNode *&head, string classid, string academicid, StudentNode *newstudent)
-// {
-//     if (!head)
-//     {
-//         cout << "The class you want to join don't exist!\n";
-//         return;
-//     }
-//     ClassNode *tmp = head;
-//     while (tmp)
-//     {
-//         if (tmp->my_class.class_id == classid && tmp->my_class.academic_id == academicid)
-//         {
-//             StudentNode *Stulist = tmp->my_class.student_list;
-//             while (Stulist->next)
-//                 Stulist = Stulist->next;
-//             Stulist->next = newstudent;
-//             return;
-//         }
-//         else
-//         {
-//             tmp = tmp->next;
-//         }
-//     }
-//     if (!tmp)
-//     {
-//         cout << "The class you want to join don't exist!\n";
-//     }
-// }
-
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
 {
     fin.open(file_name);
@@ -122,42 +66,19 @@ void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout)
     fout.close();
 }
 
-ClassSubNode *findClasses(ClassNode *head, string input)
+ClassNode *searchClassNode(ClassNode *allClass, string class_id)
 {
-    ClassSubNode *sort = nullptr;
-    ClassNode *curr = head;
+    ClassNode *curr = allClass;
     while (curr)
     {
-        if (curr->my_class.class_id.find(input) != string::npos)
-            appendClassSubNode(sort, createClassSubNode(curr));
+        if (curr->my_class.class_id == class_id)
+            return curr;
         curr = curr->next;
     }
 
-    return sort;
+    cout << "Cannot find class " << class_id << endl;
+    return nullptr;
 }
-
-// void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin)
-//{
-//     string oneclass;
-//     while (getline(ss, oneclass, ','))
-//     {
-//         Class newclass = CreateClass(oneclass);
-//         AddClassNode(classes, InitializeClassNode(newclass));
-//     }
-// };
-
-// void exportClass(ClassNode *class_list, ofstream &fout)
-//{
-//     if (!class_list)
-//         return;
-//
-//     while (class_list)
-//     {
-//         fout << class_list->my_class.class_id << ",";
-//         class_list = class_list->next;
-//     }
-//     fout << endl;
-// };
 
 bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin)
 {
@@ -181,14 +102,6 @@ bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, st
         appendClassSubNode(currYearNode->school_year.classSublist, createClassSubNode(newClassNode));
     }
 
-    // ClassNode* tmp = Listclass;
-    //
-    // while (tmp)
-    //{
-    //     cout << tmp->my_class.class_id << ",";
-    //     tmp = tmp->next;
-    // }
-
     fin.close();
     return true;
 }
@@ -196,6 +109,20 @@ bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, st
 ClassSubNode *createClassSubNode(ClassNode *classNode)
 {
     return new ClassSubNode{classNode, nullptr};
+}
+
+ClassSubNode *findClasses(ClassNode *head, string input)
+{
+    ClassSubNode *sort = nullptr;
+    ClassNode *curr = head;
+    while (curr)
+    {
+        if (curr->my_class.class_id.find(input) != string::npos)
+            appendClassSubNode(sort, createClassSubNode(curr));
+        curr = curr->next;
+    }
+
+    return sort;
 }
 
 void appendClassSubNode(ClassSubNode *&classSublist, ClassSubNode *classSubNode)
@@ -210,20 +137,6 @@ void appendClassSubNode(ClassSubNode *&classSublist, ClassSubNode *classSubNode)
     while (curr->next)
         curr = curr->next;
     curr->next = classSubNode;
-}
-
-ClassNode *searchClassNode(ClassNode *allClass, string class_id)
-{
-    ClassNode *curr = allClass;
-    while (curr)
-    {
-        if (curr->my_class.class_id == class_id)
-            return curr;
-        curr = curr->next;
-    }
-
-    cout << "Cannot find class " << class_id << endl;
-    return nullptr;
 }
 
 bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss)
@@ -248,14 +161,14 @@ bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss)
 void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout)
 {
     if (!classSublist)
-		return;
+        return;
 
     ClassSubNode *curr = classSublist;
     while (curr)
     {
         fout << curr->class_node->my_class.class_id;
         if (curr->next)
-			fout << ",";
+            fout << ",";
 
         curr = curr->next;
     }
@@ -263,55 +176,23 @@ void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout)
     fout << endl;
 }
 
- //void DeleteClassNode(ClassNode *&head, Class del_class)
- //{
- //    if (!head)
- //    {
- //        cout << "Invalid.\n";
- //        return;
- //    }
- //    if (head->my_class.class_id == del_class.class_id && head->my_class.academic_id == del_class.academic_id)
- //    {
- //        ClassNode *tmp = head;
- //        head = head->next;
- //        delete tmp;
- //        return;
- //    }
- //    ClassNode *tmp = head;
- //    while (tmp && tmp->next)
- //    {
- //        if (tmp->next->my_class.class_id == del_class.class_id && tmp->next->my_class.academic_id == del_class.academic_id)
- //        {
- //            ClassNode *delnode = tmp->next;
- //            tmp->next = tmp->next->next;
- //            delete delnode;
- //            return;
- //        }
- //        else
- //        {
- //            tmp = tmp->next;
- //        }
- //    }
- //    cout << "the class that need to remove don't exist.\n";
- //}
-
-void deleteClassList(ClassNode*& classList)
+void deleteClassList(ClassNode *&classList)
 {
     while (classList)
     {
-        ClassNode* temp = classList;
+        ClassNode *temp = classList;
         deleteStudentList(temp->my_class.student_list);
         classList = classList->next;
         delete temp;
     }
 }
 
- void deleteClassSubList(ClassSubNode*& classSublist)
- {
-     while (classSublist)
-     {
-		 ClassSubNode *temp = classSublist;
-		 classSublist = classSublist->next;
-		 delete temp;
-	 }
- }
+void deleteClassSubList(ClassSubNode *&classSublist)
+{
+    while (classSublist)
+    {
+        ClassSubNode *temp = classSublist;
+        classSublist = classSublist->next;
+        delete temp;
+    }
+}

@@ -70,55 +70,6 @@ void removeNewYearNode(YearNode *&head, Year year)
     }
 }
 
-// void importYear(YearNode*& year_list, string filename, ifstream& fin)
-//{
-//     fin.open(filename);
-//     string line;
-//     while (getline(fin, line))
-//     {
-//         Year new_year = createYear(line, nullptr);
-//         getline(fin, line, '\n');
-//         stringstream clstr(line);
-//         if (line == "#")
-//         {
-//             addNewYearNode(year_list, new_year);
-//             continue;
-//         }
-//         else
-//             importClass(new_year.allclass, clstr, fin);
-//         for (int i = 0; i < 3; ++i)
-//         {
-//             if (fin.eof())
-//                 break;
-//             getline(fin, line, '\n');
-//             if (line == "#")
-//                 break;
-//             stringstream ss(line);
-//             importSemester(new_year.list_sem, ss, fin);
-//         }
-//
-//         addNewYearNode(year_list, new_year);
-//     }
-//
-//     fin.close();
-// }
-
-// void exportYear(YearNode *&year_list, string filename, ofstream &fout)
-//{
-//     fout.open(filename);
-//
-//     YearNode *currYear = year_list;
-//     while (currYear)
-//     {
-//         fout << currYear->school_year.year_id << endl;
-//         exportClass(currYear->school_year.allclass, fout);
-//         exportSemesterInYear(currYear->school_year.list_sem, fout);
-//         currYear = currYear->next;
-//     }
-//
-//     fout.close();
-// }
-
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin)
 {
     fin.open(filename);
@@ -156,7 +107,7 @@ bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifst
             stringstream ss(line);
             bool success = importSemester(allClass, new_year.list_sem, ss, fin);
             if (!success)
-				return false;
+                return false;
         }
 
         addNewYearNode(year_list, new_year);
@@ -188,11 +139,11 @@ bool exportYear(YearNode *&year_list, string filename, ofstream &fout)
     return true;
 }
 
-void deleteYearList(YearNode*& year_list)
+void deleteYearList(YearNode *&year_list)
 {
     while (year_list)
     {
-        YearNode* temp = year_list;
+        YearNode *temp = year_list;
         deleteClassSubList(temp->school_year.classSublist);
         deleteSemesterList(temp->school_year.list_sem, year_list->school_year.year_id);
         year_list = year_list->next;

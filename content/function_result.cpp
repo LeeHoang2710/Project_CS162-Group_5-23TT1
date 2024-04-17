@@ -16,24 +16,31 @@ float updateTotalGpa(StudentNode *studentNode)
     return total / count;
 }
 
-float UpdateCurGpa(StudentNode* studentNode) {
-    ResultsNode* currRes = studentNode->student.results_list;
+float UpdateCurGpa(StudentNode *studentNode)
+{
+    ResultsNode *currRes = studentNode->student.results_list;
     string mostcuryear = "0000-0000", mostcursem = "Semester 0";
-    while (currRes) {
-        if (currRes->results.year_id > mostcuryear) {
+    while (currRes)
+    {
+        if (currRes->results.year_id > mostcuryear)
+        {
             mostcuryear = currRes->results.year_id;
             mostcursem = currRes->results.sem_id;
         }
-        else if (currRes->results.year_id == mostcuryear) {
-            if (currRes->results.sem_id > mostcursem) mostcursem = currRes->results.sem_id;
+        else if (currRes->results.year_id == mostcuryear)
+        {
+            if (currRes->results.sem_id > mostcursem)
+                mostcursem = currRes->results.sem_id;
         }
         currRes = currRes->next;
     }
     currRes = studentNode->student.results_list;
     float total = 0.0f;
     int count = 0;
-    while (currRes) {
-        if (currRes->results.year_id == mostcuryear && currRes->results.sem_id == mostcursem) {
+    while (currRes)
+    {
+        if (currRes->results.year_id == mostcuryear && currRes->results.sem_id == mostcursem)
+        {
             total += currRes->results.score.overall;
             count++;
         }
@@ -62,7 +69,7 @@ Results createResults(const string &course_id, const string &sem_id, const strin
 
 ResultsNode *createResultsNode(const Results &results)
 {
-    return new ResultsNode{ results };
+    return new ResultsNode{results};
 }
 
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
@@ -318,31 +325,31 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, st
     while (tempstu)
     {
         op << tempstu->student.num << ","
-            << tempstu->student.student_id << ","
-            << tempstu->student.last_name << " "
-            << tempstu->student.first_name << ",";
+           << tempstu->student.student_id << ","
+           << tempstu->student.last_name << " "
+           << tempstu->student.first_name << ",";
         ResultsNode *findcurr = searchResultsNode(tempstu->student.results_list, curr->course.course_id, year_id, sem_id);
         op << findcurr->results.score.process << ","
-            << findcurr->results.score.midterm << ","
-            << findcurr->results.score.final << ","
-            << findcurr->results.score.overall << endl;
+           << findcurr->results.score.midterm << ","
+           << findcurr->results.score.final << ","
+           << findcurr->results.score.overall << endl;
         tempstu = tempstu->next;
     }
 
     StudentSubNode *tempextra = curr->course.extra_stu;
     while (tempextra)
     {
-		op << tempextra->student_node->student.num << ","
-            << tempextra->student_node->student.student_id << ","
-            << tempextra->student_node->student.last_name << " "
-            << tempextra->student_node->student.first_name << ",";
-		ResultsNode *findcurr = searchResultsNode(tempextra->student_node->student.results_list, curr->course.course_id, year_id, sem_id);
-		op << findcurr->results.score.process << ","
-            << findcurr->results.score.midterm << ","
-            << findcurr->results.score.final << ","
-            << findcurr->results.score.overall << endl;
-		tempextra = tempextra->next;
-	}
+        op << tempextra->student_node->student.num << ","
+           << tempextra->student_node->student.student_id << ","
+           << tempextra->student_node->student.last_name << " "
+           << tempextra->student_node->student.first_name << ",";
+        ResultsNode *findcurr = searchResultsNode(tempextra->student_node->student.results_list, curr->course.course_id, year_id, sem_id);
+        op << findcurr->results.score.process << ","
+           << findcurr->results.score.midterm << ","
+           << findcurr->results.score.final << ","
+           << findcurr->results.score.overall << endl;
+        tempextra = tempextra->next;
+    }
     destination = filename;
     op.close();
 }
@@ -364,12 +371,12 @@ void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr
     while (restemp)
     {
         op << restemp->results.course_id << ","
-            << restemp->results.sem_id << ","
-            << restemp->results.year_id << ",";
+           << restemp->results.sem_id << ","
+           << restemp->results.year_id << ",";
         op << restemp->results.score.process << ","
-            << restemp->results.score.midterm << ","
-            << restemp->results.score.final << ","
-            << restemp->results.score.overall << endl;
+           << restemp->results.score.midterm << ","
+           << restemp->results.score.final << ","
+           << restemp->results.score.overall << endl;
         restemp = restemp->next;
     }
 

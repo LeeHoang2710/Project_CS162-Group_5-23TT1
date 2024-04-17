@@ -27,23 +27,6 @@ CourseNode *initCourseNode(Course new_course)
     return new_course_node;
 }
 
-// void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu)
-// {
-//     // semester id
-//     //  year id
-//     // CourseNode *new_course_node = initCourseNode(cs, liststu);
-//     if (!head)
-//         head = new_course_node;
-//     else
-//     {
-//         CourseNode *list_course = head;
-//         while (list_course->next)
-//             list_course = list_course->next;
-//         list_course->next = new_course_node;
-//     }
-// }
-// cái này là do chưa có student node nên phải tạo hàm test thôi
-
 void appendNewCourseNode(CourseNode *&head, Course cs)
 {
     // semester id
@@ -240,12 +223,14 @@ void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
     }
 }
 
-bool importmanycourses(ifstream& fin, string filename, ClassNode* class_list, CourseNode*& curr, string yr, string sem) {
+bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
+{
     fin.open(filename);
-    string read; //header
+    string read; // header
     getline(fin, read, '\n');
     string number;
-    while (!fin.eof()) {
+    while (!fin.eof())
+    {
         cout << "cmm";
         Course cs;
         getline(fin, number, '\n');
@@ -274,7 +259,7 @@ bool importmanycourses(ifstream& fin, string filename, ClassNode* class_list, Co
 
         while (getline(line, number, ','))
         {
-            StudentNode* stu = searchStudentNode(class_list, number);
+            StudentNode *stu = searchStudentNode(class_list, number);
             if (!stu)
             {
                 cout << "Student " << number << " does not exist." << endl;
