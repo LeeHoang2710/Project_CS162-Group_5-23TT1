@@ -37,6 +37,7 @@ float UpdateCurGpa(StudentNode* studentNode) {
             total += currRes->results.score.overall;
             count++;
         }
+        currRes = currRes->next;
     }
     return total / count;
 }
@@ -156,7 +157,7 @@ bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
                         appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
                     }
                 }
-
+                tempStu->student.cur_gpa = UpdateCurGpa(tempStu);
                 tempStu->student.total_gpa = updateTotalGpa(tempStu);
                 tempStu = tempStu->next;
             }
@@ -249,6 +250,7 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
         change->results.score.midterm = stof(m);
         change->results.score.final = stof(f);
         change->results.score.overall = 0.35 * stof(p) + 0.25 * stof(m) + 0.4 * stof(f);
+        stuTemp->student.total_gpa = UpdateCurGpa(stuTemp);
         stuTemp->student.total_gpa = updateTotalGpa(stuTemp);
         getline(fin, read, '\n');
     }
