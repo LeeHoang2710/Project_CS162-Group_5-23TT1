@@ -48,7 +48,7 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     }
 }
 
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode* class_list)
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode *class_list)
 {
 
     Event event;
@@ -1124,7 +1124,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_num = false, typing_cre = false;
     bool editing = false, resulting = false, save = false, check_class = false;
 
-    bool new_stu = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
+    bool new_res = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
     bool one_stu = false, typing_stu = false, showAddResult = false, checkAdd = false;
 
     Info *inf[4]{};
@@ -1146,6 +1146,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Info stu = createText(to_string(course->course.max_students), 525, 625);
     Info cre = createText(to_string(course->course.num_credit), 985, 625);
     Info file = createText("", 560, 490);
+    file.txt.setCharacterSize(23);
+    file.txt.setStyle(Text::Regular);
     Info born = createText("", 560, 490);
     string cour_id, cour_name, classes, teacher, num, credit;
     string file_path = "", stu_id = "";
@@ -1326,9 +1328,9 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                             return;
                     }
                     if (isHere(import.bound, mouse) && resulting)
-                        new_stu = true;
+                        new_res = true;
                     if (isHere(exit.bound, mouse))
-                        new_stu = false;
+                        new_res = false;
                     if (isHere(path.bound, mouse))
                     {
                         typing_path = true;
@@ -1354,7 +1356,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     Typing(typing_num, stu, num, event);
                     Typing(typing_cre, cre, credit, event);
                 }
-                if (new_stu)
+                if (new_res)
                     Typing(typing_path, file, file_path, event);
                 if (one_stu)
                     Typing(typing_stu, born, stu_id, event);
@@ -1412,7 +1414,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         else
             objectAppear(window, save, clock, invalid2, 2);
 
-        if (new_stu)
+        if (new_res)
         {
             window.draw(alert.draw);
             window.draw(path.draw);
@@ -1422,7 +1424,14 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 window.draw(file.txt);
             if (Import)
             {
+                ifstream fin;
+                checkPath = UpdateResults(fin, file_path, yr, sem, course->course);
+                Import = false;
             }
+            if (showImportResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid1, invalid1, checkPath);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showImportResult = false;
         }
 
         if (one_stu)
@@ -2042,14 +2051,16 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         createInfoTest(stu[i][4], "", 820, 426 + 48 * i);
         createInfoTest(stu[i][5], "", 895, 426 + 48 * i);
         createInfoTest(stu[i][6], "", 1050, 426 + 48 * i);
-        createInfoTest(resl[i][0], "1", 270, 426 + 48 * i);
-        createInfoTest(resl[i][1], "2", 342, 426 + 48 * i);
-        createInfoTest(resl[i][2], "3", 498, 426 + 48 * i);
-        createInfoTest(resl[i][3], "4", 790, 426 + 48 * i);
-        createInfoTest(resl[i][4], "5", 972, 426 + 48 * i);
+        createInfoTest(resl[i][0], "", 270, 426 + 48 * i);
+        createInfoTest(resl[i][1], "", 342, 426 + 48 * i);
+        createInfoTest(resl[i][2], "", 498, 426 + 48 * i);
+        createInfoTest(resl[i][3], "", 790, 426 + 48 * i);
+        createInfoTest(resl[i][4], "", 952, 426 + 48 * i);
 
         for (int j = 0; j < 7; ++j)
             stu[i][j]->txt.setCharacterSize(24);
+        for (int j = 0; j < 5; ++j)
+            resl[i][j]->txt.setCharacterSize(24);
     }
 
     Object *detail[7]{};
@@ -2057,7 +2068,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         createObjectTest(detail[i], "./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
 
     bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
-    bool checkDel = false;
+    bool Confirm = false, checkDel = false;
 
     bool new_stu = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
     Clock clock;
@@ -2124,6 +2135,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                     }
                     if (isHere(confirm.bound, mouse))
                     {
+                        Confirm = true;
                         showDelResult = true;
                         clock.restart();
                     }
@@ -2209,22 +2221,22 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
             StudentNode *temp = stu_list;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 7; ++i)
             {
                 if (temp)
                 {
                     one[i] = temp;
                     resl[i][0]->txt.setString(to_string(one[i]->student.num));
                     resl[i][1]->txt.setString(one[i]->student.student_id);
-                    resl[i][2]->txt.setString(one[i]->student.last_name + one[i]->student.first_name);
+                    resl[i][2]->txt.setString(one[i]->student.last_name + " " + one[i]->student.first_name);
                     resl[i][3]->txt.setString("0.0");
-                    resl[i][4]->txt.setString(to_string(one[i]->student.total_gpa));
+                    resl[i][4]->txt.setString(to_string(one[i]->student.total_gpa).substr(0, 4));
                     temp = temp->next;
                 }
                 else
                     resl[i][0]->txt.setString("");
             }
-            new_page = false;
+            new_page = true;
         }
         if (!result)
         {
@@ -2238,11 +2250,12 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         }
         else
         {
-            for (int i = 0; i < count - change; ++i)
+            for (int a = 0; a < count - change; ++a)
+                window.draw(detail[a]->draw);
+            for (int i = 0; i < 7; ++i)
             {
-                window.draw(detail[i]->draw);
-                // if (resl[i][0]->txt.getString() == "")
-                //     break;
+                if (resl[i][0]->txt.getString() == "")
+                    break;
                 for (int j = 0; j < 5; ++j)
                     window.draw(resl[i][j]->txt);
             }
@@ -2256,10 +2269,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
             window.draw(exit2.draw);
             if (typing_id)
                 window.draw(kill.txt);
-            if (showDelResult)
+            if (Confirm)
             {
                 checkDel = removeStudentNode(class_list->my_class.student_list, stu_id);
                 count--;
+                Confirm = false;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 3)
                 chooseDraw_2(window, valid1, invalid1, checkDel);
