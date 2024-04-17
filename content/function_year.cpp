@@ -194,7 +194,7 @@ void deleteYearList(YearNode*& year_list)
     {
         YearNode* temp = year_list;
         deleteClassSubList(temp->school_year.classSublist);
-        deleteSemesterList(temp->school_year.list_sem);
+        deleteSemesterList(temp->school_year.list_sem, year_list->school_year.year_id);
         year_list = year_list->next;
         delete temp;
     }

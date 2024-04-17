@@ -60,12 +60,12 @@ void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout)
         fout << "#" << endl;
 }
 
-void deleteSemesterList(SemesterNode *&sem_list)
+void deleteSemesterList(SemesterNode *&sem_list, string year_id)
 {
     while (sem_list)
     {
         SemesterNode *temp = sem_list;
-        deleteCourseList(temp->sem.course_list);
+        deleteCourseList(temp->sem.course_list, year_id, sem_list->sem.semester_id);
         sem_list = sem_list->next;
         delete temp;
     }

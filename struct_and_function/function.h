@@ -47,7 +47,7 @@ SemesterNode *createSemesterNode(const Semester &new_sem);
 void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
 bool importSemester(ClassNode *allClass, SemesterNode *&sem_list, stringstream &is, ifstream &fin);
 void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout);
-void deleteSemesterList(SemesterNode *&sem_list);
+void deleteSemesterList(SemesterNode *&sem_list, string year_id);
 
 // Course
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode *class_list);
