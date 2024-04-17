@@ -221,6 +221,15 @@ bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, str
         cout << "Student " << student_id << " does not exist." << endl;
         return false;
     }
+    else
+    {
+        StudentNode* temp = searchStudentNodeInOneClass(courseNode->course.main_class->my_class.student_list, student_id);
+        if (temp == studentNode)
+        {
+            cout << "Student " << student_id << " already exists in course's main class " << courseNode->course.main_class->my_class.class_id << courseNode->course.course_id << endl;
+            return false;
+        }
+    }
 
     StudentSubNode *studentSubNode = createStudentSubNode(studentNode);
     appendStudentSubNode(courseNode->course.extra_stu, studentSubNode);
