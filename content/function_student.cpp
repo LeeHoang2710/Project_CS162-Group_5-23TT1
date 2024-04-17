@@ -224,7 +224,7 @@ bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, str
 
     StudentSubNode *studentSubNode = createStudentSubNode(studentNode);
     appendStudentSubNode(courseNode->course.extra_stu, studentSubNode);
-    Results results = createResults(courseNode->course.course_id, year_id, sem_id, 0.0f, 0.0f, 0.0f);
+    Results results = createResults(courseNode->course.course_id, sem_id, year_id, 0.0f, 0.0f, 0.0f);
     appendResultsNode(studentNode->student.results_list, createResultsNode(results));
     return true;
 }
