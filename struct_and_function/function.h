@@ -87,7 +87,7 @@ ResultsNode *createResultsNode(const Results &results);
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
 ResultsNode *searchResultsNode(ResultsNode *results_list, string course_id, string year_id, string sem_id);
 void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string new_course_id, string year_id, string sem_id);
-bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course &curr);
+bool UpdateResults(ifstream &fin, string filename, string yr, string sem, CourseNode* &curr);
 bool deleteResultsNode(ResultsNode *&resultsList, string course_id, string year_id, string sem_id);
 void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, string year_id, string sem_id);
 void deleteResultsList(ResultsNode *&resultsList);

@@ -90,52 +90,50 @@ void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string 
     }
 }
 
-bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
+bool UpdateResults(ifstream& fin, string filename, string yr, string sem, CourseNode*& curr)
 {
     fin.open(filename);
     if (!fin.is_open())
     {
-        cout << "Cannot open " << filename << endl;
+        cout << "can not open results file to course" << endl;
         return false;
     }
-
-    string Line;
-    while (getline(fin, Line, '\n'))
+    string read;
+    getline(fin, read, '\n');
+    while (!fin.eof())
     {
-        if (Line.empty())
-            break;
-
-        ClassNode *currClass = searchClassNode(ClassList, Line);
-        if (!currClass)
+        int i = 1;
+        string no, stu_find, fullname;
+        getline(fin, no, ',');
+        if (no == "") {
+            fin.close();
             return false;
-        else
+        }
+        getline(fin, stu_find, ',');
+        getline(fin, fullname, ',');
+        StudentNode* stuTemp = searchStudentNodeInOneClass(curr->course.main_class->my_class.student_list, stu_find);
+        if (stuTemp == nullptr)
         {
-            StudentNode *tempStu = currClass->my_class.student_list;
-            while (getline(fin, Line, '\n') && tempStu)
+            stuTemp = searchStudentSubNode(curr->course.extra_stu, stu_find)->student_node;
+            if (!stuTemp)
             {
-                while (getline(fin, Line, '\n'))
-                {
-                    if (Line == "*")
-                        break;
-                    else
-                    {
-                        stringstream ss2(Line);
-                        string course, year, sem, p, m, f;
-                        getline(ss2, course, ',');
-                        getline(ss2, year, ',');
-                        getline(ss2, sem, ',');
-                        getline(ss2, p, ',');
-                        getline(ss2, m, ',');
-                        getline(ss2, f, ',');
-                        Results currResults = createResults(course, sem, year, stof(p), stof(m), stof(f));
-                        appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
-                    }
-                }
-
-                tempStu->student.total_gpa = updateTotalGpa(tempStu);
-                tempStu = tempStu->next;
+                cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
+                fin.close();
+                return false;
             }
         }
+        else cout << i++;
+        ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr->course.course_id, yr, sem);
+        string p, m, f;
+        getline(fin, p, ',');
+        getline(fin, m, ',');
+        getline(fin, f, ',');
+        change->results.score.process = stof(p);
+        change->results.score.midterm = stof(m);
+        change->results.score.final = stof(f);
+        change->results.score.overall = 0.35 * stof(p) + 0.25 * stof(m) + 0.4 * stof(f);
+        updateTotalGpa(stuTemp);
+        getline(fin, read, '\n');
     }
 
     fin.close();
