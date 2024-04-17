@@ -117,6 +117,18 @@ bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
             return false;
         }
 
+        while (getline(line, number, ','))
+        {
+            StudentNode* stu = searchStudentNode(allClass, number);
+            if (!stu)
+            {
+				cout << "Student " << number << " does not exist." << endl;
+				return false;
+			}
+
+            appendStudentSubNode(cs.extra_stu, createStudentSubNode(stu));
+        }
+
         appendNewCourseNode(Courselist, cs);
     }
 
@@ -127,14 +139,24 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
 {
     while (Courselist)
     {
-        fout << Courselist->course.course_id << ",";
-        fout << Courselist->course.course_name << ",";
-        fout << Courselist->course.teacher_name << ",";
-        fout << Courselist->course.num_credit << ",";
-        fout << Courselist->course.max_students << ",";
-        fout << Courselist->course.teaching_session.day_of_the_week << ",";
-        fout << Courselist->course.teaching_session.session_no << ",";
-        fout << Courselist->course.main_class->my_class.class_id << endl;
+        fout << Courselist->course.course_id << ","
+            << Courselist->course.course_name << ","
+            << Courselist->course.teacher_name << ","
+            << Courselist->course.num_credit << ","
+            << Courselist->course.max_students << ","
+            << Courselist->course.teaching_session.day_of_the_week << ","
+            << Courselist->course.teaching_session.session_no << ","
+            << Courselist->course.main_class->my_class.class_id << ",";
+        StudentSubNode* temp = Courselist->course.extra_stu;
+        while (temp)
+        {
+            fout << temp->student_node->student.student_id;
+            if (temp->next)
+                fout << ",";
+
+			temp = temp->next;
+		}
+
         Courselist = Courselist->next;
     }
 

@@ -290,12 +290,32 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, st
     op << "No,Student ID,Full name,Process Mark, Midterm Mark,Final Mark, Total Mark" << endl;
     while (tempstu)
     {
-        op << tempstu->student.num << "," << tempstu->student.student_id << "," << tempstu->student.last_name << " " << tempstu->student.first_name << ",";
+        op << tempstu->student.num << ","
+            << tempstu->student.student_id << ","
+            << tempstu->student.last_name << " "
+            << tempstu->student.first_name << ",";
         ResultsNode *findcurr = searchResultsNode(tempstu->student.results_list, curr->course.course_id, year_id, sem_id);
-        op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final << "," << findcurr->results.score.overall << endl;
+        op << findcurr->results.score.process << ","
+            << findcurr->results.score.midterm << ","
+            << findcurr->results.score.final << ","
+            << findcurr->results.score.overall << endl;
         tempstu = tempstu->next;
     }
 
+    StudentSubNode *tempextra = curr->course.extra_stu;
+    while (tempextra)
+    {
+		op << tempextra->student_node->student.num << ","
+            << tempextra->student_node->student.student_id << ","
+            << tempextra->student_node->student.last_name << " "
+            << tempextra->student_node->student.first_name << ",";
+		ResultsNode *findcurr = searchResultsNode(tempextra->student_node->student.results_list, curr->course.course_id, year_id, sem_id);
+		op << findcurr->results.score.process << ","
+            << findcurr->results.score.midterm << ","
+            << findcurr->results.score.final << ","
+            << findcurr->results.score.overall << endl;
+		tempextra = tempextra->next;
+	}
     destination = filename;
     op.close();
 }
@@ -316,8 +336,13 @@ void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr
     ResultsNode *restemp = Curr->student.results_list;
     while (restemp)
     {
-        op << restemp->results.course_id << "," << restemp->results.sem_id << "," << restemp->results.year_id << ",";
-        op << restemp->results.score.process << "," << restemp->results.score.midterm << "," << restemp->results.score.final << "," << restemp->results.score.overall << endl;
+        op << restemp->results.course_id << ","
+            << restemp->results.sem_id << ","
+            << restemp->results.year_id << ",";
+        op << restemp->results.score.process << ","
+            << restemp->results.score.midterm << ","
+            << restemp->results.score.final << ","
+            << restemp->results.score.overall << endl;
         restemp = restemp->next;
     }
 
