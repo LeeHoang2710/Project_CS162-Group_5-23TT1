@@ -257,7 +257,7 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
         change->results.score.midterm = stof(m);
         change->results.score.final = stof(f);
         change->results.score.overall = 0.35 * stof(p) + 0.25 * stof(m) + 0.4 * stof(f);
-        stuTemp->student.total_gpa = UpdateCurGpa(stuTemp);
+        stuTemp->student.cur_gpa = UpdateCurGpa(stuTemp);
         stuTemp->student.total_gpa = updateTotalGpa(stuTemp);
         getline(fin, read, '\n');
     }

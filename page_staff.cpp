@@ -1033,7 +1033,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                     {
                         ifstream fin;
                         string filename;
-                        filename = "./import/manycourses.csv";
+                        filename = "./import/new_courses.csv";
                         if (importmanycourses(fin, filename, class_list, course, yr, sem))
                             added = true;
                         // them hien thi succcessfully; va nhap filename;
