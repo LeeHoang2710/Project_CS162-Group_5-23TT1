@@ -1125,7 +1125,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     bool editing = false, resulting = false, save = false, check_class = false;
 
     bool new_res = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
-    bool one_stu = false, typing_stu = false, showAddResult = false, checkAdd = false;
+    bool one_stu = false, typing_stu = false, Add = false, showAddResult = false, checkAdd = false;
 
     Info *inf[4]{};
     Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
@@ -1188,6 +1188,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     }
                     if (isHere(confirm.bound, mouse))
                     {
+                        Add = true;
                         showAddResult = true;
                         clock.restart();
                     }
@@ -1442,9 +1443,10 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
             window.draw(exit2.draw);
             if (typing_stu)
                 window.draw(born.txt);
-            if (showAddResult)
+            if (Add)
             {
                 checkAdd = addStudentSubNodeToCourse(class_list, course, stu_id, yr, sem);
+                Add = false;
             }
             if (showAddResult && clock.getElapsedTime().asSeconds() < 3)
                 chooseDraw_2(window, valid3, invalid3, checkAdd);
