@@ -157,6 +157,7 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
 			temp = temp->next;
 		}
 
+        fout << endl;
         Courselist = Courselist->next;
     }
 

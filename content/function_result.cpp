@@ -15,6 +15,7 @@ float updateTotalGpa(StudentNode *studentNode)
 
     return total / count;
 }
+
 float UpdateCurGpa(StudentNode* studentNode) {
     ResultsNode* currRes = studentNode->student.results_list;
     string mostcuryear = "0000-0000", mostcursem = "Semester 0";
@@ -39,6 +40,7 @@ float UpdateCurGpa(StudentNode* studentNode) {
     }
     return total / count;
 }
+
 void updateCourseOverall(Score &score)
 {
     score.overall = 0.35 * score.process + 0.25 * score.midterm + 0.4 * score.final;
@@ -59,7 +61,7 @@ Results createResults(const string &course_id, const string &sem_id, const strin
 
 ResultsNode *createResultsNode(const Results &results)
 {
-    return new ResultsNode{results};
+    return new ResultsNode{ results };
 }
 
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode)
