@@ -26,6 +26,7 @@ struct Score;
 struct Student;
 struct StudentNode;
 struct StudentSubNode;
+
 struct Results;
 struct ResultsNode;
 
@@ -108,7 +109,7 @@ struct Score
 
 struct Student
 {
-	int num;
+	int num = 0;
 	string student_id;
 	string first_name;
 	string last_name;

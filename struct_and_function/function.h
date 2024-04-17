@@ -20,7 +20,7 @@ void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename);
 void deleteStaffList(StaffNode *&staffList);
 
 // Student
-Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass);
+Student createStudent(string student_id, string first, string last, bool gender, string dob, string social_id, string pass);
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 bool removeStudentNode(StudentNode *&head, string studentId);
@@ -29,6 +29,7 @@ StudentNode *searchStudentNodeInOneClass(StudentNode *head, string student_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
 bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstream &fin);
+void updateStudentsNumBeforeRemoval(StudentNode* studentNodeToDelete);
 void deleteStudentList(StudentNode *&studentList);
 
 // Year

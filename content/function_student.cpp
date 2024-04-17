@@ -1,17 +1,16 @@
 #include "../struct_and_function/function.h"
 
-Student createStudent(int p_num, string p_student_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass)
+Student createStudent(string student_id, string first, string last, bool gender, string dob, string social_id, string pass)
 {
     Student person;
-    person.num = p_num;
-    person.student_id = p_student_id;
-    person.first_name = p_first;
-    person.last_name = p_last;
-    person.gender = p_gender;
-    person.dob = p_dob;
-    person.social_id = p_social_id;
-    if (!p_pass.empty())
-        person.password = p_pass;
+    person.student_id = student_id;
+    person.first_name = first;
+    person.last_name = last;
+    person.gender = gender;
+    person.dob = dob;
+    person.social_id = social_id;
+    if (!pass.empty())
+        person.password = pass;
 
     return person;
 }
@@ -34,32 +33,10 @@ void addNewStudentNode(StudentNode *&head, Student new_student)
         StudentNode *list_Student = head;
         while (list_Student->next)
             list_Student = list_Student->next;
+
+        new_student_node->student.num = list_Student->student.num + 1;
         list_Student->next = new_student_node;
     }
-}
-
-bool removeStudentNode(StudentNode *&head, string studentId)
-{
-    if (head->student.student_id == studentId)
-    {
-        StudentNode *tmp = head;
-        head = head->next;
-        delete tmp;
-        return true;
-    }
-
-    for (StudentNode *tmp = head; tmp->next != nullptr; tmp = tmp->next)
-    {
-        if (tmp->next->student.student_id == studentId)
-        {
-            StudentNode *del = tmp->next;
-            tmp->next = tmp->next->next;
-            delete del;
-            return true;
-        }
-    }
-
-    return false;
 }
 
 StudentNode *searchStudentNode(ClassNode *allClass, string studentId)
@@ -94,44 +71,37 @@ void readStudentFromFile(ifstream &file, StudentNode *&list_student)
     {
         if (line == "*")
             return;
+
         stringstream ss(line);
-        string number;
-        Student person;
-        getline(ss, number, ',');
-        person.num = stoi(number);
-        getline(ss, person.student_id, ',');
-        getline(ss, person.first_name, ',');
-        getline(ss, person.last_name, ',');
-        getline(ss, number, ',');
-        person.gender = stoi(number);
-        getline(ss, person.dob, ',');
-        getline(ss, person.social_id, ',');
-        getline(ss, person.password, ',');
-        addNewStudentNode(list_student, person);
+        string stu_id, first, last, gender, dob, social_id, password;
+        getline(ss, stu_id, ',');
+        getline(ss, first, ',');
+        getline(ss, last, ',');
+        getline(ss, gender, ',');
+        getline(ss, dob, ',');
+        getline(ss, social_id, ',');
+        getline(ss, password, ',');
+
+        addNewStudentNode(list_student, createStudent(stu_id, first, last, stoi(gender), dob, social_id, password));
     }
 }
 
 void exportStudentToFile(ofstream &file, StudentNode *list_student)
 {
     if (!list_student)
-    {
         file << "*" << endl;
-        return;
-    }
-
     else
     {
         while (list_student)
         {
             Student person = list_student->student;
-            file << person.num << ","
-                 << person.student_id << ","
-                 << person.first_name << ","
-                 << person.last_name << ","
-                 << person.gender << ","
-                 << person.dob << ","
-                 << person.social_id << ","
-                 << person.password << endl;
+            file << person.student_id << ","
+                << person.first_name << ","
+                << person.last_name << ","
+                << person.gender << ","
+                << person.dob << ","
+                << person.social_id << ","
+                << person.password << endl;
             list_student = list_student->next;
         }
 
@@ -156,28 +126,44 @@ bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstrea
         return false;
     }
 
-    while (getline(fin, line))
-    {
-        Student temp;
-        istringstream iss(line);
-        string field;
-        getline(iss, field, ',');
-        temp.num = stoi(field);
-        getline(iss, temp.student_id, ',');
-        getline(iss, temp.first_name, ',');
-        getline(iss, temp.last_name, ',');
-        getline(iss, field, ',');
-        temp.gender = stoi(field);
-        getline(iss, temp.dob, ',');
-        getline(iss, temp.social_id, ',');
-        getline(iss, temp.password, '\n');
-        if (temp.password.empty())
-            temp.password = "123456";
-        addNewStudentNode(classNode->my_class.student_list, temp);
-    }
-
+    readStudentFromFile(fin, classNode->my_class.student_list);
     fin.close();
     return true;
+}
+
+void updateStudentsNumBeforeRemoval(StudentNode* studentNodeToDelete)
+{
+    StudentNode* temp = studentNodeToDelete->next;
+    while (temp)
+    {
+        --(temp->student.num);
+        temp = temp->next;
+    }
+}
+
+bool removeStudentNode(StudentNode*& head, string studentId)
+{
+    StudentNode* studentNodeToDelete = searchStudentNodeInOneClass(head, studentId);
+    if (!studentNodeToDelete)
+    {
+		cout << "Student " << studentId << " does not exist." << endl;
+		return false;
+	}
+
+    updateStudentsNumBeforeRemoval(studentNodeToDelete);
+    if (head == studentNodeToDelete)
+		head = head->next;
+    else
+    {
+		StudentNode* temp = head;
+		while (temp->next != studentNodeToDelete)
+			temp = temp->next;
+
+		temp->next = studentNodeToDelete->next;
+	}
+
+    delete studentNodeToDelete;
+    return false;
 }
 
 void deleteStudentList(StudentNode *&studentList)
@@ -233,7 +219,8 @@ bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, str
 
     StudentSubNode *studentSubNode = createStudentSubNode(studentNode);
     appendStudentSubNode(courseNode->course.extra_stu, studentSubNode);
-    Results results = createResults(courseNode->course.course_id, sem_id, year_id, 0.0f, 0.0f, 0.0f);
+
+    Results results = createResults(courseNode->course.course_id, sem_id, year_id);
     appendResultsNode(studentNode->student.results_list, createResultsNode(results));
     return true;
 }

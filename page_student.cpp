@@ -45,7 +45,7 @@ void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit
     }
 }
 
-void courseStudent(RenderWindow &window, int &page, YearNode *year_list, StudentNode *person, bool &Exit)
+void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, StudentNode *person, bool &Exit)
 {
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
@@ -58,7 +58,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *year_list, Student
     Info total = createText("", 1050, 258);
 
     ResultsNode *res = person->student.results_list;
-    CourseNode *course[20];
+    CourseNode* course[20]{};
     Object *subject[4]{};
     Info *inf[4]{};
     for (int i = 0; i < 4; ++i)
@@ -72,10 +72,9 @@ void courseStudent(RenderWindow &window, int &page, YearNode *year_list, Student
     bool new_page = true;
     for (res; res; res = res->next)
     {
-
-        for (YearNode *year; year; year = year->next)
+        for (YearNode *year = year_list; year; year = year->next)
         {
-            if (res->results.year_id == year_list->school_year.year_id)
+            if (res->results.year_id == year->school_year.year_id)
             {
                 for (SemesterNode *sem = year->school_year.list_sem; sem; sem = sem->next)
                 {
@@ -87,10 +86,13 @@ void courseStudent(RenderWindow &window, int &page, YearNode *year_list, Student
                             {
                                 course[count] = cs;
                                 count++;
+                                break;
                             }
                         }
+                        break;
                     }
                 }
+                break;
             }
         }
     }
@@ -148,9 +150,9 @@ void courseStudent(RenderWindow &window, int &page, YearNode *year_list, Student
         if (new_page)
         {
 
-            for (int i = 0; i < 4; ++i)
+            for (int i = change % 4; i < 4; ++i)
             {
-                CourseNode *temp = course[change - 1 + i];
+                CourseNode *temp = course[change + i];
                 if (temp)
                     inf[i]->txt.setString(temp->course.course_id + " - " + temp->course.course_name);
                 else
