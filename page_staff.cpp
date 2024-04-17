@@ -200,7 +200,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
-
+        window.draw(menu.draw);
         window.draw(o2.draw);
         window.draw(o3.draw);
         window.draw(o4.draw);
@@ -213,7 +213,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
             window.draw(o7.draw);
         if (!log_in)
             window.draw(o6.draw);
-        if (!log_in && clock.getElapsedTime().asSeconds() >= 3)
+        if (!log_in && clock.getElapsedTime().asSeconds() >= 2)
             log_in = true;
         window.display();
     }
@@ -1905,6 +1905,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     int count = 0, change = 0;
     for (ClassNode *curr = class_list; curr; curr = curr->next)
         count++;
+    total.txt.setString(to_string(count) + " classes");
     while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -1980,6 +1981,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.draw(sort.draw);
         window.draw(confirm.draw);
         window.draw(sort_input.txt);
+        window.draw(total.txt);
         if (new_page && class_list && !find_class)
         {
             ClassNode *temp = class_list;

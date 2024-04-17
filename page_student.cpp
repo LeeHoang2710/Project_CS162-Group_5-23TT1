@@ -45,6 +45,134 @@ void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit
     }
 }
 
+void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, StudentNode *person, bool &Exit)
+{
+    Event event;
+    Object screen = createBackGround("./image/page1/main-bg.png");
+    Object prev = createObject("./image/page3-staff/prev.png", 180, 793);
+    Object next = createObject("./image/page3-staff/next.png", 1212, 793);
+    Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
+    Object b = createObject("./image/page3-staff/backward.png", 183, 259);
+    Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
+    Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
+    Info total = createText("", 1050, 258);
+
+    ResultsNode *res = person->student.results_list;
+    CourseNode* course[20]{};
+    Object *subject[4]{};
+    Info *inf[4]{};
+    for (int i = 0; i < 4; ++i)
+    {
+        createObjectTest(subject[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
+        createInfoTest(inf[i], "", 316, 117 * i + 354);
+        inf[i]->txt.setFillColor(Color::Yellow);
+        inf[i]->txt.setStyle(Text::Bold);
+    }
+    int count = 0, change = 0;
+    bool new_page = true;
+    for (res; res; res = res->next)
+    {
+        for (YearNode *year = year_list; year; year = year->next)
+        {
+            if (res->results.year_id == year->school_year.year_id)
+            {
+                for (SemesterNode *sem = year->school_year.list_sem; sem; sem = sem->next)
+                {
+                    if (res->results.sem_id == sem->sem.semester_id)
+                    {
+                        for (CourseNode *cs = sem->sem.course_list; cs; cs = cs->next)
+                        {
+                            if (res->results.course_id == cs->course.course_id)
+                            {
+                                course[count] = cs;
+                                count++;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    total.txt.setString(to_string(count) + "courses");
+    while (window.isOpen() && page == 8)
+    {
+        Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+        updateColorOnHover(window, prev);
+        updateColorOnHover(window, next);
+        updateColorOnHover(window, menu);
+        for (int i = 0; i < 4; ++i)
+        {
+            Object &subjectRef = *subject[i];
+            updateColorOnHover(window, subjectRef);
+        }
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case Event::Closed:
+                window.close();
+                break;
+            case Event::MouseButtonReleased:
+            {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    switchPage(menu.bound, mouse, 4, page, Exit);
+                    switchPage(b.bound, mouse, 4, page, Exit);
+                    if (isHere(prev.bound, mouse) && change != 0)
+                    {
+                        new_page = true;
+                        change -= 4;
+                    }
+                    if (isHere(next.bound, mouse))
+                    {
+                        new_page = true;
+                        change += 4;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        window.clear();
+        window.draw(screen.draw);
+        window.draw(o1.draw);
+        window.draw(menu.draw);
+        window.draw(b.draw);
+        window.draw(sum.draw);
+        window.draw(prev.draw);
+        window.draw(next.draw);
+        window.draw(total.txt);
+        if (new_page)
+        {
+
+            for (int i = change % 4; i < 4; ++i)
+            {
+                CourseNode *temp = course[change + i];
+                if (temp)
+                    inf[i]->txt.setString(temp->course.course_id + " - " + temp->course.course_name);
+                else
+                    inf[i]->txt.setString("");
+            }
+            new_page = false;
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            if (inf[i]->txt.getString() == "")
+                break;
+            window.draw(subject[i]->draw);
+            window.draw(inf[i]->txt);
+        }
+        window.display();
+    }
+    for (int i = 0; i < 4; ++i)
+        delete subject[i], inf[i];
+}
+
 void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
 {
     Event event;
