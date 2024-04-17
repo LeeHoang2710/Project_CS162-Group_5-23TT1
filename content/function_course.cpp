@@ -1,6 +1,6 @@
 #include "../struct_and_function/function.h"
 
-Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode* class_list)
+Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode *class_list)
 {
     Course tmp;
     if (max_students != 50)
@@ -88,7 +88,7 @@ bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id,
     return false;
 }
 
-bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
+bool importCourse(ClassNode *allClass, CourseNode *&Courselist, ifstream &fin)
 {
     string number;
     while (getline(fin, number))
@@ -119,12 +119,12 @@ bool importCourse(ClassNode* allClass, CourseNode*& Courselist, ifstream& fin)
 
         while (getline(line, number, ','))
         {
-            StudentNode* stu = searchStudentNode(allClass, number);
+            StudentNode *stu = searchStudentNode(allClass, number);
             if (!stu)
             {
-				cout << "Student " << number << " does not exist." << endl;
-				return false;
-			}
+                cout << "Student " << number << " does not exist." << endl;
+                return false;
+            }
 
             appendStudentSubNode(cs.extra_stu, createStudentSubNode(stu));
         }
@@ -140,23 +140,23 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
     while (Courselist)
     {
         fout << Courselist->course.course_id << ","
-            << Courselist->course.course_name << ","
-            << Courselist->course.teacher_name << ","
-            << Courselist->course.num_credit << ","
-            << Courselist->course.max_students << ","
-            << Courselist->course.teaching_session.day_of_the_week << ","
-            << Courselist->course.teaching_session.session_no << ","
-            << Courselist->course.main_class->my_class.class_id << ",";
-        StudentSubNode* temp = Courselist->course.extra_stu;
+             << Courselist->course.course_name << ","
+             << Courselist->course.teacher_name << ","
+             << Courselist->course.num_credit << ","
+             << Courselist->course.max_students << ","
+             << Courselist->course.teaching_session.day_of_the_week << ","
+             << Courselist->course.teaching_session.session_no << ","
+             << Courselist->course.main_class->my_class.class_id << ",";
+        StudentSubNode *temp = Courselist->course.extra_stu;
         while (temp)
         {
             fout << temp->student_node->student.student_id;
             if (temp->next)
                 fout << ",";
 
-			temp = temp->next;
-		}
-
+            temp = temp->next;
+        }
+        fout << endl;
         Courselist = Courselist->next;
     }
 
@@ -181,7 +181,7 @@ void compareCourse(Course &old, Course &newone)
         newone.max_students = old.max_students;
 
     if (newone.main_class == nullptr)
-		newone.main_class = old.main_class;
+        newone.main_class = old.main_class;
 
     if (newone.teaching_session.day_of_the_week == 0)
         newone.teaching_session.day_of_the_week = old.teaching_session.day_of_the_week;
@@ -200,10 +200,10 @@ void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_
 
     if (newOne.main_class != curr->course.main_class)
     {
-		deleteCourseResultsForClass(curr->course.main_class->my_class.student_list, curr->course.course_id, year_id, sem_id);
-		curr->course = newOne;
+        deleteCourseResultsForClass(curr->course.main_class->my_class.student_list, curr->course.course_id, year_id, sem_id);
+        curr->course = newOne;
         addResultsNodeToClass(curr->course.main_class, year_id, sem_id, curr->course.course_id);
-	}
+    }
     else
     {
         string old_course_id;
@@ -228,13 +228,13 @@ CourseNode *findCourse(CourseNode *head, string input)
     return sort;
 }
 
-void deleteCourseList(CourseNode*& courseList, string year_id, string sem_id)
+void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
 {
     while (courseList)
     {
-		CourseNode *temp = courseList;
+        CourseNode *temp = courseList;
         deleteAllExtraStudents(temp->course.extra_stu, temp->course.course_id, year_id, sem_id);
         courseList = courseList->next;
-		delete temp;
-	}
+        delete temp;
+    }
 }
