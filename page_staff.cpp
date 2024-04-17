@@ -1444,7 +1444,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 window.draw(born.txt);
             if (showAddResult)
             {
-                // checkAdd = addStudentToCourse(course, stu_id);
+                checkAdd = addStudentSubNodeToCourse(class_list, course, stu_id, yr, sem);
             }
             if (showAddResult && clock.getElapsedTime().asSeconds() < 3)
                 chooseDraw_2(window, valid3, invalid3, checkAdd);

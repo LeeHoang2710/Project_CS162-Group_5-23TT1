@@ -198,7 +198,7 @@ StudentSubNode *createStudentSubNode(StudentNode *studentNode)
     return new StudentSubNode{studentNode, nullptr};
 }
 
-void appendStudentSubNode(StudentSubNode *studentSubList, StudentSubNode *studentSubNode)
+void appendStudentSubNode(StudentSubNode *&studentSubList, StudentSubNode *studentSubNode)
 {
     if (!studentSubList)
         studentSubList = studentSubNode;
@@ -213,7 +213,7 @@ void appendStudentSubNode(StudentSubNode *studentSubList, StudentSubNode *studen
 }
 
 // Add one extra student to a course
-bool addStudentSubNodeToCourse(ClassNode *allClass, StudentSubNode *&studentSubList, string student_id, string course_id, string year_id, string sem_id)
+bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, string student_id, string year_id, string sem_id)
 {
     StudentNode *studentNode = searchStudentNode(allClass, student_id);
     if (!studentNode)
@@ -223,8 +223,8 @@ bool addStudentSubNodeToCourse(ClassNode *allClass, StudentSubNode *&studentSubL
     }
 
     StudentSubNode *studentSubNode = createStudentSubNode(studentNode);
-    appendStudentSubNode(studentSubList, studentSubNode);
-    Results results = createResults(course_id, year_id, sem_id, 0.0f, 0.0f, 0.0f);
+    appendStudentSubNode(courseNode->course.extra_stu, studentSubNode);
+    Results results = createResults(courseNode->course.course_id, year_id, sem_id, 0.0f, 0.0f, 0.0f);
     appendResultsNode(studentNode->student.results_list, createResultsNode(results));
     return true;
 }
