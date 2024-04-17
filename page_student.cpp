@@ -62,14 +62,14 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
 
     ResultsNode *res = person->student.results_list;
     CourseNode *course[20]{};
-    Object *subject[4]{};
-    Info *inf[4]{};
+    Object subject[4]{};
+    Info inf[4]{};
     for (int i = 0; i < 4; ++i)
     {
         createObjectTest(subject[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
         createInfoTest(inf[i], "", 316, 117 * i + 354);
-        inf[i]->txt.setFillColor(Color::Yellow);
-        inf[i]->txt.setStyle(Text::Bold);
+        inf[i].txt.setFillColor(Color::Yellow);
+        inf[i].txt.setStyle(Text::Bold);
     }
     int count = 0, change = 0;
     bool new_page = true;
@@ -108,7 +108,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
         updateColorOnHover(window, menu);
         for (int i = 0; i < 4; ++i)
         {
-            Object &subjectRef = *subject[i];
+            Object &subjectRef = subject[i];
             updateColorOnHover(window, subjectRef);
         }
         while (window.pollEvent(event))
@@ -136,7 +136,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
                     }
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (isHere(subject[i]->bound, mouse) && course[i])
+                        if (isHere(subject[i].bound, mouse) && course[i])
                         {
                             page = 19;
                             detailStudent(window, page, course[i], Exit);
@@ -168,23 +168,21 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
             {
                 CourseNode *temp = course[change + i];
                 if (temp)
-                    inf[i]->txt.setString(temp->course.course_id + " - " + temp->course.course_name);
+                    inf[i].txt.setString(temp->course.course_id + " - " + temp->course.course_name);
                 else
-                    inf[i]->txt.setString("");
+                    inf[i].txt.setString("");
             }
             new_page = false;
         }
         for (int i = 0; i < 4; ++i)
         {
-            if (inf[i]->txt.getString() == "")
+            if (inf[i].txt.getString() == "")
                 break;
-            window.draw(subject[i]->draw);
-            window.draw(inf[i]->txt);
+            window.draw(subject[i].draw);
+            window.draw(inf[i].txt);
         }
         window.display();
     }
-    for (int i = 0; i < 4; ++i)
-        delete subject[i], inf[i];
 }
 
 void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Exit)
@@ -202,8 +200,8 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
     Object o6 = createObject("./image/page3-staff/course/input_1.png", 506, 620);
     Object o7 = createObject("./image/page3-staff/course/input_1.png", 965, 620);
 
-    Object *yes[6]{}, *no[6]{}, *yes_sess[4]{}, *no_sess[4]{};
-    Info *inf[4]{};
+    Object yes[6]{}, no[6]{}, yes_sess[4]{}, no_sess[4]{};
+    Info inf[4]{};
     createInfoTest(inf[0], course->course.course_id, 512, 377);
     createInfoTest(inf[1], course->course.course_name, 512, 438);
     createInfoTest(inf[2], course->course.main_class->my_class.class_id, 512, 499);
@@ -266,11 +264,11 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
         check_sess[course->course.teaching_session.session_no - 1] = true;
         for (int i = 0; i < 4; ++i)
         {
-            window.draw(inf[i]->txt);
-            chooseDraw_1(window, yes_sess[i], no_sess[i], check_sess[i]);
+            window.draw(inf[i].txt);
+            chooseDraw_2(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw_1(window, yes[i], no[i], check_day[i]);
+            chooseDraw_2(window, yes[i], no[i], check_day[i]);
         window.display();
     }
 }
@@ -291,7 +289,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     Info id = createText(student->student.student_id, 957, 144);
     Info curr_gpa = createText("", 379, 721);
     Info total_gpa = createText("", 713, 721);
-    Info *res[8][7]{};
+    Info res[8][7]{};
     for (int i = 0; i < 8; ++i)
     {
         createInfoTest(res[i][0], "", 210, 298 + 48 * i);
@@ -302,7 +300,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         createInfoTest(res[i][5], "", 1000 - 20, 298 + 48 * i);
         createInfoTest(res[i][6], "", 1150 - 10, 298 + 48 * i);
         for (int j = 0; j < 7; ++j)
-            res[i][j]->txt.setCharacterSize(24);
+            res[i][j].txt.setCharacterSize(24);
     }
     int count = 0, change = 0;
     bool new_page = true;
@@ -373,32 +371,29 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
                 if (temp)
                 {
                     one[i] = temp;
-                    res[i][0]->txt.setString(one[i]->results.course_id);
-                    res[i][1]->txt.setString(one[i]->results.sem_id);
-                    res[i][2]->txt.setString(one[i]->results.year_id);
-                    res[i][3]->txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
-                    res[i][4]->txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
-                    res[i][5]->txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
-                    res[i][6]->txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    res[i][0].txt.setString(one[i]->results.course_id);
+                    res[i][1].txt.setString(one[i]->results.sem_id);
+                    res[i][2].txt.setString(one[i]->results.year_id);
+                    res[i][3].txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
+                    res[i][4].txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
+                    res[i][5].txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
+                    res[i][6].txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
                     temp = temp->next;
                 }
                 else
-                    res[i][0]->txt.setString("");
+                    res[i][0].txt.setString("");
             }
             new_page = false;
         }
         for (int i = 0; i < 8; ++i)
         {
-            if (res[i][0]->txt.getString() == "")
+            if (res[i][0].txt.getString() == "")
                 break;
             for (int j = 0; j < 7; ++j)
-                window.draw(res[i][j]->txt);
+                window.draw(res[i][j].txt);
         }
         window.display();
     }
-    for (int i = 0; i < 8; ++i)
-        for (int j = 0; j < 7; ++j)
-            delete res[i][j];
 }
 
 void Other2(RenderWindow &window, int &page, StudentNode *&user, bool &Exit)
@@ -466,7 +461,7 @@ void Profile2(RenderWindow &window, int &page, ClassNode *class_list, StudentNod
     Object class_name = createObject("./image/page4-student/home/input.png", 924, 547);
     Object social_id = createObject("./image/page1/profile/social-id.png", 431, 702);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
-    Object *y[2]{}, *n[2]{};
+    Object y[2]{}, n[2]{};
     for (int i = 0; i < 2; ++i)
     {
         createObjectTest(y[i], "./image/page3-staff/course/yes.png", 453 + 354 * i, 637);
@@ -514,13 +509,13 @@ void Profile2(RenderWindow &window, int &page, ClassNode *class_list, StudentNod
         window.draw(class_id.txt);
         if (person->student.gender)
         {
-            window.draw(y[0]->draw);
-            window.draw(n[1]->draw);
+            window.draw(y[0].draw);
+            window.draw(n[1].draw);
         }
         else
         {
-            window.draw(y[1]->draw);
-            window.draw(n[0]->draw);
+            window.draw(y[1].draw);
+            window.draw(n[0].draw);
         }
         window.display();
     }

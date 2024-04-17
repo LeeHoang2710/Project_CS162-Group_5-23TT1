@@ -14,22 +14,19 @@ Object createObject(string input, float x, float y)
 // Object *createObjectTest(string s, float x, float y)
 // {
 // 	Object *me = new Object;
-// 	me->text.loadFromFile(s);
-// 	me->draw.setTexture(me->text);
-// 	me->draw.setPosition(x, y);
-// 	me->bound = me->draw.getGlobalBounds();
+// 	me.text.loadFromFile(s);
+// 	me.draw.setTexture(me.text);
+// 	me.draw.setPosition(x, y);
+// 	me.bound = me.draw.getGlobalBounds();
 // 	return me;
 // }
 
-void createObjectTest(Object *&me, string s, float x, float y)
+void createObjectTest(Object &me, string s, float x, float y)
 {
-	if (me)
-		delete me;
-	me = new Object;
-	me->text.loadFromFile(s);
-	me->draw.setTexture(me->text);
-	me->draw.setPosition(x, y);
-	me->bound = me->draw.getGlobalBounds();
+	me.text.loadFromFile(s);
+	me.draw.setTexture(me.text);
+	me.draw.setPosition(x, y);
+	me.bound = me.draw.getGlobalBounds();
 }
 
 Object createBackGround(string input)
@@ -59,28 +56,25 @@ Info createText(string str, float x, float y)
 // Info *createInfoTest(string s, float x, float y)
 // {
 // 	Info *a = new Info;
-// 	a->font.loadFromFile("./image/font/Arial.ttf");
-// 	a->txt.setFont(a->font);
-// 	a->txt.setCharacterSize(30);
-// 	a->txt.setPosition(x, y);
-// 	a->txt.setFillColor(Color::Black);
-// 	a->txt.setString(s);
-// 	a->bound = a->txt.getGlobalBounds();
+// 	a.font.loadFromFile("./image/font/Arial.ttf");
+// 	a.txt.setFont(a.font);
+// 	a.txt.setCharacterSize(30);
+// 	a.txt.setPosition(x, y);
+// 	a.txt.setFillColor(Color::Black);
+// 	a.txt.setString(s);
+// 	a.bound = a.txt.getGlobalBounds();
 // 	return a;
 // }
 
-void createInfoTest(Info *&a, string s, float x, float y)
+void createInfoTest(Info &a, string s, float x, float y)
 {
-	if (a)
-		delete a;
-	a = new Info;
-	a->font.loadFromFile("./image/font/Arial.ttf");
-	a->txt.setFont(a->font);
-	a->txt.setCharacterSize(30);
-	a->txt.setPosition(x, y);
-	a->txt.setFillColor(Color::Black);
-	a->txt.setString(s);
-	a->bound = a->txt.getGlobalBounds();
+	a.font.loadFromFile("./image/font/Arial.ttf");
+	a.txt.setFont(a.font);
+	a.txt.setCharacterSize(30);
+	a.txt.setPosition(x, y);
+	a.txt.setFillColor(Color::Black);
+	a.txt.setString(s);
+	a.bound = a.txt.getGlobalBounds();
 }
 bool isHere(FloatRect &bound, Vector2f &mouse)
 {
