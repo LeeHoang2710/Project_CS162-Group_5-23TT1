@@ -193,13 +193,14 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
             getline(fin, no, ',');
             getline(fin, stu_find, ',');
             getline(fin, fullname, ',');
-            StudentNode *stuTemp = searchStudentNode(curr.main_class->my_class.student_list, stu_find);
+            StudentNode *stuTemp = searchStudentNodeInOneClass(curr.main_class->my_class.student_list, stu_find);
             if (stuTemp == nullptr)
             {
                 cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
                 fin.close();
                 return false;
             }
+
             ResultsNode *change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
             string p, m, f;
             getline(fin, p, ',');
@@ -210,6 +211,7 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
             change->results.score.final = stof(f);
         }
     }
+
     fin.close();
     return true;
 }

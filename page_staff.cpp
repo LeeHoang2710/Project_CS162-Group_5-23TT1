@@ -48,7 +48,7 @@ void Scene1(RenderWindow &window, int &page, bool &is_staff)
     }
 }
 
-void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode *user2, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1)
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode* class_list)
 {
 
     Event event;
@@ -123,8 +123,9 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StudentNode
                         {
                             log_in = false;
                             page = 4;
-                            user1 = searchStudentNode(user2, name);
+                            user1 = searchStudentNode(class_list, name);
                         }
+
                         clock.restart();
                     }
                     else
@@ -2203,7 +2204,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
             }
             new_page = false;
         }
-        if (new_page && stu_list && result)
+        if (!new_page && stu_list && result)
         {
             StudentNode *temp = stu_list;
             for (int i = 0; i < change; ++i)

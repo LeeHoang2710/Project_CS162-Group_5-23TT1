@@ -40,7 +40,7 @@ int main()
         case 2:
         {
             bool see = false;
-            logIn(window, page, is_staff, see, class_list->my_class.student_list, user2, username, pass, user, user1);
+            logIn(window, page, is_staff, see, user2, username, pass, user, user1, class_list);
             break;
         }
         case 3:
