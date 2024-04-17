@@ -1670,7 +1670,7 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
 
     bool isTypingOld = false, isTypingNew = false;
     bool seeOld = false, seeNew = false;
-    bool Change;
+    bool Change = false;
     Clock clock;
 
     string old_pass = "", new_pass = "", hidden_old = "", hidden_new = "";

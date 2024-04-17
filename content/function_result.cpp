@@ -52,7 +52,7 @@ void addResultsNodeToClass(ClassNode *&classNode, const string &year_id, const s
 {
     if (!classNode)
     {
-        cout << "hello world" << endl;
+        cout << "ClassNode is nullptr." << endl;
         return;
     }
 
@@ -279,11 +279,13 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr)
         op << findcurr->results.score.process << "," << findcurr->results.score.midterm << "," << findcurr->results.score.final << "," << findcurr->results.score.overall << endl;
         tempstu = tempstu->next;
     }
+
     destination = filename;
     op.close();
 }
 
-void ExportAllResultsToFile(ofstream& op, string& destination, StudentNode* Curr) {
+void ExportAllResultsToFile(ofstream& op, string& destination, StudentNode* Curr)
+{
     string name = Curr->student.last_name + " " + Curr->student.first_name;
     string id = Curr->student.student_id;
     string filename = destination + "/" + id + "_scoreboard.csv";
@@ -293,10 +295,12 @@ void ExportAllResultsToFile(ofstream& op, string& destination, StudentNode* Curr
     op << "Total Gpa " << "," << Curr->student.total_gpa << endl;
     op << "Course,Semester,Year,Process Mark,Midterm Mark,Final Mark,Total Mark" << endl;
     ResultsNode* restemp = Curr->student.results_list;
-    while (restemp) {
+    while (restemp)
+    {
         op << restemp->results.course_id << "," << restemp->results.sem_id << "," << restemp->results.year_id << ",";
         op << restemp->results.score.process << "," << restemp->results.score.midterm << "," << restemp->results.score.final << "," << restemp->results.score.overall << endl;
         restemp = restemp->next;
     }
+
     op.close();
 }

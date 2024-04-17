@@ -66,6 +66,7 @@ bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id,
     {
         CourseNode *tmp = CourseHead;
         deleteCourseResultsForClass(CourseHead->course.main_class->my_class.student_list, course_id, year_id, sem_id);
+        deleteAllExtraStudents(CourseHead->course.extra_stu, course_id, year_id, sem_id);
         CourseHead = CourseHead->next;
         delete tmp;
         return true;
@@ -78,6 +79,7 @@ bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id,
             CourseNode *del = tmp->next;
             tmp->next = tmp->next->next;
             deleteCourseResultsForClass(del->course.main_class->my_class.student_list, course_id, year_id, sem_id);
+            deleteAllExtraStudents(del->course.extra_stu, course_id, year_id, sem_id);
             delete del;
             return true;
         }

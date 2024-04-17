@@ -62,24 +62,28 @@ bool removeStudentNode(StudentNode*& head, string studentId)
     return false;
 }
 
-StudentNode *searchStudentNode(StudentNode *head, string student_1_id)
+StudentNode* searchStudentNode(ClassNode* allClass, string studentId)
 {
-    if (!head)
+	for (ClassNode* tmp = allClass; tmp != nullptr; tmp = tmp->next)
+	{
+		StudentNode* student = searchStudentNodeInOneClass(tmp->my_class.student_list, studentId);
+		if (student != nullptr)
+			return student;
+	}
+
+	return nullptr;
+}
+
+StudentNode *searchStudentNodeInOneClass(StudentNode *head, string student_id)
+{
+    while (head)
     {
-        cout << "Cannot find the searched student..." << endl;
-        return nullptr;
+        if (head->student.student_id == student_id)
+            return head;
+            
+        head = head->next;
     }
 
-    StudentNode *list_student = head;
-    while (list_student)
-    {
-        if (list_student->student.student_id == student_1_id)
-            return list_student;
-        else
-            list_student = list_student->next;
-    }
-
-    cout << "Cannot find the searched student..." << endl;
     return nullptr;
 }
 
@@ -183,4 +187,95 @@ void deleteStudentList(StudentNode*& studentList)
 		studentList = studentList->next;
 		delete temp;
 	}
+}
+
+// StudentSubNode
+
+StudentSubNode* createStudentSubNode(StudentNode* studentNode)
+{
+    return new StudentSubNode{ studentNode, nullptr };
+}
+
+void appendStudentSubNode(StudentSubNode* studentSubList, StudentSubNode* studentSubNode)
+{
+    if (!studentSubList)
+        studentSubList = studentSubNode;
+    else
+    {
+        StudentSubNode* temp = studentSubList;
+        while (temp->next)
+            temp = temp->next;
+
+        temp->next = studentSubNode;
+    }
+}
+
+// Add one extra student to a course
+bool addStudentSubNodeToCourse(ClassNode* allClass, StudentSubNode*& studentSubList, string student_id, string course_id, string year_id, string sem_id)
+{
+    StudentNode* studentNode = searchStudentNode(allClass, student_id);
+    if (!studentNode)
+    {
+        cout << "Student " << student_id << " does not exist." << endl;
+        return false;
+    }
+
+    StudentSubNode* studentSubNode = createStudentSubNode(studentNode);
+    appendStudentSubNode(studentSubList, studentSubNode);
+    Results results = createResults(course_id, year_id, sem_id, 0.0f, 0.0f, 0.0f);
+    appendResultsNode(studentNode->student.results_list, createResultsNode(results));
+    return true;
+}
+
+StudentSubNode* searchStudentSubNode(StudentSubNode* studentSubList, string student_id)
+{
+    StudentSubNode* temp = studentSubList;
+    while (temp)
+    {
+        if (temp->student_node->student.student_id == student_id)
+            return temp;
+
+        temp = temp->next;
+    }
+
+    cout << "StudentSubNode " << student_id << " does not exist here." << endl;
+    return nullptr;
+}
+
+// Remove one extra student from a course
+bool deleteStudentSubNode(StudentSubNode*& studentSubList, string student_id, string course_id, string year_id, string sem_id)
+{
+    StudentSubNode* nodeToDelete = searchStudentSubNode(studentSubList, student_id);
+    if (nodeToDelete)
+    {
+        if (studentSubList == nodeToDelete)
+            studentSubList = studentSubList->next;
+        else
+        {
+            StudentSubNode* temp = studentSubList;
+            while (temp->next != nodeToDelete)
+                temp = temp->next;
+
+            temp->next = nodeToDelete->next;
+        }
+
+        deleteResultsNode(nodeToDelete->student_node->student.results_list, course_id, year_id, sem_id);
+        delete nodeToDelete;
+        return true;
+    }
+
+    return false;
+}
+
+// Delete all extra students before deleting a course
+void deleteAllExtraStudents(StudentSubNode*& studentSubList, string course_id, string year_id, string sem_id)
+{
+    StudentSubNode* temp = studentSubList;
+    while (studentSubList)
+    {
+        StudentSubNode* temp = studentSubList;
+        deleteResultsNode(temp->student_node->student.results_list, course_id, year_id, sem_id);
+        delete temp;
+        studentSubList = studentSubList->next;
+    }
 }

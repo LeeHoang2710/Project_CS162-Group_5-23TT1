@@ -73,7 +73,7 @@ struct Course
 	ClassNode *main_class = nullptr;
 	StudentSubNode *extra_stu = nullptr;
 };
-#
+
 struct CourseNode
 {
 	Course course;

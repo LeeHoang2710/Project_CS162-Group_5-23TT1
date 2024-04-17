@@ -24,7 +24,8 @@ Student createStudent(int p_num, string p_student_id, string p_first, string p_l
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 bool removeStudentNode(StudentNode *&head, string studentId);
-StudentNode *searchStudentNode(StudentNode *head, string student_1_id);
+StudentNode* searchStudentNode(ClassNode* allClass, string studentId);
+StudentNode* searchStudentNodeInOneClass(StudentNode* head, string student_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
 bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstream &fin);
@@ -80,7 +81,7 @@ void deleteClassList(ClassNode *&classList);
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
 void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass);
-Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final);
+Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process = 0.0f, float midterm = 0.0f, float final = 0.0f);
 ResultsNode *createResultsNode(const Results &results);
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
 float updateTotalGpa(StudentNode *studentNode);
@@ -105,3 +106,9 @@ void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout);
 void deleteClassSubList(ClassSubNode *&classSublist);
 
 // StudentSubNode
+StudentSubNode* createStudentSubNode(StudentNode* studentNode);
+void appendStudentSubNode(StudentSubNode* studentSubList, StudentSubNode* studentSubNode);
+bool addStudentSubNodeToCourse(ClassNode* allClass, StudentSubNode*& studentSubList, string student_id, string course_id, string year_id, string sem_id);
+StudentSubNode* searchStudentSubNode(StudentSubNode* studentSubList, string student_id);
+bool deleteStudentSubNode(StudentSubNode*& studentSubList, string student_id, string course_id, string year_id, string sem_id);
+void deleteAllExtraStudents(StudentSubNode*& studentSubList, string course_id, string year_id, string sem_id);
