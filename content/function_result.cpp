@@ -16,9 +16,9 @@ float updateTotalGpa(StudentNode *studentNode)
     return total / count;
 }
 
-void updateCourseOverall(Score& score)
+void updateCourseOverall(Score &score)
 {
-	score.overall = 0.35 * score.process + 0.25 * score.midterm + 0.4 * score.final;
+    score.overall = 0.35 * score.process + 0.25 * score.midterm + 0.4 * score.final;
 }
 
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process, float midterm, float final)
@@ -90,50 +90,52 @@ void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string 
     }
 }
 
-bool UpdateResults(ifstream& fin, string filename, string yr, string sem, CourseNode*& curr)
+bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
 {
     fin.open(filename);
     if (!fin.is_open())
     {
-        cout << "can not open results file to course" << endl;
+        cout << "Cannot open " << filename << endl;
         return false;
     }
-    string read;
-    getline(fin, read, '\n');
-    while (!fin.eof())
+
+    string Line;
+    while (getline(fin, Line, '\n'))
     {
-        int i = 1;
-        string no, stu_find, fullname;
-        getline(fin, no, ',');
-        if (no == "") {
-            fin.close();
+        if (Line.empty())
+            break;
+
+        ClassNode *currClass = searchClassNode(ClassList, Line);
+        if (!currClass)
             return false;
-        }
-        getline(fin, stu_find, ',');
-        getline(fin, fullname, ',');
-        StudentNode* stuTemp = searchStudentNodeInOneClass(curr->course.main_class->my_class.student_list, stu_find);
-        if (stuTemp == nullptr)
+        else
         {
-            stuTemp = searchStudentSubNode(curr->course.extra_stu, stu_find)->student_node;
-            if (!stuTemp)
+            StudentNode *tempStu = currClass->my_class.student_list;
+            while (getline(fin, Line, '\n') && tempStu)
             {
-                cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
-                fin.close();
-                return false;
+                while (getline(fin, Line, '\n'))
+                {
+                    if (Line == "*")
+                        break;
+                    else
+                    {
+                        stringstream ss2(Line);
+                        string course, year, sem, p, m, f;
+                        getline(ss2, course, ',');
+                        getline(ss2, year, ',');
+                        getline(ss2, sem, ',');
+                        getline(ss2, p, ',');
+                        getline(ss2, m, ',');
+                        getline(ss2, f, ',');
+                        Results currResults = createResults(course, sem, year, stof(p), stof(m), stof(f));
+                        appendResultsNode(tempStu->student.results_list, createResultsNode(currResults));
+                    }
+                }
+
+                tempStu->student.total_gpa = updateTotalGpa(tempStu);
+                tempStu = tempStu->next;
             }
         }
-        else cout << i++;
-        ResultsNode* change = searchResultsNode(stuTemp->student.results_list, curr->course.course_id, yr, sem);
-        string p, m, f;
-        getline(fin, p, ',');
-        getline(fin, m, ',');
-        getline(fin, f, ',');
-        change->results.score.process = stof(p);
-        change->results.score.midterm = stof(m);
-        change->results.score.final = stof(f);
-        change->results.score.overall = 0.35 * stof(p) + 0.25 * stof(m) + 0.4 * stof(f);
-        updateTotalGpa(stuTemp);
-        getline(fin, read, '\n');
     }
 
     fin.close();
@@ -178,7 +180,7 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass)
     fout.close();
 }
 
-bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course &curr)
+bool UpdateResults(ifstream &fin, string filename, string yr, string sem, CourseNode *&curr)
 {
     fin.open(filename);
     if (!fin.is_open())
@@ -186,33 +188,44 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
         cout << "can not open results file to course" << endl;
         return false;
     }
+    string read;
+    getline(fin, read, '\n');
     while (!fin.eof())
     {
-        string read;
-        getline(fin, read, '\n');
-        while (!fin.eof())
+        int i = 1;
+        string no, stu_find, fullname;
+        getline(fin, no, ',');
+        if (no == "")
         {
-            string no, stu_find, fullname;
-            getline(fin, no, ',');
-            getline(fin, stu_find, ',');
-            getline(fin, fullname, ',');
-            StudentNode *stuTemp = searchStudentNodeInOneClass(curr.main_class->my_class.student_list, stu_find);
-            if (stuTemp == nullptr)
+            fin.close();
+            return false;
+        }
+        getline(fin, stu_find, ',');
+        getline(fin, fullname, ',');
+        StudentNode *stuTemp = searchStudentNodeInOneClass(curr->course.main_class->my_class.student_list, stu_find);
+        if (!stuTemp)
+        {
+            stuTemp = searchStudentSubNode(curr->course.extra_stu, stu_find)->student_node;
+            if (!stuTemp)
             {
                 cout << "students in files and course are not matched, maybe this student is not in this course yet" << endl;
                 fin.close();
                 return false;
             }
-
-            ResultsNode *change = searchResultsNode(stuTemp->student.results_list, curr.course_id, yr, sem);
-            string p, m, f;
-            getline(fin, p, ',');
-            getline(fin, m, ',');
-            getline(fin, f, ',');
-            change->results.score.process = stof(p);
-            change->results.score.midterm = stof(m);
-            change->results.score.final = stof(f);
         }
+        else
+            cout << i++;
+        ResultsNode *change = searchResultsNode(stuTemp->student.results_list, curr->course.course_id, yr, sem);
+        string p, m, f;
+        getline(fin, p, ',');
+        getline(fin, m, ',');
+        getline(fin, f, ',');
+        change->results.score.process = stof(p);
+        change->results.score.midterm = stof(m);
+        change->results.score.final = stof(f);
+        change->results.score.overall = 0.35 * stof(p) + 0.25 * stof(m) + 0.4 * stof(f);
+        updateTotalGpa(stuTemp);
+        getline(fin, read, '\n');
     }
 
     fin.close();
@@ -267,10 +280,8 @@ void deleteResultsList(ResultsNode *&resultsList)
     }
 }
 
-void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr)
+void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id)
 {
-    string year_id = curr->course.main_class->my_class.student_list->student.results_list->results.year_id;
-    string sem_id = curr->course.main_class->my_class.student_list->student.results_list->results.sem_id;
     string filename = destination + "/" + curr->course.course_id + "_" + year_id + "_" + sem_id + ".csv";
     cout << filename;
     op.open(filename);
@@ -289,17 +300,20 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr)
     op.close();
 }
 
-void ExportAllResultsToFile(ofstream& op, string& destination, StudentNode* Curr)
+void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr)
 {
     string name = Curr->student.last_name + " " + Curr->student.first_name;
     string id = Curr->student.student_id;
     string filename = destination + "/" + id + "_scoreboard.csv";
     op.open(filename);
-    op << "Full Name:" << "," << name <<endl;
-    op << "Student ID:" << "," << id << endl;
-    op << "Total Gpa " << "," << Curr->student.total_gpa << endl;
+    op << "Full Name:"
+       << "," << name << endl;
+    op << "Student ID:"
+       << "," << id << endl;
+    op << "Total Gpa "
+       << "," << Curr->student.total_gpa << endl;
     op << "Course,Semester,Year,Process Mark,Midterm Mark,Final Mark,Total Mark" << endl;
-    ResultsNode* restemp = Curr->student.results_list;
+    ResultsNode *restemp = Curr->student.results_list;
     while (restemp)
     {
         op << restemp->results.course_id << "," << restemp->results.sem_id << "," << restemp->results.year_id << ",";

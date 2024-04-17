@@ -24,8 +24,8 @@ Student createStudent(int p_num, string p_student_id, string p_first, string p_l
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
 bool removeStudentNode(StudentNode *&head, string studentId);
-StudentNode* searchStudentNode(ClassNode* allClass, string studentId);
-StudentNode* searchStudentNodeInOneClass(StudentNode* head, string student_id);
+StudentNode *searchStudentNode(ClassNode *allClass, string studentId);
+StudentNode *searchStudentNodeInOneClass(StudentNode *head, string student_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
 bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstream &fin);
@@ -80,18 +80,18 @@ void deleteClassList(ClassNode *&classList);
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
-void updateCourseOverall(Score& score);
+void updateCourseOverall(Score &score);
 void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process = 0.0f, float midterm = 0.0f, float final = 0.0f);
 ResultsNode *createResultsNode(const Results &results);
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
 ResultsNode *searchResultsNode(ResultsNode *results_list, string course_id, string year_id, string sem_id);
 void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string new_course_id, string year_id, string sem_id);
-bool UpdateResults(ifstream &fin, string filename, string yr, string sem, CourseNode* &curr);
+bool UpdateResults(ifstream &fin, string filename, string yr, string sem, CourseNode *&curr);
 bool deleteResultsNode(ResultsNode *&resultsList, string course_id, string year_id, string sem_id);
 void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, string year_id, string sem_id);
 void deleteResultsList(ResultsNode *&resultsList);
-void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr);
+void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id);
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
 
 // ClassSubNode
@@ -106,9 +106,9 @@ void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout);
 void deleteClassSubList(ClassSubNode *&classSublist);
 
 // StudentSubNode
-StudentSubNode* createStudentSubNode(StudentNode* studentNode);
-void appendStudentSubNode(StudentSubNode*& studentSubList, StudentSubNode* studentSubNode);
-bool addStudentSubNodeToCourse(ClassNode* allClass, CourseNode*& courseNode, string student_id, string year_id, string sem_id);
-StudentSubNode* searchStudentSubNode(StudentSubNode* studentSubList, string student_id);
-bool deleteStudentSubNode(StudentSubNode*& studentSubList, string student_id, string course_id, string year_id, string sem_id);
-void deleteAllExtraStudents(StudentSubNode*& studentSubList, string course_id, string year_id, string sem_id);
+StudentSubNode *createStudentSubNode(StudentNode *studentNode);
+void appendStudentSubNode(StudentSubNode *&studentSubList, StudentSubNode *studentSubNode);
+bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, string student_id, string year_id, string sem_id);
+StudentSubNode *searchStudentSubNode(StudentSubNode *studentSubList, string student_id);
+bool deleteStudentSubNode(StudentSubNode *&studentSubList, string student_id, string course_id, string year_id, string sem_id);
+void deleteAllExtraStudents(StudentSubNode *&studentSubList, string course_id, string year_id, string sem_id);

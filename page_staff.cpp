@@ -1425,7 +1425,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
             if (Import)
             {
                 ifstream fin;
-                checkPath = UpdateResults(fin, file_path, yr, sem, course->course);
+                checkPath = UpdateResults(fin, file_path, yr, sem, course);
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 3)
@@ -1533,7 +1533,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     {
                         ofstream op;
                         destination = "export";
-                        ExportStudentTofile(op, destination, course);
+                        ExportStudentTofile(op, destination, course, yr, sem);
                         success = true;
                         clock.restart();
                     }
