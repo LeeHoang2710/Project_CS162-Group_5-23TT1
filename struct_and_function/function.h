@@ -94,6 +94,7 @@ void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, st
 void deleteResultsList(ResultsNode *&resultsList);
 void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id);
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
+bool importmanycourses(ifstream& fin, string filename, ClassNode* class_list, CourseNode*& curr, string yr, string sem);
 
 // ClassSubNode
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);

@@ -1028,6 +1028,13 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
 
                         clock.restart();
                     }
+                    else if (isHere(import.bound, mouse)) {
+                        ifstream fin;
+                        string filename;
+                        filename = "./database/manycourses.csv";
+                        importmanycourses(fin, filename, class_list, course, yr, sem);
+                        //them hien thi succcessfully; va nhap filename;
+                    }
                     else
                     {
                         typing_id = false;
@@ -2252,7 +2259,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                     resl[i][0]->txt.setString(to_string(one[i]->student.num));
                     resl[i][1]->txt.setString(one[i]->student.student_id);
                     resl[i][2]->txt.setString(one[i]->student.last_name + " " + one[i]->student.first_name);
-                    resl[i][3]->txt.setString("0.0");
+                    resl[i][3]->txt.setString(to_string(one[i]->student.cur_gpa).substr(0, 4));
                     resl[i][4]->txt.setString(to_string(one[i]->student.total_gpa).substr(0, 4));
                     temp = temp->next;
                 }
