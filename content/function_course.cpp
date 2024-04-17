@@ -239,3 +239,54 @@ void deleteCourseList(CourseNode*& courseList, string year_id, string sem_id)
 		delete temp;
 	}
 }
+
+bool importmanycourses(ifstream& fin, string filename, ClassNode* class_list, CourseNode*& curr, string yr, string sem) {
+    fin.open(filename);
+    string read; //header
+    getline(fin, read, '\n');
+    string number;
+    while (!fin.eof()) {
+        cout << "cmm";
+        Course cs;
+        getline(fin, number, '\n');
+        if (number.empty() || number == "#")
+            break;
+        stringstream line(number);
+        getline(line, cs.course_id, ',');
+        getline(line, cs.course_name, ',');
+        getline(line, cs.teacher_name, ',');
+        getline(line, number, ',');
+        cs.num_credit = stoi(number);
+        getline(line, number, ',');
+        cs.max_students = stoi(number);
+        getline(line, number, ',');
+        cs.teaching_session.day_of_the_week = stoi(number);
+        getline(line, number, ',');
+        cs.teaching_session.session_no = stoi(number);
+        getline(line, number, ',');
+        cs.main_class = searchClassNode(class_list, number);
+        if (!cs.main_class)
+        {
+            cout << "Cannot find class " << number << endl;
+            fin.close();
+            return false;
+        }
+
+        while (getline(line, number, ','))
+        {
+            StudentNode* stu = searchStudentNode(class_list, number);
+            if (!stu)
+            {
+                cout << "Student " << number << " does not exist." << endl;
+                fin.close();
+                return false;
+            }
+
+            appendStudentSubNode(cs.extra_stu, createStudentSubNode(stu));
+        }
+        appendNewCourseNode(curr, cs);
+        addResultsNodeToClass(cs.main_class, yr, sem, cs.course_id);
+    }
+    fin.close();
+    return true;
+}
