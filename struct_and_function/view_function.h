@@ -42,7 +42,7 @@ void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
-void logIn(RenderWindow& window, int& page, bool is_staff, bool see, StaffNode* user3, string& name, string& pass, StaffNode*& user, StudentNode*& user1, ClassNode* class_list);
+void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode *class_list);
 void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
 void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, ClassNode *&class_list, bool &Exit);
 void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *class_list, bool &Exit);

@@ -119,12 +119,14 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
                             page = 3;
                             user = searchStaffNode(user3, name);
                         }
-                        else
+                        else if (!is_staff && LoginForStudent(class_list, name, pass))
                         {
-                            log_in = false;
+                            log_in = true;
                             page = 4;
                             user1 = searchStudentNode(class_list, name);
                         }
+                        else
+                            log_in = false;
 
                         clock.restart();
                     }
@@ -1481,11 +1483,22 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     path.txt.setCharacterSize(23);
     Info num = createText("", 460, 726);
     int count = 0, change = 0;
-    for (StudentNode *curr = course->course.main_class->my_class.student_list; curr != nullptr; curr = curr->next)
+    StudentNode *stu_list = course->course.main_class->my_class.student_list;
+    StudentSubNode *hoc_lai = course->course.extra_stu;
+    StudentSubNode *total = nullptr;
+    for (StudentNode *curr = stu_list; curr != nullptr; curr = curr->next)
+    {
         count++;
+        appendStudentSubNode(total, createStudentSubNode(curr));
+    }
+    for (StudentSubNode *curr = hoc_lai; curr != nullptr; curr = curr->next)
+    {
+        count++;
+        appendStudentSubNode(total, createStudentSubNode(curr->student_node));
+    }
     num.txt.setString(to_string(count));
     bool new_page = true, success = false;
-    StudentNode *stu_list = course->course.main_class->my_class.student_list;
+
     StudentNode *one[8];
     Info *res[8][6]{};
     for (int i = 0; i < 8; ++i)
@@ -1558,16 +1571,15 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(num.txt);
         if (new_page && stu_list)
         {
-
-            StudentNode *temp = stu_list;
+            StudentSubNode *temp = total;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
             for (int i = 0; i < 8; ++i)
             {
                 if (temp)
                 {
-                    one[i] = temp;
-                    ResultsNode *temp_res = searchResultsNode(temp->student.results_list, course->course.course_id, yr, sem);
+                    one[i] = temp->student_node;
+                    ResultsNode *temp_res = searchResultsNode(temp->student_node->student.results_list, course->course.course_id, yr, sem);
 
                     res[i][0]->txt.setString(one[i]->student.student_id);
                     res[i][1]->txt.setString(one[i]->student.last_name + " " + one[i]->student.first_name);
@@ -1602,6 +1614,8 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     for (int i = 0; i < 8; ++i)
         for (int j = 0; j < 7; ++j)
             delete res[i][j];
+    for (StudentSubNode *curr = total; curr != nullptr; curr = curr->next)
+        delete curr;
 }
 
 void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)

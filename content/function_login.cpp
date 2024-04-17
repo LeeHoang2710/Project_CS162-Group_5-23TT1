@@ -54,16 +54,19 @@ void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
     ip.close();
 }
 
-bool LoginForStudent(StudentNode *StuPass, string &username, string &pass)
+bool LoginForStudent(ClassNode *StuPass, string &username, string &pass)
 {
     if (!StuPass)
         return false;
-
-    StudentNode *tmp = StuPass;
-    for (tmp; tmp != NULL; tmp = tmp->next)
+    ClassNode *login = StuPass;
+    for (login; login != NULL; login = login->next)
     {
-        if (tmp->student.student_id == username && tmp->student.password == pass)
-            return true;
+        StudentNode *tmp = login->my_class.student_list;
+        for (tmp; tmp != NULL; tmp = tmp->next)
+        {
+            if (tmp->student.student_id == username && tmp->student.password == pass)
+                return true;
+        }
     }
 
     return false;
@@ -238,27 +241,27 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id)
 void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename)
 {
     op.open(filename);
-    
+
     for (StaffNode *tmp = Staff_list; tmp != nullptr; tmp = tmp->next)
     {
         op << tmp->staff.username << ","
-            << tmp->staff.first_name << ","
-            << tmp->staff.last_name << ","
-            << tmp->staff.gender << ","
-            << tmp->staff.dob << ","
-            << tmp->staff.social_id << ","
-            << tmp->staff.password << endl;
+           << tmp->staff.first_name << ","
+           << tmp->staff.last_name << ","
+           << tmp->staff.gender << ","
+           << tmp->staff.dob << ","
+           << tmp->staff.social_id << ","
+           << tmp->staff.password << endl;
     }
 
     op.close();
 }
 
-void deleteStaffList(StaffNode*& staffList)
+void deleteStaffList(StaffNode *&staffList)
 {
     while (staffList)
     {
-        StaffNode* temp = staffList;
-		staffList = staffList->next;
-		delete temp;
-	}
+        StaffNode *temp = staffList;
+        staffList = staffList->next;
+        delete temp;
+    }
 }

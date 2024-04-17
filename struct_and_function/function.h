@@ -3,7 +3,7 @@
 // Login Session
 void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file);
 void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file);
-bool LoginForStudent(StudentNode *StuList, string &username, string &pass);
+bool LoginForStudent(ClassNode *StuList, string &username, string &pass);
 bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass);
 void UpdateStuPassFile(StudentNode *List, ofstream &op);
 void UpdateStaffPassFile(StaffNode *List, ofstream &op);
