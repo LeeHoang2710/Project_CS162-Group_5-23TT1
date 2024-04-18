@@ -1207,7 +1207,8 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         updateColorOnHover(window, result);
         updateColorOnHover(window, import);
         updateColorOnHover(window, view);
-
+        updateColorOnHover(window, exit);
+        updateColorOnHover(window, button);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1533,7 +1534,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         updateColorOnHover(window, prev);
         updateColorOnHover(window, next);
         updateColorOnHover(window, append);
-
+        updateColorOnHover(window, eXport);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1983,6 +1984,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         updateColorOnHover(window, menu);
         updateColorOnHover(window, prev);
         updateColorOnHover(window, next);
+        updateColorOnHover(window, confirm);
         for (int i = 0; i < 4; ++i)
         {
             Object &addRef = add[i];

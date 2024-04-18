@@ -326,6 +326,8 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     Object o4 = createObject("./image/page3-staff/result/gpa.png", 350, 721);
     Object o5 = createObject("./image/page3-staff/result/gpa.png", 684, 721);
     Object o6 = createObject("./image/page4-student/home/current.png", 844, 721);
+    Object o7 = createObject("./image/page4-student/home/all.png", 844, 721);
+
     Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
     Info id = createText(student->student.student_id, 957, 144);
     Info curr_gpa = createText("", 379, 721);
@@ -347,6 +349,8 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     bool new_page = true, cur_course = false;
     ResultsNode *res_list1 = student->student.results_list;
     ResultsNode *res_list2 = CurrCourse(student);
+    for (ResultsNode *curr = res_list1; curr; curr = curr->next)
+        count++;
     ResultsNode *one[8]{};
     while (window.isOpen() && page == 9)
     {
@@ -403,7 +407,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         window.draw(o3.draw);
         window.draw(o4.draw);
         window.draw(o5.draw);
-        window.draw(o6.draw);
+        chooseDraw_2(window, o7, o6, cur_course);
         window.draw(name.txt);
         window.draw(id.txt);
         curr_gpa.txt.setString(to_string(student->student.cur_gpa).substr(0, 4));
@@ -419,14 +423,13 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
             {
                 if (temp)
                 {
-                    one[i] = temp;
-                    res[i][0].txt.setString(one[i]->results.course_id);
-                    res[i][1].txt.setString(one[i]->results.sem_id);
-                    res[i][2].txt.setString(one[i]->results.year_id);
-                    res[i][3].txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
-                    res[i][4].txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
-                    res[i][5].txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
-                    res[i][6].txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    res[i][0].txt.setString(temp->results.course_id);
+                    res[i][1].txt.setString(temp->results.sem_id);
+                    res[i][2].txt.setString(temp->results.year_id);
+                    res[i][3].txt.setString(to_string(temp->results.score.process).substr(0, 4));
+                    res[i][4].txt.setString(to_string(temp->results.score.midterm).substr(0, 4));
+                    res[i][5].txt.setString(to_string(temp->results.score.final).substr(0, 4));
+                    res[i][6].txt.setString(to_string(temp->results.score.overall).substr(0, 4));
                     temp = temp->next;
                 }
                 else
@@ -443,14 +446,13 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
             {
                 if (temp)
                 {
-                    one[i] = temp;
-                    res[i][0].txt.setString(one[i]->results.course_id);
-                    res[i][1].txt.setString(one[i]->results.sem_id);
-                    res[i][2].txt.setString(one[i]->results.year_id);
-                    res[i][3].txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
-                    res[i][4].txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
-                    res[i][5].txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
-                    res[i][6].txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    res[i][0].txt.setString(temp->results.course_id);
+                    res[i][1].txt.setString(temp->results.sem_id);
+                    res[i][2].txt.setString(temp->results.year_id);
+                    res[i][3].txt.setString(to_string(temp->results.score.process).substr(0, 4));
+                    res[i][4].txt.setString(to_string(temp->results.score.midterm).substr(0, 4));
+                    res[i][5].txt.setString(to_string(temp->results.score.final).substr(0, 4));
+                    res[i][6].txt.setString(to_string(temp->results.score.overall).substr(0, 4));
                     temp = temp->next;
                 }
                 else
