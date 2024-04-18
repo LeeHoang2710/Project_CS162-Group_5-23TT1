@@ -106,10 +106,16 @@ void addResultsNodeToClass(ClassNode *&classNode, const string &year_id, const s
 
 ResultsNode *searchResultsNode(ResultsNode *results_list, string course_id, string year_id, string sem_id)
 {
-    while (results_list && results_list->results.course_id != course_id && results_list->results.sem_id == sem_id && results_list->results.year_id == year_id)
-        results_list = results_list->next;
+    ResultsNode* temp = results_list;
+    while (temp)
+    {
+        if (temp->results.course_id == course_id && temp->results.year_id == year_id && temp->results.sem_id == sem_id)
+			return temp;
 
-    return results_list;
+        temp = temp->next;
+    }
+
+    return temp;
 }
 
 void updateCourseIdForClass(ClassNode *&classNode, string old_course_id, string new_course_id, string year_id, string sem_id)

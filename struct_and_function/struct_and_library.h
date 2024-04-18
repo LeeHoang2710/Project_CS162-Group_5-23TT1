@@ -59,8 +59,8 @@ struct SemesterNode
 
 struct Session
 {
-	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
-	int session_no;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
+	int day_of_the_week = 0; // MON / TUE / WED / THU / FRI / SAT
+	int session_no = 0;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 
 struct Course
@@ -68,7 +68,7 @@ struct Course
 	string course_id;
 	string course_name;
 	string teacher_name;
-	int num_credit;
+	int num_credit = 0;
 	int max_students = 50;
 	Session teaching_session;
 	ClassNode *main_class = nullptr;
@@ -113,7 +113,7 @@ struct Student
 	string student_id;
 	string first_name;
 	string last_name;
-	bool gender; // male(0), female(1)
+	bool gender = false; // male(0), female(1)
 	string dob;
 	string social_id;
 	string class_id;
@@ -154,7 +154,7 @@ struct Staff
 	string username;
 	string first_name;
 	string last_name;
-	bool gender;
+	bool gender = false;
 	string dob;
 	string social_id;
 	string password = "123";

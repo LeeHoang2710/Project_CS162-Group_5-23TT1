@@ -305,7 +305,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     int count = 0, change = 0;
     bool new_page = true;
     ResultsNode *res_list = student->student.results_list;
-    ResultsNode *one[8];
+    ResultsNode* one[8]{};
     while (window.isOpen() && page == 9)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));

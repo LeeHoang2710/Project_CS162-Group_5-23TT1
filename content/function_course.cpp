@@ -226,12 +226,16 @@ void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
 bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
 {
     fin.open(filename);
+    if (!fin.is_open())
+    {
+		cout << "Cannot open file " << filename << endl;
+		return false;
+	}
     string read; // header
     getline(fin, read, '\n');
     string number;
     while (!fin.eof())
     {
-        cout << "cmm";
         Course cs;
         getline(fin, number, '\n');
         if (number.empty() || number == "#")

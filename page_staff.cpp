@@ -286,7 +286,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
     Info file = createText("", 560, 490);
     Object add[4]{};
     Info id[4]{};
-    YearNode *one[4];
+    YearNode* one[4]{};
     for (int i = 0; i < 4; ++i)
     {
         createObjectTest(add[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
@@ -473,7 +473,7 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object add[3]{};
     Info id[3]{};
-    SemesterNode *sem[3];
+    SemesterNode* sem[3]{};
     for (int i = 0; i < 3; ++i)
     {
         createObjectTest(add[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
@@ -698,7 +698,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Info kill = createText("", 560, 490);
     Object subject[4]{};
     Info inf[4]{};
-    CourseNode *one[4];
+    CourseNode* one[4]{};
     for (int i = 0; i < 4; ++i)
     {
         createObjectTest(subject[i], "./image/page3-staff/school_year/year-node.png", 235, 117 * i + 347);
@@ -874,10 +874,19 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
 
     Object valid2 = createObject("./image/page3-staff/school_year/save-success.png", 423, 351);
     Object invalid2 = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
+    
+    Object alert = createObject("./image/page3-staff/course/update/import-cour-bg.png", 301, 295);
+    Object path = createObject("./image/page3-staff/school_year/file-path.png", 539, 482);
+    Object button = createObject("./image/page3-staff/school_year/import.png", 589, 591);
+    Object exit = createObject("./image/page2/exit.png", 1070, 305);
+    Object valid1 = createObject("./image/page2/import-succ.png", 423, 351);
+    Object invalid1 = createObject("image/page2/invalid-path.png", 423, 351);
+    
     Clock clock;
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_num = false, typing_cre = false;
 
     bool save = false, check_class = false, added = false;
+    bool new_cour = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
 
     Info inf[4]{};
     Object yes[6]{}, no[6]{}, yes_sess[4]{}, no_sess[4]{};
@@ -897,7 +906,10 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
     }
     Info stu = createText("", 525, 625);
     Info cre = createText("", 985, 625);
-    string cour_id, cour_name, classes, teacher, num, credit;
+    Info file = createText("", 560, 490);
+    file.txt.setCharacterSize(23);
+    file.txt.setStyle(Text::Regular);
+    string cour_id, cour_name, classes, teacher, num, credit, filename;
     int day = 0, sess = 0;
     while (window.isOpen() && page == 14)
     {
@@ -919,6 +931,21 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                 {
                     switchPage(b.bound, mouse, 13, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
+                    if (isHere(import.bound, mouse))
+                        new_cour = true;
+                    if (isHere(exit.bound, mouse))
+                        new_cour = false;
+                    if (isHere(path.bound, mouse))
+                    {
+                        typing_path = true;
+                        file.txt.setString(filename);
+                    }
+                    if (isHere(button.bound, mouse))
+                    {
+                        Import = true;
+                        showImportResult = true;
+                        clock.restart();
+                    }
                     for (int i = 0; i < 6; ++i)
                     {
                         if (isHere(no[i].bound, mouse))
@@ -1005,7 +1032,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                         typing_num = false;
                         cre.txt.setString(credit);
                     }
-                    else if (isHere(append.bound, mouse))
+                    else if (isHere(append.bound, mouse) && !cour_id.empty() && !cour_name.empty() && !teacher.empty() && !credit.empty() && !num.empty() && !classes.empty() && day == 0 && sess == 0)
                     {
                         save = true;
                         Session s1;
@@ -1023,15 +1050,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
 
                         clock.restart();
                     }
-                    else if (isHere(import.bound, mouse))
-                    {
-                        ifstream fin;
-                        string filename;
-                        filename = "./import/new_courses.csv";
-                        if (importmanycourses(fin, filename, class_list, course, yr, sem))
-                            added = true;
-                        // them hien thi succcessfully; va nhap filename;
-                    }
+                    
                     else
                     {
                         typing_id = false;
@@ -1052,6 +1071,8 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                 Typing(typing_teacher, inf[3], teacher, event);
                 Typing(typing_num, stu, num, event);
                 Typing(typing_cre, cre, credit, event);
+                if (new_cour)
+                    Typing(typing_path, file, filename, event);
                 break;
             }
             default:
@@ -1085,6 +1106,27 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
         else
             objectAppear(window, save, clock, invalid2, 2);
         objectAppear(window, added, clock, success, 2);
+        if (new_cour)
+        {
+            window.draw(alert.draw);
+            window.draw(path.draw);
+            window.draw(button.draw);
+            window.draw(exit.draw);
+            if (typing_path)
+                window.draw(file.txt);
+            if (Import)
+            {
+                ifstream fin;
+                checkPath = importmanycourses(fin, filename, class_list, course, yr, sem);
+                if (checkPath)
+                    cout << "true";
+                Import = false;
+            }
+            if (showImportResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid1, invalid1, checkPath);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showImportResult = false;
+        }
         window.display();
     }
 }
@@ -1096,18 +1138,14 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
 
-    Object edit = createObject("./image/page3-staff/course/update/edit.png", 883, 158);
-    Object update = createObject("./image/page3-staff/course/update/save.png", 1042, 158);
+    Object edit = createObject("./image/page3-staff/course/update/edit.png", 291, 262);
+    Object update = createObject("./image/page3-staff/course/update/save.png", 448, 262);
     Object import = createObject("./image/page3-staff/course/update/import-res.png", 639, 258);
     Object result = createObject("./image/page3-staff/course/update/result.png", 839, 258);
     Object view = createObject("./image/page3-staff/course/update/view.png", 1036, 258);
     Object arrow = createObject("./image/page3-staff/course/update/arrow.png", 826, 265);
-    Object append = createObject("./image/page3-staff/course/update/add-stu.png", 285, 258);
 
-    Object add = createObject("./image/page3-staff/course/update/add-stu-bg.png", 301, 385);
-    Object exit2 = createObject("./image/page2/exit.png", 1044, 398);
-    Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
-    Object confirm = createObject("./image/page3-staff/course/update/confirm.png", 583, 566);
+
 
     Object o1 = createObject("./image/page3-staff/course/update/update-cour-bg.png", 180, 120);
     Object o2 = createObject("./image/page3-staff/course/input.png", 497, 377);
@@ -1127,40 +1165,37 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object valid2 = createObject("./image/page3-staff/school_year/save-success.png", 423, 351);
     Object invalid2 = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
 
-    Object valid3 = createObject("./image/page3-staff/course/update/add-succ.png", 423, 351);
-    Object invalid3 = createObject("./image/page2/invalid-id.png", 423, 351);
+
 
     Clock clock;
     bool typing_id = false, typing_name = false, typing_class = false, typing_teacher = false, typing_num = false, typing_cre = false;
     bool editing = false, resulting = false, save = false, check_class = false;
 
     bool new_res = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
-    bool one_stu = false, typing_stu = false, Add = false, showAddResult = false, checkAdd = false;
 
     Info inf[4]{};
     Object yes[6]{}, no[6]{}, yes_sess[4]{}, no_sess[4]{};
-    bool check_day[6], check_sess[4];
+    bool check_day[6] = { false }, check_sess[4] = { false };
     for (int i = 0; i < 4; ++i)
     {
         createInfoTest(inf[i], "", 512, 377 + 61 * i);
         createObjectTest(yes_sess[i], "./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
         createObjectTest(no_sess[i], "./image/page3-staff/course/no.png", 398 + 185 * i, 732);
-        check_sess[i] = false;
     }
+
     for (int i = 0; i < 6; ++i)
     {
         createObjectTest(yes[i], "./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
         createObjectTest(no[i], "./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
-        check_day[i] = false;
     }
+
     Info stu = createText(to_string(course->course.max_students), 525, 625);
     Info cre = createText(to_string(course->course.num_credit), 985, 625);
     Info file = createText("", 560, 490);
     file.txt.setCharacterSize(23);
     file.txt.setStyle(Text::Regular);
-    Info born = createText("", 560, 490);
     string cour_id, cour_name, classes, teacher, num, credit;
-    string file_path = "", stu_id = "";
+    string file_path = "";
     int day = 0, sess = 0;
     while (window.isOpen() && page == 15)
     {
@@ -1171,7 +1206,6 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         updateColorOnHover(window, edit);
         updateColorOnHover(window, result);
         updateColorOnHover(window, import);
-        updateColorOnHover(window, append);
         updateColorOnHover(window, view);
 
         while (window.pollEvent(event))
@@ -1187,21 +1221,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 {
                     switchPage(b.bound, mouse, 13, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
-                    if (isHere(append.bound, mouse))
-                        one_stu = true;
-                    if (isHere(exit2.bound, mouse))
-                        one_stu = false;
-                    if (isHere(id.bound, mouse))
-                    {
-                        typing_stu = true;
-                        born.txt.setString(stu_id);
-                    }
-                    if (isHere(confirm.bound, mouse))
-                    {
-                        Add = true;
-                        showAddResult = true;
-                        clock.restart();
-                    }
+                    
 
                     if (isHere(edit.bound, mouse))
                         editing = true;
@@ -1334,7 +1354,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     if (resulting && isHere(view.bound, mouse))
                     {
                         page = 16;
-                        resultCourse(window, course, page, yr, sem);
+                        resultCourse(window, course, page, yr, class_list, sem);
                         if (Exit)
                             return;
                     }
@@ -1369,8 +1389,6 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 }
                 if (new_res)
                     Typing(typing_path, file, file_path, event);
-                if (one_stu)
-                    Typing(typing_stu, born, stu_id, event);
                 break;
             }
             default:
@@ -1397,7 +1415,6 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(o6.draw);
         window.draw(o7.draw);
         window.draw(b.draw);
-        window.draw(append.draw);
         window.draw(result.draw);
         if (editing)
             window.draw(update.draw);
@@ -1445,30 +1462,13 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 showImportResult = false;
         }
 
-        if (one_stu)
-        {
-            window.draw(add.draw);
-            window.draw(id.draw);
-            window.draw(confirm.draw);
-            window.draw(exit2.draw);
-            if (typing_stu)
-                window.draw(born.txt);
-            if (Add)
-            {
-                checkAdd = addStudentSubNodeToCourse(class_list, course, stu_id, yr, sem);
-                Add = false;
-            }
-            if (showAddResult && clock.getElapsedTime().asSeconds() < 3)
-                chooseDraw_2(window, valid3, invalid3, checkAdd);
-            else if (clock.getElapsedTime().asSeconds() >= 3)
-                showAddResult = false;
-        }
+        
 
         window.display();
     }
 }
 
-void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem)
+void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, ClassNode* class_list, string sem)
 {
     Event event;
     Clock clock;
@@ -1478,14 +1478,30 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object next = createObject("./image/page3-staff/next.png", 1212, 793);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object o2 = createObject("./image/page3-staff/result/gpa.png", 410, 721);
-    Object eXport = createObject("./image/page3-staff/course/update/export.png", 822, 721);
+    Object eXport = createObject("./image/page3-staff/course/update/export.png", 900, 721);
     Object export_file = createObject("./image/page3-staff/course/update/file_path.png", 423, 351);
+    Object append = createObject("./image/page3-staff/course/update/add-stu.png", 540, 721);
+    Object add = createObject("./image/page3-staff/course/update/add-stu-bg.png", 301, 385);
+    Object exit2 = createObject("./image/page2/exit.png", 1044, 398);
+    Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
+    Object confirm = createObject("./image/page3-staff/course/update/confirm.png", 420, 565);
+    Object remove = createObject("./image/page3-staff/course/update/remove.png", 754, 565);
+
+    Object valid3 = createObject("./image/page3-staff/course/update/add-succ.png", 423, 351);   
+    Object invalid3 = createObject("./image/page2/invalid-id.png", 423, 351);
+    Object valid4 = createObject("./image/page2/delete-succ.png", 423, 351);
+
+    bool one_stu = false, typing_stu = false, Add = false, showAddResult = false, checkAdd = false;
+    bool Remove = false, checkRemove = false, showRemoveResult = false;
+    string stu_id = "";
     Info name = createText(course->course.course_id + " - " + course->course.course_name + " - " + course->course.main_class->my_class.class_id, 216, 155);
     string destination = "";
     Info path = createText("", 490, 513);
     path.txt.setStyle(Text::Regular);
     path.txt.setCharacterSize(23);
     Info num = createText("", 460, 726);
+    Info born = createText("", 560, 490);
+
     int count = 0, change = 0;
     StudentNode *stu_list = course->course.main_class->my_class.student_list;
     StudentSubNode *hoc_lai = course->course.extra_stu;
@@ -1503,7 +1519,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     num.txt.setString(to_string(count));
     bool new_page = true, success = false;
 
-    StudentNode *one[8];
+    StudentNode* one[8]{};
     Info res[8][6]{};
     for (int i = 0; i < 8; ++i)
     {
@@ -1521,7 +1537,9 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, menu);
         updateColorOnHover(window, prev);
-        updateColorOnHover(window, next);
+        updateColorOnHover(window, next);       
+        updateColorOnHover(window, append);
+
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1543,7 +1561,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                         new_page = true;
                         change -= 8;
                     }
-                    if (isHere(next.bound, mouse) && change <= count - 4)
+                    if (isHere(next.bound, mouse) && change <= count - 8)
                     {
                         new_page = true;
                         change += 8;
@@ -1556,7 +1574,34 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                         success = true;
                         clock.restart();
                     }
+                    if (isHere(append.bound, mouse))
+                        one_stu = true;
+                    if (isHere(remove.bound, mouse))
+                    {
+						Remove = true;
+						showRemoveResult = true;
+						clock.restart();
+					}
+                    if (isHere(exit2.bound, mouse))
+                        one_stu = false;
+                    if (isHere(id.bound, mouse))
+                    {
+                        typing_stu = true;
+                        born.txt.setString(stu_id);
+                    }
+                    if (isHere(confirm.bound, mouse))
+                    {
+                        Add = true;
+                        showAddResult = true;
+                        clock.restart();
+                    }
                 }
+                break;
+            }
+            case Event::TextEntered:
+            {
+                if (one_stu)
+                    Typing(typing_stu, born, stu_id, event);
                 break;
             }
             default:
@@ -1571,6 +1616,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(menu.draw);
         window.draw(o2.draw);
         window.draw(eXport.draw);
+        window.draw(append.draw);
         window.draw(name.txt);
         window.draw(num.txt);
         if (new_page && stu_list)
@@ -1587,10 +1633,10 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
 
                     res[i][0].txt.setString(one[i]->student.student_id);
                     res[i][1].txt.setString(one[i]->student.last_name + " " + one[i]->student.first_name);
-                    res[i][2].txt.setString(to_string(one[i]->student.results_list->results.score.process).substr(0, 4));
-                    res[i][3].txt.setString(to_string(one[i]->student.results_list->results.score.midterm).substr(0, 4));
-                    res[i][4].txt.setString(to_string(one[i]->student.results_list->results.score.final).substr(0, 4));
-                    res[i][5].txt.setString(to_string(one[i]->student.results_list->results.score.overall).substr(0, 4));
+                    res[i][2].txt.setString(to_string(temp_res->results.score.process).substr(0, 4));
+                    res[i][3].txt.setString(to_string(temp_res->results.score.midterm).substr(0, 4));
+                    res[i][4].txt.setString(to_string(temp_res->results.score.final).substr(0, 4));
+                    res[i][5].txt.setString(to_string(temp_res->results.score.overall).substr(0, 4));
                     temp = temp->next;
                 }
                 else
@@ -1605,6 +1651,35 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
             for (int j = 0; j < 7; ++j)
                 window.draw(res[i][j].txt);
         }
+        if (one_stu)
+        {
+            window.draw(add.draw);
+            window.draw(id.draw);
+            window.draw(confirm.draw);
+            window.draw(remove.draw);
+            window.draw(exit2.draw);
+            if (typing_stu)
+                window.draw(born.txt);
+            if (Add)
+            {
+                checkAdd = addStudentSubNodeToCourse(class_list, course, stu_id, yr, sem);
+                Add = false;
+            }
+            if (showAddResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid3, invalid3, checkAdd);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showAddResult = false;
+
+            if (Remove)
+            {
+                checkRemove = deleteStudentSubNode(course->course.extra_stu, stu_id, course->course.course_id, yr, sem);
+                Remove = false;
+            }
+            if (showRemoveResult && clock.getElapsedTime().asSeconds() < 3)
+                chooseDraw_2(window, valid4, invalid3, checkRemove);
+            else if (clock.getElapsedTime().asSeconds() >= 3)
+                showRemoveResult = false;
+        }
         if (success)
         {
             window.draw(export_file.draw);
@@ -1615,8 +1690,12 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
             success = false;
         window.display();
     }
-    for (StudentSubNode *curr = total; curr != nullptr; curr = curr->next)
+
+    for (StudentSubNode *curr; total != nullptr; total = total->next)
+    {
+        curr = total;
         delete curr;
+    }
 }
 
 void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)
@@ -1880,7 +1959,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Info sort_input = createText("", 330, 264);
     Object add[4]{};
     Info id[4]{};
-    ClassNode *one[4];
+    ClassNode* one[4]{};
     ClassSubNode *res = nullptr;
     for (int i = 0; i < 4; ++i)
     {
