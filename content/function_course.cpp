@@ -22,7 +22,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course)
 {
     CourseNode *new_course_node = new CourseNode;
-    new_course_node->next = NULL;
+    new_course_node->next = nullptr;
     new_course_node->course = new_course;
     return new_course_node;
 }
