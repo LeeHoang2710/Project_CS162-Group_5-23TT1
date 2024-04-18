@@ -166,7 +166,7 @@ bool removeStudentNode(StudentNode *&head, string studentId)
     }
 
     delete studentNodeToDelete;
-    return false;
+    return true;
 }
 
 void deleteStudentList(StudentNode *&studentList)

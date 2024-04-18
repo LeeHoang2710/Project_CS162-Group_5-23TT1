@@ -70,7 +70,7 @@ void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout);
 ClassSubNode *findClasses(ClassNode *head, string input);
 bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin);
 void deleteClassList(ClassNode *&classList);
-void ExportClassStudents(ofstream& op, string destination, ClassNode* Curr);
+void ExportClassStudents(ofstream &op, string &destination, ClassNode *Curr);
 
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
