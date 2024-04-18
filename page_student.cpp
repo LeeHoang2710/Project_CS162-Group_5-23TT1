@@ -319,6 +319,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     Object o3 = createObject("./image/page3-staff/result/id.png", 913, 137);
     Object o4 = createObject("./image/page3-staff/result/gpa.png", 350, 721);
     Object o5 = createObject("./image/page3-staff/result/gpa.png", 684, 721);
+    Object o6 = createObject("./image/page4-student/home/current.png", 844, 721);
     Info name = createText(student->student.last_name + " " + student->student.first_name, 379, 144);
     Info id = createText(student->student.student_id, 957, 144);
     Info curr_gpa = createText("", 379, 721);
@@ -346,6 +347,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         updateColorOnHover(window, menu);
         updateColorOnHover(window, prev);
         updateColorOnHover(window, next);
+        updateColorOnHover(window, o6);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -372,6 +374,10 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
                         new_page = true;
                         change += 8;
                     }
+                    if (isHere(o6.bound, mouse))
+                    {
+						
+                    }
                 }
                 break;
             }
@@ -389,6 +395,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         window.draw(o3.draw);
         window.draw(o4.draw);
         window.draw(o5.draw);
+        window.draw(o6.draw);
         window.draw(name.txt);
         window.draw(id.txt);
         curr_gpa.txt.setString(to_string(student->student.cur_gpa).substr(0, 4));
