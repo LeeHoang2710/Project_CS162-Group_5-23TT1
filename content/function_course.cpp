@@ -29,6 +29,8 @@ CourseNode *initCourseNode(Course new_course)
 
 void appendNewCourseNode(CourseNode *&head, Course cs)
 {
+    // semester id
+    //  year id
     CourseNode *new_course_node = initCourseNode(cs);
     if (!head)
         head = new_course_node;

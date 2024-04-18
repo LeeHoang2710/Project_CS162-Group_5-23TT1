@@ -200,19 +200,26 @@ void deleteClassSubList(ClassSubNode *&classSublist)
     }
 }
 
-void ExportClassStudents(ofstream& op, string destination, ClassNode* Curr) {
+void ExportClassStudents(ofstream &op, string &destination, ClassNode *Curr)
+{
     string id = Curr->my_class.class_id;
     string filename = destination + "/" + id + ".csv";
+    destination = filename;
     op.open(filename);
-    StudentNode* stulist = Curr->my_class.student_list;
+    StudentNode *stulist = Curr->my_class.student_list;
     op << "No,Student ID,First Name,Last Name,Gender,Dob,Social ID" << endl;
-    while (stulist) {
+    while (stulist)
+    {
         op << stulist->student.num << ",";
         op << stulist->student.student_id << ",";
         op << stulist->student.first_name << ",";
         op << stulist->student.last_name << ",";
-        if (stulist->student.gender == 0)  op << "Male" << ",";
-        else op << "Female" << ",";
+        if (stulist->student.gender == 0)
+            op << "Male"
+               << ",";
+        else
+            op << "Female"
+               << ",";
         op << stulist->student.dob << ",";
         op << stulist->student.social_id << ",";
         op << endl;

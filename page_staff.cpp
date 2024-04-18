@@ -910,8 +910,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
     Info stu = createText("", 525, 625);
     Info cre = createText("", 985, 625);
     Info file = createText("", 560, 490);
-    file.txt.setCharacterSize(23);
-    file.txt.setStyle(Text::Regular);
+    file.txt.setCharacterSize(24);
     string cour_id, cour_name, classes, teacher, num, credit, filename;
     int day = 0, sess = 0;
     while (window.isOpen() && page == 14)
@@ -1193,7 +1192,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Info stu = createText(to_string(course->course.max_students), 525, 625);
     Info cre = createText(to_string(course->course.num_credit), 985, 625);
     Info file = createText("", 560, 490);
-    file.txt.setCharacterSize(23);
+    file.txt.setCharacterSize(24);
     file.txt.setStyle(Text::Regular);
     string cour_id, cour_name, classes, teacher, num, credit;
     string file_path = "";
@@ -1496,7 +1495,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     string destination = "";
     Info path = createText("", 490, 513);
     path.txt.setStyle(Text::Regular);
-    path.txt.setCharacterSize(23);
+    path.txt.setCharacterSize(24);
     Info num = createText("", 460, 726);
     Info born = createText("", 560, 490);
 
@@ -2144,6 +2143,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
     Object exit1 = createObject("./image/page2/exit.png", 1070, 305);
     Object valid2 = createObject("./image/page2/import-succ.png", 423, 351);
     Object invalid2 = createObject("./image/page2/invalid-path.png", 423, 351);
+    Object export_file = createObject("./image/page3-staff/course/update/file_path.png", 423, 351);
 
     Info title = createText("Class - " + class_list->my_class.class_id, 475, 168);
     Info kill = createText("", 560, 490);
@@ -2179,11 +2179,13 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         createObjectTest(detail[i], "./image/page3-staff/class/detail.png", 1083, 426 + 48 * i);
 
     bool new_page = true, result = false, del_stu = false, typing_id = false, showDelResult = false;
-    bool Confirm = false, checkDel = false;
+    bool Confirm = false, checkDel = false, success = false;
 
     bool new_stu = false, typing_path = false, Import = false, showImportResult = false, checkPath = false;
     Clock clock;
-    string stu_id = "", file_path = "";
+    string stu_id = "", file_path = "", destination = "";
+    Info path_ex = createText("", 490, 513);
+    path_ex.txt.setCharacterSize(24);
     int count = 0, change = 0;
     for (StudentNode *curr = stu_list; curr; curr = curr->next)
         count++;
@@ -2279,9 +2281,12 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                         showImportResult = true;
                         clock.restart();
                     }
-                    if (isHere(eXport.bound, mouse)) {
-                        Export = true;
-                        showExportResult = true;
+                    if (isHere(eXport.bound, mouse))
+                    {
+                        ofstream op;
+                        destination = "export";
+                        ExportClassStudents(op, destination, class_list);
+                        success = true;
                         clock.restart();
                     }
                 }
@@ -2417,12 +2422,14 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
-        if (newfile) {
-            if (Export)
-            {
-                ofstream fout;
-            }
+        if (success)
+        {
+            window.draw(export_file.draw);
+            path_ex.txt.setString(destination);
+            window.draw(path_ex.txt);
         }
+        if (success && clock.getElapsedTime().asSeconds() >= 2)
+            success = false;
         window.display();
     }
 }

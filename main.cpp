@@ -3,8 +3,12 @@
 int main()
 {
     RenderWindow window;
-    window.create(VideoMode(1440, 960), "CS162-Project", Style::Default);
+    window.create(VideoMode(1440, 960), "CS162-Project-LMS-Group-5", Style::Default);
     window.setFramerateLimit(60);
+    Image icon;
+    icon.loadFromFile("image/page1/Asset 1.png");
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
     int page = 1;
     bool is_staff = false, menu = false;
     string username = "";
