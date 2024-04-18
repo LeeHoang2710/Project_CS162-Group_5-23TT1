@@ -282,6 +282,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
     Object exit = createObject("./image/page2/exit.png", 1070, 305);
     Object valid = createObject("./image/page2/import-succ.png", 423, 351);
     Object invalid = createObject("./image/page2/invalid-path.png", 423, 351);
+    Object success = createObject("./image/page1/alert.png", 401, 400);
     Info total = createText("", 1050, 258);
     Info file = createText("", 560, 490);
     Object add[4]{};
@@ -296,7 +297,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
     }
 
     bool new_page = true, new_class = false, typing_path = false, Import = false, showImportResult = false;
-    bool checkPath = false;
+    bool checkPath = false, checkYear = false;
     Clock clock;
     YearNode *target = nullptr;
     string str = "", file_path = "";
@@ -346,7 +347,8 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                         new_year.list_sem = nullptr;
                         addNewYearNode(year, new_year);
                         count++;
-                        new_page = true;
+                        checkYear = true;
+                        clock.restart();
                     }
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
@@ -458,6 +460,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
+        objectAppear(window, checkYear, clock, success, 2);
 
         window.display();
     }
@@ -545,7 +548,7 @@ void Semesters(RenderWindow &window, int &page, YearNode *&year, ClassNode *clas
             if (temp)
             {
                 sem[i] = temp;
-                id[i].txt.setString(sem[i]->sem.semester_id);
+                id[i].txt.setString(sem[i]->sem.semester_id + " - " + sem[i]->sem.start_date + " - " + sem[i]->sem.end_date);
                 temp = temp->next;
             }
             else
@@ -873,7 +876,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
     Object success = createObject("./image/page2/import-succ.png", 423, 351);
 
     Object valid2 = createObject("./image/page3-staff/school_year/save-success.png", 423, 351);
-    Object invalid2 = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
+    Object invalid2 = createObject("./image/page3-staff/course/not_available.png", 423, 351);
 
     Object alert = createObject("./image/page3-staff/course/update/import-cour-bg.png", 301, 295);
     Object path = createObject("./image/page3-staff/school_year/file-path.png", 539, 482);
@@ -1041,7 +1044,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
                         s1.day_of_the_week = day;
                         s1.session_no = sess;
                         Course new_cour = createCourse(cour_id, cour_name, teacher, stoi(credit), stoi(num), s1, classes, class_list);
-                        if (!new_cour.main_class)
+                        if (!new_cour.main_class || !new_cour.main_class->my_class.student_list)
                             check_class = false;
                         else
                         {
@@ -1141,7 +1144,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
 
     Object edit = createObject("./image/page3-staff/course/update/edit.png", 291, 262);
-    Object update = createObject("./image/page3-staff/course/update/save.png", 448, 262);
+    Object update = createObject("./image/page3-staff/course/update/save.png", 449, 262);
     Object import = createObject("./image/page3-staff/course/update/import-res.png", 639, 258);
     Object result = createObject("./image/page3-staff/course/update/result.png", 839, 258);
     Object view = createObject("./image/page3-staff/course/update/view.png", 1036, 258);
@@ -2199,6 +2202,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         updateColorOnHover(window, import);
         updateColorOnHover(window, exit1);
         updateColorOnHover(window, exit2);
+        updateColorOnHover(window, confirm);
         for (int i = 0; i < 7; ++i)
         {
             Object &detailRef = detail[i];
