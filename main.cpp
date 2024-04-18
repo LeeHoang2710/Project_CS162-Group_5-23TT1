@@ -19,12 +19,12 @@ int main()
     // StorePassWordStudent(user1, fin, "./database/student_password.csv");
     // StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importStaff(user2, fin, "./database/staff_list.csv");
-    ReadClassfromfile(class_list, "./database/class.csv", fin);
-    success = importYear(year, class_list, "./database/semester.csv", fin);
+    ReadClassfromfile(class_list, "./database/class_list.csv", fin);
+    success = importYear(year, class_list, "./database/semester_list.csv", fin);
     if (!success)
         cout << "Cannot import year" << endl;
 
-    success = importResults(fin, class_list, "./database/result.csv");
+    success = importResults(fin, class_list, "./database/results_list.csv");
     if (!success)
         cout << "Cannot import result" << endl;
 
@@ -106,9 +106,9 @@ int main()
             break;
         }
     }
-    exportYear(year, "./database/semester.csv", fout);
-    ExportClassTFile(class_list, "./database/class.csv", fout);
-    Exportallscoretofile(fout, "./database/result.csv", class_list);
+    exportYear(year, "./database/semester_list.csv", fout);
+    ExportClassTFile(class_list, "./database/class_list.csv", fout);
+    Exportallscoretofile(fout, "./database/results_list.csv", class_list);
     ExportStaff(user2, fout, "./database/staff_list.csv");
 
     deleteClassList(class_list);
