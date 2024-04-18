@@ -78,6 +78,7 @@ ClassSubNode *findClasses(ClassNode *head, string input);
 // void exportClass(ClassNode *class_list, ofstream &fout);
 bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin);
 void deleteClassList(ClassNode *&classList);
+void ExportClassStudents(ofstream& op, string destination, ClassNode* Curr);
 
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);

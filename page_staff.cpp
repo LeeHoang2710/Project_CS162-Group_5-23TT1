@@ -2272,6 +2272,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                         showImportResult = true;
                         clock.restart();
                     }
+                    if (isHere(eXport.bound, mouse)) {
+                        Export = true;
+                        showExportResult = true;
+                        clock.restart();
+                    }
                 }
                 break;
             }
@@ -2405,7 +2410,12 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
             else if (clock.getElapsedTime().asSeconds() >= 3)
                 showImportResult = false;
         }
-
+        if (newfile) {
+            if (Export)
+            {
+                ofstream fout;
+            }
+        }
         window.display();
     }
 }
