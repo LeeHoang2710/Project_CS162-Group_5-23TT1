@@ -1970,10 +1970,10 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     }
     bool new_page = true, find_class = false;
     string input;
-    int count = 0, change = 0;
+    int count = 0, change = 0, searchCount = 0;
     for (ClassNode *curr = class_list; curr; curr = curr->next)
         count++;
-    total.txt.setString(to_string(count) + " classes");
+    
     while (window.isOpen() && page == 6)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -1997,7 +1997,6 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-
                     switchPage(b.bound, mouse, 3, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
 
@@ -2006,7 +2005,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                         new_page = true;
                         change -= 4;
                     }
-                    if (isHere(next.bound, mouse) && change <= count - 4)
+                    if (isHere(next.bound, mouse) && (change <= searchCount - 4 || change <= count - 4))
                     {
                         new_page = true;
                         change += 4;
@@ -2016,6 +2015,10 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
                     if (isHere(confirm.bound, mouse))
                     {
                         res = findClasses(class_list, input);
+                        searchCount = 0;
+                        for (ClassSubNode *curr = res; curr; curr = curr->next)
+							searchCount++;
+                        change = 0;
                         new_page = true;
                     }
                     for (int i = 0; i < 4; ++i)
@@ -2052,6 +2055,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         window.draw(total.txt);
         if (new_page && class_list && !find_class)
         {
+            total.txt.setString(to_string(count) + " classes");
             ClassNode *temp = class_list;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
@@ -2070,7 +2074,10 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
         }
         if (new_page && res && find_class)
         {
+            total.txt.setString(to_string(searchCount) + " classes");
             ClassSubNode *temp = res;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
             for (int i = 0; i < 4; ++i)
             {
                 if (temp)

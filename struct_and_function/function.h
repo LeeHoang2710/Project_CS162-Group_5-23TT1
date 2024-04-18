@@ -60,7 +60,7 @@ bool importCourse(ClassNode *allClass, CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
 void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id);
-CourseNode *findCourse(CourseNode *head, string input);
+void findCourse(CourseNode **head, CourseNode **search, int &count, string input);
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id);
 
 // Class

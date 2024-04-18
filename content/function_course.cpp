@@ -197,19 +197,21 @@ void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_
     }
 }
 
-CourseNode *findCourse(CourseNode *head, string input)
+void findCourse(CourseNode **head, CourseNode **search, int &count, string input)
 {
-    CourseNode *sort = nullptr;
-    CourseNode *curr = head;
-    while (curr)
+    for (int i = 0; i < count; ++i)
+        search[i] = nullptr;
+
+    count = 0;
+    for (int i = 0; head[i]; ++i)
     {
-        if (curr->course.course_id.find(input) != string::npos)
-            appendNewCourseNode(sort, curr->course);
+        if (head[i]->course.course_id.find(input) != string::npos)
+        {
+			search[count] = head[i];
+			count++;
+		}
+	}
 
-        curr = curr->next;
-    }
-
-    return sort;
 }
 
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
