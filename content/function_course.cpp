@@ -281,3 +281,31 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
     fin.close();
     return true;
 }
+
+
+ResultsNode* CurrCourse(StudentNode* studentNode) {
+    ResultsNode* currRes = studentNode->student.results_list;
+    string mostcuryear = "0000-0000", mostcursem = "Semester 0";
+    while (currRes)
+    {
+        if (currRes->results.year_id > mostcuryear)
+        {
+            mostcuryear = currRes->results.year_id;
+            mostcursem = currRes->results.sem_id;
+        }
+        else if (currRes->results.year_id == mostcuryear)
+        {
+            if (currRes->results.sem_id > mostcursem)
+                mostcursem = currRes->results.sem_id;
+        }
+        currRes = currRes->next;
+    }
+    currRes = nullptr;
+    ResultsNode* temp = studentNode->student.results_list;
+    while (temp) {
+        if (temp->results.year_id == mostcuryear && temp->results.sem_id == mostcursem)
+            appendResultsNode(currRes, createResultsNode(temp->results));
+        temp = temp->next;
+    }
+    return currRes;
+}

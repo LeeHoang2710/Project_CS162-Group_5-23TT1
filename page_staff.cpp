@@ -1839,12 +1839,12 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
                     // we confirm the change successfully
                     else if (isHere(o3.bound, mouse))
                     {
-                        if (old_pass == user->staff.password && is_staff)
+                        if (is_staff && old_pass == user->staff.password )
                         {
                             user->staff.password = new_pass;
                             Change = true;
                         }
-                        else if (old_pass == person->student.password && !is_staff)
+                        else if (!is_staff && old_pass == person->student.password )
                         {
                             person->student.password = new_pass;
                             Change = true;

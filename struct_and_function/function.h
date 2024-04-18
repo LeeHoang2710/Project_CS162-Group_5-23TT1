@@ -62,6 +62,7 @@ void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id);
 void findCourse(CourseNode **head, CourseNode **search, int &count, string input);
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id);
+ResultsNode* CurrCourse(StudentNode* studentNode);
 
 // Class
 Class CreateClass(string classid);

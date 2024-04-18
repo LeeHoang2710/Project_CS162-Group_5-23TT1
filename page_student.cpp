@@ -338,8 +338,9 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
             res[i][j].txt.setCharacterSize(24);
     }
     int count = 0, change = 0;
-    bool new_page = true;
-    ResultsNode *res_list = student->student.results_list;
+    bool new_page = true, cur_course = false;
+    ResultsNode *res_list1 = student->student.results_list;
+    ResultsNode* res_list2 = CurrCourse(student);
     ResultsNode* one[8]{};
     while (window.isOpen() && page == 9)
     {
@@ -376,7 +377,8 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
                     }
                     if (isHere(o6.bound, mouse))
                     {
-						
+                        cur_course = !cur_course;
+                        change = 0;
                     }
                 }
                 break;
@@ -402,9 +404,9 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         total_gpa.txt.setString(to_string(student->student.total_gpa).substr(0, 4));
         window.draw(curr_gpa.txt);
         window.draw(total_gpa.txt);
-        if (new_page && res_list)
+        if (new_page && res_list1 && !cur_course)
         {
-            ResultsNode *temp = res_list;
+            ResultsNode *temp = res_list1;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
             for (int i = 0; i < 8; ++i)
@@ -425,6 +427,30 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
                     res[i][0].txt.setString("");
             }
             new_page = false;
+        }
+        if (!new_page && res_list2 && cur_course)
+        {
+            ResultsNode* temp = res_list2;
+            for (int i = 0; i < change; ++i)
+                temp = temp->next;
+            for (int i = 0; i < 8; ++i)
+            {
+                if (temp)
+                {
+                    one[i] = temp;
+                    res[i][0].txt.setString(one[i]->results.course_id);
+                    res[i][1].txt.setString(one[i]->results.sem_id);
+                    res[i][2].txt.setString(one[i]->results.year_id);
+                    res[i][3].txt.setString(to_string(one[i]->results.score.process).substr(0, 4));
+                    res[i][4].txt.setString(to_string(one[i]->results.score.midterm).substr(0, 4));
+                    res[i][5].txt.setString(to_string(one[i]->results.score.final).substr(0, 4));
+                    res[i][6].txt.setString(to_string(one[i]->results.score.overall).substr(0, 4));
+                    temp = temp->next;
+                }
+                else
+                    res[i][0].txt.setString("");
+            }
+            new_page = true;
         }
         for (int i = 0; i < 8; ++i)
         {
