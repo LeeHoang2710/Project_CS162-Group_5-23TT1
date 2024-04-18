@@ -1223,7 +1223,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     switchPage(menu.bound, mouse, 3, page, Exit);
 
                     if (isHere(edit.bound, mouse))
-                        editing = true;
+                        editing = !editing;
                     if (editing)
                     {
                         for (int i = 0; i < 6; ++i)
@@ -1312,7 +1312,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                             typing_num = false;
                             cre.txt.setString(credit);
                         }
-                        else if (isHere(update.bound, mouse))
+                        else if (isHere(update.bound, mouse) && editing)
                         {
                             save = true;
                             Session s1;
@@ -1415,10 +1415,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(o7.draw);
         window.draw(b.draw);
         window.draw(result.draw);
-        if (editing)
-            window.draw(update.draw);
-        else
-            window.draw(edit.draw);
+        chooseDraw_2(window, update, edit, editing);
         if (resulting)
         {
             window.draw(import.draw);

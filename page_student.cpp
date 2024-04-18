@@ -57,7 +57,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
     Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
     Object sort = createObject("./image/page3-staff/class/search-cla.png", 270, 262);
     Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 264);
-   
+
     Info total = createText("", 1050, 258);
     Info title = createText("Course - " + person->student.last_name + " " + person->student.first_name, 475, 168);
     title.txt.setFillColor(Color::Red);
@@ -149,10 +149,17 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
                     }
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (isHere(subject[i].bound, mouse) && course[i])
+                        if (isHere(subject[i].bound, mouse) && course[i + change] && !find_cour)
                         {
                             page = 19;
-                            detailStudent(window, page, course[i], Exit);
+                            detailStudent(window, page, course[i + change], Exit);
+                            if (Exit)
+                                return;
+                        }
+                        if (isHere(subject[i].bound, mouse) && searchCourse[i + change] && find_cour)
+                        {
+                            page = 19;
+                            detailStudent(window, page, searchCourse[i + change], Exit);
                             if (Exit)
                                 return;
                         }
@@ -167,7 +174,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
                 break;
             }
         }
-        
+
         window.clear();
         window.draw(screen.draw);
         window.draw(o1.draw);
@@ -178,7 +185,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
         window.draw(next.draw);
         window.draw(total.txt);
         window.draw(title.txt);
-		window.draw(sort.draw);
+        window.draw(sort.draw);
         window.draw(confirm.draw);
         window.draw(sort_input.txt);
         if (new_page && !find_cour)
@@ -199,14 +206,13 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
             total.txt.setString(to_string(searchCount) + " courses");
             for (int i = change % 4; i < 4; ++i)
             {
-                CourseNode* temp = searchCourse[change + i];
+                CourseNode *temp = searchCourse[change + i];
                 if (temp)
                     inf[i].txt.setString(temp->course.course_id + " - " + temp->course.course_name);
                 else
                     inf[i].txt.setString("");
             }
             new_page = false;
-
         }
         for (int i = 0; i < 4; ++i)
         {
@@ -340,8 +346,8 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     int count = 0, change = 0;
     bool new_page = true, cur_course = false;
     ResultsNode *res_list1 = student->student.results_list;
-    ResultsNode* res_list2 = CurrCourse(student);
-    ResultsNode* one[8]{};
+    ResultsNode *res_list2 = CurrCourse(student);
+    ResultsNode *one[8]{};
     while (window.isOpen() && page == 9)
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -430,7 +436,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         }
         if (!new_page && res_list2 && cur_course)
         {
-            ResultsNode* temp = res_list2;
+            ResultsNode *temp = res_list2;
             for (int i = 0; i < change; ++i)
                 temp = temp->next;
             for (int i = 0; i < 8; ++i)
