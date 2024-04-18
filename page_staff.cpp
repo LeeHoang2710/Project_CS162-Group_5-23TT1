@@ -1643,7 +1643,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         {
             if (res[i][0].txt.getString() == "")
                 break;
-            for (int j = 0; j < 7; ++j)
+            for (int j = 0; j < 6; ++j)
                 window.draw(res[i][j].txt);
         }
         if (one_stu)
