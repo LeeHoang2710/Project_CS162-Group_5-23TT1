@@ -113,6 +113,9 @@ ClassSubNode *createClassSubNode(ClassNode *classNode)
 
 ClassSubNode *findClasses(ClassNode *head, string input)
 {
+    for (int i = 0; i < input.size(); ++i)
+        input[i] = toupper(input[i]);
+
     ClassSubNode *sort = nullptr;
     ClassNode *curr = head;
     while (curr)

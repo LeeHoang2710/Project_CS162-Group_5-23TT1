@@ -29,8 +29,6 @@ CourseNode *initCourseNode(Course new_course)
 
 void appendNewCourseNode(CourseNode *&head, Course cs)
 {
-    // semester id
-    //  year id
     CourseNode *new_course_node = initCourseNode(cs);
     if (!head)
         head = new_course_node;
@@ -199,6 +197,9 @@ void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_
 
 void findCourse(CourseNode **head, CourseNode **search, int &count, string input)
 {
+    for (int i = 0; i < input.size(); ++i)
+        input[i] = toupper(input[i]);
+
     for (int i = 0; i < count; ++i)
         search[i] = nullptr;
 

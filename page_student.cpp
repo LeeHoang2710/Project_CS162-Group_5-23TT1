@@ -283,7 +283,6 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
         }
         window.clear();
         window.draw(screen.draw);
-        window.draw(menu.draw);
         window.draw(o1.draw);
         window.draw(o2.draw);
         window.draw(o3.draw);
@@ -294,6 +293,7 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
         window.draw(b.draw);
         window.draw(stu.txt);
         window.draw(cre.txt);
+        window.draw(menu.draw);
         check_day[course->course.teaching_session.day_of_the_week - 2] = true;
         check_sess[course->course.teaching_session.session_no - 1] = true;
         for (int i = 0; i < 4; ++i)
