@@ -29,7 +29,7 @@ StudentNode *searchStudentNodeInOneClass(StudentNode *head, string student_id);
 void readStudentFromFile(ifstream &file, StudentNode *&list_student);
 void exportStudentToFile(ofstream &file, StudentNode *list_student);
 bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstream &fin);
-void updateStudentsNumBeforeRemoval(StudentNode* studentNodeToDelete);
+void updateStudentsNumBeforeRemoval(StudentNode *studentNodeToDelete);
 void deleteStudentList(StudentNode *&studentList);
 
 // Year
@@ -38,8 +38,6 @@ YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
 void removeNewYearNode(YearNode *&head, Year year);
 YearNode *searchYearNode(YearNode *head, string year);
-// void importYear(YearNode *&year_list, string filename, ifstream &fin);
-// void exportYear(YearNode *&year_list, string filename, ofstream &fout);
 void deleteYearList(YearNode *&year_list);
 
 // Semester
@@ -53,7 +51,6 @@ void deleteSemesterList(SemesterNode *&sem_list, string year_id);
 // Course
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode *class_list);
 CourseNode *initCourseNode(Course new_course);
-// void addNewCourseNode(CourseNode *&head, Course cs, StudentNode *liststu);
 void appendNewCourseNode(CourseNode *&head, Course cs);
 bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id, string sem_id);
 bool importCourse(ClassNode *allClass, CourseNode *&Courselist, ifstream &fin);
@@ -62,20 +59,15 @@ void compareCourse(Course &old, Course &newone);
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id);
 void findCourse(CourseNode **head, CourseNode **search, int &count, string input);
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id);
-ResultsNode* CurrCourse(StudentNode* studentNode);
+ResultsNode *CurrCourse(StudentNode *studentNode);
 
 // Class
 Class CreateClass(string classid);
 ClassNode *InitializeClassNode(Class newclass);
 void AddClassNode(ClassNode *&head, ClassNode *newclassnode);
-// void deleteClassNode(ClassNode *&head, Class del_class);
-// ClassNode *SearchClassNode(ClassNode *&head, string searchclass);
-// void AddStudent(ClassNode *&head, string classid, StudentNode *newstudent);
 void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
 void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout);
 ClassSubNode *findClasses(ClassNode *head, string input);
-// void importClass(ClassNode *&classes, stringstream &ss, ifstream &fin);
-// void exportClass(ClassNode *class_list, ofstream &fout);
 bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin);
 void deleteClassList(ClassNode *&classList);
 void ExportClassStudents(ofstream& op, string destination, ClassNode* Curr);
@@ -83,7 +75,7 @@ void ExportClassStudents(ofstream& op, string destination, ClassNode* Curr);
 // Results
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
-float UpdateCurGpa(StudentNode* studentNode);
+float UpdateCurGpa(StudentNode *studentNode);
 void updateCourseOverall(Score &score);
 void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process = 0.0f, float midterm = 0.0f, float final = 0.0f);
@@ -97,7 +89,7 @@ void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, st
 void deleteResultsList(ResultsNode *&resultsList);
 void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id);
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
-bool importmanycourses(ifstream& fin, string filename, ClassNode* class_list, CourseNode*& curr, string yr, string sem);
+bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem);
 
 // ClassSubNode
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);

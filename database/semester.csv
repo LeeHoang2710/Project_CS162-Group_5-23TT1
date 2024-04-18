@@ -1,37 +1,79 @@
 2020-2021
 20APCS1
 Semester 1,1/10/2020,3/1/2021
-CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1,23APCS1,21125034
-MTH252,Calculus I,Nguyen Huu Anh,4,50,5,2,21APCS1,23125040
+CS161,Introduction to Computer Science I,Dinh Ba Tien,4,50,3,1,20APCS1,
+MTH251,Calculus I,Nguyen Huu Anh,4,50,5,2,20APCS1,
+PH211,General Physics I,Vu Thi Hanh Thu,4,50,6,2,20APCS1,
+CM101,Communication Skills,Duong Nguyen Vu,4,50,6,1,20APCS1,
 *
 Semester 2,8/1/2021,12/5/2021
-PH212,General Physics 2,Nguyen Huu Nha,4,50,6,2,23APCS1,
-CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2,22APCS1,
+CS162,Introduction to Computer Science II,Dinh Ba Tien,4,50,3,1,20APCS1,
+MTH252,Calculus II,Nguyen Huu Anh,4,50,5,2,20APCS1,
+PH212,General Physics II,Nguyen Huu Nha,4,50,6,2,20APCS1,
 *
 Semester 3,19/5/2021,4/8/2021
-CS426,Mobile Application,Vo Hoang Nam,4,50,4,1,20APCS1,
-CM102,Critical Thinking,Duong Nguyen Vu,4,50,6,1,23APCS1,
+CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1,20APCS1,
+MTH253,Calculus III,Nguyen Huu Anh,4,50,5,2,20APCS1,
 *
 2021-2022
 21APCS1
 Semester 1,1/10/2021,3/1/2022
-PH212,General Physics 2,Nguyen Huu Nha,4,50,6,2,22APCS1,
+CS161,Introduction to Computer Science I,Dinh Ba Tien,4,50,3,1,21APCS1,
+MTH251,Calculus I,Nguyen Huu Anh,4,50,5,2,21APCS1,
+PH211,General Physics I,Vu Thi Hanh Thu,4,50,6,2,21APCS1,
+CM101,Communication Skills,Duong Nguyen Vu,4,50,6,1,21APCS1,
+CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2,20APCS1,
 *
 Semester 2,8/1/2022,12/5/2022
-CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2,23APCS1,
+CS162,Introduction to Computer Science II,Dinh Ba Tien,4,50,3,1,21APCS1,
+MTH252,Calculus II,Nguyen Huu Anh,4,50,5,2,21APCS1,
+PH212,General Physics II,Nguyen Huu Nha,4,50,6,2,21APCS1,
+PH213,Quantum Physics,Vu Thi Hanh Thu,4,50,6,2,20APCS1,
 *
 Semester 3,19/5/2022,4/8/2022
-CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1,20APCS1,
-PH213,Quantum Physics,Le Quynh Giao,5,50,7,4,23APCS1,
+CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1,21APCS1,
+MTH253,Calculus III,Nguyen Huu Anh,4,50,5,2,21APCS1,
+BAA00004,Introduction to Laws,Hoang Thanh Tu,3,100,5,3,20APCS1,
 *
 2022-2023
 22APCS1
 Semester 1,1/10/2022,3/1/2023
+CS161,Introduction to Computer Science I,Dinh Ba Tien,4,50,3,1,22APCS1,
+MTH251,Calculus I,Nguyen Huu Anh,4,50,5,2,22APCS1,
+PH211,General Physics I,Vu Thi Hanh Thu,4,50,6,2,22APCS1,
+CM101,Communication Skills,Duong Nguyen Vu,4,50,6,1,22APCS1,
+CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2,21APCS1,
+CS426,Mobile Application,Vo Hoang Nam,4,50,4,1,20APCS1,
 *
 Semester 2,8/1/2023,12/5/2023
+CS162,Introduction to Computer Science II,Dinh Ba Tien,4,50,3,1,22APCS1,
+MTH252,Calculus II,Nguyen Huu Anh,4,50,5,2,22APCS1,
+PH212,General Physics II,Nguyen Huu Nha,4,50,6,2,22APCS1,20125159,20129491
+PH213,Quantum Physics,Vu Thi Hanh Thu,4,50,6,2,21APCS1,
 *
 Semester 3,19/5/2023,4/8/2023
+CS163,Data Structure and Algorithm,Bui Le Hoang,5,50,4,1,22APCS1,
+MTH253,Calculus III,Nguyen Huu Anh,4,50,5,2,22APCS1,
+BAA00004,Introduction to Laws,Hoang Thanh Tu,3,100,5,3,21APCS1,
 *
 2023-2024
 23APCS1
+Semester 1,1/10/2023,3/1/2024
+CS161,Introduction to Computer Science I,Dinh Ba Tien,4,50,3,1,23APCS1,
+MTH251,Calculus I,Nguyen Huu Anh,4,50,5,2,23APCS1,
+PH211,General Physics I,Vu Thi Hanh Thu,4,50,6,2,23APCS1,
+CM101,Communication Skills,Duong Nguyen Vu,4,50,6,1,23APCS1,
+CS321,Object Oriented Programming,Le Kim Chau,4,50,7,2,22APCS1,
+CS426,Mobile Application,Vo Hoang Nam,4,50,4,1,21APCS1,
+*
+Semester 2,8/1/2024,12/5/2024
+CS162,Introduction to Computer Science II,Dinh Ba Tien,4,50,3,1,23APCS1,
+MTH252,Calculus II,Nguyen Huu Anh,4,50,5,2,23APCS1,
+PH212,General Physics II,Nguyen Huu Nha,4,50,6,2,23APCS1,
+PH213,Quantum Physics,Vu Thi Hanh Thu,4,50,6,2,22APCS1,
+*
+#
+2024-2025
+#
+2025-2026
 #

@@ -24,13 +24,11 @@ struct Info
     Text txt;
     FloatRect bound;
 };
-
+// function to support displaying
 Object createObject(string input, float x, float y);
-// Object *createObjectTest(string input, float x, float y);
 void createObjectTest(Object &me, string s, float x, float y);
 Object createBackGround(string s);
 Info createText(string s, float x, float y);
-// Info *createInfoTest(string s, float x, float y);
 void createInfoTest(Info &a, string s, float x, float y);
 bool isHere(FloatRect &bound, Vector2f &mouse);
 void updateColorOnHover(RenderWindow &window, Object &o);
@@ -41,6 +39,7 @@ void changePosition(Object &a, float x, float y);
 void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
+// function of Staff
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode *class_list);
 void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
@@ -50,7 +49,7 @@ void addSemester(RenderWindow &window, YearNode *&year, int &page, bool &Exit);
 void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, string &sem, ClassNode *class_list, bool &Exit);
 void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit);
 void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, string sem, ClassNode *class_list, bool &Exit);
-void resultCourse(RenderWindow& window, CourseNode*& course, int& page, string yr, ClassNode* class_list, string sem);
+void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, ClassNode *class_list, string sem);
 void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_list, bool &Exit);
 void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exit);
 void studentResult(RenderWindow &window, int &page, StudentNode *&student);
@@ -58,6 +57,7 @@ void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
 void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, StudentNode *&person, bool &Exit);
 void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
 
+// function of Student
 void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
 void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, StudentNode *person, bool &Exit);
 void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Exit);

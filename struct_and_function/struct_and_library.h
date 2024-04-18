@@ -93,7 +93,7 @@ struct ClassNode
 	ClassNode *next = nullptr;
 };
 
-struct ClassSubNode // for Year, classNode Containter
+struct ClassSubNode
 {
 	ClassNode *class_node = nullptr;
 	ClassSubNode *next = nullptr;

@@ -22,7 +22,7 @@ Course createCourse(string course_id, string course_name, string teacher_name, i
 CourseNode *initCourseNode(Course new_course)
 {
     CourseNode *new_course_node = new CourseNode;
-    new_course_node->next = NULL;
+    new_course_node->next = nullptr;
     new_course_node->course = new_course;
     return new_course_node;
 }
@@ -207,11 +207,10 @@ void findCourse(CourseNode **head, CourseNode **search, int &count, string input
     {
         if (head[i]->course.course_id.find(input) != string::npos)
         {
-			search[count] = head[i];
-			count++;
-		}
-	}
-
+            search[count] = head[i];
+            count++;
+        }
+    }
 }
 
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
@@ -230,9 +229,9 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
     fin.open(filename);
     if (!fin.is_open())
     {
-		cout << "Cannot open file " << filename << endl;
-		return false;
-	}
+        cout << "Cannot open file " << filename << endl;
+        return false;
+    }
     string read; // header
     getline(fin, read, '\n');
     string number;
@@ -282,9 +281,9 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
     return true;
 }
 
-
-ResultsNode* CurrCourse(StudentNode* studentNode) {
-    ResultsNode* currRes = studentNode->student.results_list;
+ResultsNode *CurrCourse(StudentNode *studentNode)
+{
+    ResultsNode *currRes = studentNode->student.results_list;
     string mostcuryear = "0000-0000", mostcursem = "Semester 0";
     while (currRes)
     {
@@ -301,8 +300,9 @@ ResultsNode* CurrCourse(StudentNode* studentNode) {
         currRes = currRes->next;
     }
     currRes = nullptr;
-    ResultsNode* temp = studentNode->student.results_list;
-    while (temp) {
+    ResultsNode *temp = studentNode->student.results_list;
+    while (temp)
+    {
         if (temp->results.year_id == mostcuryear && temp->results.sem_id == mostcursem)
             appendResultsNode(currRes, createResultsNode(temp->results));
         temp = temp->next;

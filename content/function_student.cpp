@@ -181,7 +181,6 @@ void deleteStudentList(StudentNode *&studentList)
 }
 
 // StudentSubNode
-
 StudentSubNode *createStudentSubNode(StudentNode *studentNode)
 {
     return new StudentSubNode{studentNode, nullptr};

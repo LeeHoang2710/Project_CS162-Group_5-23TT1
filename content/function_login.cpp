@@ -10,9 +10,9 @@ void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file)
     {
         StudentNode *newNode = new StudentNode;
         newNode->student = tmp;
-        newNode->next = NULL;
+        newNode->next = nullptr;
 
-        if (StuPass == NULL)
+        if (StuPass == nullptr)
         {
             StuPass = newNode;
             cur = StuPass;
@@ -37,9 +37,9 @@ void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
     {
         StaffNode *newNode = new StaffNode;
         newNode->staff = tmp;
-        newNode->next = NULL;
+        newNode->next = nullptr;
 
-        if (StaffPass == NULL)
+        if (StaffPass == nullptr)
         {
             StaffPass = newNode;
             cur = StaffPass;
@@ -59,10 +59,10 @@ bool LoginForStudent(ClassNode *StuPass, string &username, string &pass, string 
     if (!StuPass)
         return false;
     ClassNode *login = StuPass;
-    for (login; login != NULL; login = login->next)
+    for (login; login != nullptr; login = login->next)
     {
         StudentNode *tmp = login->my_class.student_list;
-        for (tmp; tmp != NULL; tmp = tmp->next)
+        for (tmp; tmp != nullptr; tmp = tmp->next)
         {
             if (tmp->student.student_id == username && tmp->student.password == pass)
             {
@@ -81,7 +81,7 @@ bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass)
         return false;
 
     StaffNode *tmp = StaffPass;
-    for (tmp; tmp != NULL; tmp = tmp->next)
+    for (tmp; tmp != nullptr; tmp = tmp->next)
     {
         if (tmp->staff.username == username && tmp->staff.password == pass)
             return true;
@@ -93,11 +93,11 @@ bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass)
 void UpdateStuPassFile(StudentNode *List, ofstream &op)
 {
     op.open("../database/Students_Password.csv");
-    for (StudentNode *tmp = List; tmp != NULL; tmp = tmp->next)
+    for (StudentNode *tmp = List; tmp != nullptr; tmp = tmp->next)
     {
         op << tmp->student.student_id << ",";
         op << tmp->student.password;
-        if (tmp->next != NULL)
+        if (tmp->next != nullptr)
             op << endl;
     }
 
@@ -107,11 +107,11 @@ void UpdateStuPassFile(StudentNode *List, ofstream &op)
 void UpdateStaffPassFile(StaffNode *List, ofstream &op)
 {
     op.open("../database/Staff_Password.csv");
-    for (StaffNode *tmp = List; tmp != NULL; tmp = tmp->next)
+    for (StaffNode *tmp = List; tmp != nullptr; tmp = tmp->next)
     {
         op << tmp->staff.username << ",";
         op << tmp->staff.password;
-        if (tmp->next != NULL)
+        if (tmp->next != nullptr)
             op << endl;
     }
 
