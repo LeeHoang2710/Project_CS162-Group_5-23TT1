@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 Year createYear(string p_year_id, ClassSubNode *classSublist)
 {

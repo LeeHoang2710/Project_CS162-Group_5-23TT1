@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 Class CreateClass(string classid)
 {

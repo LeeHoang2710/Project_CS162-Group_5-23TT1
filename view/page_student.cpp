@@ -56,7 +56,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
     Object sum = createObject("./image/page3-staff/school_year/total.png", 946, 258);
     Object o1 = createObject("./image/page3-staff/course/course-bg.png", 180, 120);
     Object sort = createObject("./image/page3-staff/class/search-cla.png", 270, 262);
-    Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 264);
+    Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 270);
 
     Info total = createText("", 1050, 258);
     Info title = createText("Course - " + person->student.last_name + " " + person->student.first_name, 475, 168);
@@ -111,6 +111,7 @@ void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, Studen
         updateColorOnHover(window, prev);
         updateColorOnHover(window, next);
         updateColorOnHover(window, menu);
+        updateColorOnHover(window, confirm);
         for (int i = 0; i < 4; ++i)
         {
             Object &subjectRef = subject[i];
@@ -370,11 +371,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    if (isHere(menu.bound, mouse))
-                    {
-                        page = 4;
-                        return;
-                    }
+                    switchPage(menu.bound, mouse, 4, page, Exit);
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
                         new_page = true;

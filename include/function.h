@@ -1,6 +1,6 @@
 #include "struct_and_library.h"
 
-// Login Session
+// ---------------------Login Session---------------------
 void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file);
 void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file);
 bool LoginForStudent(ClassNode *StuList, string &username, string &pass, string &class_id);
@@ -10,7 +10,7 @@ void UpdateStaffPassFile(StaffNode *List, ofstream &op);
 bool ChangePassStudent(StudentNode *current);
 bool ChangePassStaff(StaffNode *current);
 
-// Staff
+// ---------------------Staff---------------------
 Staff createStaff(string p_staff_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass);
 StaffNode *initStaffNode(Staff new_staff);
 void addNewStaffNode(StaffNode *&head, Staff new_staff);
@@ -19,7 +19,7 @@ StaffNode *searchStaffNode(StaffNode *head, string staff_1_id);
 void ExportStaff(StaffNode *&Staff_list, ofstream &op, string filename);
 void deleteStaffList(StaffNode *&staffList);
 
-// Student
+// ---------------------Student---------------------
 Student createStudent(string student_id, string first, string last, bool gender, string dob, string social_id, string pass);
 StudentNode *initStudentNode(Student new_student);
 void addNewStudentNode(StudentNode *&head, Student new_student);
@@ -32,7 +32,7 @@ bool importNewStudentsFromStaff(ClassNode *&classNode, string file_name, ifstrea
 void updateStudentsNumBeforeRemoval(StudentNode *studentNodeToDelete);
 void deleteStudentList(StudentNode *&studentList);
 
-// Year
+// ---------------------Year---------------------
 Year createYear(string p_year_id, ClassSubNode *classSublist);
 YearNode *initYearNode(Year school_year);
 void addNewYearNode(YearNode *&head, Year year);
@@ -40,7 +40,7 @@ void removeNewYearNode(YearNode *&head, Year year);
 YearNode *searchYearNode(YearNode *head, string year);
 void deleteYearList(YearNode *&year_list);
 
-// Semester
+// ---------------------Semester---------------------
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date);
 SemesterNode *createSemesterNode(const Semester &new_sem);
 void appendSemesterNode(SemesterNode *&sem_list, Semester new_sem);
@@ -48,7 +48,7 @@ bool importSemester(ClassNode *allClass, SemesterNode *&sem_list, stringstream &
 void exportSemesterInYear(SemesterNode *&sem_list, ofstream &fout);
 void deleteSemesterList(SemesterNode *&sem_list, string year_id);
 
-// Course
+// ---------------------Course---------------------
 Course createCourse(string course_id, string course_name, string teacher_name, int num_credit, int max_students, Session teaching_session, string class_id, ClassNode *class_list);
 CourseNode *initCourseNode(Course new_course);
 void appendNewCourseNode(CourseNode *&head, Course cs);
@@ -61,7 +61,7 @@ void findCourse(CourseNode **head, CourseNode **search, int &count, string input
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id);
 ResultsNode *CurrCourse(StudentNode *studentNode);
 
-// Class
+// ---------------------Class---------------------
 Class CreateClass(string classid);
 ClassNode *InitializeClassNode(Class newclass);
 void AddClassNode(ClassNode *&head, ClassNode *newclassnode);
@@ -72,7 +72,7 @@ bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, st
 void deleteClassList(ClassNode *&classList);
 void ExportClassStudents(ofstream &op, string &destination, ClassNode *Curr);
 
-// Results
+// ---------------------Results---------------------
 bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
 float UpdateCurGpa(StudentNode *studentNode);
@@ -91,7 +91,7 @@ void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, st
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
 bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem);
 
-// ClassSubNode
+// ---------------------ClassSubNode---------------------
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);
 bool exportYear(YearNode *&year_list, string filename, ofstream &fout);
 ClassSubNode *createClassSubNode(ClassNode *classNode);
@@ -102,7 +102,7 @@ bool importClassSubNode(ClassNode *allClass, Year &year, stringstream &ss);
 void exportClassSubNode(ClassSubNode *classSublist, ofstream &fout);
 void deleteClassSubList(ClassSubNode *&classSublist);
 
-// StudentSubNode
+// ---------------------StudentSubNode---------------------
 StudentSubNode *createStudentSubNode(StudentNode *studentNode);
 void appendStudentSubNode(StudentSubNode *&studentSubList, StudentSubNode *studentSubNode);
 bool addStudentSubNodeToCourse(ClassNode *allClass, CourseNode *&courseNode, string student_id, string year_id, string sem_id);

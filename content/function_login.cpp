@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file)
 {

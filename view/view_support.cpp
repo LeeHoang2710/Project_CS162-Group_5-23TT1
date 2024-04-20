@@ -11,15 +11,6 @@ Object createObject(string input, float x, float y)
 	// The global bounds are the smallest rectangle that contains the entire sprite, in global coordinate(relative to the window, not the sprite)
 	return icon;
 }
-// Object *createObjectTest(string s, float x, float y)
-// {
-// 	Object *me = new Object;
-// 	me.text.loadFromFile(s);
-// 	me.draw.setTexture(me.text);
-// 	me.draw.setPosition(x, y);
-// 	me.bound = me.draw.getGlobalBounds();
-// 	return me;
-// }
 
 void createObjectTest(Object &me, string s, float x, float y)
 {
@@ -52,19 +43,6 @@ Info createText(string str, float x, float y)
 	input.bound = input.txt.getGlobalBounds();
 	return input;
 }
-
-// Info *createInfoTest(string s, float x, float y)
-// {
-// 	Info *a = new Info;
-// 	a.font.loadFromFile("./image/font/Arial.ttf");
-// 	a.txt.setFont(a.font);
-// 	a.txt.setCharacterSize(30);
-// 	a.txt.setPosition(x, y);
-// 	a.txt.setFillColor(Color::Black);
-// 	a.txt.setString(s);
-// 	a.bound = a.txt.getGlobalBounds();
-// 	return a;
-// }
 
 void createInfoTest(Info &a, string s, float x, float y)
 {
@@ -109,7 +87,7 @@ void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu)
 {
 	if (isHere(bound, mouse))
 		page = k;
-	if (page == 3)
+	if (page == 3 || page == 4)
 		menu = true;
 	else
 		menu = false;

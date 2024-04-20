@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 float updateTotalGpa(StudentNode *studentNode)
 {
@@ -106,11 +106,11 @@ void addResultsNodeToClass(ClassNode *&classNode, const string &year_id, const s
 
 ResultsNode *searchResultsNode(ResultsNode *results_list, string course_id, string year_id, string sem_id)
 {
-    ResultsNode* temp = results_list;
+    ResultsNode *temp = results_list;
     while (temp)
     {
         if (temp->results.course_id == course_id && temp->results.year_id == year_id && temp->results.sem_id == sem_id)
-			return temp;
+            return temp;
 
         temp = temp->next;
     }

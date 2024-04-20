@@ -24,7 +24,7 @@ struct Info
     Text txt;
     FloatRect bound;
 };
-// function to support displaying
+// ---------------------function to support displaying---------------------
 Object createObject(string input, float x, float y);
 void createObjectTest(Object &me, string s, float x, float y);
 Object createBackGround(string s);
@@ -39,7 +39,7 @@ void changePosition(Object &a, float x, float y);
 void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
-// function of Staff
+// ---------------------function of Staff---------------------
 void Scene1(RenderWindow &window, int &page, bool &is_staff);
 void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *user3, string &name, string &pass, StaffNode *&user, StudentNode *&user1, ClassNode *class_list);
 void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
@@ -57,7 +57,7 @@ void Other1(RenderWindow &window, int &page, StaffNode *&user, bool &Exit);
 void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&user, StudentNode *&person, bool &Exit);
 void Profile1(RenderWindow &window, int &page, StaffNode *person, bool &Exit);
 
-// function of Student
+// ---------------------function of Student---------------------
 void homeStudent(RenderWindow &window, int &page, StudentNode *&user, bool &Exit);
 void courseStudent(RenderWindow &window, int &page, YearNode *&year_list, StudentNode *person, bool &Exit);
 void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Exit);

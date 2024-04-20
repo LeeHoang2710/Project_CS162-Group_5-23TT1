@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 Student createStudent(string student_id, string first, string last, bool gender, string dob, string social_id, string pass)
 {

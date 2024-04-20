@@ -1956,7 +1956,7 @@ void Classes(RenderWindow &window, int &page, bool is_staff, ClassNode *class_li
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
     Object sort = createObject("./image/page3-staff/class/search-cla.png", 270, 262);
-    Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 264);
+    Object confirm = createObject("./image/page3-staff/class/confirm.png", 475, 270);
     Object inval = createObject("./image/page3-staff/class/invalid_sea.png", 423, 351);
     Info total = createText("", 1050, 258);
     Info sort_input = createText("", 330, 264);

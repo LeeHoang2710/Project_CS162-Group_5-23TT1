@@ -1,4 +1,4 @@
-#include "../struct_and_function/function.h"
+#include "../include/function.h"
 
 Semester createSemester(const string &sem_id, const string &start_date, const string &end_date)
 {
