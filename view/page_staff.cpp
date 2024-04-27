@@ -349,6 +349,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                         count++;
                         checkYear = true;
                         clock.restart();
+                        new_page = true;
                     }
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
@@ -460,7 +461,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
-        /*objectAppear(window, checkYear, clock, success, 1);*/
+        objectAppear(window, checkYear, clock, success, 1);
 
         window.display();
     }
@@ -692,8 +693,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Object exit = createObject("./image/page2/exit.png", 1044, 398);
     Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
     Object confirm = createObject("./image/page3-staff/course/confirm.png", 583, 566);
-    Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
-    Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
+    Object valid = createObject("./image/page2/delete-succ.png", 423, 370);
+    Object invalid = createObject("./image/page2/invalid-id.png", 423, 370);
     Info total = createText("", 1050, 258);
     Info title = createText(yr + " - " + sem, 475, 168);
     title.txt.setFillColor(Color::Red);
@@ -749,6 +750,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                     {
                         page = 14;
                         addCourse(window, course, page, yr, sem, class_list, Exit);
+						new_page = true;
                         if (Exit)
                             return;
                     }
@@ -776,6 +778,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                         Confirm = true;
                         showDelResult = true;
                         clock.restart();
+
                     }
                     for (int i = 0; i < 4; ++i)
                     {
@@ -848,8 +851,9 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
             if (Confirm)
             {
                 checkDel = deleteCourseNode(course, cour_id, yr, sem);
-                count--;
+                if (checkDel) count--;
                 Confirm = false;
+                new_page = true;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 2)
                 chooseDraw(window, valid, invalid, checkDel);
@@ -2394,7 +2398,9 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 checkDel = removeStudentNode(class_list->my_class.student_list, stu_id);
                 count--;
                 Confirm = false;
+				
             }
+            //new_page = true;
             if (showDelResult && clock.getElapsedTime().asSeconds() < 2)
                 chooseDraw(window, valid1, invalid1, checkDel);
             else if (clock.getElapsedTime().asSeconds() >= 2)
@@ -2414,6 +2420,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 ifstream fin;
                 checkPath = importNewStudentsFromStaff(class_list, file_path, fin);
                 Import = false;
+				new_page = true;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 2)
                 chooseDraw(window, valid2, invalid2, checkPath);
