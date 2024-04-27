@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "function.h"
 
 using namespace sf;

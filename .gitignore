@@ -1,6 +1,7 @@
 .vscode
+.vs
 Debug
 *.vcxproj
 *.filters
 *.user
-libraries
+*.o

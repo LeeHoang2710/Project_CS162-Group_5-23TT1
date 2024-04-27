@@ -6,7 +6,7 @@ int main()
     window.create(VideoMode(1440, 960), "CS162-Project-LMS-Group-5", Style::Default);
     window.setFramerateLimit(60);
     Image icon;
-    icon.loadFromFile("image/page1/Asset 1.png");
+    icon.loadFromFile("./image/page1/Asset 1.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     int page = 1;
@@ -20,8 +20,6 @@ int main()
     ifstream fin;
 
     bool success;
-    // StorePassWordStudent(user1, fin, "./database/student_password.csv");
-    // StorePassWordStaff(user2, fin, "./database/staff_password.csv");
     importStaff(user2, fin, "./database/staff_list.csv");
     ReadClassfromfile(class_list, "./database/class_list.csv", fin);
     success = importYear(year, class_list, "./database/year_list.csv", fin);

@@ -60,7 +60,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
     Object o5 = createObject("./image/page2/password.png", 603, 525);
     Object o6 = createObject("./image/page2/alert.png", 423, 351);
     Object o7 = createObject("./image/page2/open.png", 1003, 533);
-    Object o8 = createObject("./image/page2/closed.png", 1003, 533);
+    Object o8 = createObject("./image/page2/closed.png", 1003, 529);
     Object menu = createObject("./image/page3-staff/exit.png", 1236, 96);
 
     Info inputUsername = createText("", 641.0f, 432.0f);
@@ -73,6 +73,7 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
     {
         Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
         updateColorOnHover(window, o3);
+        updateColorOnHover(window, menu);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -103,16 +104,15 @@ void logIn(RenderWindow &window, int &page, bool is_staff, bool see, StaffNode *
                             inputPassword.txt.setString(hidden_pass);
                         else
                             inputPassword.txt.setString(password);
-                        if (isHere(o7.bound, mouse))
+                        if (isHere(o7.bound, mouse) || isHere(o8.bound, mouse))
                         {
-                            see = true;
-                            inputPassword.txt.setString(password);
+                            see = !see;
+                            if (see)
+                                inputPassword.txt.setString(password);
+                            else
+                                inputPassword.txt.setString(hidden_pass);
                         }
-                        else if (isHere(o8.bound, mouse))
-                        {
-                            see = false;
-                            inputPassword.txt.setString(hidden_pass);
-                        }
+
                     }
                     // we have to check if the password is right/wrong then move to the next page
                     else if (isHere(o3.bound, mouse))
@@ -725,6 +725,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
         updateColorOnHover(window, next);
         updateColorOnHover(window, menu);
         updateColorOnHover(window, del);
+        updateColorOnHover(window, exit);
+        updateColorOnHover(window, confirm);
         for (int i = 0; i < 4; ++i)
         {
             Object &subjectRef = subject[i];
@@ -1535,6 +1537,9 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         updateColorOnHover(window, next);
         updateColorOnHover(window, append);
         updateColorOnHover(window, eXport);
+        updateColorOnHover(window, exit2);
+        updateColorOnHover(window, confirm);
+        updateColorOnHover(window, remove);
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -1760,9 +1765,9 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
     Object success = createObject("./image/page2/changePass/change.png", 429, 343);
     Object fail = createObject("./image/page2/changePass/try-again.png", 429, 343);
     Object o7 = createObject("./image/page2/open.png", 1003, 443);
-    Object o8 = createObject("./image/page2/closed.png", 1003, 443);
+    Object o8 = createObject("./image/page2/closed.png", 1003, 439);
     Object o9 = createObject("./image/page2/open.png", 1003, 533);
-    Object o10 = createObject("./image/page2/closed.png", 1003, 533);
+    Object o10 = createObject("./image/page2/closed.png", 1003, 529);
     Object b = createObject("./image/page3-staff/backward.png", 183, 259);
 
     Info oldPassword = createText("", 665.0f, 432.0f);
@@ -1804,15 +1809,13 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
                             oldPassword.txt.setString(hidden_old);
                         else
                             oldPassword.txt.setString(old_pass);
-                        if (isHere(o7.bound, mouse))
+                        if (isHere(o7.bound, mouse) || isHere(o8.bound, mouse))
                         {
-                            seeOld = true;
-                            oldPassword.txt.setString(old_pass);
-                        }
-                        else if (isHere(o8.bound, mouse))
-                        {
-                            seeOld = false;
-                            oldPassword.txt.setString(hidden_old);
+                            seeOld = !seeOld;
+                            if (seeOld)
+                                oldPassword.txt.setString(old_pass);
+                            else
+                                oldPassword.txt.setString(hidden_old);
                         }
                     }
                     else if (isHere(o5.bound, mouse))
@@ -1823,15 +1826,13 @@ void changePassword(RenderWindow &window, int &page, bool is_staff, StaffNode *&
                             newPassword.txt.setString(hidden_new);
                         else
                             newPassword.txt.setString(new_pass);
-                        if (isHere(o9.bound, mouse))
+                        if (isHere(o9.bound, mouse) || isHere(o8.bound, mouse))
                         {
-                            seeNew = true;
-                            newPassword.txt.setString(new_pass);
-                        }
-                        else if (isHere(o8.bound, mouse))
-                        {
-                            seeNew = false;
-                            newPassword.txt.setString(hidden_new);
+                            seeNew = !seeNew;
+                            if (seeNew)
+                                newPassword.txt.setString(new_pass);
+                            else
+                                newPassword.txt.setString(hidden_new);
                         }
                     }
                     // we confirm the change successfully
