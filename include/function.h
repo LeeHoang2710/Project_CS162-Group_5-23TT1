@@ -1,8 +1,6 @@
 #include "struct_and_library.h"
 
 // ---------------------Login Session---------------------
-void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file);
-void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file);
 bool LoginForStudent(ClassNode *StuList, string &username, string &pass, string &class_id);
 bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass);
 void UpdateStuPassFile(StudentNode *List, ofstream &op);
@@ -55,7 +53,7 @@ void appendNewCourseNode(CourseNode *&head, Course cs);
 bool deleteCourseNode(CourseNode *&CourseHead, string course_id, string year_id, string sem_id);
 bool importCourse(ClassNode *allClass, CourseNode *&Courselist, ifstream &fin);
 void exportCourse(CourseNode *&Courselist, ofstream &fout);
-void compareCourse(Course &old, Course &newone);
+void compareCourse(Course &old, Course &newOne);
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id);
 void findCourse(CourseNode **head, CourseNode **search, int &count, string input);
 void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id);

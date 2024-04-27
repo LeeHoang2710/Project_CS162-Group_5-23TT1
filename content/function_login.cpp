@@ -1,59 +1,5 @@
 #include "../include/function.h"
 
-void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file)
-{
-    ip.open(file);
-    StudentNode *cur = StuPass;
-    Student tmp;
-
-    while (getline(ip, tmp.student_id, ',') && getline(ip, tmp.password, '\n'))
-    {
-        StudentNode *newNode = new StudentNode;
-        newNode->student = tmp;
-        newNode->next = nullptr;
-
-        if (StuPass == nullptr)
-        {
-            StuPass = newNode;
-            cur = StuPass;
-        }
-        else
-        {
-            cur->next = newNode;
-            cur = cur->next;
-        }
-    }
-
-    ip.close();
-}
-
-void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file)
-{
-    ip.open(file);
-    StaffNode *cur = StaffPass;
-    Staff tmp;
-
-    while (getline(ip, tmp.username, ',') && getline(ip, tmp.password, '\n'))
-    {
-        StaffNode *newNode = new StaffNode;
-        newNode->staff = tmp;
-        newNode->next = nullptr;
-
-        if (StaffPass == nullptr)
-        {
-            StaffPass = newNode;
-            cur = StaffPass;
-        }
-        else
-        {
-            cur->next = newNode;
-            cur = cur->next;
-        }
-    }
-
-    ip.close();
-}
-
 bool LoginForStudent(ClassNode *StuPass, string &username, string &pass, string &class_id)
 {
     if (!StuPass)

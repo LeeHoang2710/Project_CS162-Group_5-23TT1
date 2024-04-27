@@ -59,7 +59,7 @@ struct SemesterNode
 
 struct Session
 {
-	int day_of_the_week = 0; // MON / TUE / WED / THU / FRI / SAT
+	int day_of_the_week = 0; // 2 (MON) / 3 (TUE) / 4 (WED) / 5 (THU) / 6 (FRI) / 7 (SAT)
 	int session_no = 0;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 

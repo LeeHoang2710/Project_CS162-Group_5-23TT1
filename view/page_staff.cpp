@@ -1175,7 +1175,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
 
     Info inf[4]{};
     Object yes[6]{}, no[6]{}, yes_sess[4]{}, no_sess[4]{};
-    bool check_day[6] = {false}, check_sess[4] = {false};
+    bool check_day[6] = { false }, check_sess[4] = { false };
     for (int i = 0; i < 4; ++i)
     {
         createInfoTest(inf[i], "", 512, 377 + 61 * i);

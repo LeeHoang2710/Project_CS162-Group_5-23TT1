@@ -147,31 +147,31 @@ void exportCourse(CourseNode *&Courselist, ofstream &fout)
     fout << "*" << endl;
 }
 
-void compareCourse(Course &old, Course &newone)
+void compareCourse(Course &old, Course &newOne)
 {
-    if (newone.course_id == "")
-        newone.course_id = old.course_id;
+    if (newOne.course_id == "")
+        newOne.course_id = old.course_id;
 
-    if (newone.course_name == "")
-        newone.course_name = old.course_name;
+    if (newOne.course_name == "")
+        newOne.course_name = old.course_name;
 
-    if (newone.teacher_name == "")
-        newone.teacher_name = old.teacher_name;
+    if (newOne.teacher_name == "")
+        newOne.teacher_name = old.teacher_name;
 
-    if (newone.num_credit == 0)
-        newone.num_credit = old.num_credit;
+    if (newOne.num_credit == 0)
+        newOne.num_credit = old.num_credit;
 
-    if (newone.max_students == 0)
-        newone.max_students = old.max_students;
+    if (newOne.max_students == 0)
+        newOne.max_students = old.max_students;
 
-    if (newone.main_class == nullptr)
-        newone.main_class = old.main_class;
+    if (newOne.main_class == nullptr)
+        newOne.main_class = old.main_class;
 
-    if (newone.teaching_session.day_of_the_week == 0)
-        newone.teaching_session.day_of_the_week = old.teaching_session.day_of_the_week;
+    if (newOne.teaching_session.day_of_the_week == 0)
+        newOne.teaching_session.day_of_the_week = old.teaching_session.day_of_the_week;
 
-    if (newone.teaching_session.session_no == 0)
-        newone.teaching_session.session_no = old.teaching_session.session_no;
+    if (newOne.teaching_session.session_no == 0)
+        newOne.teaching_session.session_no = old.teaching_session.session_no;
 }
 
 void replaceCourse(CourseNode *&curr, Course newOne, string year_id, string sem_id)
@@ -235,6 +235,7 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
         cout << "Cannot open file " << filename << endl;
         return false;
     }
+
     string read; // header
     getline(fin, read, '\n');
     string number;
@@ -244,6 +245,7 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
         getline(fin, number, '\n');
         if (number.empty() || number == "#")
             break;
+
         stringstream line(number);
         getline(line, cs.course_id, ',');
         getline(line, cs.course_name, ',');
@@ -265,6 +267,13 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
             return false;
         }
 
+		if (!cs.main_class->my_class.student_list)
+        {
+			cout << "Class " << number << " does not have any student." << endl;
+			fin.close();
+			return false;
+		}
+
         while (getline(line, number, ','))
         {
             StudentNode *stu = searchStudentNode(class_list, number);
@@ -277,9 +286,11 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
 
             appendStudentSubNode(cs.extra_stu, createStudentSubNode(stu));
         }
+
         appendNewCourseNode(curr, cs);
         addResultsNodeToClass(cs.main_class, yr, sem, cs.course_id);
     }
+
     fin.close();
     return true;
 }
