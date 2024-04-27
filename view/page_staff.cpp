@@ -895,19 +895,17 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
 
     Info inf[4]{};
     Object yes[6]{}, no[6]{}, yes_sess[4]{}, no_sess[4]{};
-    bool check_day[6], check_sess[4];
+    bool check_day[6] = { false }, check_sess[4] = { false };
     for (int i = 0; i < 4; ++i)
     {
         createInfoTest(inf[i], "", 512, 377 + 61 * i);
         createObjectTest(yes_sess[i], "./image/page3-staff/course/yes.png", 398 + 185 * i, 732);
         createObjectTest(no_sess[i], "./image/page3-staff/course/no.png", 398 + 185 * i, 732);
-        check_sess[i] = false;
     }
     for (int i = 0; i < 6; ++i)
     {
         createObjectTest(yes[i], "./image/page3-staff/course/yes.png", 326 + 130 * i, 672 + 15);
         createObjectTest(no[i], "./image/page3-staff/course/no.png", 326 + 130 * i, 672 + 15);
-        check_day[i] = false;
     }
     Info stu = createText("", 525, 625);
     Info cre = createText("", 985, 625);
