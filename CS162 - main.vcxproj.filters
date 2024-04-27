@@ -13,439 +13,96 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\database">
+      <UniqueIdentifier>{0b3455e7-331e-4430-98a6-a10b527ec073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\import">
+      <UniqueIdentifier>{60d7fbe0-836f-4fa4-ab10-49b90d60b130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\export">
+      <UniqueIdentifier>{45d15668-635b-4f02-a19f-099c33bf7b5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\image">
+      <UniqueIdentifier>{69358650-9a60-4413-860a-692fb53f60c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Content">
+      <UniqueIdentifier>{bb2190be-ab85-4820-a558-4904d76f16f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{45f31a41-3b1a-4613-ab8b-52e21939ff35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Project_CS162\.gitignore" />
     <None Include="..\Project_CS162\README.md" />
-    <None Include="..\Project_CS162\database\class_list.csv" />
-    <None Include="..\Project_CS162\database\results_list.csv" />
-    <None Include="..\Project_CS162\database\staff_list.csv" />
-    <None Include="..\Project_CS162\database\year_list.csv" />
-    <None Include="..\Project_CS162\export\CS161_2020-2021_Semester 1.csv" />
-    <None Include="..\Project_CS162\export\CS161_2024-2025_Semester 1.csv" />
-    <None Include="..\Project_CS162\export\MTH252_2020-2021_Semester 1.csv" />
-    <None Include="..\Project_CS162\import\24APCS1_student.csv" />
-    <None Include="..\Project_CS162\import\24HOH4_student.csv" />
-    <None Include="..\Project_CS162\import\new_class.csv" />
-    <None Include="..\Project_CS162\import\new_courses.csv" />
+    <None Include="..\Project_CS162\database\class_list.csv">
+      <Filter>Resource Files\database</Filter>
+    </None>
+    <None Include="..\Project_CS162\database\results_list.csv">
+      <Filter>Resource Files\database</Filter>
+    </None>
+    <None Include="..\Project_CS162\database\staff_list.csv">
+      <Filter>Resource Files\database</Filter>
+    </None>
+    <None Include="..\Project_CS162\database\year_list.csv">
+      <Filter>Resource Files\database</Filter>
+    </None>
+    <None Include="..\Project_CS162\import\24APCS1_student.csv">
+      <Filter>Resource Files\import</Filter>
+    </None>
+    <None Include="..\Project_CS162\import\24HOH4_student.csv">
+      <Filter>Resource Files\import</Filter>
+    </None>
+    <None Include="..\Project_CS162\import\new_class.csv">
+      <Filter>Resource Files\import</Filter>
+    </None>
+    <None Include="..\Project_CS162\import\new_courses.csv">
+      <Filter>Resource Files\import</Filter>
+    </None>
+    <None Include="..\Project_CS162\export\MTH252_2020-2021_Semester 1.csv">
+      <Filter>Resource Files\export</Filter>
+    </None>
+    <None Include="..\Project_CS162\export\CS161_2024-2025_Semester 1.csv">
+      <Filter>Resource Files\export</Filter>
+    </None>
+    <None Include="..\Project_CS162\export\CS161_2020-2021_Semester 1.csv">
+      <Filter>Resource Files\export</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Project_CS162\content\function_class.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_course.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_login.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_result.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_semester.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_student.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\content\function_year.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\view\page_staff.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\view\page_student.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project_CS162\view\view_support.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Project_CS162\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\Project_CS162\image\font\Arial.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Project_CS162\image\page1\alert.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\Asset 1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\main-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\scene1-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\scene1-staff.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\scene1-student.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\profile\dob.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\profile\full-namw.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\profile\social-id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\profile\staff-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Project_CS162\image\page1\profile\staff-id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\alert.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\closed.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\delete-succ.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\exit.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\import-succ.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\invalid-id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\invalid-path.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\login-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\login-button.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\open.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\password.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\scene2-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\username.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\change.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\change-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\change-button.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\new-pass.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\old-pass.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page2\changePass\try-again.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\backward.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\exit.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\forward.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\next.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\prev.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\academic-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\class-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\confirm.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\create-cla.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\create-stu.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\delete-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\delete-stu.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\detail.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\export.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\import-stu-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\Infor.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\invalid_sea.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\result.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\result-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\search-cla.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\class\student-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\confirm.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\course-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\create-cour.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\create-cour-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\delete-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\delete-cour.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\del-succ.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\import.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\input.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\input_1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\invalid-id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\no.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\not_available.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\yes.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\add-stu.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\add-stu-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\add-succ.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\arrow.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\confirm.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\edit.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\export.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\file_path.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\import-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\import-cour-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\import-res.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\remove.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\res-cour-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\result.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\save.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\update-cour-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\course\update\view.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\home\class.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\home\course.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\home\homeStaff-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\home\other.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\home\year.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\other\change-pass.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\other\log-out.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\other\other-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\other\profile.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\result\full-name.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\result\gpa.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\result\id.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\result\result-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\2020.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\2021.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\2022.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\2023.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\2024.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\add.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\add-1st-class-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\create_sem.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\create_yr.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\file-path.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\import.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\input.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\new-semester-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\save-success.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\semester-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\total.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\year-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page3-staff\school_year\year-node.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\all.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\course.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\course-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\current.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\home-stu.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\input.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\other.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\other-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\result-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\score.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="image\page4-student\home\stu-profile-bg.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <ClCompile Include="..\Project_CS162\content\function_class.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_course.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_login.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_result.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_semester.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_student.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\content\function_year.cpp">
+      <Filter>Source Files\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\view\page_staff.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\view\page_student.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Project_CS162\view\view_support.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Project_CS162\include\function.h">
@@ -457,5 +114,390 @@
     <ClInclude Include="..\Project_CS162\include\view_function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Project_CS162\image\font\Arial.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\page1\alert.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\Asset 1.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\main-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\scene1-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\scene1-staff.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\scene1-student.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\profile\dob.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\profile\full-namw.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\profile\social-id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\profile\staff-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page1\profile\staff-id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\alert.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\closed.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\delete-succ.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\exit.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\import-succ.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\invalid-id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\invalid-path.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\login-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\login-button.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\open.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\password.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\scene2-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\username.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\change.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\change-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\change-button.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\new-pass.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\old-pass.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page2\changePass\try-again.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\backward.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\exit.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\forward.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\next.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\prev.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\academic-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\class-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\confirm.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\create-cla.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\create-stu.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\delete-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\delete-stu.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\detail.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\export.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\import-stu-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\Infor.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\invalid_sea.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\result.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\result-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\search-cla.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\class\student-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\confirm.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\course-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\create-cour.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\create-cour-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\delete-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\delete-cour.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\del-succ.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\import.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\input.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\input_1.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\invalid-id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\no.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\not_available.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\yes.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\add-stu.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\add-stu-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\add-succ.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\arrow.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\confirm.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\edit.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\export.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\file_path.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\import-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\import-cour-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\import-res.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\remove.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\res-cour-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\result.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\save.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\update-cour-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\course\update\view.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\home\class.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\home\course.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\home\homeStaff-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\home\other.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\home\year.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\other\change-pass.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\other\log-out.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\other\other-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\other\profile.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\result\full-name.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\result\gpa.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\result\id.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\result\result-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\2020.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\2021.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\2022.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\2023.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\2024.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\add.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\add-1st-class-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\create_sem.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\create_yr.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\file-path.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\import.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\input.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\new-semester-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\save-success.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\semester-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\total.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\year-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page3-staff\school_year\year-node.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\all.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\course.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\course-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\current.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\home-stu.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\input.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\other.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\other-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\result-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\score.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
+    <Image Include="image\page4-student\home\stu-profile-bg.png">
+      <Filter>Resource Files\image</Filter>
+    </Image>
   </ItemGroup>
 </Project>
