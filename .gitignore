@@ -1,7 +1,4 @@
 .vscode
 .vs
 Debug
-*.vcxproj
-*.filters
-*.user
 *.o
