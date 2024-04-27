@@ -306,10 +306,10 @@ void detailStudent(RenderWindow &window, int &page, CourseNode *course, bool &Ex
         for (int i = 0; i < 4; ++i)
         {
             window.draw(inf[i].txt);
-            chooseDraw_2(window, yes_sess[i], no_sess[i], check_sess[i]);
+            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw_2(window, yes[i], no[i], check_day[i]);
+            chooseDraw(window, yes[i], no[i], check_day[i]);
         window.display();
     }
 }
@@ -349,7 +349,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
     int count = 0, change = 0;
     bool new_page = true, cur_course = false;
     ResultsNode *res_list1 = student->student.results_list;
-    ResultsNode *res_list2 = CurrCourse(student);
+    ResultsNode *res_list2 = currCourses(student);
     for (ResultsNode *curr = res_list1; curr; curr = curr->next)
         count++;
     ResultsNode *one[8]{};
@@ -404,7 +404,7 @@ void resultStudent(RenderWindow &window, int &page, StudentNode *student, bool &
         window.draw(o3.draw);
         window.draw(o4.draw);
         window.draw(o5.draw);
-        chooseDraw_2(window, o7, o6, cur_course);
+        chooseDraw(window, o7, o6, cur_course);
         window.draw(name.txt);
         window.draw(id.txt);
         curr_gpa.txt.setString(to_string(student->student.cur_gpa).substr(0, 4));

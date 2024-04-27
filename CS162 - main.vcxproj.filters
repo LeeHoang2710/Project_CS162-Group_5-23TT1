@@ -68,6 +68,7 @@
     <None Include="..\Project_CS162\export\CS161_2020-2021_Semester 1.csv">
       <Filter>Resource Files\export</Filter>
     </None>
+    <None Include="import\24CLC3_student.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Project_CS162\main.cpp">

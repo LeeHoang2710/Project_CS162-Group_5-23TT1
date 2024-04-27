@@ -181,7 +181,7 @@ bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
     return true;
 }
 
-void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass)
+void ExportAllScoreToFile(ofstream &fout, string filename, ClassNode *allClass)
 {
     fout.open(filename);
     if (!fout.is_open())
@@ -320,7 +320,7 @@ void deleteResultsList(ResultsNode *&resultsList)
     }
 }
 
-void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id)
+void ExportStudentToFile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id)
 {
     string filename = destination + "/" + curr->course.course_id + "_" + year_id + "_" + sem_id + ".csv";
     cout << filename;

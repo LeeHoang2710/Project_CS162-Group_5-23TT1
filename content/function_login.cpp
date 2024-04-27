@@ -36,77 +36,6 @@ bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass)
     return false;
 }
 
-void UpdateStuPassFile(StudentNode *List, ofstream &op)
-{
-    op.open("../database/Students_Password.csv");
-    for (StudentNode *tmp = List; tmp != nullptr; tmp = tmp->next)
-    {
-        op << tmp->student.student_id << ",";
-        op << tmp->student.password;
-        if (tmp->next != nullptr)
-            op << endl;
-    }
-
-    op.close();
-}
-
-void UpdateStaffPassFile(StaffNode *List, ofstream &op)
-{
-    op.open("../database/Staff_Password.csv");
-    for (StaffNode *tmp = List; tmp != nullptr; tmp = tmp->next)
-    {
-        op << tmp->staff.username << ",";
-        op << tmp->staff.password;
-        if (tmp->next != nullptr)
-            op << endl;
-    }
-
-    op.close();
-}
-
-bool ChangePassStudent(StudentNode *current)
-{
-    while (1)
-    {
-        string input_Pass;
-        // cout << "Enter your current password: ";
-        cin >> input_Pass;
-        if (current->student.password == input_Pass)
-        {
-            // cout << "Enter your new password: ";
-            cin >> input_Pass;
-            current->student.password = input_Pass;
-            // cout << "Password changed successfully " << endl;
-            return true;
-        }
-        else
-        {
-            // cout << "current password is wrong, please try again" << endl;
-            return false;
-        }
-    }
-}
-
-bool ChangePassStaff(StaffNode *current)
-{
-    while (1)
-    {
-        string input_Pass;
-        // cout << "Enter your current password: ";
-        cin >> input_Pass;
-        if (current->staff.password == input_Pass)
-        {
-            // cout << "Enter your new password: ";
-            cin >> input_Pass;
-            current->staff.password = input_Pass;
-            // cout << "Password changed successfully" << endl;
-            return true;
-        }
-
-        return false;
-    }
-}
-
 Staff createStaff(string p_staff_id, string p_first, string p_last, bool p_gender, string p_dob, string p_social_id, string p_pass)
 {
     Staff person;
@@ -145,21 +74,20 @@ void addNewStaffNode(StaffNode *&head, Staff new_staff)
 void importStaff(StaffNode *&Staff_list, ifstream &ip, string filename)
 {
     ip.open(filename);
-    string number;
-    while (getline(ip, number))
+    string line;
+    while (getline(ip, line))
     {
-        Staff temp;
+        string username, first, last, gender, dob, social, pass;
+        stringstream ss(line);
+        getline(ss, username, ',');
+        getline(ss, first, ',');
+        getline(ss, last, ',');
+        getline(ss, gender, ',');
+        getline(ss, dob, ',');
+        getline(ss, social, ',');
+        getline(ss, pass, '\n');
 
-        stringstream line(number);
-        getline(line, temp.username, ',');
-        getline(line, temp.first_name, ',');
-        getline(line, temp.last_name, ',');
-        getline(line, number, ',');
-        temp.gender = stoi(number);
-        getline(line, temp.dob, ',');
-        getline(line, temp.social_id, ',');
-        getline(line, temp.password, '\n');
-
+		Staff temp = createStaff(username, first, last, stoi(gender), dob, social, pass);
         addNewStaffNode(Staff_list, temp);
     }
 

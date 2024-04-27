@@ -54,6 +54,7 @@ void createInfoTest(Info &a, string s, float x, float y)
 	a.txt.setString(s);
 	a.bound = a.txt.getGlobalBounds();
 }
+
 bool isHere(FloatRect &bound, Vector2f &mouse)
 {
 	return bound.contains(mouse);
@@ -67,15 +68,7 @@ void updateColorOnHover(RenderWindow &window, Object &o)
 		o.draw.setColor(Color::White);
 }
 
-void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check)
-{
-	if (check)
-		window.draw(x->draw);
-	else
-		window.draw(y->draw);
-}
-
-void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check)
+void chooseDraw(RenderWindow &window, Object x, Object y, bool check)
 {
 	if (check)
 		window.draw(x.draw);
@@ -92,12 +85,6 @@ void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu)
 	else
 		menu = false;
 	return;
-}
-
-void changePosition(Object &a, float x, float y)
-{
-	a.draw.setPosition(x, y);
-	a.bound = a.draw.getGlobalBounds();
 }
 
 void Typing(bool &texting, Info &infor, string &input, Event event)

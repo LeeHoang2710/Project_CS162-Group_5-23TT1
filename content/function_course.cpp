@@ -227,7 +227,7 @@ void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
     }
 }
 
-bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
+bool ImportManyCourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
 {
     fin.open(filename);
     if (!fin.is_open())
@@ -295,7 +295,7 @@ bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, Co
     return true;
 }
 
-ResultsNode *CurrCourse(StudentNode *studentNode)
+ResultsNode *currCourses(StudentNode *studentNode)
 {
     ResultsNode *currRes = studentNode->student.results_list;
     string mostcuryear = "0000-0000", mostcursem = "Semester 0";

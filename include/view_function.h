@@ -32,10 +32,8 @@ Info createText(string s, float x, float y);
 void createInfoTest(Info &a, string s, float x, float y);
 bool isHere(FloatRect &bound, Vector2f &mouse);
 void updateColorOnHover(RenderWindow &window, Object &o);
-void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check);
-void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check);
+void chooseDraw(RenderWindow &window, Object x, Object y, bool check);
 void switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page, bool &menu);
-void changePosition(Object &a, float x, float y);
 void Typing(bool &texting, Info &info, string &input, Event event);
 void objectAppear(RenderWindow &window, bool &change, Clock &clock, Object &o, int period);
 
