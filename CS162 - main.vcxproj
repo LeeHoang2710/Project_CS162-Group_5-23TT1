@@ -70,6 +70,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -171,17 +187,22 @@
     <Font Include="..\Project_CS162\image\font\Arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Project_CS162\image\page1\alert.png" />
-    <Image Include="..\Project_CS162\image\page1\Asset 1.png" />
-    <Image Include="..\Project_CS162\image\page1\main-bg.png" />
-    <Image Include="..\Project_CS162\image\page1\profile\dob.png" />
-    <Image Include="..\Project_CS162\image\page1\profile\full-namw.png" />
-    <Image Include="..\Project_CS162\image\page1\profile\social-id.png" />
-    <Image Include="..\Project_CS162\image\page1\profile\staff-bg.png" />
-    <Image Include="..\Project_CS162\image\page1\profile\staff-id.png" />
-    <Image Include="..\Project_CS162\image\page1\scene1-bg.png" />
-    <Image Include="..\Project_CS162\image\page1\scene1-staff.png" />
-    <Image Include="..\Project_CS162\image\page1\scene1-student.png" />
+    <ClInclude Include="..\Project_CS162\include\function.h" />
+    <ClInclude Include="..\Project_CS162\include\struct_and_library.h" />
+    <ClInclude Include="..\Project_CS162\include\view_function.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\page1\alert.png" />
+    <Image Include="image\page1\Asset 1.png" />
+    <Image Include="image\page1\main-bg.png" />
+    <Image Include="image\page1\profile\dob.png" />
+    <Image Include="image\page1\profile\full-namw.png" />
+    <Image Include="image\page1\profile\social-id.png" />
+    <Image Include="image\page1\profile\staff-bg.png" />
+    <Image Include="image\page1\profile\staff-id.png" />
+    <Image Include="image\page1\scene1-bg.png" />
+    <Image Include="image\page1\scene1-staff.png" />
+    <Image Include="image\page1\scene1-student.png" />
     <Image Include="image\page2\alert.png" />
     <Image Include="image\page2\changePass\change-bg.png" />
     <Image Include="image\page2\changePass\change-button.png" />
@@ -297,11 +318,6 @@
     <Image Include="image\page4-student\home\result-bg.png" />
     <Image Include="image\page4-student\home\score.png" />
     <Image Include="image\page4-student\home\stu-profile-bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Project_CS162\include\function.h" />
-    <ClInclude Include="..\Project_CS162\include\struct_and_library.h" />
-    <ClInclude Include="..\Project_CS162\include\view_function.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
