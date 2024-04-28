@@ -29,7 +29,7 @@ void AddClassNode(ClassNode *&head, ClassNode *newclassnode)
     }
 }
 
-void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
+void readClassFromFile(ClassNode *&Listclass, string file_name, ifstream &fin)
 {
     fin.open(file_name);
     if (!fin.is_open())
@@ -48,7 +48,7 @@ void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin)
     fin.close();
 }
 
-void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout)
+void exportClassToFile(ClassNode *Listclass, string file_name, ofstream &fout)
 {
     fout.open(file_name);
     if (!fout.is_open())

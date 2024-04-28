@@ -164,9 +164,6 @@
     <None Include="..\Project_CS162\database\results_list.csv" />
     <None Include="..\Project_CS162\database\staff_list.csv" />
     <None Include="..\Project_CS162\database\year_list.csv" />
-    <None Include="..\Project_CS162\export\CS161_2020-2021_Semester 1.csv" />
-    <None Include="..\Project_CS162\export\CS161_2024-2025_Semester 1.csv" />
-    <None Include="..\Project_CS162\export\MTH252_2020-2021_Semester 1.csv" />
     <None Include="..\Project_CS162\import\24APCS1_student.csv" />
     <None Include="..\Project_CS162\import\24HOH4_student.csv" />
     <None Include="..\Project_CS162\import\new_class.csv" />

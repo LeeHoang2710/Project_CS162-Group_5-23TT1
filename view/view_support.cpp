@@ -67,15 +67,7 @@ void updateColorOnHover(RenderWindow &window, Object &o)
 		o.draw.setColor(Color::White);
 }
 
-void chooseDraw_1(RenderWindow &window, Object *x, Object *y, bool check)
-{
-	if (check)
-		window.draw(x->draw);
-	else
-		window.draw(y->draw);
-}
-
-void chooseDraw_2(RenderWindow &window, Object x, Object y, bool check)
+void chooseDraw(RenderWindow &window, Object x, Object y, bool check)
 {
 	if (check)
 		window.draw(x.draw);

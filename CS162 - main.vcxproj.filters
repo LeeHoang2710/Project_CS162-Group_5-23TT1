@@ -60,15 +60,6 @@
     <None Include="..\Project_CS162\database\class_list.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Project_CS162\export\CS161_2020-2021_Semester 1.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Project_CS162\export\CS161_2024-2025_Semester 1.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Project_CS162\export\MTH252_2020-2021_Semester 1.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\Project_CS162\import\new_class.csv">
       <Filter>Resource Files</Filter>
     </None>

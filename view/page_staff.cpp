@@ -457,7 +457,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid, invalid, checkPath);
+                chooseDraw(window, valid, invalid, checkPath);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
@@ -856,7 +856,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                 new_page = true;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid, invalid, checkDel);
+                chooseDraw(window, valid, invalid, checkDel);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showDelResult = false;
         }
@@ -1105,10 +1105,10 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
         for (int i = 0; i < 4; ++i)
         {
             window.draw(inf[i].txt);
-            chooseDraw_2(window, yes_sess[i], no_sess[i], check_sess[i]);
+            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw_2(window, yes[i], no[i], check_day[i]);
+            chooseDraw(window, yes[i], no[i], check_day[i]);
         if (check_class)
             objectAppear(window, save, clock, valid2, 2);
         else
@@ -1125,13 +1125,13 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
             if (Import)
             {
                 ifstream fin;
-                checkPath = importmanycourses(fin, filename, class_list, course, yr, sem);
+                checkPath = importManyCourses(fin, filename, class_list, course, yr, sem);
                 if (checkPath)
                     cout << "true";
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid1, invalid1, checkPath);
+                chooseDraw(window, valid1, invalid1, checkPath);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
@@ -1420,7 +1420,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         window.draw(o7.draw);
         window.draw(b.draw);
         window.draw(result.draw);
-        chooseDraw_2(window, update, edit, editing);
+        chooseDraw(window, update, edit, editing);
         if (resulting)
         {
             window.draw(import.draw);
@@ -1434,10 +1434,10 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
         for (int i = 0; i < 4; ++i)
         {
             window.draw(inf[i].txt);
-            chooseDraw_2(window, yes_sess[i], no_sess[i], check_sess[i]);
+            chooseDraw(window, yes_sess[i], no_sess[i], check_sess[i]);
         }
         for (int i = 0; i < 6; ++i)
-            chooseDraw_2(window, yes[i], no[i], check_day[i]);
+            chooseDraw(window, yes[i], no[i], check_day[i]);
         if (check_class)
             objectAppear(window, save, clock, valid2, 2);
         else
@@ -1458,7 +1458,7 @@ void updateCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid1, invalid1, checkPath);
+                chooseDraw(window, valid1, invalid1, checkPath);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
@@ -1572,7 +1572,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                     {
                         ofstream op;
                         destination = "export";
-                        ExportStudentTofile(op, destination, course, yr, sem);
+                        exportStudentToFile(op, destination, course, yr, sem);
                         success = true;
                         clock.restart();
                     }
@@ -1668,7 +1668,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 Add = false;
             }
             if (showAddResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid3, invalid3, checkAdd);
+                chooseDraw(window, valid3, invalid3, checkAdd);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showAddResult = false;
 
@@ -1678,7 +1678,7 @@ void resultCourse(RenderWindow &window, CourseNode *&course, int &page, string y
                 Remove = false;
             }
             if (showRemoveResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid4, invalid3, checkRemove);
+                chooseDraw(window, valid4, invalid3, checkRemove);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showRemoveResult = false;
         }
@@ -2316,11 +2316,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         }
         window.clear();
         window.draw(screen.draw);
-        chooseDraw_2(window, o2, o1, result);
+        chooseDraw(window, o2, o1, result);
         window.draw(create.draw);
         window.draw(del.draw);
         window.draw(eXport.draw);
-        chooseDraw_2(window, infor, res, result);
+        chooseDraw(window, infor, res, result);
         window.draw(b.draw);
         window.draw(prev.draw);
         window.draw(next.draw);
@@ -2409,7 +2409,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 Confirm = false;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid1, invalid1, checkDel);
+                chooseDraw(window, valid1, invalid1, checkDel);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showDelResult = false;
         }
@@ -2429,7 +2429,7 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                 Import = false;
             }
             if (showImportResult && clock.getElapsedTime().asSeconds() < 2)
-                chooseDraw_2(window, valid2, invalid2, checkPath);
+                chooseDraw(window, valid2, invalid2, checkPath);
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }

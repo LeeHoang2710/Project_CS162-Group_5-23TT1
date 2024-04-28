@@ -227,7 +227,7 @@ void deleteCourseList(CourseNode *&courseList, string year_id, string sem_id)
     }
 }
 
-bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
+bool importManyCourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem)
 {
     fin.open(filename);
     if (!fin.is_open())

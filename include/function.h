@@ -1,8 +1,6 @@
 #include "struct_and_library.h"
 
 // ---------------------Login Session---------------------
-void StorePassWordStudent(StudentNode *&StuPass, ifstream &ip, string file);
-void StorePassWordStaff(StaffNode *&StaffPass, ifstream &ip, string file);
 bool LoginForStudent(ClassNode *StuList, string &username, string &pass, string &class_id);
 bool LoginForStaff(StaffNode *StaffPass, string &username, string &pass);
 void UpdateStuPassFile(StudentNode *List, ofstream &op);
@@ -65,8 +63,8 @@ ResultsNode *CurrCourse(StudentNode *studentNode);
 Class CreateClass(string classid);
 ClassNode *InitializeClassNode(Class newclass);
 void AddClassNode(ClassNode *&head, ClassNode *newclassnode);
-void ReadClassfromfile(ClassNode *&Listclass, string file_name, ifstream &fin);
-void ExportClassTFile(ClassNode *Listclass, string file_name, ofstream &fout);
+void readClassFromFile(ClassNode *&Listclass, string file_name, ifstream &fin);
+void exportClassToFile(ClassNode *Listclass, string file_name, ofstream &fout);
 ClassSubNode *findClasses(ClassNode *head, string input);
 bool importNewClassesFromStaff(YearNode *currYearNode, ClassNode *&Listclass, string file_name, ifstream &fin);
 void deleteClassList(ClassNode *&classList);
@@ -77,7 +75,7 @@ bool importResults(ifstream &fin, ClassNode *&MainClass, string filename);
 float updateTotalGpa(StudentNode *studentNode);
 float UpdateCurGpa(StudentNode *studentNode);
 void updateCourseOverall(Score &score);
-void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass);
+void exportAllScoreToFile(ofstream &fout, string filename, ClassNode *allClass);
 Results createResults(const string &course_id, const string &sem_id, const string &year_id, float process = 0.0f, float midterm = 0.0f, float final = 0.0f);
 ResultsNode *createResultsNode(const Results &results);
 void appendResultsNode(ResultsNode *&results_list, ResultsNode *resultsNode);
@@ -87,9 +85,9 @@ bool UpdateResults(ifstream &fin, string filename, string yr, string sem, Course
 bool deleteResultsNode(ResultsNode *&resultsList, string course_id, string year_id, string sem_id);
 void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, string year_id, string sem_id);
 void deleteResultsList(ResultsNode *&resultsList);
-void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id);
+void exportStudentToFile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id);
 void ExportAllResultsToFile(ofstream &op, string &destination, StudentNode *Curr);
-bool importmanycourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem);
+bool importManyCourses(ifstream &fin, string filename, ClassNode *class_list, CourseNode *&curr, string yr, string sem);
 
 // ---------------------ClassSubNode---------------------
 bool importYear(YearNode *&year_list, ClassNode *allClass, string filename, ifstream &fin);

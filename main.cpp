@@ -21,7 +21,7 @@ int main()
 
     bool success;
     importStaff(user2, fin, "./database/staff_list.csv");
-    ReadClassfromfile(class_list, "./database/class_list.csv", fin);
+    readClassFromFile(class_list, "./database/class_list.csv", fin);
     success = importYear(year, class_list, "./database/year_list.csv", fin);
     if (!success)
         cout << "Cannot import year" << endl;
@@ -109,8 +109,8 @@ int main()
         }
     }
     exportYear(year, "./database/year_list.csv", fout);
-    ExportClassTFile(class_list, "./database/class_list.csv", fout);
-    Exportallscoretofile(fout, "./database/results_list.csv", class_list);
+    exportClassToFile(class_list, "./database/class_list.csv", fout);
+    exportAllScoreToFile(fout, "./database/results_list.csv", class_list);
     ExportStaff(user2, fout, "./database/staff_list.csv");
 
     deleteClassList(class_list);

@@ -181,7 +181,7 @@ bool importResults(ifstream &fin, ClassNode *&ClassList, string filename)
     return true;
 }
 
-void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass)
+void exportAllScoreToFile(ofstream &fout, string filename, ClassNode *allClass)
 {
     fout.open(filename);
     if (!fout.is_open())
@@ -193,23 +193,23 @@ void Exportallscoretofile(ofstream &fout, string filename, ClassNode *allClass)
     while (allClass)
     {
         fout << allClass->my_class.class_id << endl;
-        StudentNode *Studentlist = allClass->my_class.student_list;
-        while (Studentlist)
+        StudentNode *studentList = allClass->my_class.student_list;
+        while (studentList)
         {
-            fout << Studentlist->student.student_id << ',' << Studentlist->student.first_name << ',';
-            fout << Studentlist->student.last_name << endl;
-            ResultsNode *courselist = Studentlist->student.results_list;
-            while (courselist)
+            fout << studentList->student.student_id << ',' << studentList->student.first_name << ',';
+            fout << studentList->student.last_name << endl;
+            ResultsNode *courseList = studentList->student.results_list;
+            while (courseList)
             {
-                fout << courselist->results.course_id << ',' << courselist->results.year_id << ',';
-                fout << courselist->results.sem_id << ',' << courselist->results.score.process << ',';
-                fout << courselist->results.score.midterm << ',' << courselist->results.score.final << ',';
-                fout << fixed << setprecision(1) << courselist->results.score.overall << endl;
-                courselist = courselist->next;
+                fout << courseList->results.course_id << ',' << courseList->results.year_id << ',';
+                fout << courseList->results.sem_id << ',' << courseList->results.score.process << ',';
+                fout << courseList->results.score.midterm << ',' << courseList->results.score.final << ',';
+                fout << fixed << setprecision(1) << courseList->results.score.overall << endl;
+                courseList = courseList->next;
             }
 
             fout << "*" << endl;
-            Studentlist = Studentlist->next;
+            studentList = studentList->next;
         }
 
         fout << "#" << endl;
@@ -306,6 +306,8 @@ void deleteCourseResultsForClass(StudentNode *&studentList, string course_id, st
         if (!success)
             cout << "ResultsNode for " << course_id << " does not exist for " << currStu->student.student_id << endl;
 
+		currStu->student.cur_gpa = UpdateCurGpa(currStu);
+		currStu->student.total_gpa = updateTotalGpa(currStu);
         currStu = currStu->next;
     }
 }
@@ -320,7 +322,7 @@ void deleteResultsList(ResultsNode *&resultsList)
     }
 }
 
-void ExportStudentTofile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id)
+void exportStudentToFile(ofstream &op, string &destination, CourseNode *curr, string year_id, string sem_id)
 {
     string filename = destination + "/" + curr->course.course_id + "_" + year_id + "_" + sem_id + ".csv";
     cout << filename;
