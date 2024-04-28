@@ -152,6 +152,7 @@
     <None Include="..\Project_CS162\import\new_class.csv" />
     <None Include="..\Project_CS162\import\new_courses.csv" />
     <None Include="..\Project_CS162\README.md" />
+    <None Include="import\24CLC3_student.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Project_CS162\content\function_class.cpp" />

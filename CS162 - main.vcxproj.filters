@@ -28,6 +28,9 @@
     <None Include="..\Project_CS162\import\24HOH4_student.csv" />
     <None Include="..\Project_CS162\import\new_class.csv" />
     <None Include="..\Project_CS162\import\new_courses.csv" />
+    <None Include="import\24CLC3_student.csv">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Project_CS162\content\function_class.cpp">
