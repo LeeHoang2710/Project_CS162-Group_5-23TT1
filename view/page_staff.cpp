@@ -224,7 +224,7 @@ void homeStaff(RenderWindow &window, int &page, StaffNode *&user, bool &Exit)
     Event event;
     Object screen = createBackGround("./image/page1/main-bg.png");
     Object o1 = createObject("./image/page3-staff/home/homeStaff-bg.png", 180, 120);
-    Object o2 = createObject("./image/page3-staff/home/year.png", 235, 348);
+    Object o2 = createObject("./image/page3-staff/home/course.png", 235, 348);
     Object o3 = createObject("./image/page3-staff/home/class.png", 235, 462);
     Object o4 = createObject("./image/page3-staff/home/other.png", 235, 580);
     ;
