@@ -159,6 +159,7 @@ struct Staff
 	string social_id;
 	string password = "123";
 };
+
 struct StaffNode
 {
 	Staff staff;

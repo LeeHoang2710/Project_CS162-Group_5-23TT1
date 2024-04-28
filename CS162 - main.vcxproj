@@ -93,6 +93,7 @@
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\libraries\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,6 +111,7 @@
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\libraries\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +129,7 @@
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\libraries\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +147,7 @@
       <PreprocessorDefinitions>SFML_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\libraries\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -184,140 +188,9 @@
     <ClCompile Include="..\Project_CS162\view\view_support.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="..\Project_CS162\image\font\Arial.ttf" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\Project_CS162\include\function.h" />
     <ClInclude Include="..\Project_CS162\include\struct_and_library.h" />
     <ClInclude Include="..\Project_CS162\include\view_function.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="image\page1\alert.png" />
-    <Image Include="image\page1\Asset 1.png" />
-    <Image Include="image\page1\main-bg.png" />
-    <Image Include="image\page1\profile\dob.png" />
-    <Image Include="image\page1\profile\full-namw.png" />
-    <Image Include="image\page1\profile\social-id.png" />
-    <Image Include="image\page1\profile\staff-bg.png" />
-    <Image Include="image\page1\profile\staff-id.png" />
-    <Image Include="image\page1\scene1-bg.png" />
-    <Image Include="image\page1\scene1-staff.png" />
-    <Image Include="image\page1\scene1-student.png" />
-    <Image Include="image\page2\alert.png" />
-    <Image Include="image\page2\changePass\change-bg.png" />
-    <Image Include="image\page2\changePass\change-button.png" />
-    <Image Include="image\page2\changePass\change.png" />
-    <Image Include="image\page2\changePass\new-pass.png" />
-    <Image Include="image\page2\changePass\old-pass.png" />
-    <Image Include="image\page2\changePass\try-again.png" />
-    <Image Include="image\page2\closed.png" />
-    <Image Include="image\page2\delete-succ.png" />
-    <Image Include="image\page2\exit.png" />
-    <Image Include="image\page2\import-succ.png" />
-    <Image Include="image\page2\invalid-id.png" />
-    <Image Include="image\page2\invalid-path.png" />
-    <Image Include="image\page2\login-bg.png" />
-    <Image Include="image\page2\login-button.png" />
-    <Image Include="image\page2\open.png" />
-    <Image Include="image\page2\password.png" />
-    <Image Include="image\page2\scene2-bg.png" />
-    <Image Include="image\page2\username.png" />
-    <Image Include="image\page3-staff\backward.png" />
-    <Image Include="image\page3-staff\class\academic-bg.png" />
-    <Image Include="image\page3-staff\class\class-bg.png" />
-    <Image Include="image\page3-staff\class\confirm.png" />
-    <Image Include="image\page3-staff\class\create-cla.png" />
-    <Image Include="image\page3-staff\class\create-stu.png" />
-    <Image Include="image\page3-staff\class\delete-bg.png" />
-    <Image Include="image\page3-staff\class\delete-stu.png" />
-    <Image Include="image\page3-staff\class\detail.png" />
-    <Image Include="image\page3-staff\class\export.png" />
-    <Image Include="image\page3-staff\class\import-stu-bg.png" />
-    <Image Include="image\page3-staff\class\Infor.png" />
-    <Image Include="image\page3-staff\class\invalid_sea.png" />
-    <Image Include="image\page3-staff\class\result-bg.png" />
-    <Image Include="image\page3-staff\class\result.png" />
-    <Image Include="image\page3-staff\class\search-cla.png" />
-    <Image Include="image\page3-staff\class\student-bg.png" />
-    <Image Include="image\page3-staff\course\confirm.png" />
-    <Image Include="image\page3-staff\course\course-bg.png" />
-    <Image Include="image\page3-staff\course\create-cour-bg.png" />
-    <Image Include="image\page3-staff\course\create-cour.png" />
-    <Image Include="image\page3-staff\course\del-succ.png" />
-    <Image Include="image\page3-staff\course\delete-bg.png" />
-    <Image Include="image\page3-staff\course\delete-cour.png" />
-    <Image Include="image\page3-staff\course\id.png" />
-    <Image Include="image\page3-staff\course\import.png" />
-    <Image Include="image\page3-staff\course\input.png" />
-    <Image Include="image\page3-staff\course\input_1.png" />
-    <Image Include="image\page3-staff\course\invalid-id.png" />
-    <Image Include="image\page3-staff\course\no.png" />
-    <Image Include="image\page3-staff\course\not_available.png" />
-    <Image Include="image\page3-staff\course\update.png" />
-    <Image Include="image\page3-staff\course\update\add-stu-bg.png" />
-    <Image Include="image\page3-staff\course\update\add-stu.png" />
-    <Image Include="image\page3-staff\course\update\add-succ.png" />
-    <Image Include="image\page3-staff\course\update\arrow.png" />
-    <Image Include="image\page3-staff\course\update\confirm.png" />
-    <Image Include="image\page3-staff\course\update\edit.png" />
-    <Image Include="image\page3-staff\course\update\export.png" />
-    <Image Include="image\page3-staff\course\update\file_path.png" />
-    <Image Include="image\page3-staff\course\update\import-bg.png" />
-    <Image Include="image\page3-staff\course\update\import-cour-bg.png" />
-    <Image Include="image\page3-staff\course\update\import-res.png" />
-    <Image Include="image\page3-staff\course\update\remove.png" />
-    <Image Include="image\page3-staff\course\update\res-cour-bg.png" />
-    <Image Include="image\page3-staff\course\update\result.png" />
-    <Image Include="image\page3-staff\course\update\save.png" />
-    <Image Include="image\page3-staff\course\update\update-cour-bg.png" />
-    <Image Include="image\page3-staff\course\update\view.png" />
-    <Image Include="image\page3-staff\course\yes.png" />
-    <Image Include="image\page3-staff\exit.png" />
-    <Image Include="image\page3-staff\forward.png" />
-    <Image Include="image\page3-staff\home\class.png" />
-    <Image Include="image\page3-staff\home\course.png" />
-    <Image Include="image\page3-staff\home\homeStaff-bg.png" />
-    <Image Include="image\page3-staff\home\other.png" />
-    <Image Include="image\page3-staff\home\year.png" />
-    <Image Include="image\page3-staff\next.png" />
-    <Image Include="image\page3-staff\other\change-pass.png" />
-    <Image Include="image\page3-staff\other\log-out.png" />
-    <Image Include="image\page3-staff\other\other-bg.png" />
-    <Image Include="image\page3-staff\other\profile.png" />
-    <Image Include="image\page3-staff\prev.png" />
-    <Image Include="image\page3-staff\result\full-name.png" />
-    <Image Include="image\page3-staff\result\gpa.png" />
-    <Image Include="image\page3-staff\result\id.png" />
-    <Image Include="image\page3-staff\result\result-bg.png" />
-    <Image Include="image\page3-staff\school_year\2020.png" />
-    <Image Include="image\page3-staff\school_year\2021.png" />
-    <Image Include="image\page3-staff\school_year\2022.png" />
-    <Image Include="image\page3-staff\school_year\2023.png" />
-    <Image Include="image\page3-staff\school_year\2024.png" />
-    <Image Include="image\page3-staff\school_year\add-1st-class-bg.png" />
-    <Image Include="image\page3-staff\school_year\add.png" />
-    <Image Include="image\page3-staff\school_year\create_sem.png" />
-    <Image Include="image\page3-staff\school_year\create_yr.png" />
-    <Image Include="image\page3-staff\school_year\file-path.png" />
-    <Image Include="image\page3-staff\school_year\import.png" />
-    <Image Include="image\page3-staff\school_year\input.png" />
-    <Image Include="image\page3-staff\school_year\new-semester-bg.png" />
-    <Image Include="image\page3-staff\school_year\save-success.png" />
-    <Image Include="image\page3-staff\school_year\semester-bg.png" />
-    <Image Include="image\page3-staff\school_year\total.png" />
-    <Image Include="image\page3-staff\school_year\year-bg.png" />
-    <Image Include="image\page3-staff\school_year\year-node.png" />
-    <Image Include="image\page4-student\home\all.png" />
-    <Image Include="image\page4-student\home\course-bg.png" />
-    <Image Include="image\page4-student\home\course.png" />
-    <Image Include="image\page4-student\home\current.png" />
-    <Image Include="image\page4-student\home\home-stu.png" />
-    <Image Include="image\page4-student\home\input.png" />
-    <Image Include="image\page4-student\home\other-bg.png" />
-    <Image Include="image\page4-student\home\other.png" />
-    <Image Include="image\page4-student\home\result-bg.png" />
-    <Image Include="image\page4-student\home\score.png" />
-    <Image Include="image\page4-student\home\stu-profile-bg.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

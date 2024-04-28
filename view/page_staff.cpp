@@ -349,6 +349,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
                         count++;
                         checkYear = true;
                         clock.restart();
+                        new_page = true;
                     }
                     if (isHere(prev.bound, mouse) && change != 0)
                     {
@@ -460,7 +461,7 @@ void School(RenderWindow &window, int &page, bool is_staff, YearNode *&year, Cla
             else if (clock.getElapsedTime().asSeconds() >= 2)
                 showImportResult = false;
         }
-        objectAppear(window, checkYear, clock, success, 2);
+        objectAppear(window, checkYear, clock, success, 1);
 
         window.display();
     }
@@ -692,8 +693,8 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
     Object exit = createObject("./image/page2/exit.png", 1044, 398);
     Object id = createObject("./image/page3-staff/course/id.png", 539, 484);
     Object confirm = createObject("./image/page3-staff/course/confirm.png", 583, 566);
-    Object valid = createObject("./image/page2/delete-succ.png", 423, 351);
-    Object invalid = createObject("./image/page2/invalid-id.png", 423, 351);
+    Object valid = createObject("./image/page2/delete-succ.png", 423, 380);
+    Object invalid = createObject("./image/page2/invalid-id.png", 423, 380);
     Info total = createText("", 1050, 258);
     Info title = createText(yr + " - " + sem, 475, 168);
     title.txt.setFillColor(Color::Red);
@@ -749,6 +750,7 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
                     {
                         page = 14;
                         addCourse(window, course, page, yr, sem, class_list, Exit);
+                        new_page = true;
                         if (Exit)
                             return;
                     }
@@ -848,8 +850,10 @@ void Courses(RenderWindow &window, CourseNode *&course, int &page, string &yr, s
             if (Confirm)
             {
                 checkDel = deleteCourseNode(course, cour_id, yr, sem);
-                count--;
+                if (checkDel)
+                    count--;
                 Confirm = false;
+                new_page = true;
             }
             if (showDelResult && clock.getElapsedTime().asSeconds() < 2)
                 chooseDraw_2(window, valid, invalid, checkDel);
@@ -931,7 +935,7 @@ void addCourse(RenderWindow &window, CourseNode *&course, int &page, string yr, 
             {
                 if (event.mouseButton.button == Mouse::Left)
                 {
-                    switchPage(b.bound, mouse, 13, page, Exit);
+                    switchPage(b.bound, mouse, 11, page, Exit);
                     switchPage(menu.bound, mouse, 3, page, Exit);
                     if (isHere(import.bound, mouse))
                         new_cour = true;
@@ -2226,16 +2230,26 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
                         result = true;
                     else if (isHere(infor.bound, mouse))
                         result = false;
-                    if (isHere(prev.bound, mouse) && change != 0)
+                    if (isHere(prev.bound, mouse) && !result && change != 0)
                     {
                         new_page = true;
                         change -= 7;
                     }
+                    if (isHere(prev.bound, mouse) && result && change != 0)
+                    {
+                        new_page = false;
+                        change -= 7;
+                    }
                     if (isHere(exit2.bound, mouse))
                         del_stu = false;
-                    if (isHere(next.bound, mouse) && change <= count - 7)
+                    if (isHere(next.bound, mouse) && !result && change <= count - 7)
                     {
                         new_page = true;
+                        change += 7;
+                    }
+                    if (isHere(next.bound, mouse) && result && change <= count - 7)
+                    {
+                        new_page = false;
                         change += 7;
                     }
                     if (isHere(del.bound, mouse))
@@ -2370,12 +2384,11 @@ void Students(RenderWindow &window, int &page, ClassNode *&class_list, bool &Exi
         }
         else
         {
-            for (int a = 0; a < count - change; ++a)
-                window.draw(detail[a].draw);
             for (int i = 0; i < 7; ++i)
             {
                 if (resl[i][0].txt.getString() == "")
                     break;
+                window.draw(detail[i].draw);
                 for (int j = 0; j < 5; ++j)
                     window.draw(resl[i][j].txt);
             }
